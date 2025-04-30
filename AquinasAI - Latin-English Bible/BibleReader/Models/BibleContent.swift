@@ -2,12 +2,26 @@ import Foundation
 
 struct BibleContent: Codable {
     let charset: String
-    private let contents: [String: BookContent]
+    private let contents: [String: [String: [String: String]]]
     
     // Computed property to get books in a more usable format
     var books: [Book] {
-        contents.map { bookName, content in
-            Book(name: bookName, chapters: content.processedChapters)
+        contents.map { bookName, chapters in
+            let processedChapters = chapters.map { chapterNum, verses in
+                let processedVerses = verses.map { verseNum, text in
+                    Verse(id: "\(chapterNum):\(verseNum)", 
+                         number: Int(verseNum) ?? 0,
+                         text: text)
+                }.sorted { $0.number < $1.number }
+                
+                return Chapter(
+                    id: chapterNum,
+                    number: Int(chapterNum) ?? 0,
+                    verses: processedVerses
+                )
+            }.sorted { $0.number < $1.number }
+            
+            return Book(name: bookName, chapters: processedChapters)
         }.sorted { $0.name < $1.name }
     }
     
@@ -23,11 +37,11 @@ struct BibleContent: Codable {
         
         // Decode the dynamic book content
         let dynamicContainer = try decoder.container(keyedBy: DynamicCodingKeys.self)
-        var tempContents: [String: BookContent] = [:]
+        var tempContents: [String: [String: [String: String]]] = [:]
         
         for key in dynamicContainer.allKeys {
             if key.stringValue != "charset" {
-                tempContents[key.stringValue] = try dynamicContainer.decode(BookContent.self, forKey: key)
+                tempContents[key.stringValue] = try dynamicContainer.decode([String: [String: String]].self, forKey: key)
             }
         }
         contents = tempContents
