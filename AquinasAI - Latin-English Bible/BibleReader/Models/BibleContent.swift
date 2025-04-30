@@ -22,7 +22,9 @@ struct BibleContent: Codable {
             }.sorted { $0.number < $1.number }
             
             return Book(name: bookName, chapters: processedChapters)
-        }.sorted { $0.name < $1.name }
+        }.sorted { 
+            BibleBookMetadata.getOrder(for: $0.name) < BibleBookMetadata.getOrder(for: $1.name)
+        }
     }
     
     // Custom coding keys to handle dynamic book names
@@ -92,6 +94,14 @@ struct Book: Identifiable {
     let chapters: [Chapter]
     
     var id: String { name }
+    
+    var metadata: BibleBookMetadata? {
+        BibleBookMetadata.allBooks.first { $0.latin == name }
+    }
+    
+    var displayName: String {
+        metadata?.english ?? name
+    }
 }
 
 struct Chapter: Identifiable {
