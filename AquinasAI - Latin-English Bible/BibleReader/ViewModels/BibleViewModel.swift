@@ -1,119 +1,35 @@
 import Foundation
 
+struct BookNameMappings: Codable {
+    let description: String
+    let vulgate_to_english: [String: String]
+    let english_to_vulgate: [String: String]
+}
+
 class BibleViewModel: ObservableObject {
     @Published var books: [Book] = []
     @Published var errorMessage: String?
     @Published var displayMode: DisplayMode = .bilingual
     
-    private var bookNameMapping: [String: String] = [:]
+    private var bookNameMappings: BookNameMappings?
     
     init() {
-        loadBookNameMapping()
+        loadBookNameMappings()
         loadBibleContent()
     }
     
-    private func loadBookNameMapping() {
-        guard let url = Bundle.main.url(forResource: "metadata", withExtension: "csv") else {
-            print("Warning: Could not find metadata.csv")
+    private func loadBookNameMappings() {
+        guard let url = Bundle.main.url(forResource: "mappings", withExtension: "json") else {
+            print("Warning: Could not find mappings.json")
             return
         }
         
         do {
-            let content = try String(contentsOf: url)
-            let rows = content.components(separatedBy: .newlines)
-            
-            // Skip header row and empty lines
-            for row in rows.dropFirst() where !row.isEmpty {
-                let columns = row.components(separatedBy: ",")
-                if columns.count >= 2 {
-                    let english = columns[1].trimmingCharacters(in: .whitespaces)
-                    let latin = convertToLatinName(english)
-                    bookNameMapping[latin] = english
-                }
-            }
-            print("Loaded book name mapping: \(bookNameMapping.count) entries")
+            let data = try Data(contentsOf: url)
+            bookNameMappings = try JSONDecoder().decode(BookNameMappings.self, from: data)
+            print("Successfully loaded book name mappings")
         } catch {
-            print("Error loading metadata.csv: \(error)")
-        }
-    }
-    
-    private func convertToLatinName(_ english: String) -> String {
-        // Convert English names to their Latin equivalents
-        switch english {
-        case "Genesis": return "Genesis"
-        case "Exodus": return "Exodus"
-        case "Leviticus": return "Leviticus"
-        case "Numbers": return "Numeri"
-        case "Deuteronomy": return "Deuteronomium"
-        case "Joshua": return "Josue"
-        case "Judges": return "Judicum"
-        case "Ruth": return "Ruth"
-        case "1 Samuel": return "Regum I"
-        case "2 Samuel": return "Regum II"
-        case "1 Kings": return "Regum III"
-        case "2 Kings": return "Regum IV"
-        case "1 Chronicles": return "Paralipomenon I"
-        case "2 Chronicles": return "Paralipomenon II"
-        case "Ezra": return "Esdrae"
-        case "Nehemiah": return "Nehemiae"
-        case "Tobit": return "Tobiae"
-        case "Judith": return "Judith"
-        case "Esther": return "Esther"
-        case "Job": return "Job"
-        case "Psalms": return "Psalmi"
-        case "Proverbs": return "Proverbia"
-        case "Ecclesiastes": return "Ecclesiastes"
-        case "Song of Solomon": return "Canticum Canticorum"
-        case "Wisdom": return "Sapientia"
-        case "Sirach": return "Ecclesiasticus"
-        case "Isaiah": return "Isaias"
-        case "Jeremiah": return "Jeremias"
-        case "Lamentations": return "Lamentationes"
-        case "Baruch": return "Baruch"
-        case "Ezekiel": return "Ezechiel"
-        case "Daniel": return "Daniel"
-        case "Hosea": return "Osee"
-        case "Joel": return "Joel"
-        case "Amos": return "Amos"
-        case "Obadiah": return "Abdias"
-        case "Jonah": return "Jonas"
-        case "Micah": return "Michaea"
-        case "Nahum": return "Nahum"
-        case "Habakkuk": return "Habacuc"
-        case "Zephaniah": return "Sophonias"
-        case "Haggai": return "Aggaeus"
-        case "Zechariah": return "Zacharias"
-        case "Malachi": return "Malachias"
-        case "1 Maccabees": return "Machabaeorum I"
-        case "2 Maccabees": return "Machabaeorum II"
-        case "Matthew": return "Matthaeus"
-        case "Mark": return "Marcus"
-        case "Luke": return "Lucas"
-        case "John": return "Joannes"
-        case "Acts": return "Actus Apostolorum"
-        case "Romans": return "ad Romanos"
-        case "1 Corinthians": return "ad Corinthios I"
-        case "2 Corinthians": return "ad Corinthios II"
-        case "Galatians": return "ad Galatas"
-        case "Ephesians": return "ad Ephesios"
-        case "Philippians": return "ad Philippenses"
-        case "Colossians": return "ad Colossenses"
-        case "1 Thessalonians": return "ad Thessalonicenses I"
-        case "2 Thessalonians": return "ad Thessalonicenses II"
-        case "1 Timothy": return "ad Timotheum I"
-        case "2 Timothy": return "ad Timotheum II"
-        case "Titus": return "ad Titum"
-        case "Philemon": return "ad Philemonem"
-        case "Hebrews": return "ad Hebraeos"
-        case "James": return "Jacobi"
-        case "1 Peter": return "Petri I"
-        case "2 Peter": return "Petri II"
-        case "1 John": return "Joannis I"
-        case "2 John": return "Joannis II"
-        case "3 John": return "Joannis III"
-        case "Jude": return "Judae"
-        case "Revelation": return "Apocalypsis"
-        default: return english
+            print("Error loading mappings.json: \(error)")
         }
     }
     
@@ -141,7 +57,7 @@ class BibleViewModel: ObservableObject {
             // Create a dictionary of English books for faster lookup
             var englishBooksDictionary: [String: Book] = [:]
             for englishBook in englishContent.books {
-                if let latinName = bookNameMapping.first(where: { $0.value == englishBook.name })?.key {
+                if let latinName = bookNameMappings?.english_to_vulgate[englishBook.name] {
                     englishBooksDictionary[latinName] = englishBook
                 }
             }
