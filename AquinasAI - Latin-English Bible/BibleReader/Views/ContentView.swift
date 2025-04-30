@@ -5,8 +5,8 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            if let content = viewModel.bibleContent {
-                List(content.books) { book in
+            if !viewModel.books.isEmpty {
+                List(viewModel.books) { book in
                     NavigationLink(destination: BookView(book: book)) {
                         Text(book.name)
                     }
@@ -18,6 +18,7 @@ struct ContentView: View {
                     .padding()
             } else {
                 ProgressView()
+                    .navigationTitle("Loading...")
             }
         }
     }
@@ -43,8 +44,15 @@ struct ChapterView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
                 ForEach(chapter.verses) { verse in
-                    Text("\(verse.number). \(verse.text)")
-                        .padding(.horizontal)
+                    HStack(alignment: .top, spacing: 8) {
+                        Text("\(verse.number)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .frame(width: 30, alignment: .trailing)
+                        Text(verse.text)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.horizontal)
                 }
             }
             .padding(.vertical)
