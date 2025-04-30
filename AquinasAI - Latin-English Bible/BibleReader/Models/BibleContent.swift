@@ -11,7 +11,8 @@ struct BibleContent: Codable {
                 let processedVerses = verses.map { verseNum, text in
                     Verse(id: "\(chapterNum):\(verseNum)", 
                          number: Int(verseNum) ?? 0,
-                         text: text)
+                         latinText: text,
+                         englishText: text)
                 }.sorted { $0.number < $1.number }
                 
                 return Chapter(
@@ -76,7 +77,8 @@ struct BookContent: Codable {
             let processedVerses = verses.map { verseNum, text in
                 Verse(id: "\(chapterNum):\(verseNum)", 
                      number: Int(verseNum) ?? 0,
-                     text: text)
+                     latinText: text,
+                     englishText: text)
             }.sorted { $0.number < $1.number }
             
             return Chapter(
@@ -113,5 +115,20 @@ struct Chapter: Identifiable {
 struct Verse: Identifiable {
     let id: String
     let number: Int
-    let text: String
+    let latinText: String
+    let englishText: String
+}
+
+enum DisplayMode {
+    case latinOnly
+    case englishOnly
+    case bilingual
+    
+    var description: String {
+        switch self {
+        case .latinOnly: return "Latin"
+        case .englishOnly: return "English"
+        case .bilingual: return "Bilingual"
+        }
+    }
 } 
