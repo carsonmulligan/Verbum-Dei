@@ -28,10 +28,36 @@ struct BookView: View {
     let book: Book
     
     var body: some View {
-        List(book.chapters) { chapter in
-            NavigationLink(destination: ChapterView(chapter: chapter)) {
-                Text("Chapter \(chapter.number)")
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                ForEach(book.chapters) { chapter in
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Chapter \(chapter.number)")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                        
+                        ForEach(chapter.verses) { verse in
+                            HStack(alignment: .top, spacing: 8) {
+                                Text("\(verse.number)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .frame(width: 30, alignment: .trailing)
+                                Text(verse.text)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    .padding(.vertical, 10)
+                    
+                    if chapter.number != book.chapters.last?.number {
+                        Divider()
+                            .padding(.horizontal)
+                    }
+                }
             }
+            .padding(.vertical)
         }
         .navigationTitle(book.name)
     }
