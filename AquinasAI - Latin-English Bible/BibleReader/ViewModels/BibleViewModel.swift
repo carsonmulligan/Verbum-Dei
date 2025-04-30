@@ -3,6 +3,7 @@ import Foundation
 class BibleViewModel: ObservableObject {
     @Published var books: [Book] = []
     @Published var errorMessage: String?
+    @Published var displayMode: DisplayMode = .bilingual
     
     init() {
         loadBibleContent()
@@ -16,17 +17,50 @@ class BibleViewModel: ObservableObject {
         let resourcePaths = Bundle.main.paths(forResourcesOfType: "json", inDirectory: nil)
         print("Found JSON files in bundle: \(resourcePaths)")
         
-        guard let url = Bundle.main.url(forResource: "vulgate_latin", withExtension: "json") else {
-            errorMessage = "Could not find vulgate_latin.json in bundle. Please ensure the file is added to the Xcode project and included in the target."
+        guard let latinUrl = Bundle.main.url(forResource: "vulgate_latin", withExtension: "json"),
+              let englishUrl = Bundle.main.url(forResource: "vulgate_english", withExtension: "json") else {
+            errorMessage = "Could not find Bible content files in bundle."
             return
         }
         
         do {
-            let data = try Data(contentsOf: url)
-            print("Successfully loaded JSON data of size: \(data.count) bytes")
-            let bibleContent = try JSONDecoder().decode(BibleContent.self, from: data)
-            self.books = bibleContent.books
-            print("Successfully decoded Bible content")
+            let latinData = try Data(contentsOf: latinUrl)
+            let englishData = try Data(contentsOf: englishUrl)
+            
+            let latinContent = try JSONDecoder().decode(BibleContent.self, from: latinData)
+            let englishContent = try JSONDecoder().decode(BibleContent.self, from: englishData)
+            
+            // Merge Latin and English content
+            self.books = latinContent.books.enumerated().map { index, latinBook in
+                let englishBook = englishContent.books[index]
+                
+                let mergedChapters = latinBook.chapters.enumerated().map { chapterIndex, latinChapter in
+                    let englishChapter = englishBook.chapters[chapterIndex]
+                    
+                    let mergedVerses = latinChapter.verses.enumerated().map { verseIndex, latinVerse in
+                        let englishVerse = englishChapter.verses[verseIndex]
+                        return Verse(
+                            id: latinVerse.id,
+                            number: latinVerse.number,
+                            latinText: latinVerse.latinText,
+                            englishText: englishVerse.latinText  // Note: In the English JSON, it's still under 'latinText'
+                        )
+                    }
+                    
+                    return Chapter(
+                        id: latinChapter.id,
+                        number: latinChapter.number,
+                        verses: mergedVerses
+                    )
+                }
+                
+                return Book(
+                    name: latinBook.name,
+                    chapters: mergedChapters
+                )
+            }
+            
+            print("Successfully loaded and merged Bible content")
         } catch {
             print("Error loading content: \(error)")
             errorMessage = "Error loading Bible content: \(error.localizedDescription)"
