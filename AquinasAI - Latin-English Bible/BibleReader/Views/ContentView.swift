@@ -163,7 +163,12 @@ struct BookList: View {
             .navigationDestination(for: SearchResult.self) { result in
                 switch result {
                 case .book(let book):
-                    BookView(book: book, viewModel: viewModel)
+                    BookView(
+                        book: book,
+                        viewModel: viewModel,
+                        initialChapter: nil,
+                        scrollToVerse: nil
+                    )
                 case .verse(let book, let chapter, let verse):
                     BookView(
                         book: book,
