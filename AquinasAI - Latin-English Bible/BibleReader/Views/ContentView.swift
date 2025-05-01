@@ -15,6 +15,7 @@ struct ContentView: View {
     @StateObject private var bookmarkStore = BookmarkStore()
     @AppStorage("isDarkMode") private var isDarkMode = false
     @State private var showingBookmarks = false
+    @State private var showingSearch = false
     
     var body: some View {
         NavigationView {
@@ -28,6 +29,9 @@ struct ContentView: View {
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)
         .environmentObject(bookmarkStore)
+        .sheet(isPresented: $showingSearch) {
+            SearchView(bibleViewModel: viewModel)
+        }
     }
 }
 
@@ -57,6 +61,7 @@ struct TestamentSelectorView: View {
     @Binding var selectedTestament: Testament
     @Binding var isDarkMode: Bool
     @Binding var showingBookmarks: Bool
+    @Binding var showingSearch: Bool
     
     var body: some View {
         VStack(spacing: 12) {
@@ -82,6 +87,12 @@ struct TestamentSelectorView: View {
                 )
                 
                 TestamentPillButton(
+                    title: "Search",
+                    isSelected: false,
+                    action: { showingSearch = true }
+                )
+                
+                TestamentPillButton(
                     title: "Bookmarks",
                     isSelected: false,
                     action: { showingBookmarks = true }
@@ -99,7 +110,7 @@ struct BookList: View {
     @Binding var isDarkMode: Bool
     @Binding var showingBookmarks: Bool
     @State private var selectedTestament: Testament = .old
-    @State private var selectedBookmark: Bookmark?
+    @State private var showingSearch = false
     @State private var navigationPath = NavigationPath()
     
     var filteredBooks: [Book] {
@@ -141,13 +152,27 @@ struct BookList: View {
                     TestamentSelectorView(
                         selectedTestament: $selectedTestament,
                         isDarkMode: $isDarkMode,
-                        showingBookmarks: $showingBookmarks
+                        showingBookmarks: $showingBookmarks,
+                        showingSearch: $showingSearch
                     )
                     
                     bookListContent
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: SearchResult.self) { result in
+                switch result {
+                case .book(let book):
+                    BookView(book: book, viewModel: viewModel)
+                case .verse(let book, let chapter, let verse):
+                    BookView(
+                        book: book,
+                        viewModel: viewModel,
+                        initialChapter: chapter.number,
+                        scrollToVerse: verse.number
+                    )
+                }
+            }
             .navigationDestination(for: BookNavigation.self) { navigation in
                 BookView(
                     book: navigation.book,
@@ -166,6 +191,9 @@ struct BookList: View {
                     .pickerStyle(.menu)
                     .tint(isDarkMode ? .white : Color.deepPurple)
                 }
+            }
+            .sheet(isPresented: $showingSearch) {
+                SearchView(bibleViewModel: viewModel)
             }
             .sheet(isPresented: $showingBookmarks) {
                 BookmarksListView { bookmark in
