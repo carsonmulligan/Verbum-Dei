@@ -7,6 +7,7 @@ extension Color {
     static let nightBackground = Color(red: 28/255, green: 28/255, blue: 30/255) // Soft black for dark mode
     static let nightText = Color.white.opacity(0.92) // Slightly softened white for dark mode
     static let nightSecondary = Color.white.opacity(0.65) // Secondary text for dark mode
+    static let separatorLight = Color(red: 0/255, green: 0/255, blue: 0/255, opacity: 0.05) // Subtle separator for light mode
 }
 
 struct ContentView: View {
@@ -72,7 +73,8 @@ struct BookList: View {
                     // Custom Title
                     Text(navigationTitle)
                         .font(.largeTitle)
-                        .foregroundColor(isDarkMode ? .nightText : .black)
+                        .fontWeight(.medium)
+                        .foregroundColor(isDarkMode ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                         .padding(.top, 20)
                         .padding(.bottom, 10)
                     
@@ -113,15 +115,32 @@ struct BookList: View {
                     .padding()
                     
                     // Book List
-                    List(filteredBooks) { book in
-                        NavigationLink(value: BookNavigation(book: book)) {
-                            Text(getDisplayName(for: book))
-                                .foregroundColor(isDarkMode ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                    ScrollView {
+                        LazyVStack(spacing: 0, pinnedViews: []) {
+                            ForEach(filteredBooks) { book in
+                                NavigationLink(value: BookNavigation(book: book)) {
+                                    HStack {
+                                        Text(getDisplayName(for: book))
+                                            .foregroundColor(isDarkMode ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                                            .padding(.vertical, 12)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(Color(.systemGray3))
+                                            .font(.system(size: 14))
+                                    }
+                                    .padding(.horizontal)
+                                    .contentShape(Rectangle())
+                                }
+                                .background(isDarkMode ? Color.nightBackground : Color.paperWhite)
+                                
+                                if book != filteredBooks.last {
+                                    Divider()
+                                        .background(isDarkMode ? Color.white.opacity(0.1) : Color.separatorLight)
+                                }
+                            }
                         }
-                        .listRowBackground(isDarkMode ? Color.nightBackground : Color.paperWhite)
                     }
-                    .listStyle(PlainListStyle())
-                    .scrollContentBackground(.hidden)
+                    .background(isDarkMode ? Color.nightBackground : Color.paperWhite)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -222,9 +241,9 @@ struct TestamentPillButton: View {
                 .cornerRadius(20)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.deepPurple, lineWidth: 1)
+                        .stroke(Color.deepPurple, lineWidth: colorScheme == .dark ? 1 : 0.75)
                 )
-                .shadow(color: colorScheme == .dark ? .clear : Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .shadow(color: colorScheme == .dark ? .clear : Color.black.opacity(0.03), radius: 1, x: 0, y: 1)
         }
     }
 }
