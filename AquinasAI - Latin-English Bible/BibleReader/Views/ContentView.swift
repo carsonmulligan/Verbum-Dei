@@ -222,9 +222,12 @@ struct BookView: View {
     let book: Book
     @ObservedObject var viewModel: BibleViewModel
     @State private var selectedChapterIndex: Int = 0
-    @State private var isInitialLoad = true
     let initialChapter: Int?
     let scrollToVerse: Int?
+    
+    private var currentChapter: Chapter {
+        book.chapters[selectedChapterIndex]
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -256,54 +259,38 @@ struct BookView: View {
             // Chapter Content
             ScrollViewReader { proxy in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        ForEach(book.chapters.indices, id: \.self) { index in
-                            ChapterView(
-                                chapter: book.chapters[index],
+                    LazyVStack(alignment: .leading, spacing: 20) {
+                        Text("Chapter \(currentChapter.number)")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                            .id("chapter_header")
+                        
+                        ForEach(currentChapter.verses) { verse in
+                            VerseView(
+                                verse: verse,
                                 displayMode: viewModel.displayMode,
-                                bookName: book.name
+                                bookName: book.name,
+                                chapterNumber: currentChapter.number
                             )
-                            .id(index)
-                            
-                            ForEach(book.chapters[index].verses) { verse in
-                                Color.clear.frame(height: 0)
-                                    .id("verse_\(index)_\(verse.number)")
-                            }
+                            .id("verse_\(verse.number)")
+                            .padding(.horizontal)
                         }
                     }
                     .padding(.vertical)
                 }
-                .onChange(of: selectedChapterIndex) { newIndex in
-                    if !isInitialLoad {
-                        withAnimation {
-                            proxy.scrollTo(newIndex, anchor: .top)
-                        }
+                .onChange(of: selectedChapterIndex) { _ in
+                    withAnimation {
+                        proxy.scrollTo("chapter_header", anchor: .top)
                     }
                 }
                 .onAppear {
-                    if let chapter = initialChapter {
-                        // Find the index for the chapter
-                        if let index = book.chapters.firstIndex(where: { $0.number == chapter }) {
-                            selectedChapterIndex = index
-                            
-                            // If we have a verse to scroll to, do it after a brief delay
-                            if let verse = scrollToVerse {
-                                Task {
-                                    try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
-                                    DispatchQueue.main.async {
-                                        withAnimation {
-                                            proxy.scrollTo("verse_\(index)_\(verse)", anchor: .top)
-                                        }
-                                        isInitialLoad = false
-                                    }
-                                }
-                            } else {
-                                proxy.scrollTo(index, anchor: .top)
-                                isInitialLoad = false
-                            }
+                    if let chapter = initialChapter,
+                       let index = book.chapters.firstIndex(where: { $0.number == chapter }) {
+                        selectedChapterIndex = index
+                        if let verse = scrollToVerse {
+                            proxy.scrollTo("verse_\(verse)", anchor: .top)
                         }
-                    } else {
-                        isInitialLoad = false
                     }
                 }
             }

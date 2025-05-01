@@ -65,9 +65,15 @@ struct BookmarksListView: View {
                         onBookmarkSelected(bookmark)
                         dismiss()
                     }) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("\(bookmark.bookName) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
-                                .foregroundColor(.primary)
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text("\(bookmark.bookName) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "bookmark.fill")
+                                    .foregroundColor(.deepPurple)
+                            }
                             
                             Text(bookmark.verseText)
                                 .font(.subheadline)
@@ -76,12 +82,13 @@ struct BookmarksListView: View {
                             
                             if !bookmark.note.isEmpty {
                                 Text(bookmark.note)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .lineLimit(2)
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
+                                    .lineLimit(1)
+                                    .padding(.top, 2)
                             }
                         }
-                        .padding(.vertical, 4)
+                        .contentShape(Rectangle())
                     }
                 }
                 .onDelete { indexSet in
