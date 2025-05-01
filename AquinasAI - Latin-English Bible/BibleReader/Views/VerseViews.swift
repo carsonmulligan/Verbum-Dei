@@ -11,14 +11,14 @@ struct LatinOnlyVerseView: View {
         HStack(alignment: .top, spacing: 8) {
             Text("\(number)")
                 .font(.footnote)
-                .foregroundColor(.secondary)
+                .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
             Text(text)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(8)
-                .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
+                .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
                 .cornerRadius(8)
-                .foregroundColor(colorScheme == .dark ? .white : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                 .contextMenu {
                     if isBookmarked {
                         Button(role: .destructive, action: { onDeleteBookmark?() }) {
@@ -41,14 +41,14 @@ struct EnglishOnlyVerseView: View {
         HStack(alignment: .top, spacing: 8) {
             Text("\(number)")
                 .font(.footnote)
-                .foregroundColor(.secondary)
+                .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
             Text(text)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(8)
-                .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
+                .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
                 .cornerRadius(8)
-                .foregroundColor(colorScheme == .dark ? .white : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                 .contextMenu {
                     if isBookmarked {
                         Button(role: .destructive, action: { onDeleteBookmark?() }) {
@@ -72,19 +72,19 @@ struct BilingualVerseView: View {
         HStack(alignment: .top, spacing: 8) {
             Text("\(number)")
                 .font(.footnote)
-                .foregroundColor(.secondary)
+                .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
             VStack(alignment: .leading, spacing: 4) {
                 Text(latinText)
                     .fixedSize(horizontal: false, vertical: true)
-                    .foregroundColor(colorScheme == .dark ? .white : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                    .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                 Text(englishText)
                     .italic()
-                    .foregroundColor(colorScheme == .dark ? .gray : Color(.displayP3, red: 0.3, green: 0.3, blue: 0.3, opacity: 1))
+                    .foregroundColor(colorScheme == .dark ? .nightSecondary : Color(.displayP3, red: 0.3, green: 0.3, blue: 0.3, opacity: 1))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(8)
-            .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
+            .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
             .cornerRadius(8)
             .contextMenu {
                 if isBookmarked {

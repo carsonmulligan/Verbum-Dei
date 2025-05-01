@@ -1,9 +1,12 @@
 import SwiftUI
 
-// Custom deep purple color
+// Custom colors
 extension Color {
     static let deepPurple = Color(red: 76/255, green: 40/255, blue: 90/255)
     static let paperWhite = Color(red: 251/255, green: 247/255, blue: 240/255) // Warm, paper-like color
+    static let nightBackground = Color(red: 28/255, green: 28/255, blue: 30/255) // Soft black for dark mode
+    static let nightText = Color.white.opacity(0.92) // Slightly softened white for dark mode
+    static let nightSecondary = Color.white.opacity(0.65) // Secondary text for dark mode
 }
 
 struct ContentView: View {
@@ -62,13 +65,14 @@ struct BookList: View {
         NavigationStack(path: $navigationPath) {
             ZStack {
                 // Background
-                (isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
+                (isDarkMode ? Color.nightBackground : Color.paperWhite)
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
                     // Custom Title
                     Text(navigationTitle)
                         .font(.largeTitle)
+                        .foregroundColor(isDarkMode ? .nightText : .black)
                         .padding(.top, 20)
                         .padding(.bottom, 10)
                     
@@ -112,9 +116,9 @@ struct BookList: View {
                     List(filteredBooks) { book in
                         NavigationLink(value: BookNavigation(book: book)) {
                             Text(getDisplayName(for: book))
-                                .foregroundColor(isDarkMode ? .white : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                                .foregroundColor(isDarkMode ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                         }
-                        .listRowBackground(isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
+                        .listRowBackground(isDarkMode ? Color.nightBackground : Color.paperWhite)
                     }
                     .listStyle(PlainListStyle())
                     .scrollContentBackground(.hidden)
@@ -267,7 +271,7 @@ struct BookView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 8)
             }
-            .background(colorScheme == .dark ? Color(UIColor.systemBackground) : Color.paperWhite)
+            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
             
             // Chapter Content
             ScrollViewReader { proxy in
@@ -276,6 +280,7 @@ struct BookView: View {
                         Text("Chapter \(currentChapter.number)")
                             .font(.title2)
                             .fontWeight(.bold)
+                            .foregroundColor(colorScheme == .dark ? .nightText : .black)
                             .padding(.horizontal)
                             .id("chapter_header")
                         
@@ -292,7 +297,7 @@ struct BookView: View {
                     }
                     .padding(.vertical)
                 }
-                .background(colorScheme == .dark ? Color(UIColor.systemBackground) : Color.paperWhite)
+                .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
                 .onChange(of: selectedChapterIndex) { _ in
                     withAnimation {
                         proxy.scrollTo("chapter_header", anchor: .top)
@@ -309,7 +314,7 @@ struct BookView: View {
                 }
             }
         }
-        .background(colorScheme == .dark ? Color(UIColor.systemBackground) : Color.paperWhite)
+        .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         .navigationTitle(book.name)
         .navigationBarTitleDisplayMode(.inline)
     }
