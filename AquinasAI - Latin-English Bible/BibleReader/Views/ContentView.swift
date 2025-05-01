@@ -222,6 +222,7 @@ struct BookView: View {
     let book: Book
     @ObservedObject var viewModel: BibleViewModel
     @State private var selectedChapterIndex: Int = 0
+    @State private var isInitialLoad = true
     let initialChapter: Int?
     let scrollToVerse: Int?
     
@@ -273,8 +274,10 @@ struct BookView: View {
                     .padding(.vertical)
                 }
                 .onChange(of: selectedChapterIndex) { newIndex in
-                    withAnimation {
-                        proxy.scrollTo(newIndex, anchor: .top)
+                    if !isInitialLoad {
+                        withAnimation {
+                            proxy.scrollTo(newIndex, anchor: .top)
+                        }
                     }
                 }
                 .onAppear {
@@ -291,12 +294,16 @@ struct BookView: View {
                                         withAnimation {
                                             proxy.scrollTo("verse_\(index)_\(verse)", anchor: .top)
                                         }
+                                        isInitialLoad = false
                                     }
                                 }
                             } else {
                                 proxy.scrollTo(index, anchor: .top)
+                                isInitialLoad = false
                             }
                         }
+                    } else {
+                        isInitialLoad = false
                     }
                 }
             }
