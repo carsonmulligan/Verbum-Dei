@@ -60,61 +60,66 @@ struct BookList: View {
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
-            VStack(spacing: 0) {
-                // Custom Title
-                Text(navigationTitle)
-                    .font(.largeTitle)
-                    .padding(.top, 20)
-                    .padding(.bottom, 10)
+            ZStack {
+                // Background
+                (isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
+                    .ignoresSafeArea()
                 
-                // Testament and Mode Selectors
-                VStack(spacing: 12) {
-                    // Testament Selector
-                    HStack(spacing: 16) {
-                        TestamentPillButton(
-                            title: "Old Testament",
-                            isSelected: selectedTestament == .old,
-                            action: { selectedTestament = .old }
-                        )
-                        
-                        TestamentPillButton(
-                            title: "New Testament",
-                            isSelected: selectedTestament == .new,
-                            action: { selectedTestament = .new }
-                        )
-                    }
+                VStack(spacing: 0) {
+                    // Custom Title
+                    Text(navigationTitle)
+                        .font(.largeTitle)
+                        .padding(.top, 20)
+                        .padding(.bottom, 10)
                     
-                    // Mode Toggles
-                    HStack(spacing: 16) {
-                        // Dark Mode Toggle
-                        TestamentPillButton(
-                            title: isDarkMode ? "Light Mode" : "Dark Mode",
-                            isSelected: isDarkMode,
-                            action: { isDarkMode.toggle() }
-                        )
+                    // Testament and Mode Selectors
+                    VStack(spacing: 12) {
+                        // Testament Selector
+                        HStack(spacing: 16) {
+                            TestamentPillButton(
+                                title: "Old Testament",
+                                isSelected: selectedTestament == .old,
+                                action: { selectedTestament = .old }
+                            )
+                            
+                            TestamentPillButton(
+                                title: "New Testament",
+                                isSelected: selectedTestament == .new,
+                                action: { selectedTestament = .new }
+                            )
+                        }
                         
-                        // Bookmarks Toggle
-                        TestamentPillButton(
-                            title: "Bookmarks",
-                            isSelected: false,
-                            action: { showingBookmarks = true }
-                        )
+                        // Mode Toggles
+                        HStack(spacing: 16) {
+                            // Dark Mode Toggle
+                            TestamentPillButton(
+                                title: isDarkMode ? "Light Mode" : "Dark Mode",
+                                isSelected: isDarkMode,
+                                action: { isDarkMode.toggle() }
+                            )
+                            
+                            // Bookmarks Toggle
+                            TestamentPillButton(
+                                title: "Bookmarks",
+                                isSelected: false,
+                                action: { showingBookmarks = true }
+                            )
+                        }
                     }
-                }
-                .padding()
-                .background(isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
-                
-                // Book List
-                List(filteredBooks) { book in
-                    NavigationLink(value: BookNavigation(book: book)) {
-                        Text(getDisplayName(for: book))
+                    .padding()
+                    
+                    // Book List
+                    List(filteredBooks) { book in
+                        NavigationLink(value: BookNavigation(book: book)) {
+                            Text(getDisplayName(for: book))
+                                .foregroundColor(isDarkMode ? .white : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                        }
+                        .listRowBackground(isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
                     }
+                    .listStyle(PlainListStyle())
+                    .scrollContentBackground(.hidden)
                 }
-                .listStyle(PlainListStyle())
-                .scrollContentBackground(isDarkMode ? .visible : .hidden)
-                .background(isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
             }
-            .background(isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: BookNavigation.self) { navigation in
                 BookView(
@@ -132,6 +137,7 @@ struct BookList: View {
                         Text("Bilingual").tag(DisplayMode.bilingual)
                     }
                     .pickerStyle(.menu)
+                    .tint(isDarkMode ? .white : Color.deepPurple)
                 }
             }
             .sheet(isPresented: $showingBookmarks) {
@@ -200,6 +206,7 @@ struct TestamentPillButton: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         Button(action: action) {
@@ -207,12 +214,13 @@ struct TestamentPillButton: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background(isSelected ? Color.deepPurple : Color.clear)
-                .foregroundColor(isSelected ? .white : .deepPurple)
+                .foregroundColor(isSelected ? .white : Color.deepPurple)
                 .cornerRadius(20)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.deepPurple, lineWidth: 1)
                 )
+                .shadow(color: colorScheme == .dark ? .clear : Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
         }
     }
 }
