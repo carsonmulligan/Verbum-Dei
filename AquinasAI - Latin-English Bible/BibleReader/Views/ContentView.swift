@@ -7,12 +7,14 @@ extension Color {
 
 struct ContentView: View {
     @StateObject private var viewModel = BibleViewModel()
+    @StateObject private var bookmarkStore = BookmarkStore()
     @AppStorage("isDarkMode") private var isDarkMode = false
+    @State private var showingBookmarks = false
     
     var body: some View {
         NavigationView {
             if !viewModel.books.isEmpty {
-                BookList(books: viewModel.books, viewModel: viewModel, isDarkMode: $isDarkMode)
+                BookList(books: viewModel.books, viewModel: viewModel, isDarkMode: $isDarkMode, showingBookmarks: $showingBookmarks)
             } else if let error = viewModel.errorMessage {
                 ErrorView(message: error)
             } else {
@@ -20,6 +22,7 @@ struct ContentView: View {
             }
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)
+        .environmentObject(bookmarkStore)
     }
 }
 
@@ -27,7 +30,9 @@ struct BookList: View {
     let books: [Book]
     @ObservedObject var viewModel: BibleViewModel
     @Binding var isDarkMode: Bool
+    @Binding var showingBookmarks: Bool
     @State private var selectedTestament: Testament = .old
+    @State private var selectedBookmark: Bookmark?
     
     var filteredBooks: [Book] {
         books.filter { book in
@@ -59,7 +64,7 @@ struct BookList: View {
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
-            // Testament and Dark Mode Selectors
+            // Testament and Mode Selectors
             VStack(spacing: 12) {
                 // Testament Selector
                 HStack(spacing: 16) {
@@ -76,12 +81,22 @@ struct BookList: View {
                     )
                 }
                 
-                // Dark Mode Toggle
-                TestamentPillButton(
-                    title: isDarkMode ? "Light Mode" : "Dark Mode",
-                    isSelected: isDarkMode,
-                    action: { isDarkMode.toggle() }
-                )
+                // Mode Toggles
+                HStack(spacing: 16) {
+                    // Dark Mode Toggle
+                    TestamentPillButton(
+                        title: isDarkMode ? "Light Mode" : "Dark Mode",
+                        isSelected: isDarkMode,
+                        action: { isDarkMode.toggle() }
+                    )
+                    
+                    // Bookmarks Toggle
+                    TestamentPillButton(
+                        title: "Bookmarks",
+                        isSelected: false,
+                        action: { showingBookmarks = true }
+                    )
+                }
             }
             .padding()
             .background(Color(UIColor.systemBackground))
@@ -105,6 +120,18 @@ struct BookList: View {
                 }
                 .pickerStyle(.menu)
                 .font(.custom("Times New Roman", size: 17))
+            }
+        }
+        .sheet(isPresented: $showingBookmarks) {
+            BookmarksListView { bookmark in
+                selectedBookmark = bookmark
+                // Find the book and navigate to it
+                if let book = books.first(where: { $0.name == bookmark.bookName }) {
+                    // We'll handle the navigation in BookView
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        selectedBookmark = bookmark
+                    }
+                }
             }
         }
     }
@@ -203,8 +230,12 @@ struct BookView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         ForEach(book.chapters.indices, id: \.self) { index in
-                            ChapterView(chapter: book.chapters[index], displayMode: viewModel.displayMode)
-                                .id(index)
+                            ChapterView(
+                                chapter: book.chapters[index],
+                                displayMode: viewModel.displayMode,
+                                bookName: book.name
+                            )
+                            .id(index)
                         }
                     }
                     .padding(.vertical)
@@ -224,6 +255,7 @@ struct BookView: View {
 struct ChapterView: View {
     let chapter: Chapter
     let displayMode: DisplayMode
+    let bookName: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -233,8 +265,13 @@ struct ChapterView: View {
                 .padding(.horizontal)
             
             ForEach(chapter.verses) { verse in
-                VerseView(verse: verse, displayMode: displayMode)
-                    .padding(.horizontal)
+                VerseView(
+                    verse: verse,
+                    displayMode: displayMode,
+                    bookName: bookName,
+                    chapterNumber: chapter.number
+                )
+                .padding(.horizontal)
             }
         }
         .padding(.vertical, 10)
