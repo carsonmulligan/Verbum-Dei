@@ -13,6 +13,22 @@ class SearchViewModel: ObservableObject {
         self.bibleViewModel = bibleViewModel
     }
     
+    private func parseVerseReference(_ query: String) -> (bookName: String, chapter: Int, verse: Int)? {
+        // Match patterns like "john 3:16", "John 3:16", "JOHN 3:16"
+        let components = query.lowercased().trimmingCharacters(in: .whitespaces).components(separatedBy: " ")
+        guard components.count == 2 else { return nil }
+        
+        let bookName = components[0]
+        let chapterVerse = components[1].components(separatedBy: ":")
+        guard chapterVerse.count == 2,
+              let chapter = Int(chapterVerse[0]),
+              let verse = Int(chapterVerse[1]) else {
+            return nil
+        }
+        
+        return (bookName: bookName, chapter: chapter, verse: verse)
+    }
+    
     func performSearch(query: String) {
         // Cancel any existing search task
         searchTask?.cancel()
@@ -31,31 +47,53 @@ class SearchViewModel: ObservableObject {
             var results: [SearchResult] = []
             let lowercaseQuery = query.lowercased()
             
-            // Search through book names (English only)
-            for book in self.bibleViewModel.books {
-                let englishName = self.bibleViewModel.getEnglishName(for: book.name).lowercased()
-                
-                if englishName.contains(lowercaseQuery) {
-                    results.append(.book(
-                        book: book,
-                        englishName: self.bibleViewModel.getEnglishName(for: book.name)
-                    ))
+            // First try to parse as a verse reference
+            if let reference = parseVerseReference(query) {
+                // Find matching book
+                if let book = self.bibleViewModel.books.first(where: { 
+                    self.bibleViewModel.getEnglishName(for: $0.name).lowercased().starts(with: reference.bookName)
+                }) {
+                    // Find matching chapter and verse
+                    if let chapter = book.chapters.first(where: { $0.number == reference.chapter }),
+                       let verse = chapter.verses.first(where: { $0.number == reference.verse }) {
+                        results.append(.verse(
+                            book: book,
+                            englishName: self.bibleViewModel.getEnglishName(for: book.name),
+                            chapter: chapter,
+                            verse: verse
+                        ))
+                    }
                 }
-                
-                // Search through verses (English only)
-                for chapter in book.chapters {
-                    for verse in chapter.verses {
-                        if Task.isCancelled { return }
-                        
-                        let englishText = verse.englishText.lowercased()
-                        
-                        if englishText.contains(lowercaseQuery) {
-                            results.append(.verse(
-                                book: book,
-                                englishName: self.bibleViewModel.getEnglishName(for: book.name),
-                                chapter: chapter,
-                                verse: verse
-                            ))
+            }
+            
+            // If no direct verse reference found or it didn't match, perform regular search
+            if results.isEmpty {
+                // Search through book names (English only)
+                for book in self.bibleViewModel.books {
+                    let englishName = self.bibleViewModel.getEnglishName(for: book.name).lowercased()
+                    
+                    if englishName.contains(lowercaseQuery) {
+                        results.append(.book(
+                            book: book,
+                            englishName: self.bibleViewModel.getEnglishName(for: book.name)
+                        ))
+                    }
+                    
+                    // Search through verses (English only)
+                    for chapter in book.chapters {
+                        for verse in chapter.verses {
+                            if Task.isCancelled { return }
+                            
+                            let englishText = verse.englishText.lowercased()
+                            
+                            if englishText.contains(lowercaseQuery) {
+                                results.append(.verse(
+                                    book: book,
+                                    englishName: self.bibleViewModel.getEnglishName(for: book.name),
+                                    chapter: chapter,
+                                    verse: verse
+                                ))
+                            }
                         }
                     }
                 }

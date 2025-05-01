@@ -66,7 +66,7 @@ struct SearchView: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
             
-            TextField("Search books and verses...", text: $searchViewModel.searchQuery)
+            TextField("Enter verse (e.g. john 3:16) or search text...", text: $searchViewModel.searchQuery)
                 .textFieldStyle(PlainTextFieldStyle())
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
