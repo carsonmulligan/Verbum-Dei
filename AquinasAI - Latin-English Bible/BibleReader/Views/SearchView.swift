@@ -81,9 +81,9 @@ private struct SearchBar: View {
                 }
             
             if !searchText.isEmpty {
-                Button(action: {
+                Button {
                     searchText = ""
-                }) {
+                } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(.gray)
                 }
@@ -150,7 +150,7 @@ private struct SearchResultRow: View {
                             verseNumber: verse.number
                         )
                     )
-                } {
+                } label: {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
                             Text("\(englishName) \(chapter.number):\(verse.number)")
@@ -183,7 +183,7 @@ private struct SearchResultRow: View {
                             verseNumber: nil
                         )
                     )
-                } {
+                } label: {
                     HStack {
                         Text(englishName)
                             .font(.headline)

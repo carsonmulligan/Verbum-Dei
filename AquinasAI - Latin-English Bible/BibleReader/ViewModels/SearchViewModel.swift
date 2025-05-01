@@ -48,7 +48,8 @@ class SearchViewModel: ObservableObject {
         searchTask = Task { [weak self] in
             guard let self = self else { return }
             
-            var results: [SearchResult] = []
+            // Create a local array to store results
+            var localResults: [SearchResult] = []
             let lowercaseQuery = query.lowercased()
             
             // First try to parse as a verse reference
@@ -60,7 +61,7 @@ class SearchViewModel: ObservableObject {
                     // Find matching chapter and verse
                     if let chapter = book.chapters.first(where: { $0.number == reference.chapter }),
                        let verse = chapter.verses.first(where: { $0.number == reference.verse }) {
-                        results.append(.verse(
+                        localResults.append(.verse(
                             book: book,
                             englishName: self.bibleViewModel.getEnglishName(for: book.name),
                             chapter: chapter,
@@ -71,13 +72,15 @@ class SearchViewModel: ObservableObject {
             }
             
             // If no direct verse reference found or it didn't match, perform regular search
-            if results.isEmpty {
+            if localResults.isEmpty {
                 // Search through book names (English only)
                 for book in self.bibleViewModel.books {
+                    if Task.isCancelled { return }
+                    
                     let englishName = self.bibleViewModel.getEnglishName(for: book.name).lowercased()
                     
                     if englishName.contains(lowercaseQuery) {
-                        results.append(.book(
+                        localResults.append(.book(
                             book: book,
                             englishName: self.bibleViewModel.getEnglishName(for: book.name)
                         ))
@@ -91,7 +94,7 @@ class SearchViewModel: ObservableObject {
                             let englishText = verse.englishText.lowercased()
                             
                             if englishText.contains(lowercaseQuery) {
-                                results.append(.verse(
+                                localResults.append(.verse(
                                     book: book,
                                     englishName: self.bibleViewModel.getEnglishName(for: book.name),
                                     chapter: chapter,
@@ -103,8 +106,9 @@ class SearchViewModel: ObservableObject {
                 }
             }
             
+            // Update the published property on the main thread
             await MainActor.run {
-                self.searchResults = results
+                self.searchResults = localResults
                 self.isSearching = false
             }
         }
