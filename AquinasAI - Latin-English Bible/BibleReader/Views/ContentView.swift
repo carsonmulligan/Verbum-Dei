@@ -31,6 +31,68 @@ struct ContentView: View {
     }
 }
 
+// MARK: - Book Row View
+struct BookRowView: View {
+    let book: Book
+    let displayName: String
+    let isDarkMode: Bool
+    
+    var body: some View {
+        HStack {
+            Text(displayName)
+                .foregroundColor(isDarkMode ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                .padding(.vertical, 12)
+            Spacer()
+            Image(systemName: "chevron.right")
+                .foregroundColor(Color(.systemGray3))
+                .font(.system(size: 14))
+        }
+        .padding(.horizontal)
+        .contentShape(Rectangle())
+    }
+}
+
+// MARK: - Testament Selector View
+struct TestamentSelectorView: View {
+    @Binding var selectedTestament: Testament
+    @Binding var isDarkMode: Bool
+    @Binding var showingBookmarks: Bool
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack(spacing: 16) {
+                TestamentPillButton(
+                    title: "Old Testament",
+                    isSelected: selectedTestament == .old,
+                    action: { selectedTestament = .old }
+                )
+                
+                TestamentPillButton(
+                    title: "New Testament",
+                    isSelected: selectedTestament == .new,
+                    action: { selectedTestament = .new }
+                )
+            }
+            
+            HStack(spacing: 16) {
+                TestamentPillButton(
+                    title: isDarkMode ? "Light Mode" : "Dark Mode",
+                    isSelected: isDarkMode,
+                    action: { isDarkMode.toggle() }
+                )
+                
+                TestamentPillButton(
+                    title: "Bookmarks",
+                    isSelected: false,
+                    action: { showingBookmarks = true }
+                )
+            }
+        }
+        .padding()
+    }
+}
+
+// MARK: - Book List View
 struct BookList: View {
     let books: [Book]
     @ObservedObject var viewModel: BibleViewModel
@@ -65,12 +127,10 @@ struct BookList: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             ZStack {
-                // Background
                 (isDarkMode ? Color.nightBackground : Color.paperWhite)
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    // Custom Title
                     Text(navigationTitle)
                         .font(.largeTitle)
                         .fontWeight(.medium)
@@ -78,69 +138,13 @@ struct BookList: View {
                         .padding(.top, 20)
                         .padding(.bottom, 10)
                     
-                    // Testament and Mode Selectors
-                    VStack(spacing: 12) {
-                        // Testament Selector
-                        HStack(spacing: 16) {
-                            TestamentPillButton(
-                                title: "Old Testament",
-                                isSelected: selectedTestament == .old,
-                                action: { selectedTestament = .old }
-                            )
-                            
-                            TestamentPillButton(
-                                title: "New Testament",
-                                isSelected: selectedTestament == .new,
-                                action: { selectedTestament = .new }
-                            )
-                        }
-                        
-                        // Mode Toggles
-                        HStack(spacing: 16) {
-                            // Dark Mode Toggle
-                            TestamentPillButton(
-                                title: isDarkMode ? "Light Mode" : "Dark Mode",
-                                isSelected: isDarkMode,
-                                action: { isDarkMode.toggle() }
-                            )
-                            
-                            // Bookmarks Toggle
-                            TestamentPillButton(
-                                title: "Bookmarks",
-                                isSelected: false,
-                                action: { showingBookmarks = true }
-                            )
-                        }
-                    }
-                    .padding()
+                    TestamentSelectorView(
+                        selectedTestament: $selectedTestament,
+                        isDarkMode: $isDarkMode,
+                        showingBookmarks: $showingBookmarks
+                    )
                     
-                    // Book List
-                    ScrollView {
-                        LazyVStack(spacing: 0, pinnedViews: []) {
-                            ForEach(filteredBooks) { book in
-                                NavigationLink(value: BookNavigation(book: book)) {
-                                    HStack {
-                                        Text(getDisplayName(for: book))
-                                            .foregroundColor(isDarkMode ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                                            .padding(.vertical, 12)
-                                        Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(Color(.systemGray3))
-                                            .font(.system(size: 14))
-                                    }
-                                    .padding(.horizontal)
-                                    .contentShape(Rectangle())
-                                }
-                                .background(isDarkMode ? Color.nightBackground : Color.paperWhite)
-                                
-                                if book != filteredBooks.last {
-                                    Divider()
-                                        .background(isDarkMode ? Color.white.opacity(0.1) : Color.separatorLight)
-                                }
-                            }
-                        }
-                    }
-                    .background(isDarkMode ? Color.nightBackground : Color.paperWhite)
+                    bookListContent
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -178,6 +182,29 @@ struct BookList: View {
         }
     }
     
+    private var bookListContent: some View {
+        ScrollView {
+            LazyVStack(spacing: 0, pinnedViews: []) {
+                ForEach(filteredBooks) { book in
+                    NavigationLink(value: BookNavigation(book: book)) {
+                        BookRowView(
+                            book: book,
+                            displayName: getDisplayName(for: book),
+                            isDarkMode: isDarkMode
+                        )
+                    }
+                    .background(isDarkMode ? Color.nightBackground : Color.paperWhite)
+                    
+                    if book != filteredBooks.last {
+                        Divider()
+                            .background(isDarkMode ? Color.white.opacity(0.1) : Color.separatorLight)
+                    }
+                }
+            }
+        }
+        .background(isDarkMode ? Color.nightBackground : Color.paperWhite)
+    }
+    
     private func getDisplayName(for book: Book) -> String {
         switch viewModel.displayMode {
         case .latinOnly:
@@ -190,7 +217,6 @@ struct BookList: View {
     }
     
     private func isOldTestament(_ bookName: String) -> Bool {
-        // Add all New Testament books
         let newTestamentBooks = Set([
             "Matthaeus", "Marcus", "Lucas", "Joannes",
             "Actus Apostolorum",
