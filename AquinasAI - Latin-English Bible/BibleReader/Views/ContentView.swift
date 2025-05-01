@@ -60,7 +60,7 @@ struct BookList: View {
         VStack(spacing: 0) {
             // Custom Title
             Text(navigationTitle)
-                .font(.custom("Times New Roman", size: 32))
+                .font(.largeTitle)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
@@ -105,7 +105,6 @@ struct BookList: View {
             List(filteredBooks) { book in
                 NavigationLink(destination: BookView(book: book, viewModel: viewModel)) {
                     Text(getDisplayName(for: book))
-                        .font(.custom("Times New Roman", size: 17))
                 }
             }
             .listStyle(PlainListStyle())
@@ -119,7 +118,6 @@ struct BookList: View {
                     Text("Bilingual").tag(DisplayMode.bilingual)
                 }
                 .pickerStyle(.menu)
-                .font(.custom("Times New Roman", size: 17))
             }
         }
         .sheet(isPresented: $showingBookmarks) {
@@ -173,7 +171,6 @@ struct TestamentPillButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.custom("Times New Roman", size: 15))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background(isSelected ? Color.deepPurple : Color.clear)
@@ -260,7 +257,7 @@ struct ChapterView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Chapter \(chapter.number)")
-                .font(.custom("Times New Roman", size: 24))
+                .font(.title2)
                 .fontWeight(.bold)
                 .padding(.horizontal)
             
