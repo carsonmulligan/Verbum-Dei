@@ -17,11 +17,13 @@ struct LatinOnlyVerseView: View {
                 .padding(8)
                 .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
                 .cornerRadius(8)
-                .contextMenu(isBookmarked ? {
-                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                .contextMenu {
+                    if isBookmarked {
+                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                            Label("Remove Bookmark", systemImage: "bookmark.slash")
+                        }
                     }
-                } : nil)
+                }
         }
     }
 }
@@ -43,11 +45,13 @@ struct EnglishOnlyVerseView: View {
                 .padding(8)
                 .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
                 .cornerRadius(8)
-                .contextMenu(isBookmarked ? {
-                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                .contextMenu {
+                    if isBookmarked {
+                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                            Label("Remove Bookmark", systemImage: "bookmark.slash")
+                        }
                     }
-                } : nil)
+                }
         }
     }
 }
@@ -76,11 +80,13 @@ struct BilingualVerseView: View {
             .padding(8)
             .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
             .cornerRadius(8)
-            .contextMenu(isBookmarked ? {
-                Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                    Label("Remove Bookmark", systemImage: "bookmark.slash")
+            .contextMenu {
+                if isBookmarked {
+                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                    }
                 }
-            } : nil)
+            }
         }
     }
 }
