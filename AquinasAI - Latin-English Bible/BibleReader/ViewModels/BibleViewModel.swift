@@ -18,6 +18,14 @@ class BibleViewModel: ObservableObject {
         loadBibleContent()
     }
     
+    // Add public method to get English name
+    func getEnglishName(for latinName: String) -> String {
+        if let englishName = bookNameMappings?.vulgate_to_english[latinName] {
+            return englishName
+        }
+        return latinName
+    }
+    
     private func loadBookNameMappings() {
         guard let url = Bundle.main.url(forResource: "mappings", withExtension: "json") else {
             print("Warning: Could not find mappings.json")

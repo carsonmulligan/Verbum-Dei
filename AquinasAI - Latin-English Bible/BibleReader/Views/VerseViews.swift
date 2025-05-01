@@ -7,10 +7,11 @@ struct LatinOnlyVerseView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             Text("\(number)")
-                .font(.caption)
+                .font(.custom("Times New Roman", size: 14))
                 .foregroundColor(.secondary)
                 .frame(width: 30, alignment: .trailing)
             Text(text)
+                .font(.custom("Times New Roman", size: 17))
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -23,10 +24,11 @@ struct EnglishOnlyVerseView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             Text("\(number)")
-                .font(.caption)
+                .font(.custom("Times New Roman", size: 14))
                 .foregroundColor(.secondary)
                 .frame(width: 30, alignment: .trailing)
             Text(text)
+                .font(.custom("Times New Roman", size: 17))
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -40,13 +42,15 @@ struct BilingualVerseView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             Text("\(number)")
-                .font(.caption)
+                .font(.custom("Times New Roman", size: 14))
                 .foregroundColor(.secondary)
                 .frame(width: 30, alignment: .trailing)
             VStack(alignment: .leading, spacing: 4) {
                 Text(latinText)
+                    .font(.custom("Times New Roman", size: 17))
                     .fixedSize(horizontal: false, vertical: true)
                 Text(englishText)
+                    .font(.custom("Times New Roman", size: 17))
                     .italic()
                     .foregroundColor(.gray)
                     .fixedSize(horizontal: false, vertical: true)
