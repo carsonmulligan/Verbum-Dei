@@ -3,6 +3,7 @@ import SwiftUI
 // Custom deep purple color
 extension Color {
     static let deepPurple = Color(red: 76/255, green: 40/255, blue: 90/255)
+    static let paperWhite = Color(red: 251/255, green: 247/255, blue: 240/255) // Warm, paper-like color
 }
 
 struct ContentView: View {
@@ -101,7 +102,7 @@ struct BookList: View {
                     }
                 }
                 .padding()
-                .background(Color(UIColor.systemBackground))
+                .background(isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
                 
                 // Book List
                 List(filteredBooks) { book in
@@ -110,7 +111,10 @@ struct BookList: View {
                     }
                 }
                 .listStyle(PlainListStyle())
+                .scrollContentBackground(isDarkMode ? .visible : .hidden)
+                .background(isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
             }
+            .background(isDarkMode ? Color(UIColor.systemBackground) : Color.paperWhite)
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: BookNavigation.self) { navigation in
                 BookView(
@@ -224,6 +228,7 @@ struct BookView: View {
     @State private var selectedChapterIndex: Int = 0
     let initialChapter: Int?
     let scrollToVerse: Int?
+    @Environment(\.colorScheme) private var colorScheme
     
     private var currentChapter: Chapter {
         book.chapters[selectedChapterIndex]
@@ -254,7 +259,7 @@ struct BookView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 8)
             }
-            .background(Color(UIColor.systemBackground))
+            .background(colorScheme == .dark ? Color(UIColor.systemBackground) : Color.paperWhite)
             
             // Chapter Content
             ScrollViewReader { proxy in
@@ -279,6 +284,7 @@ struct BookView: View {
                     }
                     .padding(.vertical)
                 }
+                .background(colorScheme == .dark ? Color(UIColor.systemBackground) : Color.paperWhite)
                 .onChange(of: selectedChapterIndex) { _ in
                     withAnimation {
                         proxy.scrollTo("chapter_header", anchor: .top)
@@ -295,6 +301,7 @@ struct BookView: View {
                 }
             }
         }
+        .background(colorScheme == .dark ? Color(UIColor.systemBackground) : Color.paperWhite)
         .navigationTitle(book.name)
         .navigationBarTitleDisplayMode(.inline)
     }

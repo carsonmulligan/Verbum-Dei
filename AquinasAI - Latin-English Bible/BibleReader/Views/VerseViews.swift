@@ -5,6 +5,7 @@ struct LatinOnlyVerseView: View {
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -17,6 +18,7 @@ struct LatinOnlyVerseView: View {
                 .padding(8)
                 .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
                 .cornerRadius(8)
+                .foregroundColor(colorScheme == .dark ? .white : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                 .contextMenu {
                     if isBookmarked {
                         Button(role: .destructive, action: { onDeleteBookmark?() }) {
@@ -33,6 +35,7 @@ struct EnglishOnlyVerseView: View {
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -45,6 +48,7 @@ struct EnglishOnlyVerseView: View {
                 .padding(8)
                 .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
                 .cornerRadius(8)
+                .foregroundColor(colorScheme == .dark ? .white : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                 .contextMenu {
                     if isBookmarked {
                         Button(role: .destructive, action: { onDeleteBookmark?() }) {
@@ -62,6 +66,7 @@ struct BilingualVerseView: View {
     let englishText: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -72,9 +77,10 @@ struct BilingualVerseView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(latinText)
                     .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(colorScheme == .dark ? .white : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                 Text(englishText)
                     .italic()
-                    .foregroundColor(.gray)
+                    .foregroundColor(colorScheme == .dark ? .gray : Color(.displayP3, red: 0.3, green: 0.3, blue: 0.3, opacity: 1))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(8)
