@@ -33,6 +33,14 @@ class BookmarkStore: ObservableObject {
         }
     }
     
+    func getBookmark(bookName: String, chapterNumber: Int, verseNumber: Int) -> Bookmark? {
+        bookmarks.first { bookmark in
+            bookmark.bookName == bookName &&
+            bookmark.chapterNumber == chapterNumber &&
+            bookmark.verseNumber == verseNumber
+        }
+    }
+    
     private func loadBookmarks() {
         guard let data = UserDefaults.standard.data(forKey: saveKey) else { return }
         

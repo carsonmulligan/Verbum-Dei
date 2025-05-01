@@ -4,6 +4,7 @@ struct LatinOnlyVerseView: View {
     let number: Int
     let text: String
     let isBookmarked: Bool
+    let onDeleteBookmark: (() -> Void)?
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -14,12 +15,13 @@ struct LatinOnlyVerseView: View {
             Text(text)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(8)
-                .background(isBookmarked ? Color.deepPurple.opacity(0.15) : Color.clear)
+                .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
                 .cornerRadius(8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(isBookmarked ? Color.deepPurple.opacity(0.3) : Color.clear, lineWidth: 1)
-                )
+                .contextMenu(isBookmarked ? {
+                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                    }
+                } : nil)
         }
     }
 }
@@ -28,6 +30,7 @@ struct EnglishOnlyVerseView: View {
     let number: Int
     let text: String
     let isBookmarked: Bool
+    let onDeleteBookmark: (() -> Void)?
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -38,12 +41,13 @@ struct EnglishOnlyVerseView: View {
             Text(text)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(8)
-                .background(isBookmarked ? Color.deepPurple.opacity(0.15) : Color.clear)
+                .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
                 .cornerRadius(8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(isBookmarked ? Color.deepPurple.opacity(0.3) : Color.clear, lineWidth: 1)
-                )
+                .contextMenu(isBookmarked ? {
+                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                    }
+                } : nil)
         }
     }
 }
@@ -53,6 +57,7 @@ struct BilingualVerseView: View {
     let latinText: String
     let englishText: String
     let isBookmarked: Bool
+    let onDeleteBookmark: (() -> Void)?
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -69,12 +74,13 @@ struct BilingualVerseView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(8)
-            .background(isBookmarked ? Color.deepPurple.opacity(0.15) : Color.clear)
+            .background(isBookmarked ? Color.secondary.opacity(0.15) : Color.clear)
             .cornerRadius(8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(isBookmarked ? Color.deepPurple.opacity(0.3) : Color.clear, lineWidth: 1)
-            )
+            .contextMenu(isBookmarked ? {
+                Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                    Label("Remove Bookmark", systemImage: "bookmark.slash")
+                }
+            } : nil)
         }
     }
 }
@@ -93,25 +99,30 @@ struct VerseView: View {
                 LatinOnlyVerseView(
                     number: verse.number,
                     text: verse.latinText,
-                    isBookmarked: isBookmarked
+                    isBookmarked: isBookmarked,
+                    onDeleteBookmark: deleteBookmark
                 )
             } else if displayMode == .englishOnly {
                 EnglishOnlyVerseView(
                     number: verse.number,
                     text: verse.englishText,
-                    isBookmarked: isBookmarked
+                    isBookmarked: isBookmarked,
+                    onDeleteBookmark: deleteBookmark
                 )
             } else {
                 BilingualVerseView(
                     number: verse.number,
                     latinText: verse.latinText,
                     englishText: verse.englishText,
-                    isBookmarked: isBookmarked
+                    isBookmarked: isBookmarked,
+                    onDeleteBookmark: deleteBookmark
                 )
             }
         }
         .onLongPressGesture {
-            showingBookmarkSheet = true
+            if !isBookmarked {
+                showingBookmarkSheet = true
+            }
         }
         .sheet(isPresented: $showingBookmarkSheet) {
             BookmarkCreationView(
@@ -128,5 +139,15 @@ struct VerseView: View {
             chapterNumber: chapterNumber,
             verseNumber: verse.number
         )
+    }
+    
+    private func deleteBookmark() {
+        if let bookmark = bookmarkStore.bookmarks.first(where: { 
+            $0.bookName == bookName &&
+            $0.chapterNumber == chapterNumber &&
+            $0.verseNumber == verse.number
+        }) {
+            bookmarkStore.removeBookmark(withId: bookmark.id)
+        }
     }
 } 
