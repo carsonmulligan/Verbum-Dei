@@ -4,13 +4,14 @@ struct SearchView: View {
     @StateObject private var searchViewModel: SearchViewModel
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @State private var navigationPath = NavigationPath()
     
     init(bibleViewModel: BibleViewModel) {
         _searchViewModel = StateObject(wrappedValue: SearchViewModel(bibleViewModel: bibleViewModel))
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 // Search bar
                 searchBar
@@ -33,9 +34,61 @@ struct SearchView: View {
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(searchViewModel.searchResults) { result in
-                                SearchResultRow(result: result)
+                                switch result {
+                                case .verse(let book, let englishName, let chapter, let verse):
+                                    Button {
+                                        navigationPath.append(
+                                            BookNavigation(
+                                                book: book,
+                                                chapterNumber: chapter.number,
+                                                verseNumber: verse.number
+                                            )
+                                        )
+                                    } {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            HStack {
+                                                Text("\(englishName) \(chapter.number):\(verse.number)")
+                                                    .font(.headline)
+                                                    .foregroundColor(colorScheme == .dark ? .nightText : .primary)
+                                                Spacer()
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.gray)
+                                            }
+                                            
+                                            Text(verse.englishText)
+                                                .font(.body)
+                                                .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
+                                                .multilineTextAlignment(.leading)
+                                                .fixedSize(horizontal: false, vertical: true)
+                                        }
+                                        .padding()
+                                        .background(colorScheme == .dark ? Color.black.opacity(0.3) : Color.white)
+                                        .cornerRadius(10)
+                                    }
                                     .padding(.horizontal)
-                                    .padding(.vertical, 12)
+                                    .padding(.vertical, 4)
+                                    
+                                case .book(let book, let englishName):
+                                    Button {
+                                        navigationPath.append(
+                                            BookNavigation(
+                                                book: book,
+                                                chapterNumber: nil,
+                                                verseNumber: nil
+                                            )
+                                        )
+                                    } {
+                                        HStack {
+                                            Text(englishName)
+                                                .font(.headline)
+                                                .foregroundColor(colorScheme == .dark ? .nightText : .primary)
+                                            Spacer()
+                                            Image(systemName: "chevron.right")
+                                                .foregroundColor(.gray)
+                                        }
+                                        .padding()
+                                    }
+                                }
                                 
                                 if result != searchViewModel.searchResults.last {
                                     Divider()
@@ -51,6 +104,14 @@ struct SearchView: View {
             .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: BookNavigation.self) { navigation in
+                BookView(
+                    book: navigation.book,
+                    viewModel: searchViewModel.bibleViewModel,
+                    initialChapter: navigation.chapterNumber,
+                    scrollToVerse: navigation.verseNumber
+                )
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
@@ -88,38 +149,5 @@ struct SearchView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.05))
         )
-    }
-}
-
-struct SearchResultRow: View {
-    let result: SearchResult
-    @Environment(\.colorScheme) private var colorScheme
-    
-    var body: some View {
-        NavigationLink(value: result) {
-            VStack(alignment: .leading, spacing: 4) {
-                switch result {
-                case .book(let book, let englishName):
-                    Text(englishName)
-                        .font(.headline)
-                        .foregroundColor(colorScheme == .dark ? .nightText : .primary)
-                    
-                case .verse(_, let englishName, let chapter, let verse):
-                    HStack {
-                        Text("\(englishName) \(chapter.number):\(verse.number)")
-                            .font(.headline)
-                            .foregroundColor(colorScheme == .dark ? .nightText : .primary)
-                        Spacer()
-                        Image(systemName: "text.quote")
-                            .foregroundColor(.gray)
-                    }
-                    
-                    Text(verse.englishText)
-                        .font(.subheadline)
-                        .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
-                        .lineLimit(3)
-                }
-            }
-        }
     }
 } 

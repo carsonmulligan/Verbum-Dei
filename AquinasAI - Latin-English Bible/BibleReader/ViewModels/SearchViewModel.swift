@@ -6,7 +6,7 @@ class SearchViewModel: ObservableObject {
     @Published var searchResults: [SearchResult] = []
     @Published var isSearching = false
     
-    private let bibleViewModel: BibleViewModel
+    let bibleViewModel: BibleViewModel
     private var searchTask: Task<Void, Never>?
     
     init(bibleViewModel: BibleViewModel) {
