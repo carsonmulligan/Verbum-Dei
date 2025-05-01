@@ -14,9 +14,13 @@ struct LatinOnlyVerseView: View {
             Text(text)
                 .font(.custom("Times New Roman", size: 17))
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(isBookmarked ? 8 : 0)
-                .background(isBookmarked ? Color.deepPurple.opacity(0.1) : Color.clear)
+                .padding(8)
+                .background(isBookmarked ? Color.deepPurple.opacity(0.15) : Color.clear)
                 .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(isBookmarked ? Color.deepPurple.opacity(0.3) : Color.clear, lineWidth: 1)
+                )
         }
     }
 }
@@ -35,9 +39,13 @@ struct EnglishOnlyVerseView: View {
             Text(text)
                 .font(.custom("Times New Roman", size: 17))
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(isBookmarked ? 8 : 0)
-                .background(isBookmarked ? Color.deepPurple.opacity(0.1) : Color.clear)
+                .padding(8)
+                .background(isBookmarked ? Color.deepPurple.opacity(0.15) : Color.clear)
                 .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(isBookmarked ? Color.deepPurple.opacity(0.3) : Color.clear, lineWidth: 1)
+                )
         }
     }
 }
@@ -64,9 +72,13 @@ struct BilingualVerseView: View {
                     .foregroundColor(.gray)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(isBookmarked ? 8 : 0)
-            .background(isBookmarked ? Color.deepPurple.opacity(0.1) : Color.clear)
+            .padding(8)
+            .background(isBookmarked ? Color.deepPurple.opacity(0.15) : Color.clear)
             .cornerRadius(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(isBookmarked ? Color.deepPurple.opacity(0.3) : Color.clear, lineWidth: 1)
+            )
         }
     }
 }

@@ -71,15 +71,9 @@ struct BookmarksListView: View {
                         dismiss()
                     }) {
                         VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Text("\(bookmark.bookName) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
-                                    .font(.custom("Times New Roman", size: 17))
-                                    .foregroundColor(.primary)
-                                Spacer()
-                                Text(bookmark.timestamp.formatted(date: .abbreviated, time: .shortened))
-                                    .font(.custom("Times New Roman", size: 14))
-                                    .foregroundColor(.secondary)
-                            }
+                            Text("\(bookmark.bookName) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
+                                .font(.custom("Times New Roman", size: 17))
+                                .foregroundColor(.primary)
                             
                             Text(bookmark.verseText)
                                 .font(.custom("Times New Roman", size: 15))
@@ -89,7 +83,7 @@ struct BookmarksListView: View {
                             if !bookmark.note.isEmpty {
                                 Text(bookmark.note)
                                     .font(.custom("Times New Roman", size: 15))
-                                    .foregroundColor(.deepPurple)
+                                    .foregroundColor(.secondary)
                                     .lineLimit(2)
                             }
                         }
