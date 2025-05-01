@@ -2,7 +2,11 @@ import Foundation
 import SwiftUI
 
 class SearchViewModel: ObservableObject {
-    @Published var searchQuery = ""
+    @Published var searchQuery = "" {
+        didSet {
+            performSearch(query: searchQuery)
+        }
+    }
     @Published var searchResults: [SearchResult] = []
     @Published var isSearching = false
     
@@ -29,7 +33,7 @@ class SearchViewModel: ObservableObject {
         return (bookName: bookName, chapter: chapter, verse: verse)
     }
     
-    func performSearch(query: String) {
+    private func performSearch(query: String) {
         // Cancel any existing search task
         searchTask?.cancel()
         

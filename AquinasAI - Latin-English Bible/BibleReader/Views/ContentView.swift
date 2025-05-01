@@ -376,7 +376,7 @@ struct BookView: View {
                     .padding(.vertical)
                 }
                 .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-                .onChange(of: selectedChapterIndex) { _ in
+                .onChange(of: selectedChapterIndex) { oldValue, newValue in
                     withAnimation {
                         proxy.scrollTo("chapter_header", anchor: .top)
                     }
