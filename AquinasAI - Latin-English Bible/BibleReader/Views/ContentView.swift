@@ -33,6 +33,7 @@ struct BookList: View {
     @Binding var showingBookmarks: Bool
     @State private var selectedTestament: Testament = .old
     @State private var selectedBookmark: Bookmark?
+    @State private var navigationPath = NavigationPath()
     
     var filteredBooks: [Book] {
         books.filter { book in
@@ -57,78 +58,88 @@ struct BookList: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Custom Title
-            Text(navigationTitle)
-                .font(.largeTitle)
-                .padding(.top, 20)
-                .padding(.bottom, 10)
-            
-            // Testament and Mode Selectors
-            VStack(spacing: 12) {
-                // Testament Selector
-                HStack(spacing: 16) {
-                    TestamentPillButton(
-                        title: "Old Testament",
-                        isSelected: selectedTestament == .old,
-                        action: { selectedTestament = .old }
-                    )
-                    
-                    TestamentPillButton(
-                        title: "New Testament",
-                        isSelected: selectedTestament == .new,
-                        action: { selectedTestament = .new }
-                    )
-                }
+        NavigationStack(path: $navigationPath) {
+            VStack(spacing: 0) {
+                // Custom Title
+                Text(navigationTitle)
+                    .font(.largeTitle)
+                    .padding(.top, 20)
+                    .padding(.bottom, 10)
                 
-                // Mode Toggles
-                HStack(spacing: 16) {
-                    // Dark Mode Toggle
-                    TestamentPillButton(
-                        title: isDarkMode ? "Light Mode" : "Dark Mode",
-                        isSelected: isDarkMode,
-                        action: { isDarkMode.toggle() }
-                    )
-                    
-                    // Bookmarks Toggle
-                    TestamentPillButton(
-                        title: "Bookmarks",
-                        isSelected: false,
-                        action: { showingBookmarks = true }
-                    )
-                }
-            }
-            .padding()
-            .background(Color(UIColor.systemBackground))
-            
-            // Book List
-            List(filteredBooks) { book in
-                NavigationLink(destination: BookView(book: book, viewModel: viewModel)) {
-                    Text(getDisplayName(for: book))
-                }
-            }
-            .listStyle(PlainListStyle())
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Picker("Display Mode", selection: $viewModel.displayMode) {
-                    Text("Latin").tag(DisplayMode.latinOnly)
-                    Text("English").tag(DisplayMode.englishOnly)
-                    Text("Bilingual").tag(DisplayMode.bilingual)
-                }
-                .pickerStyle(.menu)
-            }
-        }
-        .sheet(isPresented: $showingBookmarks) {
-            BookmarksListView { bookmark in
-                selectedBookmark = bookmark
-                // Find the book and navigate to it
-                if let book = books.first(where: { $0.name == bookmark.bookName }) {
-                    // We'll handle the navigation in BookView
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        selectedBookmark = bookmark
+                // Testament and Mode Selectors
+                VStack(spacing: 12) {
+                    // Testament Selector
+                    HStack(spacing: 16) {
+                        TestamentPillButton(
+                            title: "Old Testament",
+                            isSelected: selectedTestament == .old,
+                            action: { selectedTestament = .old }
+                        )
+                        
+                        TestamentPillButton(
+                            title: "New Testament",
+                            isSelected: selectedTestament == .new,
+                            action: { selectedTestament = .new }
+                        )
                     }
+                    
+                    // Mode Toggles
+                    HStack(spacing: 16) {
+                        // Dark Mode Toggle
+                        TestamentPillButton(
+                            title: isDarkMode ? "Light Mode" : "Dark Mode",
+                            isSelected: isDarkMode,
+                            action: { isDarkMode.toggle() }
+                        )
+                        
+                        // Bookmarks Toggle
+                        TestamentPillButton(
+                            title: "Bookmarks",
+                            isSelected: false,
+                            action: { showingBookmarks = true }
+                        )
+                    }
+                }
+                .padding()
+                .background(Color(UIColor.systemBackground))
+                
+                // Book List
+                List(filteredBooks) { book in
+                    NavigationLink(value: BookNavigation(book: book)) {
+                        Text(getDisplayName(for: book))
+                    }
+                }
+                .listStyle(PlainListStyle())
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: BookNavigation.self) { navigation in
+                BookView(
+                    book: navigation.book,
+                    viewModel: viewModel,
+                    initialChapter: navigation.chapterNumber,
+                    scrollToVerse: navigation.verseNumber
+                )
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Picker("Display Mode", selection: $viewModel.displayMode) {
+                        Text("Latin").tag(DisplayMode.latinOnly)
+                        Text("English").tag(DisplayMode.englishOnly)
+                        Text("Bilingual").tag(DisplayMode.bilingual)
+                    }
+                    .pickerStyle(.menu)
+                }
+            }
+            .sheet(isPresented: $showingBookmarks) {
+                BookmarksListView { bookmark in
+                    if let book = books.first(where: { $0.name == bookmark.bookName }) {
+                        navigationPath.append(BookNavigation(
+                            book: book,
+                            chapterNumber: bookmark.chapterNumber,
+                            verseNumber: bookmark.verseNumber
+                        ))
+                    }
+                    showingBookmarks = false
                 }
             }
         }
@@ -163,6 +174,24 @@ struct BookList: View {
     }
 }
 
+struct BookNavigation: Hashable {
+    let book: Book
+    var chapterNumber: Int?
+    var verseNumber: Int?
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(book.id)
+        hasher.combine(chapterNumber)
+        hasher.combine(verseNumber)
+    }
+    
+    static func == (lhs: BookNavigation, rhs: BookNavigation) -> Bool {
+        lhs.book.id == rhs.book.id &&
+        lhs.chapterNumber == rhs.chapterNumber &&
+        lhs.verseNumber == rhs.verseNumber
+    }
+}
+
 struct TestamentPillButton: View {
     let title: String
     let isSelected: Bool
@@ -193,6 +222,8 @@ struct BookView: View {
     let book: Book
     @ObservedObject var viewModel: BibleViewModel
     @State private var selectedChapterIndex: Int = 0
+    let initialChapter: Int?
+    let scrollToVerse: Int?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -204,7 +235,6 @@ struct BookView: View {
                             selectedChapterIndex = index
                         }) {
                             Text("\(book.chapters[index].number)")
-                                .font(.custom("Times New Roman", size: 17))
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
                                 .background(selectedChapterIndex == index ? Color.deepPurple : Color.clear)
@@ -233,6 +263,11 @@ struct BookView: View {
                                 bookName: book.name
                             )
                             .id(index)
+                            
+                            ForEach(book.chapters[index].verses) { verse in
+                                Color.clear.frame(height: 0)
+                                    .id("verse_\(index)_\(verse.number)")
+                            }
                         }
                     }
                     .padding(.vertical)
@@ -240,6 +275,25 @@ struct BookView: View {
                 .onChange(of: selectedChapterIndex) { newIndex in
                     withAnimation {
                         proxy.scrollTo(newIndex, anchor: .top)
+                    }
+                }
+                .onAppear {
+                    if let chapter = initialChapter {
+                        // Find the index for the chapter
+                        if let index = book.chapters.firstIndex(where: { $0.number == chapter }) {
+                            selectedChapterIndex = index
+                            
+                            // If we have a verse to scroll to, do it after a brief delay
+                            if let verse = scrollToVerse {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    withAnimation {
+                                        proxy.scrollTo("verse_\(index)_\(verse)", anchor: .center)
+                                    }
+                                }
+                            } else {
+                                proxy.scrollTo(index, anchor: .top)
+                            }
+                        }
                     }
                 }
             }
