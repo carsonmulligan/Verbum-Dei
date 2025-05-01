@@ -168,15 +168,53 @@ enum Testament {
 struct BookView: View {
     let book: Book
     @ObservedObject var viewModel: BibleViewModel
+    @State private var selectedChapterIndex: Int = 0
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                ForEach(book.chapters) { chapter in
-                    ChapterView(chapter: chapter, displayMode: viewModel.displayMode)
+        VStack(spacing: 0) {
+            // Chapter Navigation
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(book.chapters.indices, id: \.self) { index in
+                        Button(action: {
+                            selectedChapterIndex = index
+                        }) {
+                            Text("\(book.chapters[index].number)")
+                                .font(.custom("Times New Roman", size: 17))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(selectedChapterIndex == index ? Color.deepPurple : Color.clear)
+                                .foregroundColor(selectedChapterIndex == index ? .white : .deepPurple)
+                                .cornerRadius(15)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(Color.deepPurple, lineWidth: 1)
+                                )
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+            }
+            .background(Color(UIColor.systemBackground))
+            
+            // Chapter Content
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        ForEach(book.chapters.indices, id: \.self) { index in
+                            ChapterView(chapter: book.chapters[index], displayMode: viewModel.displayMode)
+                                .id(index)
+                        }
+                    }
+                    .padding(.vertical)
+                }
+                .onChange(of: selectedChapterIndex) { newIndex in
+                    withAnimation {
+                        proxy.scrollTo(newIndex, anchor: .top)
+                    }
                 }
             }
-            .padding(.vertical)
         }
         .navigationTitle(book.name)
         .navigationBarTitleDisplayMode(.inline)
