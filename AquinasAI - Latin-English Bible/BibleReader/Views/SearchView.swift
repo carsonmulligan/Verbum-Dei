@@ -99,14 +99,14 @@ struct SearchResultRow: View {
         NavigationLink(value: result) {
             VStack(alignment: .leading, spacing: 4) {
                 switch result {
-                case .book(let book):
-                    Text(book.name)
+                case .book(let book, let englishName):
+                    Text(englishName)
                         .font(.headline)
                         .foregroundColor(colorScheme == .dark ? .nightText : .primary)
                     
-                case .verse(let book, let chapter, let verse):
+                case .verse(_, let englishName, let chapter, let verse):
                     HStack {
-                        Text("\(book.name) \(chapter.number):\(verse.number)")
+                        Text("\(englishName) \(chapter.number):\(verse.number)")
                             .font(.headline)
                             .foregroundColor(colorScheme == .dark ? .nightText : .primary)
                         Spacer()
@@ -114,16 +114,10 @@ struct SearchResultRow: View {
                             .foregroundColor(.gray)
                     }
                     
-                    Text(verse.latinText)
-                        .font(.subheadline)
-                        .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
-                        .lineLimit(2)
-                    
                     Text(verse.englishText)
                         .font(.subheadline)
-                        .italic()
                         .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
-                        .lineLimit(2)
+                        .lineLimit(3)
                 }
             }
         }

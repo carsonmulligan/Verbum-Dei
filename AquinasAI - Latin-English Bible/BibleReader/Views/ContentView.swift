@@ -162,14 +162,14 @@ struct BookList: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: SearchResult.self) { result in
                 switch result {
-                case .book(let book):
+                case .book(let book, _):
                     BookView(
                         book: book,
                         viewModel: viewModel,
                         initialChapter: nil,
                         scrollToVerse: nil
                     )
-                case .verse(let book, let chapter, let verse):
+                case .verse(let book, _, let chapter, let verse):
                     BookView(
                         book: book,
                         viewModel: viewModel,

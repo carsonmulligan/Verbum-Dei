@@ -31,26 +31,28 @@ class SearchViewModel: ObservableObject {
             var results: [SearchResult] = []
             let lowercaseQuery = query.lowercased()
             
-            // Search through book names
+            // Search through book names (English only)
             for book in self.bibleViewModel.books {
-                let latinName = book.name.lowercased()
                 let englishName = self.bibleViewModel.getEnglishName(for: book.name).lowercased()
                 
-                if latinName.contains(lowercaseQuery) || englishName.contains(lowercaseQuery) {
-                    results.append(.book(book))
+                if englishName.contains(lowercaseQuery) {
+                    results.append(.book(
+                        book: book,
+                        englishName: self.bibleViewModel.getEnglishName(for: book.name)
+                    ))
                 }
                 
-                // Search through verses
+                // Search through verses (English only)
                 for chapter in book.chapters {
                     for verse in chapter.verses {
                         if Task.isCancelled { return }
                         
-                        let latinText = verse.latinText.lowercased()
                         let englishText = verse.englishText.lowercased()
                         
-                        if latinText.contains(lowercaseQuery) || englishText.contains(lowercaseQuery) {
+                        if englishText.contains(lowercaseQuery) {
                             results.append(.verse(
                                 book: book,
+                                englishName: self.bibleViewModel.getEnglishName(for: book.name),
                                 chapter: chapter,
                                 verse: verse
                             ))
@@ -68,14 +70,14 @@ class SearchViewModel: ObservableObject {
 }
 
 enum SearchResult: Identifiable, Hashable {
-    case book(Book)
-    case verse(book: Book, chapter: Chapter, verse: Verse)
+    case book(book: Book, englishName: String)
+    case verse(book: Book, englishName: String, chapter: Chapter, verse: Verse)
     
     var id: String {
         switch self {
-        case .book(let book):
+        case .book(let book, _):
             return "book-\(book.name)"
-        case .verse(let book, let chapter, let verse):
+        case .verse(let book, _, let chapter, let verse):
             return "verse-\(book.name)-\(chapter.number)-\(verse.number)"
         }
     }
