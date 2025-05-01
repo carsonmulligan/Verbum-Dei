@@ -91,7 +91,7 @@ struct BookContent: Codable {
 }
 
 // Models for the view layer
-struct Book: Identifiable {
+struct Book: Identifiable, Equatable {
     let name: String
     let chapters: [Chapter]
     
@@ -104,19 +104,31 @@ struct Book: Identifiable {
     var displayName: String {
         metadata?.english ?? name
     }
+    
+    static func == (lhs: Book, rhs: Book) -> Bool {
+        lhs.name == rhs.name
+    }
 }
 
-struct Chapter: Identifiable {
+struct Chapter: Identifiable, Equatable {
     let id: String
     let number: Int
     let verses: [Verse]
+    
+    static func == (lhs: Chapter, rhs: Chapter) -> Bool {
+        lhs.id == rhs.id && lhs.number == rhs.number
+    }
 }
 
-struct Verse: Identifiable {
+struct Verse: Identifiable, Equatable {
     let id: String
     let number: Int
     let latinText: String
     let englishText: String
+    
+    static func == (lhs: Verse, rhs: Verse) -> Bool {
+        lhs.id == rhs.id && lhs.number == rhs.number
+    }
 }
 
 enum DisplayMode {
