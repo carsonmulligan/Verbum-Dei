@@ -285,9 +285,12 @@ struct BookView: View {
                             
                             // If we have a verse to scroll to, do it after a brief delay
                             if let verse = scrollToVerse {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    withAnimation {
-                                        proxy.scrollTo("verse_\(index)_\(verse)", anchor: .center)
+                                Task {
+                                    try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
+                                    DispatchQueue.main.async {
+                                        withAnimation {
+                                            proxy.scrollTo("verse_\(index)_\(verse)", anchor: .top)
+                                        }
                                     }
                                 }
                             } else {
