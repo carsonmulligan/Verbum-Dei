@@ -9,4 +9,6 @@
 - home page -> index, bookmarks, notes -- text in times new roman -- text to be bigger or smaller -- 
 
 - search bar that looks for books 
-- 
+- fix title
+- times new roman 
+- main page be index, bookmarks, make homepage beautiful -- 
