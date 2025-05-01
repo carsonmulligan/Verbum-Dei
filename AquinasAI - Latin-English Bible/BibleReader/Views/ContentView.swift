@@ -324,6 +324,17 @@ struct BookView: View {
         book.chapters[selectedChapterIndex]
     }
     
+    private var navigationTitle: String {
+        switch viewModel.displayMode {
+        case .latinOnly:
+            return book.name
+        case .englishOnly:
+            return viewModel.getEnglishName(for: book.name)
+        case .bilingual:
+            return book.name
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             // Chapter Navigation
@@ -398,7 +409,7 @@ struct BookView: View {
             }
         }
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-        .navigationTitle(book.name)
+        .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
