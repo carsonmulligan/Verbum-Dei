@@ -33,6 +33,63 @@ class SearchViewModel: ObservableObject {
         return (bookName: bookName, chapter: chapter, verse: verse)
     }
     
+    private func searchForVerseReference(_ reference: (bookName: String, chapter: Int, verse: Int)) async -> [SearchResult] {
+        // Find matching book
+        guard let book = bibleViewModel.books.first(where: {
+            bibleViewModel.getEnglishName(for: $0.name).lowercased().starts(with: reference.bookName)
+        }) else { return [] }
+        
+        // Find matching chapter and verse
+        guard let chapter = book.chapters.first(where: { $0.number == reference.chapter }),
+              let verse = chapter.verses.first(where: { $0.number == reference.verse }) else { return [] }
+        
+        return [.verse(
+            book: book,
+            englishName: bibleViewModel.getEnglishName(for: book.name),
+            chapter: chapter,
+            verse: verse
+        )]
+    }
+    
+    private func searchContent(_ query: String) async -> [SearchResult] {
+        var results: [SearchResult] = []
+        let lowercaseQuery = query.lowercased()
+        
+        for book in bibleViewModel.books {
+            if Task.isCancelled { return [] }
+            
+            let englishName = bibleViewModel.getEnglishName(for: book.name).lowercased()
+            
+            if englishName.contains(lowercaseQuery) {
+                results.append(.book(
+                    book: book,
+                    englishName: bibleViewModel.getEnglishName(for: book.name)
+                ))
+            }
+            
+            for chapter in book.chapters {
+                if Task.isCancelled { return [] }
+                
+                for verse in chapter.verses {
+                    if Task.isCancelled { return [] }
+                    
+                    let englishText = verse.englishText.lowercased()
+                    
+                    if englishText.contains(lowercaseQuery) {
+                        results.append(.verse(
+                            book: book,
+                            englishName: bibleViewModel.getEnglishName(for: book.name),
+                            chapter: chapter,
+                            verse: verse
+                        ))
+                    }
+                }
+            }
+        }
+        
+        return results
+    }
+    
     private func performSearch(query: String) {
         // Cancel any existing search task
         searchTask?.cancel()
@@ -48,67 +105,19 @@ class SearchViewModel: ObservableObject {
         searchTask = Task { [weak self] in
             guard let self = self else { return }
             
-            // Create a local array to store results
-            var localResults: [SearchResult] = []
-            let lowercaseQuery = query.lowercased()
+            let results: [SearchResult]
             
             // First try to parse as a verse reference
             if let reference = parseVerseReference(query) {
-                // Find matching book
-                if let book = self.bibleViewModel.books.first(where: { 
-                    self.bibleViewModel.getEnglishName(for: $0.name).lowercased().starts(with: reference.bookName)
-                }) {
-                    // Find matching chapter and verse
-                    if let chapter = book.chapters.first(where: { $0.number == reference.chapter }),
-                       let verse = chapter.verses.first(where: { $0.number == reference.verse }) {
-                        localResults.append(.verse(
-                            book: book,
-                            englishName: self.bibleViewModel.getEnglishName(for: book.name),
-                            chapter: chapter,
-                            verse: verse
-                        ))
-                    }
-                }
-            }
-            
-            // If no direct verse reference found or it didn't match, perform regular search
-            if localResults.isEmpty {
-                // Search through book names (English only)
-                for book in self.bibleViewModel.books {
-                    if Task.isCancelled { return }
-                    
-                    let englishName = self.bibleViewModel.getEnglishName(for: book.name).lowercased()
-                    
-                    if englishName.contains(lowercaseQuery) {
-                        localResults.append(.book(
-                            book: book,
-                            englishName: self.bibleViewModel.getEnglishName(for: book.name)
-                        ))
-                    }
-                    
-                    // Search through verses (English only)
-                    for chapter in book.chapters {
-                        for verse in chapter.verses {
-                            if Task.isCancelled { return }
-                            
-                            let englishText = verse.englishText.lowercased()
-                            
-                            if englishText.contains(lowercaseQuery) {
-                                localResults.append(.verse(
-                                    book: book,
-                                    englishName: self.bibleViewModel.getEnglishName(for: book.name),
-                                    chapter: chapter,
-                                    verse: verse
-                                ))
-                            }
-                        }
-                    }
-                }
+                results = await searchForVerseReference(reference)
+            } else {
+                // If no verse reference found or it didn't match, perform content search
+                results = await searchContent(query)
             }
             
             // Update the published property on the main thread
             await MainActor.run {
-                self.searchResults = localResults
+                self.searchResults = results
                 self.isSearching = false
             }
         }
