@@ -386,7 +386,12 @@ struct BookView: View {
                        let index = book.chapters.firstIndex(where: { $0.number == chapter }) {
                         selectedChapterIndex = index
                         if let verse = scrollToVerse {
-                            proxy.scrollTo("verse_\(verse)", anchor: .top)
+                            // Add a slight delay to ensure the view is fully loaded
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                withAnimation {
+                                    proxy.scrollTo("verse_\(verse)", anchor: .top)
+                                }
+                            }
                         }
                     }
                 }
