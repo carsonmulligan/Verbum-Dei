@@ -27,9 +27,6 @@ struct ContentView: View {
                 LoadingView()
             }
         }
-        .onAppear {
-            viewModel.displayMode = .bilingual // Always set to bilingual mode
-        }
         .preferredColorScheme(isDarkMode ? .dark : .light)
         .environmentObject(bookmarkStore)
         .environmentObject(viewModel)
@@ -123,8 +120,14 @@ struct BookList: View {
     }
     
     var navigationTitle: String {
-        // Always show both titles in bilingual mode
-        return "Biblia Sacra • Holy Bible"
+        switch viewModel.displayMode {
+        case .latinOnly:
+            return "Biblia Sacra"
+        case .englishOnly:
+            return "Holy Bible"
+        case .bilingual:
+            return "Biblia Sacra"
+        }
     }
     
     var body: some View {
@@ -196,6 +199,16 @@ struct BookList: View {
                             .font(.system(size: 20))
                     }
                 }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Picker("Display Mode", selection: $viewModel.displayMode) {
+                        Text("Latin").tag(DisplayMode.latinOnly)
+                        Text("English").tag(DisplayMode.englishOnly)
+                        Text("Bilingual").tag(DisplayMode.bilingual)
+                    }
+                    .pickerStyle(.menu)
+                    .tint(isDarkMode ? .white : Color.deepPurple)
+                }
             }
             .sheet(isPresented: $showingSearch) {
                 SearchView(bibleViewModel: viewModel)
@@ -239,8 +252,14 @@ struct BookList: View {
     }
     
     private func getDisplayName(for book: Book) -> String {
-        // Always show English name since we're in bilingual mode
-        return viewModel.getEnglishName(for: book.name)
+        switch viewModel.displayMode {
+        case .latinOnly:
+            return book.name
+        case .englishOnly:
+            return viewModel.getEnglishName(for: book.name)
+        case .bilingual:
+            return viewModel.getEnglishName(for: book.name)
+        }
     }
     
     private func isOldTestament(_ bookName: String) -> Bool {
@@ -316,14 +335,21 @@ struct BookView: View {
     @State private var scrollOffset: CGFloat = 0
     @State private var previousScrollOffset: CGFloat = 0
     @State private var isChapterNavVisible = true
+    @State private var chapterNavOpacity: CGFloat = 1.0  // New state for smooth opacity animation
     
     private var currentChapter: Chapter {
         book.chapters[selectedChapterIndex]
     }
     
     private var navigationTitle: String {
-        // Always show both Latin and English names
-        return "\(book.name) • \(viewModel.getEnglishName(for: book.name))"
+        switch viewModel.displayMode {
+        case .latinOnly:
+            return book.name
+        case .englishOnly:
+            return viewModel.getEnglishName(for: book.name)
+        case .bilingual:
+            return book.name
+        }
     }
     
     var body: some View {
@@ -354,8 +380,8 @@ struct BookView: View {
                 }
             }
             .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-            .opacity(isChapterNavVisible ? 1 : 0)
-            .animation(.easeInOut(duration: 0.25), value: isChapterNavVisible)
+            .opacity(chapterNavOpacity)  // Use the smooth opacity value
+            .animation(.easeInOut(duration: 0.3), value: chapterNavOpacity)  // Smooth animation
             
             // Chapter Content
             ScrollView {
@@ -390,13 +416,19 @@ struct BookView: View {
             }
             .coordinateSpace(name: "scroll")
             .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                // Detect scroll direction
                 let diff = value - previousScrollOffset
                 
-                // Update visibility with some threshold to prevent jittering
-                if abs(diff) > 1 {
-                    withAnimation {
-                        isChapterNavVisible = diff > 0
+                // More gradual opacity change based on scroll direction and speed
+                withAnimation {
+                    if abs(diff) > 1 {
+                        // Scrolling down - fade out
+                        if diff < 0 {
+                            chapterNavOpacity = max(0, chapterNavOpacity - 0.15)
+                        }
+                        // Scrolling up - fade in
+                        else {
+                            chapterNavOpacity = min(1, chapterNavOpacity + 0.15)
+                        }
                     }
                 }
                 
