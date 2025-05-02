@@ -1,6 +1,6 @@
 import Foundation
 
-struct Bookmark: Identifiable, Codable, Equatable {
+struct Bookmark: Identifiable, Codable {
     let id: UUID
     let bookName: String
     let chapterNumber: Int
@@ -19,9 +19,5 @@ struct Bookmark: Identifiable, Codable, Equatable {
         self.timestamp = Date()
         self.verseText = verseText
         self.latinText = latinText
-    }
-    
-    static func == (lhs: Bookmark, rhs: Bookmark) -> Bool {
-        lhs.id == rhs.id
     }
 } 

@@ -55,59 +55,6 @@ struct BookmarkCreationView: View {
     }
 }
 
-struct BookmarkEditView: View {
-    let bookmark: Bookmark
-    @State private var note: String
-    @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var bookmarkStore: BookmarkStore
-    
-    init(bookmark: Bookmark) {
-        self.bookmark = bookmark
-        _note = State(initialValue: bookmark.note)
-    }
-    
-    var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Verse")) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(bookmark.verseText)
-                            .foregroundColor(.primary)
-                        if let latinText = bookmark.latinText {
-                            Text(latinText)
-                                .italic()
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
-                
-                Section(header: Text("Notes")) {
-                    TextEditor(text: $note)
-                        .frame(minHeight: 100)
-                }
-            }
-            .navigationTitle("Edit Bookmark")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        var updatedBookmark = bookmark
-                        updatedBookmark.note = note
-                        bookmarkStore.updateBookmark(updatedBookmark)
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-}
-
 struct EmptyBookmarksView: View {
     @Environment(\.colorScheme) private var colorScheme
     
@@ -136,7 +83,6 @@ struct BookmarksListView: View {
     @EnvironmentObject private var bookmarkStore: BookmarkStore
     @EnvironmentObject private var viewModel: BibleViewModel
     @Environment(\.dismiss) private var dismiss
-    @State private var editingBookmark: Bookmark?
     var onBookmarkSelected: (Bookmark) -> Void
     
     var sortedBookmarks: [Bookmark] {
@@ -170,51 +116,21 @@ struct BookmarksListView: View {
                                         .foregroundColor(.primary)
                                         .lineLimit(2)
                                     
-                                    if let latinText = bookmark.latinText {
-                                        Text(latinText)
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                            .italic()
-                                            .lineLimit(2)
-                                    }
+                                    Text(bookmark.latinText ?? "")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                        .italic()
+                                        .lineLimit(2)
                                     
                                     if !bookmark.note.isEmpty {
-                                        Button(action: {
-                                            editingBookmark = bookmark
-                                        }) {
-                                            Text(bookmark.note)
-                                                .font(.footnote)
-                                                .foregroundColor(.gray)
-                                                .lineLimit(1)
-                                                .padding(.top, 2)
-                                        }
-                                    } else {
-                                        Button(action: {
-                                            editingBookmark = bookmark
-                                        }) {
-                                            Text("Add note...")
-                                                .font(.footnote)
-                                                .foregroundColor(.gray)
-                                                .lineLimit(1)
-                                                .padding(.top, 2)
-                                        }
+                                        Text(bookmark.note)
+                                            .font(.footnote)
+                                            .foregroundColor(.gray)
+                                            .lineLimit(1)
+                                            .padding(.top, 2)
                                     }
                                 }
                                 .contentShape(Rectangle())
-                            }
-                            .contextMenu {
-                                Button(action: {
-                                    editingBookmark = bookmark
-                                }) {
-                                    Label("Edit Note", systemImage: "pencil")
-                                }
-                                Button(role: .destructive, action: {
-                                    if let index = sortedBookmarks.firstIndex(where: { $0.id == bookmark.id }) {
-                                        bookmarkStore.removeBookmark(withId: bookmark.id)
-                                    }
-                                }) {
-                                    Label("Delete Bookmark", systemImage: "trash")
-                                }
                             }
                         }
                         .onDelete { indexSet in
@@ -234,9 +150,6 @@ struct BookmarksListView: View {
                         dismiss()
                     }
                 }
-            }
-            .sheet(item: $editingBookmark) { bookmark in
-                BookmarkEditView(bookmark: bookmark)
             }
         }
     }

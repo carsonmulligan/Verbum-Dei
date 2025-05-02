@@ -1,95 +1,31 @@
 import SwiftUI
-import UIKit
-
-// Haptic feedback helper
-private func triggerHapticFeedback() {
-    let generator = UIImpactFeedbackGenerator(style: .medium)
-    generator.impactOccurred()
-}
 
 struct LatinOnlyVerseView: View {
     let number: Int
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
-    let onCreateBookmark: () -> Void
     @Environment(\.colorScheme) private var colorScheme
-    @State private var offset: CGFloat = 0
-    @State private var showingBookmarkIndicator = false
-    @State private var hasTriggeredHaptic = false
     
     var body: some View {
-        ZStack {
-            // Bookmark indicator background
-            HStack {
-                Spacer()
-                VStack(spacing: 4) {
-                    Image(systemName: "bookmark.fill")
-                        .font(.system(size: 24))
-                        .foregroundColor(.white)
-                    Text("Release to bookmark")
-                        .font(.caption)
-                        .foregroundColor(.white)
-                }
-                .frame(width: 100)
-                .opacity(showingBookmarkIndicator ? 1 : 0)
-                .scaleEffect(showingBookmarkIndicator ? 1 : 0.8)
-                .animation(.spring(response: 0.3), value: showingBookmarkIndicator)
-            }
-            .background(Color.deepPurple)
-            
-            // Main content
-            HStack(alignment: .top, spacing: 8) {
-                Text("\(number)")
-                    .font(.footnote)
-                    .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
-                    .frame(width: 30, alignment: .trailing)
-                Text(text)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(8)
-                    .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
-                    .cornerRadius(8)
-                    .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-            }
-            .padding(.vertical, 4)
-            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-            .offset(x: offset)
-            .gesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        if !isBookmarked {
-                            let translation = gesture.translation.width
-                            offset = max(-100, min(0, translation))
-                            let shouldShowIndicator = offset < -50
-                            
-                            if shouldShowIndicator != showingBookmarkIndicator {
-                                showingBookmarkIndicator = shouldShowIndicator
-                                if shouldShowIndicator && !hasTriggeredHaptic {
-                                    triggerHapticFeedback()
-                                    hasTriggeredHaptic = true
-                                }
-                            }
+        HStack(alignment: .top, spacing: 8) {
+            Text("\(number)")
+                .font(.footnote)
+                .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
+                .frame(width: 30, alignment: .trailing)
+            Text(text)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(8)
+                .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
+                .cornerRadius(8)
+                .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                .contextMenu {
+                    if isBookmarked {
+                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                            Label("Remove Bookmark", systemImage: "bookmark.slash")
                         }
-                    }
-                    .onEnded { gesture in
-                        if offset < -50 && !isBookmarked {
-                            onCreateBookmark()
-                            triggerHapticFeedback()
-                        }
-                        withAnimation(.spring(response: 0.3)) {
-                            offset = 0
-                            showingBookmarkIndicator = false
-                            hasTriggeredHaptic = false
-                        }
-                    }
-            )
-            .contextMenu {
-                if isBookmarked {
-                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                        Label("Remove Bookmark", systemImage: "bookmark.slash")
                     }
                 }
-            }
         }
     }
 }
@@ -99,84 +35,27 @@ struct EnglishOnlyVerseView: View {
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
-    let onCreateBookmark: () -> Void
     @Environment(\.colorScheme) private var colorScheme
-    @State private var offset: CGFloat = 0
-    @State private var showingBookmarkIndicator = false
-    @State private var hasTriggeredHaptic = false
     
     var body: some View {
-        ZStack {
-            // Bookmark indicator background
-            HStack {
-                Spacer()
-                VStack(spacing: 4) {
-                    Image(systemName: "bookmark.fill")
-                        .font(.system(size: 24))
-                        .foregroundColor(.white)
-                    Text("Release to bookmark")
-                        .font(.caption)
-                        .foregroundColor(.white)
-                }
-                .frame(width: 100)
-                .opacity(showingBookmarkIndicator ? 1 : 0)
-                .scaleEffect(showingBookmarkIndicator ? 1 : 0.8)
-                .animation(.spring(response: 0.3), value: showingBookmarkIndicator)
-            }
-            .background(Color.deepPurple)
-            
-            // Main content
-            HStack(alignment: .top, spacing: 8) {
-                Text("\(number)")
-                    .font(.footnote)
-                    .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
-                    .frame(width: 30, alignment: .trailing)
-                Text(text)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(8)
-                    .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
-                    .cornerRadius(8)
-                    .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-            }
-            .padding(.vertical, 4)
-            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-            .offset(x: offset)
-            .gesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        if !isBookmarked {
-                            let translation = gesture.translation.width
-                            offset = max(-100, min(0, translation))
-                            let shouldShowIndicator = offset < -50
-                            
-                            if shouldShowIndicator != showingBookmarkIndicator {
-                                showingBookmarkIndicator = shouldShowIndicator
-                                if shouldShowIndicator && !hasTriggeredHaptic {
-                                    triggerHapticFeedback()
-                                    hasTriggeredHaptic = true
-                                }
-                            }
+        HStack(alignment: .top, spacing: 8) {
+            Text("\(number)")
+                .font(.footnote)
+                .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
+                .frame(width: 30, alignment: .trailing)
+            Text(text)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(8)
+                .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
+                .cornerRadius(8)
+                .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                .contextMenu {
+                    if isBookmarked {
+                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                            Label("Remove Bookmark", systemImage: "bookmark.slash")
                         }
-                    }
-                    .onEnded { gesture in
-                        if offset < -50 && !isBookmarked {
-                            onCreateBookmark()
-                            triggerHapticFeedback()
-                        }
-                        withAnimation(.spring(response: 0.3)) {
-                            offset = 0
-                            showingBookmarkIndicator = false
-                            hasTriggeredHaptic = false
-                        }
-                    }
-            )
-            .contextMenu {
-                if isBookmarked {
-                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                        Label("Remove Bookmark", systemImage: "bookmark.slash")
                     }
                 }
-            }
         }
     }
 }
@@ -187,83 +66,26 @@ struct BilingualVerseView: View {
     let englishText: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
-    let onCreateBookmark: () -> Void
     @Environment(\.colorScheme) private var colorScheme
-    @State private var offset: CGFloat = 0
-    @State private var showingBookmarkIndicator = false
-    @State private var hasTriggeredHaptic = false
     
     var body: some View {
-        ZStack {
-            // Bookmark indicator background
-            HStack {
-                Spacer()
-                VStack(spacing: 4) {
-                    Image(systemName: "bookmark.fill")
-                        .font(.system(size: 24))
-                        .foregroundColor(.white)
-                    Text("Release to bookmark")
-                        .font(.caption)
-                        .foregroundColor(.white)
-                }
-                .frame(width: 100)
-                .opacity(showingBookmarkIndicator ? 1 : 0)
-                .scaleEffect(showingBookmarkIndicator ? 1 : 0.8)
-                .animation(.spring(response: 0.3), value: showingBookmarkIndicator)
+        HStack(alignment: .top, spacing: 8) {
+            Text("\(number)")
+                .font(.footnote)
+                .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
+                .frame(width: 30, alignment: .trailing)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(latinText)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                Text(englishText)
+                    .italic()
+                    .foregroundColor(colorScheme == .dark ? .nightSecondary : Color(.displayP3, red: 0.3, green: 0.3, blue: 0.3, opacity: 1))
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .background(Color.deepPurple)
-            
-            // Main content
-            HStack(alignment: .top, spacing: 8) {
-                Text("\(number)")
-                    .font(.footnote)
-                    .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
-                    .frame(width: 30, alignment: .trailing)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(englishText)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                    Text(latinText)
-                        .italic()
-                        .foregroundColor(colorScheme == .dark ? .nightSecondary : Color(.displayP3, red: 0.3, green: 0.3, blue: 0.3, opacity: 1))
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(8)
-                .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
-                .cornerRadius(8)
-            }
-            .padding(.vertical, 4)
-            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-            .offset(x: offset)
-            .gesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        if !isBookmarked {
-                            let translation = gesture.translation.width
-                            offset = max(-100, min(0, translation))
-                            let shouldShowIndicator = offset < -50
-                            
-                            if shouldShowIndicator != showingBookmarkIndicator {
-                                showingBookmarkIndicator = shouldShowIndicator
-                                if shouldShowIndicator && !hasTriggeredHaptic {
-                                    triggerHapticFeedback()
-                                    hasTriggeredHaptic = true
-                                }
-                            }
-                        }
-                    }
-                    .onEnded { gesture in
-                        if offset < -50 && !isBookmarked {
-                            onCreateBookmark()
-                            triggerHapticFeedback()
-                        }
-                        withAnimation(.spring(response: 0.3)) {
-                            offset = 0
-                            showingBookmarkIndicator = false
-                            hasTriggeredHaptic = false
-                        }
-                    }
-            )
+            .padding(8)
+            .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
+            .cornerRadius(8)
             .contextMenu {
                 if isBookmarked {
                     Button(role: .destructive, action: { onDeleteBookmark?() }) {
@@ -291,16 +113,14 @@ struct VerseView: View {
                     number: verse.number,
                     text: verse.latinText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark,
-                    onCreateBookmark: { showingBookmarkSheet = true }
+                    onDeleteBookmark: deleteBookmark
                 )
             } else if displayMode == .englishOnly {
                 EnglishOnlyVerseView(
                     number: verse.number,
                     text: verse.englishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark,
-                    onCreateBookmark: { showingBookmarkSheet = true }
+                    onDeleteBookmark: deleteBookmark
                 )
             } else {
                 BilingualVerseView(
@@ -308,9 +128,13 @@ struct VerseView: View {
                     latinText: verse.latinText,
                     englishText: verse.englishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark,
-                    onCreateBookmark: { showingBookmarkSheet = true }
+                    onDeleteBookmark: deleteBookmark
                 )
+            }
+        }
+        .onLongPressGesture {
+            if !isBookmarked {
+                showingBookmarkSheet = true
             }
         }
         .sheet(isPresented: $showingBookmarkSheet) {
