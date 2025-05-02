@@ -332,6 +332,8 @@ struct BookView: View {
     let initialChapter: Int?
     let scrollToVerse: Int?
     @Environment(\.colorScheme) private var colorScheme
+    @State private var lastScrollOffset: CGFloat = 0
+    @State private var isChapterNavVisible = true
     
     private var currentChapter: Chapter {
         book.chapters[selectedChapterIndex]
@@ -374,10 +376,21 @@ struct BookView: View {
                 .padding(.vertical, 8)
             }
             .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
+            .opacity(isChapterNavVisible ? 1 : 0)
+            .animation(.easeInOut(duration: 0.2), value: isChapterNavVisible)
+            .offset(y: isChapterNavVisible ? 0 : -50)
             
             // Chapter Content
             ScrollViewReader { proxy in
                 ScrollView {
+                    GeometryReader { geometry in
+                        Color.clear.preference(
+                            key: ScrollOffsetPreferenceKey.self,
+                            value: geometry.frame(in: .named("scroll")).minY
+                        )
+                    }
+                    .frame(height: 0)
+                    
                     LazyVStack(alignment: .leading, spacing: 20) {
                         Text("Chapter \(currentChapter.number)")
                             .font(.title2)
@@ -399,6 +412,16 @@ struct BookView: View {
                     }
                     .padding(.vertical)
                 }
+                .coordinateSpace(name: "scroll")
+                .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                    let diff = value - lastScrollOffset
+                    if abs(diff) > 5 { // Add a small threshold to prevent jitter
+                        withAnimation {
+                            isChapterNavVisible = diff > 0 // Show when scrolling up, hide when scrolling down
+                        }
+                        lastScrollOffset = value
+                    }
+                }
                 .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
                 .onChange(of: selectedChapterIndex) { oldValue, newValue in
                     withAnimation {
@@ -410,7 +433,6 @@ struct BookView: View {
                        let index = book.chapters.firstIndex(where: { $0.number == chapter }) {
                         selectedChapterIndex = index
                         if let verse = scrollToVerse {
-                            // Add a slight delay to ensure the view is fully loaded
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                 withAnimation {
                                     proxy.scrollTo("verse_\(verse)", anchor: .top)
@@ -424,6 +446,13 @@ struct BookView: View {
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
 
