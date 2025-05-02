@@ -7,17 +7,14 @@ struct BookmarkCreationView: View {
     @State private var note: String = ""
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var bookmarkStore: BookmarkStore
+    @EnvironmentObject private var viewModel: BibleViewModel
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Verse")) {
-                    Text(verse.latinText)
-                    if verse.englishText != verse.latinText {
-                        Text(verse.englishText)
-                            .italic()
-                            .foregroundColor(.gray)
-                    }
+                    Text(verse.englishText)
+                        .foregroundColor(.primary)
                 }
                 
                 Section(header: Text("Notes")) {
@@ -41,7 +38,7 @@ struct BookmarkCreationView: View {
                             chapterNumber: chapterNumber,
                             verseNumber: verse.number,
                             note: note,
-                            verseText: verse.latinText
+                            verseText: verse.englishText
                         )
                         bookmarkStore.addBookmark(bookmark)
                         dismiss()
@@ -54,6 +51,7 @@ struct BookmarkCreationView: View {
 
 struct BookmarksListView: View {
     @EnvironmentObject private var bookmarkStore: BookmarkStore
+    @EnvironmentObject private var viewModel: BibleViewModel
     @Environment(\.dismiss) private var dismiss
     var onBookmarkSelected: (Bookmark) -> Void
     
@@ -67,7 +65,7 @@ struct BookmarksListView: View {
                     }) {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text("\(bookmark.bookName) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
+                                Text("\(viewModel.getEnglishName(for: bookmark.bookName)) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
                                     .font(.headline)
                                     .foregroundColor(.primary)
                                 Spacer()

@@ -104,6 +104,7 @@ struct VerseView: View {
     let chapterNumber: Int
     @State private var showingBookmarkSheet = false
     @EnvironmentObject private var bookmarkStore: BookmarkStore
+    @EnvironmentObject private var viewModel: BibleViewModel
     
     var body: some View {
         Group {

@@ -29,6 +29,7 @@ struct ContentView: View {
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)
         .environmentObject(bookmarkStore)
+        .environmentObject(viewModel)
         .sheet(isPresented: $showingSearch) {
             SearchView(bibleViewModel: viewModel)
         }
