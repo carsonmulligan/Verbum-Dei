@@ -142,6 +142,14 @@ struct BookList: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
+                    // Cross Image
+                    Image("app_home_image")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                        .padding(.top, 20)
+                    
                     Text(navigationTitle)
                         .font(.largeTitle)
                         .fontWeight(.medium)
