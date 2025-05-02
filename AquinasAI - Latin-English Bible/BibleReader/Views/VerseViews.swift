@@ -8,18 +8,21 @@ struct WordSelectionModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onTapGesture(count: 2) { // Change to double tap for better UX
+                // Split text into words and remove punctuation
                 let words = text.components(separatedBy: .whitespacesAndNewlines)
+                    .map { $0.trimmingCharacters(in: .punctuationCharacters) }
                     .filter { !$0.isEmpty }
+                
+                // For now, just take the first word as we can't get tap location
+                // In a future update, we could use UIKit integration for precise word selection
                 if let word = words.first {
-                    selectedWord = word.trimmingCharacters(in: .punctuationCharacters)
+                    selectedWord = word
                     showingDictionary = true
                 }
             }
             .sheet(isPresented: $showingDictionary) {
                 if let word = selectedWord {
-                    NavigationView {
-                        DictionaryPopover(word: word)
-                    }
+                    DictionaryPopover(word: word)
                 }
             }
     }

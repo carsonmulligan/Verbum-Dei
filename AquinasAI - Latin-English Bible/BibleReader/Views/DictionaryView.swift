@@ -62,15 +62,16 @@ struct DictionaryPopover: View {
     @State private var isLoading = true
     @State private var error: Error?
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationView {
             Group {
                 if isLoading {
-                    ProgressView()
+                    ProgressView("Loading definition...")
                         .progressViewStyle(CircularProgressViewStyle())
                 } else if let error = error {
-                    VStack {
+                    VStack(spacing: 12) {
                         Image(systemName: "exclamationmark.triangle")
                             .font(.largeTitle)
                             .foregroundColor(.red)
@@ -81,11 +82,11 @@ struct DictionaryPopover: View {
                             .foregroundColor(.secondary)
                     }
                 } else if entries.isEmpty {
-                    VStack {
+                    VStack(spacing: 12) {
                         Image(systemName: "book.closed")
                             .font(.largeTitle)
                             .foregroundColor(.secondary)
-                        Text("No definition found")
+                        Text("No definition found for '\(word)'")
                             .font(.headline)
                     }
                 } else {
@@ -99,8 +100,15 @@ struct DictionaryPopover: View {
                     }
                 }
             }
-            .navigationTitle("Dictionary")
+            .navigationTitle("Dictionary: \(word)")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                }
+            }
             .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         }
         .task {
