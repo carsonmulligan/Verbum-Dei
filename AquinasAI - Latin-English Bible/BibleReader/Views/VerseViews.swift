@@ -1,10 +1,39 @@
 import SwiftUI
 
+struct WordSelectionModifier: ViewModifier {
+    let text: String
+    @Binding var selectedWord: String?
+    @State private var showingDictionary = false
+    
+    func body(content: Content) -> some View {
+        content
+            .gesture(
+                LongPressGesture(minimumDuration: 0.5)
+                    .sequenced(before: DragGesture(minimumDistance: 0))
+                    .onEnded { _ in
+                        // Get the tapped word
+                        if let word = text.components(separatedBy: .whitespacesAndNewlines)
+                            .first(where: { !$0.isEmpty }) {
+                            selectedWord = word
+                            showingDictionary = true
+                        }
+                    }
+            )
+            .sheet(isPresented: $showingDictionary) {
+                if let word = selectedWord {
+                    DictionaryPopover(word: word)
+                }
+            }
+    }
+}
+
 struct LatinOnlyVerseView: View {
     let number: Int
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    let onBookmarkRequest: (() -> Void)?
+    @State private var selectedWord: String?
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -19,10 +48,16 @@ struct LatinOnlyVerseView: View {
                 .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
                 .cornerRadius(8)
                 .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                .contextMenu {
-                    if isBookmarked {
+                .modifier(WordSelectionModifier(text: text, selectedWord: $selectedWord))
+                .swipeActions(edge: .trailing) {
+                    if !isBookmarked {
+                        Button(action: { onBookmarkRequest?() }) {
+                            Label("Bookmark", systemImage: "bookmark")
+                        }
+                        .tint(.blue)
+                    } else {
                         Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                            Label("Remove Bookmark", systemImage: "bookmark.slash")
+                            Label("Remove", systemImage: "bookmark.slash")
                         }
                     }
                 }
@@ -35,6 +70,8 @@ struct EnglishOnlyVerseView: View {
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    let onBookmarkRequest: (() -> Void)?
+    @State private var selectedWord: String?
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -49,10 +86,16 @@ struct EnglishOnlyVerseView: View {
                 .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
                 .cornerRadius(8)
                 .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                .contextMenu {
-                    if isBookmarked {
+                .modifier(WordSelectionModifier(text: text, selectedWord: $selectedWord))
+                .swipeActions(edge: .trailing) {
+                    if !isBookmarked {
+                        Button(action: { onBookmarkRequest?() }) {
+                            Label("Bookmark", systemImage: "bookmark")
+                        }
+                        .tint(.blue)
+                    } else {
                         Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                            Label("Remove Bookmark", systemImage: "bookmark.slash")
+                            Label("Remove", systemImage: "bookmark.slash")
                         }
                     }
                 }
@@ -66,6 +109,8 @@ struct BilingualVerseView: View {
     let englishText: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    let onBookmarkRequest: (() -> Void)?
+    @State private var selectedWord: String?
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -86,10 +131,16 @@ struct BilingualVerseView: View {
             .padding(8)
             .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
             .cornerRadius(8)
-            .contextMenu {
-                if isBookmarked {
+            .modifier(WordSelectionModifier(text: latinText, selectedWord: $selectedWord))
+            .swipeActions(edge: .trailing) {
+                if !isBookmarked {
+                    Button(action: { onBookmarkRequest?() }) {
+                        Label("Bookmark", systemImage: "bookmark")
+                    }
+                    .tint(.blue)
+                } else {
                     Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                        Label("Remove", systemImage: "bookmark.slash")
                     }
                 }
             }
@@ -113,14 +164,16 @@ struct VerseView: View {
                     number: verse.number,
                     text: verse.latinText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    onBookmarkRequest: { showingBookmarkSheet = true }
                 )
             } else if displayMode == .englishOnly {
                 EnglishOnlyVerseView(
                     number: verse.number,
                     text: verse.englishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    onBookmarkRequest: { showingBookmarkSheet = true }
                 )
             } else {
                 BilingualVerseView(
@@ -128,13 +181,9 @@ struct VerseView: View {
                     latinText: verse.latinText,
                     englishText: verse.englishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    onBookmarkRequest: { showingBookmarkSheet = true }
                 )
-            }
-        }
-        .onLongPressGesture {
-            if !isBookmarked {
-                showingBookmarkSheet = true
             }
         }
         .sheet(isPresented: $showingBookmarkSheet) {

@@ -68,7 +68,7 @@ struct EmptyBookmarksView: View {
                 .font(.headline)
                 .foregroundColor(.gray)
             
-            Text("Press and hold any verse to create a bookmark")
+            Text("Swipe right on any verse to create a bookmark")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
