@@ -334,8 +334,8 @@ struct BookView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var scrollOffset: CGFloat = 0
     @State private var previousScrollOffset: CGFloat = 0
-    @State private var isChapterNavVisible = true
-    @State private var chapterNavOpacity: CGFloat = 1.0  // New state for smooth opacity animation
+    @State private var chapterNavOpacity: CGFloat = 1.0
+    @State private var isNavBarVisible = true  // New state for nav bar visibility
     
     private var currentChapter: Chapter {
         book.chapters[selectedChapterIndex]
@@ -380,8 +380,8 @@ struct BookView: View {
                 }
             }
             .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-            .opacity(chapterNavOpacity)  // Use the smooth opacity value
-            .animation(.easeInOut(duration: 0.3), value: chapterNavOpacity)  // Smooth animation
+            .opacity(chapterNavOpacity)
+            .animation(.easeInOut(duration: 0.3), value: chapterNavOpacity)
             
             // Chapter Content
             ScrollView {
@@ -400,6 +400,7 @@ struct BookView: View {
                         .foregroundColor(colorScheme == .dark ? .nightText : .black)
                         .padding(.horizontal)
                         .id("chapter_header")
+                        .opacity(chapterNavOpacity) // Also hide chapter title when scrolling
                     
                     ForEach(currentChapter.verses) { verse in
                         VerseView(
@@ -424,10 +425,16 @@ struct BookView: View {
                         // Scrolling down - fade out
                         if diff < 0 {
                             chapterNavOpacity = max(0, chapterNavOpacity - 0.15)
+                            if chapterNavOpacity < 0.1 { // Hide nav bar when almost hidden
+                                isNavBarVisible = false
+                            }
                         }
                         // Scrolling up - fade in
                         else {
                             chapterNavOpacity = min(1, chapterNavOpacity + 0.15)
+                            if chapterNavOpacity > 0.1 { // Show nav bar when starting to show
+                                isNavBarVisible = true
+                            }
                         }
                     }
                 }
@@ -439,6 +446,20 @@ struct BookView: View {
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EmptyView() // Remove any existing toolbar items
+            }
+        }
+        // Hide navigation bar based on state
+        .navigationBarHidden(!isNavBarVisible)
+        // Add a tap gesture to show navigation elements
+        .onTapGesture {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isNavBarVisible = true
+                chapterNavOpacity = 1.0
+            }
+        }
     }
 }
 
