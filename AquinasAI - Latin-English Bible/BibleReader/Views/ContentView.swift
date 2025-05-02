@@ -258,7 +258,7 @@ struct BookList: View {
         case .englishOnly:
             return viewModel.getEnglishName(for: book.name)
         case .bilingual:
-            return book.name
+            return viewModel.getEnglishName(for: book.name)
         }
     }
     
