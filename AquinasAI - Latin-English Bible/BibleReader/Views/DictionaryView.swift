@@ -56,23 +56,8 @@ struct DictionaryEntryView: View {
                 }
                 .padding(.bottom, 8)
                 
-                // Definitions
-                ForEach(entry.senses.indices, id: \.self) { index in
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("\(index + 1).")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                        
-                        Text(entry.senses[index])
-                            .font(.body)
-                            .foregroundColor(colorScheme == .dark ? .nightText : .primary)
-                    }
-                    
-                    if index != entry.senses.count - 1 {
-                        Divider()
-                            .background(colorScheme == .dark ? Color.white.opacity(0.1) : Color.separatorLight)
-                    }
-                }
+                // Definitions with nested structure
+                SensesView(senses: entry.senses, level: 0)
             }
             .padding()
         }
@@ -88,6 +73,40 @@ struct DictionaryEntryView: View {
     }
 }
 
+struct SensesView: View {
+    let senses: [DictionarySense]
+    let level: Int
+    @Environment(\.colorScheme) private var colorScheme
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ForEach(Array(senses.enumerated()), id: \.offset) { index, sense in
+                switch sense {
+                case .text(let text):
+                    HStack(alignment: .top, spacing: 8) {
+                        if level == 0 {
+                            Text("\(index + 1).")
+                                .font(.headline)
+                                .foregroundColor(.secondary)
+                        }
+                        Text(text)
+                            .font(.body)
+                            .foregroundColor(colorScheme == .dark ? .nightText : .primary)
+                    }
+                    .padding(.leading, CGFloat(level * 16))
+                case .array(let nestedSenses):
+                    SensesView(senses: nestedSenses, level: level + 1)
+                }
+                
+                if index != senses.count - 1 {
+                    Divider()
+                        .background(colorScheme == .dark ? Color.white.opacity(0.1) : Color.separatorLight)
+                }
+            }
+        }
+    }
+}
+
 struct DictionaryPopover: View {
     let word: String
     @StateObject private var dictionaryService = LatinDictionaryService()
@@ -97,45 +116,46 @@ struct DictionaryPopover: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        NavigationView {
-            Group {
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                } else if let error = error {
-                    VStack {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.largeTitle)
-                            .foregroundColor(.red)
-                        Text("Error loading definition")
-                            .font(.headline)
-                        Text(error.localizedDescription)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                } else if entries.isEmpty {
-                    VStack {
-                        Image(systemName: "book.closed")
-                            .font(.largeTitle)
-                            .foregroundColor(.secondary)
-                        Text("No definition found")
-                            .font(.headline)
-                    }
-                } else {
-                    ScrollView {
-                        VStack(spacing: 20) {
-                            ForEach(entries) { entry in
-                                DictionaryEntryView(entry: entry)
-                            }
+        Group {
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+            } else if let error = error {
+                VStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.largeTitle)
+                        .foregroundColor(.red)
+                    Text("Error loading definition")
+                        .font(.headline)
+                    Text(error.localizedDescription)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+            } else if entries.isEmpty {
+                VStack {
+                    Image(systemName: "book.closed")
+                        .font(.largeTitle)
+                        .foregroundColor(.secondary)
+                    Text("No definition found")
+                        .font(.headline)
+                    Text("Could not find '\(word)' in the dictionary")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+            } else {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        ForEach(entries) { entry in
+                            DictionaryEntryView(entry: entry)
                         }
-                        .padding()
                     }
+                    .padding()
                 }
             }
-            .navigationTitle("Dictionary")
-            .navigationBarTitleDisplayMode(.inline)
-            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         }
+        .navigationTitle("Dictionary")
+        .navigationBarTitleDisplayMode(.inline)
+        .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         .task {
             do {
                 entries = try await dictionaryService.lookupWord(word)

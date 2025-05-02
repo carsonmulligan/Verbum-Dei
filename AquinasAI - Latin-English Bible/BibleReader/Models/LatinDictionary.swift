@@ -4,7 +4,7 @@ struct DictionaryEntry: Codable, Identifiable {
     var id: String { key } // Computed property using key as id
     let key: String
     let partOfSpeech: String?
-    let senses: [String]
+    let senses: [DictionarySense]
     let entryType: String?
     let declension: Int?
     let gender: String?
@@ -27,6 +27,39 @@ struct DictionaryEntry: Codable, Identifiable {
     }
 }
 
+// Handle nested senses
+enum DictionarySense: Codable, Equatable {
+    case text(String)
+    case array([DictionarySense])
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let str = try? container.decode(String.self) {
+            self = .text(str)
+        } else if let arr = try? container.decode([DictionarySense].self) {
+            self = .array(arr)
+        } else {
+            throw DecodingError.typeMismatch(
+                DictionarySense.self,
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Expected String or [DictionarySense]"
+                )
+            )
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .text(let str):
+            try container.encode(str)
+        case .array(let arr):
+            try container.encode(arr)
+        }
+    }
+}
+
 class LatinDictionaryService: ObservableObject {
     @Published private var dictionaryCache: [String: [DictionaryEntry]] = [:]
     
@@ -39,6 +72,23 @@ class LatinDictionaryService: ObservableObject {
         
         // Remove diacritical marks for matching
         return cleaned.folding(options: .diacriticInsensitive, locale: .current)
+    }
+    
+    // Get all text definitions from nested senses
+    private func flattenSenses(_ senses: [DictionarySense]) -> [String] {
+        var result: [String] = []
+        
+        func flatten(_ sense: DictionarySense) {
+            switch sense {
+            case .text(let str):
+                result.append(str)
+            case .array(let arr):
+                arr.forEach(flatten)
+            }
+        }
+        
+        senses.forEach(flatten)
+        return result
     }
     
     func lookupWord(_ word: String) async throws -> [DictionaryEntry] {
