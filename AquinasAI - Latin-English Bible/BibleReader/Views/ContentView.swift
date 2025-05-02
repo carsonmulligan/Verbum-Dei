@@ -27,6 +27,9 @@ struct ContentView: View {
                 LoadingView()
             }
         }
+        .onAppear {
+            viewModel.displayMode = .bilingual // Always set to bilingual mode
+        }
         .preferredColorScheme(isDarkMode ? .dark : .light)
         .environmentObject(bookmarkStore)
         .environmentObject(viewModel)
@@ -120,14 +123,8 @@ struct BookList: View {
     }
     
     var navigationTitle: String {
-        switch viewModel.displayMode {
-        case .latinOnly:
-            return "Biblia Sacra"
-        case .englishOnly:
-            return "Holy Bible"
-        case .bilingual:
-            return "Biblia Sacra"
-        }
+        // Always show both titles in bilingual mode
+        return "Biblia Sacra • Holy Bible"
     }
     
     var body: some View {
@@ -199,16 +196,6 @@ struct BookList: View {
                             .font(.system(size: 20))
                     }
                 }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Picker("Display Mode", selection: $viewModel.displayMode) {
-                        Text("Latin").tag(DisplayMode.latinOnly)
-                        Text("English").tag(DisplayMode.englishOnly)
-                        Text("Bilingual").tag(DisplayMode.bilingual)
-                    }
-                    .pickerStyle(.menu)
-                    .tint(isDarkMode ? .white : Color.deepPurple)
-                }
             }
             .sheet(isPresented: $showingSearch) {
                 SearchView(bibleViewModel: viewModel)
@@ -252,14 +239,8 @@ struct BookList: View {
     }
     
     private func getDisplayName(for book: Book) -> String {
-        switch viewModel.displayMode {
-        case .latinOnly:
-            return book.name
-        case .englishOnly:
-            return viewModel.getEnglishName(for: book.name)
-        case .bilingual:
-            return viewModel.getEnglishName(for: book.name)
-        }
+        // Always show English name since we're in bilingual mode
+        return viewModel.getEnglishName(for: book.name)
     }
     
     private func isOldTestament(_ bookName: String) -> Bool {
@@ -341,14 +322,8 @@ struct BookView: View {
     }
     
     private var navigationTitle: String {
-        switch viewModel.displayMode {
-        case .latinOnly:
-            return book.name
-        case .englishOnly:
-            return viewModel.getEnglishName(for: book.name)
-        case .bilingual:
-            return book.name
-        }
+        // Always show both Latin and English names
+        return "\(book.name) • \(viewModel.getEnglishName(for: book.name))"
     }
     
     var body: some View {
