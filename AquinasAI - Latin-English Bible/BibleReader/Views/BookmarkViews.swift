@@ -5,47 +5,28 @@ struct BookmarkCreationView: View {
     let bookName: String
     let chapterNumber: Int
     @State private var note: String = ""
-    @FocusState private var isFocused: Bool
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var bookmarkStore: BookmarkStore
     @EnvironmentObject private var viewModel: BibleViewModel
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 16) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("VERSE")
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal)
-                    
-                    Text(verse.englishText)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
+            Form {
+                Section(header: Text("Verse")) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(verse.englishText)
+                            .foregroundColor(.primary)
+                        Text(verse.latinText)
+                            .italic()
+                            .foregroundColor(.secondary)
+                    }
                 }
-                .padding(.horizontal)
                 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("NOTES")
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal)
-                    
+                Section(header: Text("Notes")) {
                     TextEditor(text: $note)
-                        .frame(maxWidth: .infinity, minHeight: 100)
-                        .padding(8)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
-                        .focused($isFocused)
+                        .frame(minHeight: 100)
                 }
-                .padding(.horizontal)
-                
-                Spacer()
             }
-            .padding(.top)
             .navigationTitle("Add Bookmark")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -62,16 +43,13 @@ struct BookmarkCreationView: View {
                             chapterNumber: chapterNumber,
                             verseNumber: verse.number,
                             note: note,
-                            verseText: verse.englishText
+                            verseText: verse.englishText,
+                            latinText: verse.latinText
                         )
                         bookmarkStore.addBookmark(bookmark)
                         dismiss()
                     }
                 }
-            }
-            .onAppear {
-                // Focus on the notes field when the view appears
-                isFocused = true
             }
         }
     }
@@ -135,7 +113,13 @@ struct BookmarksListView: View {
                                     
                                     Text(bookmark.verseText)
                                         .font(.subheadline)
+                                        .foregroundColor(.primary)
+                                        .lineLimit(2)
+                                    
+                                    Text(bookmark.latinText ?? "")
+                                        .font(.subheadline)
                                         .foregroundColor(.secondary)
+                                        .italic()
                                         .lineLimit(2)
                                     
                                     if !bookmark.note.isEmpty {

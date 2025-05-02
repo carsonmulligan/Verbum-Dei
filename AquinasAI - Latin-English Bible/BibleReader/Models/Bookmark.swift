@@ -8,8 +8,9 @@ struct Bookmark: Identifiable, Codable {
     var note: String
     let timestamp: Date
     let verseText: String
+    let latinText: String?
     
-    init(bookName: String, chapterNumber: Int, verseNumber: Int, note: String = "", verseText: String) {
+    init(bookName: String, chapterNumber: Int, verseNumber: Int, note: String = "", verseText: String, latinText: String? = nil) {
         self.id = UUID()
         self.bookName = bookName
         self.chapterNumber = chapterNumber
@@ -17,5 +18,6 @@ struct Bookmark: Identifiable, Codable {
         self.note = note
         self.timestamp = Date()
         self.verseText = verseText
+        self.latinText = latinText
     }
 } 
