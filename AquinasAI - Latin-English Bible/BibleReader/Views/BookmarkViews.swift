@@ -68,18 +68,11 @@ struct EmptyBookmarksView: View {
                 .font(.headline)
                 .foregroundColor(.gray)
             
-            VStack(spacing: 8) {
-                Text("Swipe right on any verse to create a bookmark")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                
-                Text("Double tap any Latin word to see its definition")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-            }
-            .padding(.horizontal, 40)
+            Text("Press and hold any verse to create a bookmark")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
@@ -102,48 +95,48 @@ struct BookmarksListView: View {
                 if sortedBookmarks.isEmpty {
                     EmptyBookmarksView()
                 } else {
-                    List {
+            List {
                         ForEach(sortedBookmarks) { bookmark in
-                            Button(action: {
-                                onBookmarkSelected(bookmark)
-                                dismiss()
-                            }) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    HStack {
+                    Button(action: {
+                        onBookmarkSelected(bookmark)
+                        dismiss()
+                    }) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
                                         Text("\(viewModel.getEnglishName(for: bookmark.bookName)) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
-                                            .font(.headline)
-                                            .foregroundColor(.primary)
-                                        Spacer()
-                                        Image(systemName: "bookmark.fill")
-                                            .foregroundColor(.deepPurple)
-                                    }
-                                    
-                                    Text(bookmark.verseText)
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "bookmark.fill")
+                                    .foregroundColor(.deepPurple)
+                            }
+                            
+                            Text(bookmark.verseText)
                                         .font(.subheadline)
                                         .foregroundColor(.primary)
                                         .lineLimit(2)
                                     
                                     Text(bookmark.latinText ?? "")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
                                         .italic()
-                                        .lineLimit(2)
-                                    
-                                    if !bookmark.note.isEmpty {
-                                        Text(bookmark.note)
-                                            .font(.footnote)
-                                            .foregroundColor(.gray)
-                                            .lineLimit(1)
-                                            .padding(.top, 2)
-                                    }
-                                }
-                                .contentShape(Rectangle())
+                                .lineLimit(2)
+                            
+                            if !bookmark.note.isEmpty {
+                                Text(bookmark.note)
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
+                                    .lineLimit(1)
+                                    .padding(.top, 2)
                             }
                         }
-                        .onDelete { indexSet in
-                            for index in indexSet {
+                        .contentShape(Rectangle())
+                    }
+                }
+                .onDelete { indexSet in
+                    for index in indexSet {
                                 let bookmark = sortedBookmarks[index]
-                                bookmarkStore.removeBookmark(withId: bookmark.id)
+                        bookmarkStore.removeBookmark(withId: bookmark.id)
                             }
                         }
                     }
