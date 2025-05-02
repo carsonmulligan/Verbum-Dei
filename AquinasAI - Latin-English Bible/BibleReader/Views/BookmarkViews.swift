@@ -5,7 +5,7 @@ struct BookmarkCreationView: View {
     let bookName: String
     let chapterNumber: Int
     @State private var note: String = ""
-    @State private var isFocused: Bool = false
+    @FocusState private var isFocused: Bool
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var bookmarkStore: BookmarkStore
