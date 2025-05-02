@@ -97,6 +97,33 @@ struct BilingualVerseView: View {
     }
 }
 
+struct WordTapModifier: ViewModifier {
+    let text: String
+    @Binding var selectedWord: String?
+    @Binding var showDictionary: Bool
+    
+    func body(content: Content) -> some View {
+        content
+            .gesture(
+                TapGesture(count: 2)
+                    .onEnded { _ in
+                        // Get the tapped word
+                        if let word = text.components(separatedBy: .whitespacesAndNewlines)
+                            .first(where: { !$0.isEmpty }) {
+                            selectedWord = word
+                            showDictionary = true
+                        }
+                    }
+            )
+    }
+}
+
+extension View {
+    func onWordDoubleTap(text: String, selectedWord: Binding<String?>, showDictionary: Binding<Bool>) -> some View {
+        modifier(WordTapModifier(text: text, selectedWord: selectedWord, showDictionary: showDictionary))
+    }
+}
+
 struct VerseView: View {
     let verse: Verse
     let displayMode: DisplayMode
@@ -105,6 +132,8 @@ struct VerseView: View {
     @State private var showingBookmarkSheet = false
     @EnvironmentObject private var bookmarkStore: BookmarkStore
     @EnvironmentObject private var viewModel: BibleViewModel
+    @State private var selectedWord: String?
+    @State private var showDictionary: Bool = false
     
     var body: some View {
         Group {
@@ -143,6 +172,14 @@ struct VerseView: View {
                 bookName: bookName,
                 chapterNumber: chapterNumber
             )
+        }
+        .onWordDoubleTap(text: verse.latinText, selectedWord: $selectedWord, showDictionary: $showDictionary)
+        .sheet(isPresented: $showDictionary) {
+            if let word = selectedWord {
+                NavigationView {
+                    DictionaryPopover(word: word)
+                }
+            }
         }
     }
     
