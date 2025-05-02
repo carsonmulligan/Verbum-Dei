@@ -13,7 +13,7 @@ extension Color {
 struct ContentView: View {
     @StateObject private var viewModel = BibleViewModel()
     @StateObject private var bookmarkStore = BookmarkStore()
-    @AppStorage("isDarkMode") private var isDarkMode = false
+    @AppStorage("isDarkMode") private var isDarkMode = true
     @State private var showingBookmarks = false
     @State private var showingSearch = false
     
@@ -81,12 +81,6 @@ struct TestamentSelectorView: View {
             }
             
             HStack(spacing: 16) {
-                TestamentPillButton(
-                    title: isDarkMode ? "Light Mode" : "Dark Mode",
-                    isSelected: isDarkMode,
-                    action: { isDarkMode.toggle() }
-                )
-                
                 TestamentPillButton(
                     title: "Search",
                     isSelected: false,
@@ -196,6 +190,16 @@ struct BookList: View {
                 )
             }
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        isDarkMode.toggle()
+                    }) {
+                        Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
+                            .foregroundColor(isDarkMode ? .white : .deepPurple)
+                            .font(.system(size: 20))
+                    }
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Picker("Display Mode", selection: $viewModel.displayMode) {
                         Text("Latin").tag(DisplayMode.latinOnly)
