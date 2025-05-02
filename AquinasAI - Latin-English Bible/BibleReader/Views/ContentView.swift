@@ -332,10 +332,11 @@ struct BookView: View {
     let initialChapter: Int?
     let scrollToVerse: Int?
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.presentationMode) private var presentationMode
     @State private var scrollOffset: CGFloat = 0
     @State private var previousScrollOffset: CGFloat = 0
     @State private var chapterNavOpacity: CGFloat = 1.0
-    @State private var isNavBarVisible = true  // New state for nav bar visibility
+    @State private var isNavBarVisible = true
     
     private var currentChapter: Chapter {
         book.chapters[selectedChapterIndex]
@@ -353,88 +354,82 @@ struct BookView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Chapter Navigation
-            VStack {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(book.chapters.indices, id: \.self) { index in
-                            Button(action: {
-                                selectedChapterIndex = index
-                            }) {
-                                Text("\(book.chapters[index].number)")
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 6)
-                                    .background(selectedChapterIndex == index ? Color.deepPurple : Color.clear)
-                                    .foregroundColor(selectedChapterIndex == index ? .white : .deepPurple)
-                                    .cornerRadius(15)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .stroke(Color.deepPurple, lineWidth: 1)
-                                    )
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-                }
-            }
-            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-            .opacity(chapterNavOpacity)
-            .animation(.easeInOut(duration: 0.3), value: chapterNavOpacity)
-            
-            // Chapter Content
+        ZStack(alignment: .top) {
+            // Main Content
             ScrollView {
                 GeometryReader { geometry in
                     Color.clear.preference(
                         key: ScrollOffsetPreferenceKey.self,
-                        value: geometry.frame(in: .named("scroll")).minY
+                        value: -geometry.frame(in: .named("scroll")).minY
                     )
                 }
                 .frame(height: 0)
                 
-                LazyVStack(alignment: .leading, spacing: 20) {
-                    Text("Chapter \(currentChapter.number)")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(colorScheme == .dark ? .nightText : .black)
-                        .padding(.horizontal)
-                        .id("chapter_header")
-                        .opacity(chapterNavOpacity) // Also hide chapter title when scrolling
-                    
-                    ForEach(currentChapter.verses) { verse in
-                        VerseView(
-                            verse: verse,
-                            displayMode: viewModel.displayMode,
-                            bookName: book.name,
-                            chapterNumber: currentChapter.number
-                        )
-                        .id("verse_\(verse.number)")
-                        .padding(.horizontal)
+                VStack(spacing: 0) {
+                    // Chapter Navigation - Now part of the scrolling content
+                    VStack {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(book.chapters.indices, id: \.self) { index in
+                                    Button(action: {
+                                        selectedChapterIndex = index
+                                    }) {
+                                        Text("\(book.chapters[index].number)")
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 6)
+                                            .background(selectedChapterIndex == index ? Color.deepPurple : Color.clear)
+                                            .foregroundColor(selectedChapterIndex == index ? .white : .deepPurple)
+                                            .cornerRadius(15)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 15)
+                                                    .stroke(Color.deepPurple, lineWidth: 1)
+                                            )
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                            .padding(.vertical, 8)
+                        }
                     }
+                    .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
+                    .opacity(chapterNavOpacity)
+                    
+                    LazyVStack(alignment: .leading, spacing: 20) {
+                        Text("Chapter \(currentChapter.number)")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(colorScheme == .dark ? .nightText : .black)
+                            .padding(.horizontal)
+                            .id("chapter_header")
+                            .opacity(chapterNavOpacity)
+                        
+                        ForEach(currentChapter.verses) { verse in
+                            VerseView(
+                                verse: verse,
+                                displayMode: viewModel.displayMode,
+                                bookName: book.name,
+                                chapterNumber: currentChapter.number
+                            )
+                            .id("verse_\(verse.number)")
+                            .padding(.horizontal)
+                        }
+                    }
+                    .padding(.vertical)
                 }
-                .padding(.vertical)
             }
             .coordinateSpace(name: "scroll")
             .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                let threshold: CGFloat = 10
                 let diff = value - previousScrollOffset
                 
-                // More gradual opacity change based on scroll direction and speed
-                withAnimation {
-                    if abs(diff) > 1 {
-                        // Scrolling down - fade out
-                        if diff < 0 {
-                            chapterNavOpacity = max(0, chapterNavOpacity - 0.15)
-                            if chapterNavOpacity < 0.1 { // Hide nav bar when almost hidden
-                                isNavBarVisible = false
-                            }
-                        }
-                        // Scrolling up - fade in
-                        else {
-                            chapterNavOpacity = min(1, chapterNavOpacity + 0.15)
-                            if chapterNavOpacity > 0.1 { // Show nav bar when starting to show
-                                isNavBarVisible = true
-                            }
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    if abs(diff) > threshold {
+                        if diff > 0 { // Scrolling down
+                            chapterNavOpacity = 0
+                            isNavBarVisible = false
+                        } else { // Scrolling up
+                            chapterNavOpacity = 1
+                            isNavBarVisible = true
                         }
                     }
                 }
@@ -444,18 +439,12 @@ struct BookView: View {
             .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         }
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-        .navigationTitle(navigationTitle)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                EmptyView() // Remove any existing toolbar items
-            }
-        }
-        // Hide navigation bar based on state
+        .navigationBarTitle(navigationTitle, displayMode: .inline)
         .navigationBarHidden(!isNavBarVisible)
+        .animation(.easeInOut(duration: 0.2), value: isNavBarVisible)
         // Add a tap gesture to show navigation elements
         .onTapGesture {
-            withAnimation(.easeInOut(duration: 0.3)) {
+            withAnimation(.easeInOut(duration: 0.2)) {
                 isNavBarVisible = true
                 chapterNavOpacity = 1.0
             }
