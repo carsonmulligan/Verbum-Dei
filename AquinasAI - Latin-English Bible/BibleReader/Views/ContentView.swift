@@ -332,7 +332,8 @@ struct BookView: View {
     let initialChapter: Int?
     let scrollToVerse: Int?
     @Environment(\.colorScheme) private var colorScheme
-    @State private var lastScrollOffset: CGFloat = 0
+    @State private var scrollOffset: CGFloat = 0
+    @State private var previousScrollOffset: CGFloat = 0
     @State private var isChapterNavVisible = true
     
     private var currentChapter: Chapter {
@@ -353,95 +354,80 @@ struct BookView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Chapter Navigation
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(book.chapters.indices, id: \.self) { index in
-                        Button(action: {
-                            selectedChapterIndex = index
-                        }) {
-                            Text("\(book.chapters[index].number)")
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(selectedChapterIndex == index ? Color.deepPurple : Color.clear)
-                                .foregroundColor(selectedChapterIndex == index ? .white : .deepPurple)
-                                .cornerRadius(15)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .stroke(Color.deepPurple, lineWidth: 1)
-                                )
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-            }
-            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-            .opacity(isChapterNavVisible ? 1 : 0)
-            .animation(.easeInOut(duration: 0.2), value: isChapterNavVisible)
-            .offset(y: isChapterNavVisible ? 0 : -50)
-            
-            // Chapter Content
-            ScrollViewReader { proxy in
-                ScrollView {
-                    GeometryReader { geometry in
-                        Color.clear.preference(
-                            key: ScrollOffsetPreferenceKey.self,
-                            value: geometry.frame(in: .named("scroll")).minY
-                        )
-                    }
-                    .frame(height: 0)
-                    
-                    LazyVStack(alignment: .leading, spacing: 20) {
-                        Text("Chapter \(currentChapter.number)")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(colorScheme == .dark ? .nightText : .black)
-                            .padding(.horizontal)
-                            .id("chapter_header")
-                        
-                        ForEach(currentChapter.verses) { verse in
-                            VerseView(
-                                verse: verse,
-                                displayMode: viewModel.displayMode,
-                                bookName: book.name,
-                                chapterNumber: currentChapter.number
-                            )
-                            .id("verse_\(verse.number)")
-                            .padding(.horizontal)
-                        }
-                    }
-                    .padding(.vertical)
-                }
-                .coordinateSpace(name: "scroll")
-                .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                    let diff = value - lastScrollOffset
-                    if abs(diff) > 5 { // Add a small threshold to prevent jitter
-                        withAnimation {
-                            isChapterNavVisible = diff > 0 // Show when scrolling up, hide when scrolling down
-                        }
-                        lastScrollOffset = value
-                    }
-                }
-                .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-                .onChange(of: selectedChapterIndex) { oldValue, newValue in
-                    withAnimation {
-                        proxy.scrollTo("chapter_header", anchor: .top)
-                    }
-                }
-                .onAppear {
-                    if let chapter = initialChapter,
-                       let index = book.chapters.firstIndex(where: { $0.number == chapter }) {
-                        selectedChapterIndex = index
-                        if let verse = scrollToVerse {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                withAnimation {
-                                    proxy.scrollTo("verse_\(verse)", anchor: .top)
-                                }
+            VStack {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(book.chapters.indices, id: \.self) { index in
+                            Button(action: {
+                                selectedChapterIndex = index
+                            }) {
+                                Text("\(book.chapters[index].number)")
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .background(selectedChapterIndex == index ? Color.deepPurple : Color.clear)
+                                    .foregroundColor(selectedChapterIndex == index ? .white : .deepPurple)
+                                    .cornerRadius(15)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .stroke(Color.deepPurple, lineWidth: 1)
+                                    )
                             }
                         }
                     }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
                 }
             }
+            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
+            .opacity(isChapterNavVisible ? 1 : 0)
+            .animation(.easeInOut(duration: 0.25), value: isChapterNavVisible)
+            
+            // Chapter Content
+            ScrollView {
+                GeometryReader { geometry in
+                    Color.clear.preference(
+                        key: ScrollOffsetPreferenceKey.self,
+                        value: geometry.frame(in: .named("scroll")).minY
+                    )
+                }
+                .frame(height: 0)
+                
+                LazyVStack(alignment: .leading, spacing: 20) {
+                    Text("Chapter \(currentChapter.number)")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(colorScheme == .dark ? .nightText : .black)
+                        .padding(.horizontal)
+                        .id("chapter_header")
+                    
+                    ForEach(currentChapter.verses) { verse in
+                        VerseView(
+                            verse: verse,
+                            displayMode: viewModel.displayMode,
+                            bookName: book.name,
+                            chapterNumber: currentChapter.number
+                        )
+                        .id("verse_\(verse.number)")
+                        .padding(.horizontal)
+                    }
+                }
+                .padding(.vertical)
+            }
+            .coordinateSpace(name: "scroll")
+            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                // Detect scroll direction
+                let diff = value - previousScrollOffset
+                
+                // Update visibility with some threshold to prevent jittering
+                if abs(diff) > 1 {
+                    withAnimation {
+                        isChapterNavVisible = diff > 0
+                    }
+                }
+                
+                previousScrollOffset = value
+            }
+            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         }
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         .navigationTitle(navigationTitle)
