@@ -1,7 +1,7 @@
 import Foundation
 
 struct DictionaryEntry: Codable, Identifiable {
-    let id: String // The key will serve as the ID
+    var id: String { key } // Computed property using key as id
     let key: String
     let partOfSpeech: String?
     let senses: [String]
@@ -14,7 +14,6 @@ struct DictionaryEntry: Codable, Identifiable {
     let mainNotes: String?
     
     enum CodingKeys: String, CodingKey {
-        case id = "key"
         case key
         case partOfSpeech = "part_of_speech"
         case senses
