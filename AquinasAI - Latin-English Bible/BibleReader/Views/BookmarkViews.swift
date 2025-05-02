@@ -68,11 +68,18 @@ struct EmptyBookmarksView: View {
                 .font(.headline)
                 .foregroundColor(.gray)
             
-            Text("Swipe right on any verse to create a bookmark")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
+            VStack(spacing: 8) {
+                Text("Swipe right on any verse to create a bookmark")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                
+                Text("Double tap any Latin word to see its definition")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal, 40)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)

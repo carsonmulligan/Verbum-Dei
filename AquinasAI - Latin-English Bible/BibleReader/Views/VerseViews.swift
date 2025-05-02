@@ -7,21 +7,19 @@ struct WordSelectionModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .gesture(
-                LongPressGesture(minimumDuration: 0.5)
-                    .sequenced(before: DragGesture(minimumDistance: 0))
-                    .onEnded { _ in
-                        // Get the tapped word
-                        if let word = text.components(separatedBy: .whitespacesAndNewlines)
-                            .first(where: { !$0.isEmpty }) {
-                            selectedWord = word
-                            showingDictionary = true
-                        }
-                    }
-            )
+            .onTapGesture(count: 2) { // Change to double tap for better UX
+                let words = text.components(separatedBy: .whitespacesAndNewlines)
+                    .filter { !$0.isEmpty }
+                if let word = words.first {
+                    selectedWord = word.trimmingCharacters(in: .punctuationCharacters)
+                    showingDictionary = true
+                }
+            }
             .sheet(isPresented: $showingDictionary) {
                 if let word = selectedWord {
-                    DictionaryPopover(word: word)
+                    NavigationView {
+                        DictionaryPopover(word: word)
+                    }
                 }
             }
     }
@@ -42,6 +40,7 @@ struct LatinOnlyVerseView: View {
                 .font(.footnote)
                 .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
+            
             Text(text)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(8)
@@ -49,18 +48,18 @@ struct LatinOnlyVerseView: View {
                 .cornerRadius(8)
                 .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
                 .modifier(WordSelectionModifier(text: text, selectedWord: $selectedWord))
-                .swipeActions(edge: .trailing) {
-                    if !isBookmarked {
-                        Button(action: { onBookmarkRequest?() }) {
-                            Label("Bookmark", systemImage: "bookmark")
-                        }
-                        .tint(.blue)
-                    } else {
-                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                            Label("Remove", systemImage: "bookmark.slash")
-                        }
-                    }
+        }
+        .swipeActions(edge: .trailing) {
+            if !isBookmarked {
+                Button(action: { onBookmarkRequest?() }) {
+                    Label("Bookmark", systemImage: "bookmark")
                 }
+                .tint(.blue)
+            } else {
+                Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                    Label("Remove", systemImage: "bookmark.slash")
+                }
+            }
         }
     }
 }
@@ -80,25 +79,25 @@ struct EnglishOnlyVerseView: View {
                 .font(.footnote)
                 .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
+            
             Text(text)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(8)
                 .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
                 .cornerRadius(8)
                 .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                .modifier(WordSelectionModifier(text: text, selectedWord: $selectedWord))
-                .swipeActions(edge: .trailing) {
-                    if !isBookmarked {
-                        Button(action: { onBookmarkRequest?() }) {
-                            Label("Bookmark", systemImage: "bookmark")
-                        }
-                        .tint(.blue)
-                    } else {
-                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                            Label("Remove", systemImage: "bookmark.slash")
-                        }
-                    }
+        }
+        .swipeActions(edge: .trailing) {
+            if !isBookmarked {
+                Button(action: { onBookmarkRequest?() }) {
+                    Label("Bookmark", systemImage: "bookmark")
                 }
+                .tint(.blue)
+            } else {
+                Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                    Label("Remove", systemImage: "bookmark.slash")
+                }
+            }
         }
     }
 }
@@ -119,10 +118,13 @@ struct BilingualVerseView: View {
                 .font(.footnote)
                 .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
+            
             VStack(alignment: .leading, spacing: 4) {
                 Text(latinText)
                     .fixedSize(horizontal: false, vertical: true)
                     .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                    .modifier(WordSelectionModifier(text: latinText, selectedWord: $selectedWord))
+                
                 Text(englishText)
                     .italic()
                     .foregroundColor(colorScheme == .dark ? .nightSecondary : Color(.displayP3, red: 0.3, green: 0.3, blue: 0.3, opacity: 1))
@@ -131,17 +133,16 @@ struct BilingualVerseView: View {
             .padding(8)
             .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
             .cornerRadius(8)
-            .modifier(WordSelectionModifier(text: latinText, selectedWord: $selectedWord))
-            .swipeActions(edge: .trailing) {
-                if !isBookmarked {
-                    Button(action: { onBookmarkRequest?() }) {
-                        Label("Bookmark", systemImage: "bookmark")
-                    }
-                    .tint(.blue)
-                } else {
-                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                        Label("Remove", systemImage: "bookmark.slash")
-                    }
+        }
+        .swipeActions(edge: .trailing) {
+            if !isBookmarked {
+                Button(action: { onBookmarkRequest?() }) {
+                    Label("Bookmark", systemImage: "bookmark")
+                }
+                .tint(.blue)
+            } else {
+                Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                    Label("Remove", systemImage: "bookmark.slash")
                 }
             }
         }
