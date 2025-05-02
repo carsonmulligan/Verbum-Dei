@@ -1,4 +1,11 @@
 import SwiftUI
+import UIKit
+
+// Haptic feedback helper
+private func triggerHapticFeedback() {
+    let generator = UIImpactFeedbackGenerator(style: .medium)
+    generator.impactOccurred()
+}
 
 struct LatinOnlyVerseView: View {
     let number: Int
@@ -9,16 +16,25 @@ struct LatinOnlyVerseView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var offset: CGFloat = 0
     @State private var showingBookmarkIndicator = false
+    @State private var hasTriggeredHaptic = false
     
     var body: some View {
         ZStack {
             // Bookmark indicator background
             HStack {
                 Spacer()
-                Image(systemName: "bookmark.fill")
-                    .foregroundColor(.white)
-                    .frame(width: 50)
-                    .opacity(showingBookmarkIndicator ? 1 : 0)
+                VStack(spacing: 4) {
+                    Image(systemName: "bookmark.fill")
+                        .font(.system(size: 24))
+                        .foregroundColor(.white)
+                    Text("Release to bookmark")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                }
+                .frame(width: 100)
+                .opacity(showingBookmarkIndicator ? 1 : 0)
+                .scaleEffect(showingBookmarkIndicator ? 1 : 0.8)
+                .animation(.spring(response: 0.3), value: showingBookmarkIndicator)
             }
             .background(Color.deepPurple)
             
@@ -44,16 +60,26 @@ struct LatinOnlyVerseView: View {
                         if !isBookmarked {
                             let translation = gesture.translation.width
                             offset = max(-100, min(0, translation))
-                            showingBookmarkIndicator = offset < -50
+                            let shouldShowIndicator = offset < -50
+                            
+                            if shouldShowIndicator != showingBookmarkIndicator {
+                                showingBookmarkIndicator = shouldShowIndicator
+                                if shouldShowIndicator && !hasTriggeredHaptic {
+                                    triggerHapticFeedback()
+                                    hasTriggeredHaptic = true
+                                }
+                            }
                         }
                     }
                     .onEnded { gesture in
                         if offset < -50 && !isBookmarked {
                             onCreateBookmark()
+                            triggerHapticFeedback()
                         }
-                        withAnimation {
+                        withAnimation(.spring(response: 0.3)) {
                             offset = 0
                             showingBookmarkIndicator = false
+                            hasTriggeredHaptic = false
                         }
                     }
             )
@@ -77,16 +103,25 @@ struct EnglishOnlyVerseView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var offset: CGFloat = 0
     @State private var showingBookmarkIndicator = false
+    @State private var hasTriggeredHaptic = false
     
     var body: some View {
         ZStack {
             // Bookmark indicator background
             HStack {
                 Spacer()
-                Image(systemName: "bookmark.fill")
-                    .foregroundColor(.white)
-                    .frame(width: 50)
-                    .opacity(showingBookmarkIndicator ? 1 : 0)
+                VStack(spacing: 4) {
+                    Image(systemName: "bookmark.fill")
+                        .font(.system(size: 24))
+                        .foregroundColor(.white)
+                    Text("Release to bookmark")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                }
+                .frame(width: 100)
+                .opacity(showingBookmarkIndicator ? 1 : 0)
+                .scaleEffect(showingBookmarkIndicator ? 1 : 0.8)
+                .animation(.spring(response: 0.3), value: showingBookmarkIndicator)
             }
             .background(Color.deepPurple)
             
@@ -112,16 +147,26 @@ struct EnglishOnlyVerseView: View {
                         if !isBookmarked {
                             let translation = gesture.translation.width
                             offset = max(-100, min(0, translation))
-                            showingBookmarkIndicator = offset < -50
+                            let shouldShowIndicator = offset < -50
+                            
+                            if shouldShowIndicator != showingBookmarkIndicator {
+                                showingBookmarkIndicator = shouldShowIndicator
+                                if shouldShowIndicator && !hasTriggeredHaptic {
+                                    triggerHapticFeedback()
+                                    hasTriggeredHaptic = true
+                                }
+                            }
                         }
                     }
                     .onEnded { gesture in
                         if offset < -50 && !isBookmarked {
                             onCreateBookmark()
+                            triggerHapticFeedback()
                         }
-                        withAnimation {
+                        withAnimation(.spring(response: 0.3)) {
                             offset = 0
                             showingBookmarkIndicator = false
+                            hasTriggeredHaptic = false
                         }
                     }
             )
@@ -146,16 +191,25 @@ struct BilingualVerseView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var offset: CGFloat = 0
     @State private var showingBookmarkIndicator = false
+    @State private var hasTriggeredHaptic = false
     
     var body: some View {
         ZStack {
             // Bookmark indicator background
             HStack {
                 Spacer()
-                Image(systemName: "bookmark.fill")
-                    .foregroundColor(.white)
-                    .frame(width: 50)
-                    .opacity(showingBookmarkIndicator ? 1 : 0)
+                VStack(spacing: 4) {
+                    Image(systemName: "bookmark.fill")
+                        .font(.system(size: 24))
+                        .foregroundColor(.white)
+                    Text("Release to bookmark")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                }
+                .frame(width: 100)
+                .opacity(showingBookmarkIndicator ? 1 : 0)
+                .scaleEffect(showingBookmarkIndicator ? 1 : 0.8)
+                .animation(.spring(response: 0.3), value: showingBookmarkIndicator)
             }
             .background(Color.deepPurple)
             
@@ -166,10 +220,10 @@ struct BilingualVerseView: View {
                     .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                     .frame(width: 30, alignment: .trailing)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(latinText)
+                    Text(englishText)
                         .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                    Text(englishText)
+                    Text(latinText)
                         .italic()
                         .foregroundColor(colorScheme == .dark ? .nightSecondary : Color(.displayP3, red: 0.3, green: 0.3, blue: 0.3, opacity: 1))
                         .fixedSize(horizontal: false, vertical: true)
@@ -187,16 +241,26 @@ struct BilingualVerseView: View {
                         if !isBookmarked {
                             let translation = gesture.translation.width
                             offset = max(-100, min(0, translation))
-                            showingBookmarkIndicator = offset < -50
+                            let shouldShowIndicator = offset < -50
+                            
+                            if shouldShowIndicator != showingBookmarkIndicator {
+                                showingBookmarkIndicator = shouldShowIndicator
+                                if shouldShowIndicator && !hasTriggeredHaptic {
+                                    triggerHapticFeedback()
+                                    hasTriggeredHaptic = true
+                                }
+                            }
                         }
                     }
                     .onEnded { gesture in
                         if offset < -50 && !isBookmarked {
                             onCreateBookmark()
+                            triggerHapticFeedback()
                         }
-                        withAnimation {
+                        withAnimation(.spring(response: 0.3)) {
                             offset = 0
                             showingBookmarkIndicator = false
+                            hasTriggeredHaptic = false
                         }
                     }
             )
