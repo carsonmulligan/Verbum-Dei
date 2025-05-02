@@ -5,23 +5,47 @@ struct BookmarkCreationView: View {
     let bookName: String
     let chapterNumber: Int
     @State private var note: String = ""
+    @State private var isFocused: Bool = false
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var bookmarkStore: BookmarkStore
     @EnvironmentObject private var viewModel: BibleViewModel
     
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Verse")) {
+            VStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("VERSE")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                    
                     Text(verse.englishText)
-                        .foregroundColor(.primary)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
                 }
+                .padding(.horizontal)
                 
-                Section(header: Text("Notes")) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("NOTES")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                    
                     TextEditor(text: $note)
-                        .frame(minHeight: 100)
+                        .frame(maxWidth: .infinity, minHeight: 100)
+                        .padding(8)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .focused($isFocused)
                 }
+                .padding(.horizontal)
+                
+                Spacer()
             }
+            .padding(.top)
             .navigationTitle("Add Bookmark")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -44,6 +68,10 @@ struct BookmarkCreationView: View {
                         dismiss()
                     }
                 }
+            }
+            .onAppear {
+                // Focus on the notes field when the view appears
+                isFocused = true
             }
         }
     }
