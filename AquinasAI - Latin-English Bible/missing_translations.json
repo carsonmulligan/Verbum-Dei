@@ -1,0 +1,105 @@
+{
+  "missing_verses": [
+    {
+      "book": "Ruth",
+      "chapter": 2,
+      "verse": 2,
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Regum II",
+      "english_book_name": "2 Kings",
+      "chapter": 13,
+      "verse": 39,
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Esther",
+      "chapter": 1,
+      "verses": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Esther",
+      "chapter": 2,
+      "verses": [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Esther",
+      "chapter": 5,
+      "verse": 14,
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Esther",
+      "chapter": 6,
+      "verses": [10, 11, 12, 13, 14],
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Esther",
+      "chapter": 9,
+      "verses": [31, 32],
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Esther",
+      "chapter": 11,
+      "verses": [11, 12],
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Esther",
+      "chapter": 15,
+      "verses": [15, 16, 17, 18, 19],
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Esther",
+      "chapter": 16,
+      "note": "Entire chapter missing",
+      "verses": "all",
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Ecclesiasticus",
+      "english_book_name": "Sirach",
+      "chapter": 29,
+      "verse": 35,
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "Machabaeorum I",
+      "english_book_name": "1 Maccabees",
+      "chapter": 11,
+      "verse": 50,
+      "latin_text": null,
+      "english_translation": null
+    },
+    {
+      "book": "ad Thessalonicenses II",
+      "english_book_name": "2 Thessalonians",
+      "chapter": 2,
+      "verse": 17,
+      "latin_text": null,
+      "english_translation": null
+    }
+  ],
+  "notes": {
+    "format": "For each entry, please fill in the 'latin_text' with the original Latin verse and 'english_translation' with the corresponding English translation",
+    "source": "These missing translations were identified from the Vulgate comparison warnings",
+    "recommendation": "Consider using the Douay-Rheims Bible translation as it closely follows the Vulgate versification"
+  }
+} 
