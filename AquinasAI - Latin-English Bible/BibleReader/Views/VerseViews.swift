@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct LatinOnlyVerseView: View {
     let number: Int
@@ -104,17 +105,45 @@ struct WordTapModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .gesture(
+            .simultaneousGesture(
                 TapGesture(count: 2)
                     .onEnded { _ in
-                        // Get the tapped word
-                        if let word = text.components(separatedBy: .whitespacesAndNewlines)
-                            .first(where: { !$0.isEmpty }) {
-                            selectedWord = word
+                        // Split text into words while preserving punctuation
+                        let words = text.components(separatedBy: .whitespaces)
+                            .filter { !$0.isEmpty }
+                            .map { word -> String in
+                                // Clean the word by removing punctuation but keep diacritics
+                                let cleaned = word.trimmingCharacters(in: CharacterSet.punctuationCharacters)
+                                return cleaned
+                            }
+                        
+                        // For testing, just use the first non-empty word for now
+                        if let firstWord = words.first {
+                            selectedWord = firstWord
                             showDictionary = true
                         }
                     }
             )
+    }
+}
+
+// Helper to get text bounds
+private extension String {
+    func wordBounds(for range: NSRange, in bounds: CGRect, with attributes: [NSAttributedString.Key: Any]) -> CGRect {
+        let attributedString = NSAttributedString(string: self, attributes: attributes)
+        let textStorage = NSTextStorage(attributedString: attributedString)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: bounds.size)
+        
+        textStorage.addLayoutManager(layoutManager)
+        layoutManager.addTextContainer(textContainer)
+        
+        var result = CGRect.zero
+        layoutManager.enumerateEnclosingRects(forGlyphRange: range, withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0), in: textContainer) { rect, _ in
+            result = rect
+        }
+        
+        return result
     }
 }
 
