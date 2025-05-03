@@ -12,15 +12,13 @@ struct BibleContent: Codable {
                     Verse(id: "\(chapterNum):\(verseNum)", 
                          number: Int(verseNum) ?? 0,
                          latinText: text,
-                         englishText: text,
-                         hasTranslation: true) // Default to true for the source text
+                         englishText: text)
                 }.sorted { $0.number < $1.number }
                 
                 return Chapter(
                     id: chapterNum,
                     number: Int(chapterNum) ?? 0,
-                    verses: processedVerses,
-                    hasTranslation: true // Default to true for the source text
+                    verses: processedVerses
                 )
             }.sorted { $0.number < $1.number }
             
@@ -51,47 +49,6 @@ struct BibleContent: Codable {
         }
         contents = tempContents
     }
-    
-    // Function to merge Latin and English content
-    static func merge(latin: BibleContent, english: BibleContent) -> [Book] {
-        let latinBooks = latin.books
-        let englishBooks = english.books.reduce(into: [String: Book]()) { dict, book in
-            dict[book.name] = book
-        }
-        
-        return latinBooks.map { latinBook in
-            let englishBook = englishBooks[latinBook.name]
-            
-            let mergedChapters = latinBook.chapters.map { latinChapter -> Chapter in
-                let englishChapter = englishBook?.chapters.first { $0.number == latinChapter.number }
-                
-                let mergedVerses = latinChapter.verses.map { latinVerse -> Verse in
-                    let englishVerse = englishChapter?.verses.first { $0.number == latinVerse.number }
-                    
-                    return Verse(
-                        id: latinVerse.id,
-                        number: latinVerse.number,
-                        latinText: latinVerse.latinText,
-                        englishText: englishVerse?.englishText ?? "",
-                        hasTranslation: englishVerse != nil
-                    )
-                }
-                
-                return Chapter(
-                    id: latinChapter.id,
-                    number: latinChapter.number,
-                    verses: mergedVerses,
-                    hasTranslation: englishChapter != nil
-                )
-            }
-            
-            return Book(
-                name: latinBook.name,
-                chapters: mergedChapters,
-                hasTranslation: englishBook != nil
-            )
-        }
-    }
 }
 
 // Helper struct to handle dynamic keys in JSON
@@ -121,15 +78,13 @@ struct BookContent: Codable {
                 Verse(id: "\(chapterNum):\(verseNum)", 
                      number: Int(verseNum) ?? 0,
                      latinText: text,
-                     englishText: text,
-                     hasTranslation: true)
+                     englishText: text)
             }.sorted { $0.number < $1.number }
             
             return Chapter(
                 id: chapterNum,
                 number: Int(chapterNum) ?? 0,
-                verses: processedVerses,
-                hasTranslation: true
+                verses: processedVerses
             )
         }.sorted { $0.number < $1.number }
     }
@@ -139,7 +94,6 @@ struct BookContent: Codable {
 struct Book: Identifiable, Equatable {
     let name: String
     let chapters: [Chapter]
-    let hasTranslation: Bool
     
     var id: String { name }
     
@@ -151,12 +105,6 @@ struct Book: Identifiable, Equatable {
         metadata?.english ?? name
     }
     
-    init(name: String, chapters: [Chapter], hasTranslation: Bool = true) {
-        self.name = name
-        self.chapters = chapters
-        self.hasTranslation = hasTranslation
-    }
-    
     static func == (lhs: Book, rhs: Book) -> Bool {
         lhs.name == rhs.name
     }
@@ -166,7 +114,6 @@ struct Chapter: Identifiable, Equatable {
     let id: String
     let number: Int
     let verses: [Verse]
-    let hasTranslation: Bool
     
     static func == (lhs: Chapter, rhs: Chapter) -> Bool {
         lhs.id == rhs.id && lhs.number == rhs.number
@@ -178,7 +125,6 @@ struct Verse: Identifiable, Equatable {
     let number: Int
     let latinText: String
     let englishText: String
-    let hasTranslation: Bool
     
     static func == (lhs: Verse, rhs: Verse) -> Bool {
         lhs.id == rhs.id && lhs.number == rhs.number
