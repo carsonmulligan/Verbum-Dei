@@ -1,18 +1,42 @@
-# Bible Versions in AquinasAI Bible Reader
+# AquinasAI Bible Reader
+## Parallel Latin-English Bible: Vulgate & CPDV
 
-## Latin Version: Biblia Sacra Vulgata
+Discover the profound connection between Latin and English biblical texts with the Latin Bible, your ultimate companion for parallel Bible study. This thoughtfully designed app brings together the classical Latin Vulgate and English translations in an elegant, easy-to-use interface.
+
+Key Features
+
+Parallel Reading
+• View Latin and English translations side by side
+• Seamlessly switch between chapters and books
+• Perfect synchronization between both languages
+
+Advanced Search Capabilities
+• Search across both Latin and English texts simultaneously
+• Search results displayed in both languages
+• History feature to track your previous searches
+
+Smart Bookmarking System
+• Create personalized bookmarks for your favorite verses
+• Add detailed notes to your bookmarks
+• Quick access to frequently referenced verses
+• Edit or remove bookmarks with ease
+
+Bible Versions in The Latin English Bible
+
+Latin Version: Biblia Sacra Vulgata
+
 The Latin text is from the Vulgate, the authoritative Latin translation of the Bible in the Catholic Church, originally prepared by St. Jerome in the late 4th century AD. This version includes:
 
 - Complete Old Testament (including deuterocanonical books)
 - Complete New Testament
 - Traditional Latin book names (e.g., "Actus Apostolorum", "Apocalypsis")
 
-## English Version: Catholic Public Domain Version (CPDV)
+
+English Version: Catholic Public Domain Version (CPDV)
 The English text uses the Catholic Public Domain Version, a modern English translation based directly on the Clementine Vulgate. This ensures precise correspondence with the Latin text.
+Books Included
 
-## Books Included
-
-### Old Testament
+Old Testament
 1. Genesis (Genesis)
 2. Exodus (Exodus)
 3. Leviticus (Leviticus)
@@ -60,7 +84,7 @@ The English text uses the Catholic Public Domain Version, a modern English trans
 45. 1 Maccabees (Machabaeorum I)
 46. 2 Maccabees (Machabaeorum II)
 
-### New Testament
+New Testament
 1. Matthew (Matthaeus)
 2. Mark (Marcus)
 3. Luke (Lucas)
@@ -89,7 +113,8 @@ The English text uses the Catholic Public Domain Version, a modern English trans
 26. Jude (Judae)
 27. Revelation (Apocalypsis)
 
-## Special Features
+
+Special Features
 - Complete parallel text alignment between Latin and English
 - Includes all deuterocanonical books
 - Maintains traditional Catholic book ordering
