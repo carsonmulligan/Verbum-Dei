@@ -44,22 +44,35 @@ struct SearchContentView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            // Fixed search bar at top
             SearchBar(searchText: $searchViewModel.searchQuery)
                 .padding()
             
-            if searchViewModel.isSearching {
-                ProgressView()
-                    .padding()
-            } else if searchViewModel.searchResults.isEmpty && !searchViewModel.searchQuery.isEmpty {
-                EmptySearchView()
-            } else {
-                SearchResultsList(
-                    results: searchViewModel.searchResults,
-                    navigationPath: $navigationPath
-                )
+            // Content area
+            ZStack {
+                if searchViewModel.isSearching {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if searchViewModel.searchResults.isEmpty && !searchViewModel.searchQuery.isEmpty {
+                    EmptySearchView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    SearchResultsList(
+                        results: searchViewModel.searchResults,
+                        navigationPath: $navigationPath
+                    )
+                }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
+    }
+}
+
+private struct SearchBarPositionPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
 

@@ -55,6 +55,72 @@ struct BookmarkCreationView: View {
     }
 }
 
+struct BookmarkEditView: View {
+    let bookmark: Bookmark
+    @State private var note: String
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var bookmarkStore: BookmarkStore
+    @EnvironmentObject private var viewModel: BibleViewModel
+    
+    init(bookmark: Bookmark) {
+        self.bookmark = bookmark
+        _note = State(initialValue: bookmark.note)
+    }
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text("Verse")) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(bookmark.verseText)
+                            .foregroundColor(.primary)
+                        if let latinText = bookmark.latinText {
+                            Text(latinText)
+                                .italic()
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                
+                Section(header: Text("Notes")) {
+                    TextEditor(text: $note)
+                        .frame(minHeight: 100)
+                }
+                
+                Section {
+                    Button(role: .destructive) {
+                        bookmarkStore.removeBookmark(withId: bookmark.id)
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "bookmark.slash")
+                            Text("Remove Bookmark")
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Edit Bookmark")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        var updatedBookmark = bookmark
+                        updatedBookmark.note = note
+                        bookmarkStore.updateBookmark(updatedBookmark)
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
+}
+
 struct EmptyBookmarksView: View {
     @Environment(\.colorScheme) private var colorScheme
     
@@ -83,6 +149,7 @@ struct BookmarksListView: View {
     @EnvironmentObject private var bookmarkStore: BookmarkStore
     @EnvironmentObject private var viewModel: BibleViewModel
     @Environment(\.dismiss) private var dismiss
+    @State private var editingBookmark: Bookmark?
     var onBookmarkSelected: (Bookmark) -> Void
     
     var sortedBookmarks: [Bookmark] {
@@ -97,41 +164,17 @@ struct BookmarksListView: View {
                 } else {
                     List {
                         ForEach(sortedBookmarks) { bookmark in
-                            Button(action: {
-                                onBookmarkSelected(bookmark)
-                                dismiss()
-                            }) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    HStack {
-                                        Text("\(viewModel.getEnglishName(for: bookmark.bookName)) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
-                                            .font(.headline)
-                                            .foregroundColor(.primary)
-                                        Spacer()
-                                        Image(systemName: "bookmark.fill")
-                                            .foregroundColor(.deepPurple)
-                                    }
-                                    
-                                    Text(bookmark.verseText)
-                                        .font(.subheadline)
-                                        .foregroundColor(.primary)
-                                        .lineLimit(2)
-                                    
-                                    Text(bookmark.latinText ?? "")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                        .italic()
-                                        .lineLimit(2)
-                                    
-                                    if !bookmark.note.isEmpty {
-                                        Text(bookmark.note)
-                                            .font(.footnote)
-                                            .foregroundColor(.gray)
-                                            .lineLimit(1)
-                                            .padding(.top, 2)
-                                    }
+                            BookmarkRow(
+                                bookmark: bookmark,
+                                viewModel: viewModel,
+                                onSelect: {
+                                    onBookmarkSelected(bookmark)
+                                    dismiss()
+                                },
+                                onEdit: {
+                                    editingBookmark = bookmark
                                 }
-                                .contentShape(Rectangle())
-                            }
+                            )
                         }
                         .onDelete { indexSet in
                             for index in indexSet {
@@ -151,6 +194,71 @@ struct BookmarksListView: View {
                     }
                 }
             }
+            .sheet(item: $editingBookmark) { bookmark in
+                BookmarkEditView(bookmark: bookmark)
+            }
+        }
+    }
+}
+
+private struct BookmarkRow: View {
+    let bookmark: Bookmark
+    let viewModel: BibleViewModel
+    let onSelect: () -> Void
+    let onEdit: () -> Void
+    @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var bookmarkStore: BookmarkStore
+    
+    var body: some View {
+        Button(action: onSelect) {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text("\(viewModel.getEnglishName(for: bookmark.bookName)) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Image(systemName: "bookmark.fill")
+                        .foregroundColor(.deepPurple)
+                }
+                
+                Text(bookmark.verseText)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                    .lineLimit(2)
+                
+                if let latinText = bookmark.latinText {
+                    Text(latinText)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .italic()
+                        .lineLimit(2)
+                }
+                
+                if !bookmark.note.isEmpty {
+                    Text(bookmark.note)
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .lineLimit(1)
+                        .padding(.top, 2)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .swipeActions(edge: .trailing) {
+            Button(role: .destructive) {
+                withAnimation {
+                    bookmarkStore.removeBookmark(withId: bookmark.id)
+                }
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+            
+            Button {
+                onEdit()
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.blue)
         }
     }
 } 
