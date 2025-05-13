@@ -97,7 +97,7 @@ struct RosaryTemplate: Codable {
     let decade: [TemplateItem]
     let closing: [String]
     
-    enum TemplateItem: Codable {
+    enum TemplateItem: Codable, Hashable {
         case string(String)
         case object([String: TemplateObject])
         
@@ -111,9 +111,46 @@ struct RosaryTemplate: Codable {
                 throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode TemplateItem")
             }
         }
+        
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            switch self {
+            case .string(let str):
+                try container.encode(str)
+            case .object(let obj):
+                try container.encode(obj)
+            }
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            switch self {
+            case .string(let str):
+                hasher.combine(0) // Discriminator for string case
+                hasher.combine(str)
+            case .object(let obj):
+                hasher.combine(1) // Discriminator for object case
+                // Convert dictionary to array of tuples to ensure consistent hashing
+                let sortedPairs = obj.sorted(by: { $0.key < $1.key })
+                for (key, value) in sortedPairs {
+                    hasher.combine(key)
+                    hasher.combine(value)
+                }
+            }
+        }
+        
+        static func == (lhs: TemplateItem, rhs: TemplateItem) -> Bool {
+            switch (lhs, rhs) {
+            case (.string(let lhs), .string(let rhs)):
+                return lhs == rhs
+            case (.object(let lhs), .object(let rhs)):
+                return lhs == rhs
+            default:
+                return false
+            }
+        }
     }
     
-    struct TemplateObject: Codable {
+    struct TemplateObject: Codable, Hashable {
         let count: Int
         let intentions: [String]?
         
