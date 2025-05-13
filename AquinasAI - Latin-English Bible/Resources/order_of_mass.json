@@ -1,0 +1,293 @@
+{
+    "prayers": [
+      {
+        "section_type": "INTRODUCTORY_BASIC_PRAYERS",
+        "section_description": "Basic prayers used in the introductory rites of the Mass"
+      },
+      {
+        "title": "Signum Crucis",
+        "title_latin": "Signum Crucis",
+        "title_english": "Sign of the Cross",
+        "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+        "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
+      },
+      {
+        "title": "Dominus Vobiscum",
+        "title_latin": "Dominus Vobiscum",
+        "title_english": "The Lord Be with You",
+        "latin": "Dominus vobiscum.",
+        "english": "The Lord be with you."
+      },
+      {
+        "title": "Et Cum Spiritu Tuo",
+        "title_latin": "Et Cum Spiritu Tuo",
+        "title_english": "And with Your Spirit",
+        "latin": "Et cum spiritu tuo.",
+        "english": "And with your spirit."
+      },
+  
+      {
+        "section_type": "PENITENTIAL_ACT",
+        "section_description": "Prayers and responses used during the Penitential Rite"
+      },
+      {
+        "title": "Confiteor",
+        "title_latin": "Confiteor",
+        "title_english": "I Confess",
+        "latin": "Confiteor Deo omnipotenti, beatae Mariae semper Virgini, ... Amen.",
+        "english": "I confess to Almighty God, to Blessed Mary ever Virgin, ... Amen."
+      },
+      {
+        "title": "Penitential Act (Form B)",
+        "title_latin": "Penitentiae Actus – Forma II",
+        "title_english": "Penitential Act – Form B",
+        "latin": "V/. Miserere nostri, Domine. R/. Quia peccavimus tibi. V/. Ostende nobis, Domine, misericordiam tuam. R/. Et salutare tuum da nobis.",
+        "english": "V/. Have mercy on us, O Lord. R/. For we have sinned against you. V/. Show us, O Lord, your mercy. R/. And grant us your salvation."
+      },
+      {
+        "title": "Penitential Act (Form C)",
+        "title_latin": "Penitentiae Actus – Forma III",
+        "title_english": "Penitential Act – Form C",
+        "latin": "V/. Qui missus es sanare contritos corde: Kyrie, eleison. R/. Kyrie, eleison. ...",
+        "english": "V/. You were sent to heal the contrite of heart: Lord, have mercy. R/. Lord, have mercy. ..."
+      },
+      {
+        "title": "Kyrie Eleison",
+        "latin": "Kyrie eleison. Christe eleison. Kyrie eleison.",
+        "english": "Lord, have mercy. Christ, have mercy. Lord, have mercy."
+      },
+      {
+        "title": "Gloria in Excelsis",
+        "title_latin": "Gloria in Excelsis Deo",
+        "title_english": "Glory to God in the Highest",
+        "latin": "Gloria in excelsis Deo et in terra pax hominibus bonae voluntatis. ... Amen.",
+        "english": "Glory to God in the highest, and on earth peace to people of good will. ... Amen."
+      },
+  
+      {
+        "section_type": "CREEDS",
+        "section_description": "Profession of faith prayers used during Mass"
+      },
+      {
+        "title": "Credo (Apostles' Creed)",
+        "title_latin": "Credo",
+        "title_english": "Apostles' Creed",
+        "latin": "Credo in Deum, Patrem omnipotentem, Creatorem caeli et terrae. ... Amen.",
+        "english": "I believe in God, the Father Almighty, Creator of heaven and earth. ... Amen."
+      },
+      {
+        "title": "Nicene Creed",
+        "title_latin": "Symbolum Niceno-Constantinopolitanum",
+        "title_english": "Nicene Creed",
+        "latin": "Credo in unum Deum, Patrem omnipotentem, factorem caeli et terrae, ... Amen.",
+        "english": "I believe in one God, the Father almighty, maker of heaven and earth, ... Amen."
+      },
+  
+      {
+        "section_type": "LITURGY_OF_THE_EUCHARIST",
+        "section_description": "Dialogues and acclamations used during the Liturgy of the Eucharist"
+      },
+      {
+        "title": "Orate Fratres",
+        "title_latin": "Orate, Fratres",
+        "title_english": "Pray, Brethren",
+        "latin": "Orate, fratres, ut meum ac vestrum sacrificium acceptabile fiat apud Deum Patrem omnipotentem.",
+        "english": "Pray, brethren, that my sacrifice and yours may be acceptable to God, the almighty Father."
+      },
+      {
+        "title": "Preface Dialogue",
+        "title_latin": "Sursum Corda",
+        "title_english": "Preface Dialogue",
+        "latin": "Dominus vobiscum.\nEt cum spiritu tuo.\nSursum corda.\nHabemus ad Dominum.\nGratias agamus Domino Deo nostro.\nDignum et iustum est.",
+        "english": "The Lord be with you.\nAnd with your spirit.\nLift up your hearts.\nWe lift them up to the Lord.\nLet us give thanks to the Lord our God.\nIt is right and just."
+      },
+      {
+        "title": "Sanctus",
+        "latin": "Sanctus, Sanctus, Sanctus Dominus Deus Sabaoth. Pleni sunt caeli et terra gloria tua. Hosanna in excelsis. Benedictus qui venit in nomine Domini. Hosanna in excelsis.",
+        "english": "Holy, holy, holy Lord God of hosts. Heaven and earth are full of your glory. Hosanna in the highest. Blessed is he who comes in the name of the Lord. Hosanna in the highest."
+      },
+      {
+        "title": "Mystery of Faith I",
+        "title_latin": "Mortem Tuam Annuntiamus",
+        "title_english": "We Proclaim Your Death",
+        "latin": "Mortem tuam annuntiamus, Domine, et tuam resurrectionem confitemur, donec venias.",
+        "english": "We proclaim your Death, O Lord, and profess your Resurrection until you come again."
+      },
+      {
+        "title": "Mystery of Faith II",
+        "title_latin": "Quotiescumque Manducamus",
+        "title_english": "When We Eat This Bread",
+        "latin": "Quotiescumque manducamus panem hunc et calicem bibimus, mortem tuam annuntiamus, Domine, donec venias.",
+        "english": "When we eat this Bread and drink this Cup, we proclaim your Death, O Lord, until you come again."
+      },
+      {
+        "title": "Mystery of Faith III",
+        "title_latin": "Salvator Mundi",
+        "title_english": "Save Us, Savior of the World",
+        "latin": "Salvator mundi, salva nos, qui per crucem et resurrectionem tuam liberasti nos.",
+        "english": "Save us, Savior of the world, for by your Cross and Resurrection you have set us free."
+      },
+      {
+        "title": "Pax Domini",
+        "title_latin": "Pax Domini",
+        "title_english": "Peace of the Lord",
+        "latin": "Pax Domini sit semper vobiscum.",
+        "english": "The peace of the Lord be with you always."
+      },
+      {
+        "title": "Agnus Dei",
+        "title_latin": "Agnus Dei",
+        "title_english": "Lamb of God",
+        "latin": "Agnus Dei, qui tollis peccata mundi, miserere nobis. ... dona nobis pacem.",
+        "english": "Lamb of God, you take away the sins of the world, have mercy on us. ... grant us peace."
+      },
+      {
+        "title": "Ecce Agnus Dei",
+        "title_latin": "Ecce Agnus Dei",
+        "title_english": "Behold the Lamb of God",
+        "latin": "Ecce Agnus Dei, ecce qui tollit peccata mundi. Beati qui ad cenam Agni vocati sunt.",
+        "english": "Behold the Lamb of God, behold him who takes away the sins of the world. Blessed are those called to the supper of the Lamb."
+      },
+      {
+        "title": "Domine, Non Sum Dignus",
+        "latin": "Domine, non sum dignus ut intres sub tectum meum, sed tantum dic verbo et sanabitur anima mea.",
+        "english": "Lord, I am not worthy that you should enter under my roof, but only say the word and my soul shall be healed."
+      },
+  
+      {
+        "section_type": "CONCLUDING_RITES",
+        "section_description": "Prayers and responses used during the conclusion of Mass"
+      },
+      {
+        "title": "Ite, Missa Est",
+        "title_latin": "Ite, Missa Est",
+        "title_english": "Dismissal",
+        "latin": "Ite, missa est.",
+        "english": "Go forth, the Mass is ended."
+      },
+  
+      {
+        "section_type": "ADDITIONAL_PRAYERS",
+        "section_description": "Additional devotional prayers and acts"
+      },
+      {
+        "title": "Actus Fidei",
+        "title_latin": "Actus Fidei",
+        "title_english": "Act of Faith",
+        "latin": "Domine Deus, credo omnia quae Ecclesia Catholica infallibiliter proponit... Amen.",
+        "english": "O my God, I firmly believe all the truths the Holy Catholic Church teaches... Amen."
+      },
+      {
+        "title": "Actus Spei",
+        "title_latin": "Actus Spei",
+        "title_english": "Act of Hope",
+        "latin": "Domine Deus, spero per misericordiam tuam... Amen.",
+        "english": "O my God, relying on Your mercy and promises... Amen."
+      },
+      {
+        "title": "Actus Caritatis",
+        "title_latin": "Actus Caritatis",
+        "title_english": "Act of Charity",
+        "latin": "Domine Deus, amo Te super omnia... Amen.",
+        "english": "O my God, I love You above all things... Amen."
+      },
+      {
+        "title": "Oblatio Matutina",
+        "title_latin": "Oblatio Matutina",
+        "title_english": "Morning Offering",
+        "latin": "O Iesu, per Immaculatum Cor Mariae, offero Tibi preces... Amen.",
+        "english": "O Jesus, through the Immaculate Heart of Mary, I offer You my prayers... Amen."
+      },
+      {
+        "title": "Communio Spiritualis",
+        "title_latin": "Communio Spiritualis",
+        "title_english": "Act of Spiritual Communion",
+        "latin": "Iesu mi, credo Te in Sanctissimo Sacramento vere praesentem... Amen.",
+        "english": "My Jesus, I believe that You are present in the Most Holy Sacrament... Amen."
+      },
+      {
+        "title": "Laudes Divinae",
+        "title_latin": "Laudes Divinae",
+        "title_english": "The Divine Praises",
+        "latin": "Benedictus Deus. Benedictum Nomen Sanctum eius. ... Amen.",
+        "english": "Blessed be God. Blessed be His Holy Name. ... Amen."
+      }
+      /*  —— Any other devotions you listed earlier remain in place here —— */
+    ],
+  
+    "order_of_mass": {
+      "introductory_rites": [
+        "Entrance Chant (Antiphon or Hymn)",
+        "Signum Crucis",
+        ["Dominus Vobiscum", "Et Cum Spiritu Tuo"],
+        {
+          "penitential_act": [
+            "Confiteor",
+            "Penitential Act (Form B)",
+            "Penitential Act (Form C)"
+          ]
+        },
+        "Kyrie Eleison",
+        "Gloria in Excelsis (omit in Advent/Lent)",
+        "Collect (variable)"
+      ],
+  
+      "liturgy_of_the_word": [
+        "First Reading",
+        "Responsorial Psalm",
+        "Second Reading (Sundays/Solemnities)",
+        "Gospel Acclamation",
+        "Gospel",
+        "Homily",
+        {
+          "profession_of_faith": [
+            "Nicene Creed",
+            "Credo (Apostles' Creed)"
+          ]
+        },
+        "Prayer of the Faithful"
+      ],
+  
+      "liturgy_of_the_eucharist": {
+        "preparation_of_the_gifts": [
+          "Offertory Chant",
+          "Presentation of the Gifts",
+          "Orate Fratres",
+          "Prayer over the Offerings"
+        ],
+  
+        "eucharistic_prayer": [
+          "Preface Dialogue",
+          "Preface (variable)",
+          "Sanctus",
+          "Eucharistic Prayer (Consecration, Epiclesis, etc.)",
+          {
+            "mystery_of_faith": [
+              "Mystery of Faith I",
+              "Mystery of Faith II",
+              "Mystery of Faith III"
+            ]
+          },
+          "Doxology & Great Amen"
+        ],
+  
+        "communion_rite": [
+          "Pater Noster",
+          "Embolism & Doxology (For the kingdom…)",
+          "Pax Domini",
+          "Agnus Dei",
+          ["Ecce Agnus Dei", "Domine, Non Sum Dignus"],
+          "Communion Chant / Silence",
+          "Communio Spiritualis (optional)",
+          "Prayer after Communion"
+        ]
+      },
+  
+      "concluding_rites": [
+        "Blessing (Signum Crucis or solemn)",
+        "Ite, Missa Est",
+        "Recessional Hymn"
+      ]
+    }
+  }
+  
