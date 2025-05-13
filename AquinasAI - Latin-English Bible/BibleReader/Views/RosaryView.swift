@@ -104,7 +104,7 @@ struct RosaryView: View {
                                 .foregroundColor(.purple)
                                 .padding(.bottom, 4)
                         ) {
-                            ForEach(template.opening, id: \.self) { item in
+                            ForEach(Array(template.opening.enumerated()), id: \.offset) { index, item in
                                 if case .string(let prayerKey) = item,
                                    let prayer = commonPrayers[prayerKey] {
                                     PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
@@ -141,7 +141,7 @@ struct RosaryView: View {
                                     }
                                     
                                     // Decade prayers
-                                    ForEach(template.decade, id: \.self) { item in
+                                    ForEach(Array(template.decade.enumerated()), id: \.offset) { index, item in
                                         if case .string(let prayerKey) = item,
                                            let prayer = commonPrayers[prayerKey] {
                                             PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
