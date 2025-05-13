@@ -9,6 +9,42 @@ struct Prayer: Identifiable, Codable {
     let latin: String
     let english: String
     var category: PrayerCategory = .basic
+    
+    private enum CodingKeys: String, CodingKey {
+        case title
+        case title_latin
+        case title_english
+        case latin
+        case english
+    }
+    
+    init(title: String, title_latin: String?, title_english: String?, latin: String, english: String, category: PrayerCategory = .basic) {
+        self.title = title
+        self.title_latin = title_latin
+        self.title_english = title_english
+        self.latin = latin
+        self.english = english
+        self.category = category
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        title = try container.decode(String.self, forKey: .title)
+        title_latin = try container.decodeIfPresent(String.self, forKey: .title_latin)
+        title_english = try container.decodeIfPresent(String.self, forKey: .title_english)
+        latin = try container.decode(String.self, forKey: .latin)
+        english = try container.decode(String.self, forKey: .english)
+        category = .basic // Default category, will be set after decoding
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(title, forKey: .title)
+        try container.encode(title_latin, forKey: .title_latin)
+        try container.encode(title_english, forKey: .title_english)
+        try container.encode(latin, forKey: .latin)
+        try container.encode(english, forKey: .english)
+    }
 }
 
 // MARK: - Basic Prayers Container
