@@ -216,43 +216,45 @@ private struct MysteriesView: View {
     let selectedLanguage: PrayerLanguage
     
     var body: some View {
-        ForEach(mysteries, id: \.number) { mystery in
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text("Mystery \(mystery.number)")
-                        .font(.headline)
-                        .foregroundColor(.purple)
+        VStack(spacing: 16) {
+            ForEach(Array(zip(mysteries.indices, mysteries)), id: \.0) { index, mystery in
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("Mystery \(mystery.number)")
+                            .font(.headline)
+                            .foregroundColor(.purple)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "rosette")
+                            .foregroundColor(.purple)
+                    }
+                    .padding(.bottom, 4)
                     
-                    Spacer()
+                    if selectedLanguage != .englishOnly {
+                        Text(mystery.latin)
+                            .font(.body)
+                            .italic()
+                    }
                     
-                    Image(systemName: "rosette")
-                        .foregroundColor(.purple)
-                }
-                .padding(.bottom, 4)
-                
-                if selectedLanguage != .english {
-                    Text(mystery.latin)
-                        .font(.body)
-                        .italic()
-                }
-                
-                if selectedLanguage != .latin {
-                    Text(mystery.english)
-                        .font(.body)
-                }
-                
-                ForEach(Array(template.decade.enumerated()), id: \.offset) { index, item in
-                    if case .string(let prayerKey) = item,
-                       let prayer = commonPrayers[prayerKey] {
-                        PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                            .padding(.leading)
+                    if selectedLanguage != .latinOnly {
+                        Text(mystery.english)
+                            .font(.body)
+                    }
+                    
+                    ForEach(Array(template.decade.enumerated()), id: \.0) { decadeIndex, item in
+                        if case .string(let prayerKey) = item,
+                           let prayer = commonPrayers[prayerKey] {
+                            PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                                .padding(.leading)
+                        }
                     }
                 }
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(12)
+                .padding(.horizontal)
             }
-            .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(12)
-            .padding(.horizontal)
         }
     }
 }
@@ -296,9 +298,9 @@ private struct LoadingErrorView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
-                Button(action: {
+                Button {
                     prayerStore.loadPrayers()
-                }) {
+                } label: {
                     HStack {
                         Image(systemName: "arrow.clockwise")
                         Text("Retry")
