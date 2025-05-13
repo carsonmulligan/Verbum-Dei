@@ -10,6 +10,14 @@ struct Prayer: Identifiable, Codable {
     let english: String
     var category: PrayerCategory = .basic
     
+    var displayTitleLatin: String {
+        title_latin ?? title
+    }
+    
+    var displayTitleEnglish: String {
+        title_english ?? title
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case title
         case title_latin
