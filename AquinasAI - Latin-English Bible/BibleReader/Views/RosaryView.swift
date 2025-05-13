@@ -43,155 +43,239 @@ struct RosaryView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            // Day selection
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], id: \.self) { day in
-                        Button(action: {
-                            selectedDay = day
-                        }) {
-                            Text(day)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 8)
-                                .background(
-                                    Capsule()
-                                        .fill(selectedDay == day ? Color.purple : Color.clear)
-                                        .overlay(
-                                            Capsule()
-                                                .strokeBorder(Color.purple, lineWidth: 1)
-                                        )
-                                )
-                                .foregroundColor(selectedDay == day ? .white : .purple)
-                        }
-                    }
-                }
-                .padding(.horizontal)
-            }
+            DaySelectionView(selectedDay: $selectedDay)
             
-            // Language selection
-            Picker("Language", selection: $selectedLanguage) {
-                ForEach(PrayerLanguage.allCases, id: \.self) { language in
-                    Text(language.rawValue.capitalized).tag(language)
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
+            LanguageSelectionView(selectedLanguage: $selectedLanguage)
             
-            // Rosary content
             if let template = template, let commonPrayers = commonPrayers {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 24) {
-                        // Mystery type title and description
-                        if !mysteryTitle.isEmpty {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(mysteryTitle)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.purple)
-                                
-                                Text(mysteryDescription)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .padding(.bottom, 8)
-                            }
-                            .padding(.horizontal)
-                        }
-                        
-                        // Opening prayers
-                        Section(header: 
-                            Text("Opening Prayers")
-                                .font(.headline)
-                                .foregroundColor(.purple)
-                                .padding(.bottom, 4)
-                        ) {
-                            ForEach(Array(template.opening.enumerated()), id: \.offset) { index, item in
-                                if case .string(let prayerKey) = item,
-                                   let prayer = commonPrayers[prayerKey] {
-                                    PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                        
-                        // Mysteries
-                        if let mysteries = mysteries {
-                            ForEach(mysteries, id: \.number) { mystery in
-                                VStack(alignment: .leading, spacing: 8) {
-                                    HStack {
-                                        Text("Mystery \(mystery.number)")
-                                            .font(.headline)
-                                            .foregroundColor(.purple)
-                                        
-                                        Spacer()
-                                        
-                                        Image(systemName: "rosette")
-                                            .foregroundColor(.purple)
-                                    }
-                                    .padding(.bottom, 4)
-                                    
-                                    if selectedLanguage != .english {
-                                        Text(mystery.latin)
-                                            .font(.body)
-                                            .italic()
-                                    }
-                                    
-                                    if selectedLanguage != .latin {
-                                        Text(mystery.english)
-                                            .font(.body)
-                                    }
-                                    
-                                    // Decade prayers
-                                    ForEach(Array(template.decade.enumerated()), id: \.offset) { index, item in
-                                        if case .string(let prayerKey) = item,
-                                           let prayer = commonPrayers[prayerKey] {
-                                            PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                                                .padding(.leading)
-                                        }
-                                    }
-                                }
-                                .padding()
-                                .background(Color(.systemGray6))
-                                .cornerRadius(12)
-                                .padding(.horizontal)
-                            }
-                        }
-                        
-                        // Closing prayers
-                        Section(header: 
-                            Text("Closing Prayers")
-                                .font(.headline)
-                                .foregroundColor(.purple)
-                                .padding(.bottom, 4)
-                        ) {
-                            ForEach(template.closing, id: \.self) { prayerKey in
-                                if let prayer = commonPrayers[prayerKey] {
-                                    PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
-                    .padding(.vertical)
-                }
+                RosaryContentView(
+                    template: template,
+                    commonPrayers: commonPrayers,
+                    mysteries: mysteries,
+                    mysteryTitle: mysteryTitle,
+                    mysteryDescription: mysteryDescription,
+                    selectedLanguage: selectedLanguage
+                )
             } else {
-                VStack(spacing: 16) {
-                    if prayerStore.rosaryPrayers == nil {
-                        ProgressView()
-                            .scaleEffect(1.5)
-                        Text("Loading prayers...")
-                            .foregroundColor(.secondary)
-                    } else {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 40))
-                            .foregroundColor(.orange)
-                        Text("Unable to load prayers")
-                            .foregroundColor(.secondary)
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                LoadingErrorView(isLoading: prayerStore.rosaryPrayers == nil)
             }
         }
         .navigationTitle("Rosary")
+    }
+}
+
+// MARK: - Day Selection View
+private struct DaySelectionView: View {
+    @Binding var selectedDay: String
+    private let weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(weekDays, id: \.self) { day in
+                    DayButton(day: day, isSelected: selectedDay == day) {
+                        selectedDay = day
+                    }
+                }
+            }
+            .padding(.horizontal)
+        }
+    }
+}
+
+private struct DayButton: View {
+    let day: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Text(day)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(
+                    Capsule()
+                        .fill(isSelected ? Color.purple : Color.clear)
+                        .overlay(
+                            Capsule()
+                                .strokeBorder(Color.purple, lineWidth: 1)
+                        )
+                )
+                .foregroundColor(isSelected ? .white : .purple)
+        }
+    }
+}
+
+// MARK: - Language Selection View
+private struct LanguageSelectionView: View {
+    @Binding var selectedLanguage: PrayerLanguage
+    
+    var body: some View {
+        Picker("Language", selection: $selectedLanguage) {
+            ForEach(PrayerLanguage.allCases, id: \.self) { language in
+                Text(language.rawValue.capitalized).tag(language)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
+        .padding(.horizontal)
+    }
+}
+
+// MARK: - Rosary Content View
+private struct RosaryContentView: View {
+    let template: RosaryTemplate
+    let commonPrayers: [String: RosaryPrayer]
+    let mysteries: [RosaryMystery]?
+    let mysteryTitle: String
+    let mysteryDescription: String
+    let selectedLanguage: PrayerLanguage
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                if !mysteryTitle.isEmpty {
+                    MysteryHeaderView(title: mysteryTitle, description: mysteryDescription)
+                }
+                
+                PrayerSectionView(
+                    title: "Opening Prayers",
+                    prayers: template.opening,
+                    commonPrayers: commonPrayers,
+                    selectedLanguage: selectedLanguage
+                )
+                
+                if let mysteries = mysteries {
+                    MysteriesView(
+                        mysteries: mysteries,
+                        template: template,
+                        commonPrayers: commonPrayers,
+                        selectedLanguage: selectedLanguage
+                    )
+                }
+                
+                PrayerSectionView(
+                    title: "Closing Prayers",
+                    prayers: template.closing.map { RosaryTemplate.TemplateItem.string($0) },
+                    commonPrayers: commonPrayers,
+                    selectedLanguage: selectedLanguage
+                )
+            }
+            .padding(.vertical)
+        }
+    }
+}
+
+private struct MysteryHeaderView: View {
+    let title: String
+    let description: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.purple)
+            
+            Text(description)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .padding(.bottom, 8)
+        }
+        .padding(.horizontal)
+    }
+}
+
+private struct PrayerSectionView: View {
+    let title: String
+    let prayers: [RosaryTemplate.TemplateItem]
+    let commonPrayers: [String: RosaryPrayer]
+    let selectedLanguage: PrayerLanguage
+    
+    var body: some View {
+        Section(header:
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.purple)
+                .padding(.bottom, 4)
+        ) {
+            ForEach(Array(prayers.enumerated()), id: \.offset) { index, item in
+                if case .string(let prayerKey) = item,
+                   let prayer = commonPrayers[prayerKey] {
+                    PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                }
+            }
+        }
+        .padding(.horizontal)
+    }
+}
+
+private struct MysteriesView: View {
+    let mysteries: [RosaryMystery]
+    let template: RosaryTemplate
+    let commonPrayers: [String: RosaryPrayer]
+    let selectedLanguage: PrayerLanguage
+    
+    var body: some View {
+        ForEach(mysteries, id: \.number) { mystery in
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text("Mystery \(mystery.number)")
+                        .font(.headline)
+                        .foregroundColor(.purple)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "rosette")
+                        .foregroundColor(.purple)
+                }
+                .padding(.bottom, 4)
+                
+                if selectedLanguage != .english {
+                    Text(mystery.latin)
+                        .font(.body)
+                        .italic()
+                }
+                
+                if selectedLanguage != .latin {
+                    Text(mystery.english)
+                        .font(.body)
+                }
+                
+                ForEach(Array(template.decade.enumerated()), id: \.offset) { index, item in
+                    if case .string(let prayerKey) = item,
+                       let prayer = commonPrayers[prayerKey] {
+                        PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                            .padding(.leading)
+                    }
+                }
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(12)
+            .padding(.horizontal)
+        }
+    }
+}
+
+private struct LoadingErrorView: View {
+    let isLoading: Bool
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            if isLoading {
+                ProgressView()
+                    .scaleEffect(1.5)
+                Text("Loading prayers...")
+                    .foregroundColor(.secondary)
+            } else {
+                Image(systemName: "exclamationmark.triangle")
+                    .font(.system(size: 40))
+                    .foregroundColor(.orange)
+                Text("Unable to load prayers")
+                    .foregroundColor(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
