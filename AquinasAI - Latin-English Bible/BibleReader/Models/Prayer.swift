@@ -9,41 +9,37 @@ struct Prayer: Identifiable, Codable {
     let latin: String
     let english: String
     var category: PrayerCategory = .basic
-    
-    var displayTitleLatin: String {
-        title_latin ?? title
-    }
-    
-    var displayTitleEnglish: String {
-        title_english ?? title
-    }
-    
-    // Custom coding keys to match JSON structure
-    private enum CodingKeys: String, CodingKey {
-        case title
-        case title_latin
-        case title_english
-        case latin
-        case english
-    }
-    
-    // Custom decoder to handle category which isn't in JSON
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        title = try container.decode(String.self, forKey: .title)
-        title_latin = try container.decodeIfPresent(String.self, forKey: .title_latin)
-        title_english = try container.decodeIfPresent(String.self, forKey: .title_english)
-        latin = try container.decode(String.self, forKey: .latin)
-        english = try container.decode(String.self, forKey: .english)
-    }
 }
 
-// MARK: - Container Models for Different JSON Structures
+// MARK: - Basic Prayers Container
+struct BasicPrayersContainer: Codable {
+    let prayers: [Prayer]
+}
+
+// MARK: - Rosary Container
 struct RosaryPrayersContainer: Codable {
-    let common_prayers: [String: Prayer]
+    let common_prayers: [String: RosaryPrayer]
     let mysteries: [String: [RosaryMystery]]
     let schedule: [String: String]
     let template: RosaryTemplate
+}
+
+struct RosaryPrayer: Codable {
+    let title_latin: String?
+    let title_english: String?
+    let latin: String
+    let english: String
+    
+    var asPrayer: Prayer {
+        Prayer(
+            title: title_english ?? title_latin ?? "",
+            title_latin: title_latin,
+            title_english: title_english,
+            latin: latin,
+            english: english,
+            category: .rosary
+        )
+    }
 }
 
 struct RosaryMystery: Codable {
@@ -53,14 +49,65 @@ struct RosaryMystery: Codable {
 }
 
 struct RosaryTemplate: Codable {
-    let opening: [String]
-    let decade: [String]
+    let opening: [TemplateItem]
+    let decade: [TemplateItem]
     let closing: [String]
+    
+    enum TemplateItem: Codable {
+        case string(String)
+        case object([String: TemplateObject])
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let str = try? container.decode(String.self) {
+                self = .string(str)
+            } else if let obj = try? container.decode([String: TemplateObject].self) {
+                self = .object(obj)
+            } else {
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode TemplateItem")
+            }
+        }
+    }
+    
+    struct TemplateObject: Codable {
+        let count: Int
+        let intentions: [String]?
+        
+        private enum CodingKeys: CodingKey {
+            case count, intentions
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            count = try container.decode(Int.self, forKey: .count)
+            intentions = try container.decodeIfPresent([String].self, forKey: .intentions)
+        }
+    }
 }
 
+// MARK: - Mass Container
 struct OrderOfMassContainer: Codable {
-    let prayers: [Prayer]
+    let prayers: [MassPrayer]
     let order_of_mass: OrderOfMass
+}
+
+struct MassPrayer: Codable {
+    let title: String
+    let title_latin: String?
+    let title_english: String?
+    let latin: String
+    let english: String
+    
+    var asPrayer: Prayer {
+        Prayer(
+            title: title,
+            title_latin: title_latin,
+            title_english: title_english,
+            latin: latin,
+            english: english,
+            category: .mass
+        )
+    }
 }
 
 struct OrderOfMass: Codable {
@@ -95,13 +142,32 @@ struct EucharistLiturgy: Codable {
     let communion_rite: [OrderItem]
 }
 
+// MARK: - Angelus Container
 struct AngelusContainer: Codable {
     let angelus: AngelusContent
 }
 
 struct AngelusContent: Codable {
-    let common_prayers: [String: Prayer]
+    let common_prayers: [String: AngelusPrayer]
     let template: AngelusTemplate
+}
+
+struct AngelusPrayer: Codable {
+    let title_latin: String?
+    let title_english: String?
+    let latin: String
+    let english: String
+    
+    var asPrayer: Prayer {
+        Prayer(
+            title: title_english ?? title_latin ?? "",
+            title_latin: title_latin,
+            title_english: title_english,
+            latin: latin,
+            english: english,
+            category: .other
+        )
+    }
 }
 
 struct AngelusTemplate: Codable {
@@ -114,13 +180,32 @@ struct AngelusStructure: Codable {
     let customary_hours: [String]
 }
 
+// MARK: - Divine Mercy Container
 struct DivineMercyContainer: Codable {
     let divine_mercy_chaplet: DivineMercyContent
 }
 
 struct DivineMercyContent: Codable {
-    let common_prayers: [String: Prayer]
+    let common_prayers: [String: DivineMercyPrayer]
     let template: DivineMercyTemplate
+}
+
+struct DivineMercyPrayer: Codable {
+    let title_latin: String?
+    let title_english: String?
+    let latin: String
+    let english: String
+    
+    var asPrayer: Prayer {
+        Prayer(
+            title: title_english ?? title_latin ?? "",
+            title_latin: title_latin,
+            title_english: title_english,
+            latin: latin,
+            english: english,
+            category: .divine
+        )
+    }
 }
 
 struct DivineMercyTemplate: Codable {
@@ -147,6 +232,7 @@ class PrayerStore: ObservableObject {
     }
     
     private func loadPrayers() {
+        print("Starting to load prayers...")
         let prayerFiles = [
             ("prayers.json", PrayerCategory.basic),
             ("rosay_prayers.json", PrayerCategory.rosary),
@@ -158,66 +244,67 @@ class PrayerStore: ObservableObject {
         var allPrayers: [Prayer] = []
         
         for (filename, category) in prayerFiles {
+            print("Processing \(filename)...")
             if let url = Bundle.main.url(forResource: filename.replacingOccurrences(of: ".json", with: ""), withExtension: "json") {
                 do {
                     let data = try Data(contentsOf: url)
+                    print("Successfully loaded data from \(filename)")
                     
                     switch filename {
                     case "rosay_prayers.json":
                         let container = try JSONDecoder().decode(RosaryPrayersContainer.self, from: data)
                         rosaryPrayers = container
-                        let prayerArray = container.common_prayers.values.map { prayer -> Prayer in
-                            var mutablePrayer = prayer
-                            mutablePrayer.category = category
-                            return mutablePrayer
-                        }
+                        let prayerArray = container.common_prayers.values.map { $0.asPrayer }
+                        print("Loaded \(prayerArray.count) rosary prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "order_of_mass.json":
                         let container = try JSONDecoder().decode(OrderOfMassContainer.self, from: data)
                         massOrder = container
-                        let prayerArray = container.prayers.map { prayer -> Prayer in
-                            var mutablePrayer = prayer
-                            mutablePrayer.category = category
-                            return mutablePrayer
-                        }
+                        let prayerArray = container.prayers.map { $0.asPrayer }
+                        print("Loaded \(prayerArray.count) mass prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "angelus_domini.json":
                         let container = try JSONDecoder().decode(AngelusContainer.self, from: data)
                         angelusPrayers = container
-                        let prayerArray = container.angelus.common_prayers.values.map { prayer -> Prayer in
-                            var mutablePrayer = prayer
-                            mutablePrayer.category = category
-                            return mutablePrayer
-                        }
+                        let prayerArray = container.angelus.common_prayers.values.map { $0.asPrayer }
+                        print("Loaded \(prayerArray.count) angelus prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "divine_mercy_chaplet.json":
                         let container = try JSONDecoder().decode(DivineMercyContainer.self, from: data)
                         divineMercyPrayers = container
-                        let prayerArray = container.divine_mercy_chaplet.common_prayers.values.map { prayer -> Prayer in
-                            var mutablePrayer = prayer
-                            mutablePrayer.category = category
-                            return mutablePrayer
-                        }
+                        let prayerArray = container.divine_mercy_chaplet.common_prayers.values.map { $0.asPrayer }
+                        print("Loaded \(prayerArray.count) divine mercy prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     default:
-                        if let prayersContainer = try? JSONDecoder().decode([String: [Prayer]].self, from: data),
-                           var categoryPrayers = prayersContainer["prayers"] {
-                            for i in categoryPrayers.indices {
-                                categoryPrayers[i].category = category
+                        if let prayersContainer = try? JSONDecoder().decode(BasicPrayersContainer.self, from: data) {
+                            let mappedPrayers = prayersContainer.prayers.map { prayer -> Prayer in
+                                var mutablePrayer = prayer
+                                mutablePrayer.category = category
+                                return mutablePrayer
                             }
-                            allPrayers.append(contentsOf: categoryPrayers)
+                            print("Loaded \(mappedPrayers.count) basic prayers")
+                            allPrayers.append(contentsOf: mappedPrayers)
                         }
                     }
                 } catch {
-                    print("Error loading prayers from \(filename): \(error)")
+                    print("❌ Error loading prayers from \(filename): \(error)")
+                    // Print the data for debugging
+                    if let data = try? Data(contentsOf: url),
+                       let jsonString = String(data: data, encoding: .utf8) {
+                        print("JSON content for \(filename):")
+                        print(jsonString.prefix(200)) // Print first 200 characters for debugging
+                    }
                 }
+            } else {
+                print("❌ Could not find \(filename) in bundle")
             }
         }
         
+        print("Total prayers loaded: \(allPrayers.count)")
         prayers = allPrayers
     }
     
