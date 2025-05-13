@@ -1,0 +1,59 @@
+{
+    "divine_mercy_chaplet": {
+      "common_prayers": {
+        "opening_prayer": {
+          "title_latin": "Oratio Apertoria",
+          "title_english": "Opening Prayer",
+          "latin": "Expirásti, Iesu, sed fons vitæ erupit pro animis, et mare misericórdiæ patefáctum est toti mundo. O fons vitæ, misericórdia Divina infinita, circumde totum mundum et effúnde Te super nos.",
+          "english": "You expired, Jesus, but the source of life gushed forth for souls and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us."
+        },
+        "eternal_father": {
+          "title_latin": "Pater Ætérne",
+          "title_english": "Eternal Father Prayer",
+          "latin": "Pater ætérne, tibi offero Corpus et Sánguinem, Ánimam et Divinitátem dilectíssimi Fílii tui, Dómini nostri Iesu Christi, in propitiatiónem pro peccátis nostris et totíus mundi.",
+          "english": "Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."
+        },
+        "sorrowful_passion": {
+          "title_latin": "Pro Dolorósa Passióne Eius",
+          "title_english": "For the Sake of His Sorrowful Passion",
+          "latin": "Pro dolorósa Passióne eius, miserére nobis et totíus mundi.",
+          "english": "For the sake of His sorrowful Passion, have mercy on us and on the whole world."
+        },
+        "holy_god": {
+          "title_latin": "Sanctus Deus",
+          "title_english": "Holy God",
+          "latin": "Sanctus Deus, Sanctus Fortis, Sanctus Immortális, miserére nobis et totíus mundi.",
+          "english": "Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world."
+        },
+        "closing_prayer": {
+          "title_latin": "Oratio Conclusiva",
+          "title_english": "Closing Prayer",
+          "latin": "Deus ætérne, in quo misericórdia est infiníta et compassionis thesaurus inexhauríbilis, réspice in nos benígnus et multíplica in nobis misericórdiam tuam, ut in difficílibus momentis non desperémus neque desperátio nos opprimat, sed magna cum fidúcia nos submíttere nosmetípsos sanctíssimæ voluntáti tuæ, quæ est amor et misericórdia ipsa. Amen.",
+          "english": "Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen."
+        }
+      },
+  
+      "template": {
+        "opening": [
+          "sign_of_the_cross",
+          "opening_prayer",
+          "our_father",
+          "hail_mary",
+          "apostles_creed"
+        ],
+        "decade": [
+          "eternal_father",
+          { "sorrowful_passion": 10 }
+        ],
+        "closing": [
+          { "holy_god": 3 },
+          "closing_prayer",
+          "sign_of_the_cross"
+        ],
+        "structure": {
+          "decades": 5
+        }
+      }
+    }
+  }
+  

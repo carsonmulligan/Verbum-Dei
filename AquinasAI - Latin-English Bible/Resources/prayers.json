@@ -1,6 +1,76 @@
 {
     "prayers": [
-      {
+    {
+        "title": "Actus Fidei",
+        "title_latin": "Actus Fidei",
+        "title_english": "Act of Faith",
+        "latin": "Domine Deus, credo omnia quae Ecclesia Catholica infallibiliter proponit, quia Tu ea revelasti, qui es Veritas aeterna. In hac fide vivere et mori statuo. Amen.",
+        "english": "O my God, I firmly believe all the truths that the Holy Catholic Church teaches, because You have revealed them, who can neither deceive nor be deceived. I intend to live and die in this faith. Amen."
+        },
+        {
+        "title": "Actus Spei",
+        "title_latin": "Actus Spei",
+        "title_english": "Act of Hope",
+        "latin": "Domine Deus, spero per misericordiam tuam, per merita Domini nostri Iesu Christi, me esse futurum participem gloriae aeternae, et ad hoc accipere media necessaria, quia Tu promisisti et fidelis es in promissis. Amen.",
+        "english": "O my God, relying on Your almighty power, infinite mercy, and promises, I hope to obtain forgiveness of my sins, the help of Your grace, and life everlasting through the merits of Jesus Christ, my Lord and Redeemer. Amen."
+        },
+        {
+        "title": "Actus Caritatis",
+        "title_latin": "Actus Caritatis",
+        "title_english": "Act of Charity (Act of Love)",
+        "latin": "Domine Deus, amo Te super omnia ex toto corde meo, quia dignus es super omnia amore; et propter amorem Tuum diligo proximum meum sicut me ipsum. Amen.",
+        "english": "O my God, I love You above all things with my whole heart and soul, because You are all-good and worthy of all my love. For Your sake, I love my neighbor as myself. Amen."
+        },
+        {
+        "title": "Oblatio Matutina",
+        "title_latin": "Oblatio Matutina",
+        "title_english": "Morning Offering",
+        "latin": "O Iesu, per Immaculatum Cor Mariae, offero Tibi preces, opera, gaudia et passiones huius diei, in unione cum Sacratissimo Corde Tuo, pro omnibus intentionibus pro quibus continuo Te in Sacrificio Missae offertur in terris. Amen.",
+        "english": "O Jesus, through the Immaculate Heart of Mary, I offer You my prayers, works, joys, and sufferings of this day, in union with the Holy Sacrifice of the Mass throughout the world, for all the intentions of Your Sacred Heart. Amen."
+        },
+        {
+        "title": "Veni Sancte Spiritus (Oratio Brevis)",
+        "title_latin": "Veni Sancte Spiritus",
+        "title_english": "Come, Holy Spirit (Short Invocation)",
+        "latin": "Veni, Sancte Spiritus, reple tuorum corda fidelium, et tui amoris in eis ignem accende.",
+        "english": "Come, Holy Spirit, fill the hearts of Your faithful and kindle in them the fire of Your love."
+        },
+        {
+        "title": "Communio Spiritualis",
+        "title_latin": "Communio Spiritualis",
+        "title_english": "Act of Spiritual Communion",
+        "latin": "Iesu mi, credo Te in Sanctissimo Sacramento vere praesentem. Te amo super omnia et te desidero in animam meam. Quoniam nunc non possum Te sacramentaliter recipere, veni spiritualiter in cor meum. Te amplector ac me totum Tibi unio; numquam permittas me a Te separari. Amen.",
+        "english": "My Jesus, I believe that You are present in the Most Holy Sacrament. I love You above all things and I desire to receive You into my soul. Since I cannot at this moment receive You sacramentally, come at least spiritually into my heart. I embrace You as if You were already there and unite myself wholly to You. Never permit me to be separated from You. Amen."
+        },
+        {
+        "title": "Oratio Fatimae",
+        "title_latin": "Oratio Fatimae",
+        "title_english": "Fatima Prayer (O My Jesus)",
+        "latin": "Domine Iesu, dimitte nobis debita nostra, libera nos ab ignibus inferni; perduc in caelum omnes animas, praesertim eas quae maxime indigent misericordia Tua. Amen.",
+        "english": "O my Jesus, forgive us our sins, save us from the fires of hell, and lead all souls to Heaven, especially those most in need of Your mercy. Amen."
+        },
+        {
+        "title": "En Ego, O Bone et Dulcissime Iesu",
+        "title_latin": "Oratio ante Crucifixum",
+        "title_english": "Prayer Before a Crucifix",
+        "latin": "En ego, o bone et dulcissime Iesu, ante faciem tuam genibus provolutus, te supplex et ardentissime oro, ut cordi meo vivas et imprimatur in eo firma fide, spe et caritate vera contritio de peccatis ac firmissima voluntas emendandi. Amen.",
+        "english": "Behold, O good and sweetest Jesus, I kneel before You, and with the most fervent desire of my soul I pray that You will engrave upon my heart lively sentiments of faith, hope, and charity, true contrition for my sins, and a firm purpose of amendment. Amen."
+        },
+        {
+        "title": "Oremus pro Pontifice Nostro",
+        "title_latin": "Oremus pro Pontifice Nostro",
+        "title_english": "Prayer for the Pope",
+        "latin": "Oremus pro Pontifice nostro N.: Dominus conservet eum, et vivificet eum, et beatum faciat eum in terra, et non tradat eum in animam inimicorum eius.",
+        "english": "Let us pray for our Holy Father N. May the Lord preserve him, give him life, make him blessed upon the earth, and never deliver him to the will of his enemies."
+        },
+        {
+        "title": "Laudes Divinae",
+        "title_latin": "Laudes Divinae",
+        "title_english": "The Divine Praises",
+        "latin": "Benedictus Deus. Benedictum Nomen Sanctum eius. Benedictus Iesus Christus, verus Deus et verus Homo. Benedictum Nomen Iesu. Benedictum Cor eius sacratissimum. Benedictus Sanguis eius pretiosissimus. Benedictus Iesus in sanctissimo altaris Sacramento. Benedictus Spiritus Sanctus Paraclitus. Benedicta excelsa Mater Dei, Maria sanctissima. Benedicta sancta eius et immaculata Conceptio. Benedicta eius gloriosa Assumptio. Benedictum nomen Mariae, Virginis et Matris. Benedictus sanctus Ioseph, eius castissimus Sponsus. Benedictus Deus in Angelis suis et in Sanctis suis. Amen.",
+        "english": "Blessed be God. Blessed be His Holy Name. Blessed be Jesus Christ, true God and true Man. Blessed be the Name of Jesus. Blessed be His Most Sacred Heart. Blessed be His Most Precious Blood. Blessed be Jesus in the Most Holy Sacrament of the Altar. Blessed be the Holy Spirit, the Paraclete. Blessed be the great Mother of God, Mary most holy. Blessed be her holy and Immaculate Conception. Blessed be her glorious Assumption. Blessed be the name of Mary, Virgin and Mother. Blessed be Saint Joseph, her most chaste spouse. Blessed be God in His Angels and in His Saints. Amen."
+        },
+        {
         "title": "Signum Crucis",
         "title_latin": "Signum Crucis",
         "title_english": "Sign of the Cross",
