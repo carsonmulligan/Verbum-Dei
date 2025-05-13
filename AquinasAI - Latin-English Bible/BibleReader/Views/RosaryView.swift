@@ -216,7 +216,7 @@ private struct MysteriesView: View {
     let selectedLanguage: PrayerLanguage
     
     var body: some View {
-        ForEach(mysteries) { mystery in
+        ForEach(mysteries, id: \.number) { mystery in
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Text("Mystery \(mystery.number)")
@@ -260,6 +260,7 @@ private struct MysteriesView: View {
 private struct LoadingErrorView: View {
     let isLoading: Bool
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var prayerStore: PrayerStore
     
     var body: some View {
         VStack(spacing: 20) {
@@ -296,10 +297,7 @@ private struct LoadingErrorView: View {
                     .padding(.horizontal)
                 
                 Button(action: {
-                    // Trigger reload in PrayerStore
-                    if let prayerStore = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController?.view.window?.windowScene?.windows.first?.rootViewController?.view.environmentObject(PrayerStore()) as? PrayerStore {
-                        prayerStore.loadPrayers()
-                    }
+                    prayerStore.loadPrayers()
                 }) {
                     HStack {
                         Image(systemName: "arrow.clockwise")

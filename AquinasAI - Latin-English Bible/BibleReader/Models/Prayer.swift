@@ -313,7 +313,7 @@ class PrayerStore: ObservableObject {
         loadPrayers()
     }
     
-    private func loadPrayers() {
+    func loadPrayers() {
         print("Starting to load prayers...")
         let prayerFiles = [
             ("prayers.json", PrayerCategory.basic),
