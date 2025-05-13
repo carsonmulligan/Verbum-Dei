@@ -9,21 +9,18 @@ enum PrayerCategory: String, CaseIterable {
 }
 
 struct PrayersView: View {
-    @StateObject private var prayerStore = PrayerStore()
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: BibleViewModel
+    @EnvironmentObject var prayerStore: PrayerStore
+    @Environment(\.dismiss) var dismiss
     @State private var searchText = ""
     @State private var selectedCategory: PrayerCategory = .basic
+    @State private var selectedLanguage: PrayerLanguage = .bilingual
     
     var filteredPrayers: [Prayer] {
-        let categoryPrayers = prayerStore.getPrayers(for: selectedCategory)
-        
+        let prayers = prayerStore.getPrayers(for: selectedCategory)
         if searchText.isEmpty {
-            return categoryPrayers
+            return prayers
         }
-        
-        return categoryPrayers.filter { prayer in
+        return prayers.filter { prayer in
             prayer.displayTitleEnglish.localizedCaseInsensitiveContains(searchText) ||
             prayer.displayTitleLatin.localizedCaseInsensitiveContains(searchText) ||
             prayer.latin.localizedCaseInsensitiveContains(searchText) ||
@@ -33,38 +30,80 @@ struct PrayersView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                (colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
-                    .ignoresSafeArea()
+            VStack(spacing: 16) {
+                // Search bar
+                SearchBar(text: $searchText)
+                    .padding(.horizontal)
                 
-                VStack(spacing: 0) {
-                    // Search Bar
-                    SearchBar(searchText: $searchText)
-                        .padding()
-                    
-                    // Category Selector
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(PrayerCategory.allCases, id: \.self) { category in
-                                TestamentPillButton(
-                                    title: category.rawValue,
-                                    isSelected: selectedCategory == category,
-                                    action: { selectedCategory = category }
-                                )
+                // Category selection
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(PrayerCategory.allCases, id: \.self) { category in
+                            if category == .rosary {
+                                NavigationLink(destination: RosaryView()) {
+                                    Text(category.displayName)
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 8)
+                                        .background(
+                                            Capsule()
+                                                .fill(selectedCategory == category ? Color.purple : Color.clear)
+                                                .overlay(
+                                                    Capsule()
+                                                        .strokeBorder(Color.purple, lineWidth: 1)
+                                                )
+                                        )
+                                        .foregroundColor(selectedCategory == category ? .white : .purple)
+                                }
+                            } else {
+                                Button(action: {
+                                    selectedCategory = category
+                                }) {
+                                    Text(category.displayName)
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 8)
+                                        .background(
+                                            Capsule()
+                                                .fill(selectedCategory == category ? Color.purple : Color.clear)
+                                                .overlay(
+                                                    Capsule()
+                                                        .strokeBorder(Color.purple, lineWidth: 1)
+                                                )
+                                        )
+                                        .foregroundColor(selectedCategory == category ? .white : .purple)
+                                }
                             }
                         }
-                        .padding(.horizontal)
                     }
-                    .padding(.vertical, 8)
-                    
-                    // Prayer List
+                    .padding(.horizontal)
+                }
+                
+                // Language selection
+                Picker("Language", selection: $selectedLanguage) {
+                    ForEach(PrayerLanguage.allCases, id: \.self) { language in
+                        Text(language.rawValue.capitalized).tag(language)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                
+                // Prayer list
+                if selectedCategory != .rosary {
                     if filteredPrayers.isEmpty {
-                        EmptyPrayersView()
+                        Spacer()
+                        VStack {
+                            Image(systemName: "book.closed")
+                                .font(.system(size: 50))
+                                .foregroundColor(.gray)
+                            Text("No Prayers Found")
+                                .foregroundColor(.gray)
+                                .padding(.top)
+                        }
+                        Spacer()
                     } else {
                         ScrollView {
                             LazyVStack(spacing: 16) {
                                 ForEach(filteredPrayers) { prayer in
-                                    PrayerCard(prayer: prayer, displayMode: viewModel.displayMode)
+                                    PrayerCard(prayer: prayer, language: selectedLanguage)
                                         .padding(.horizontal)
                                 }
                             }
@@ -74,20 +113,13 @@ struct PrayersView: View {
                 }
             }
             .navigationTitle("Prayers")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        dismiss()
-                    }
-                }
-            }
+            .navigationBarItems(trailing: Button("Done") { dismiss() })
         }
     }
 }
 
 private struct SearchBar: View {
-    @Binding var searchText: String
+    @Binding var text: String
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -95,14 +127,14 @@ private struct SearchBar: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
             
-            TextField("Search prayers...", text: $searchText)
+            TextField("Search prayers...", text: $text)
                 .textFieldStyle(PlainTextFieldStyle())
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
             
-            if !searchText.isEmpty {
+            if !text.isEmpty {
                 Button {
-                    searchText = ""
+                    text = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(.gray)
@@ -117,37 +149,22 @@ private struct SearchBar: View {
     }
 }
 
-private struct EmptyPrayersView: View {
-    var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "book.closed")
-                .font(.system(size: 50))
-                .foregroundColor(.gray)
-            
-            Text("No Prayers Found")
-                .font(.headline)
-                .foregroundColor(.gray)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
 private struct PrayerCard: View {
     let prayer: Prayer
-    let displayMode: DisplayMode
+    let language: PrayerLanguage
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
-                if displayMode == .latinOnly || displayMode == .bilingual {
+                if language == .latinOnly || language == .bilingual {
                     Text(prayer.displayTitleLatin)
                         .font(.headline)
                         .foregroundColor(colorScheme == .dark ? .nightText : .primary)
                 }
                 
-                if displayMode == .englishOnly || displayMode == .bilingual {
-                    if displayMode == .bilingual {
+                if language == .englishOnly || language == .bilingual {
+                    if language == .bilingual {
                         Text(prayer.displayTitleEnglish)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
@@ -160,17 +177,17 @@ private struct PrayerCard: View {
                 }
             }
             
-            if displayMode == .latinOnly || displayMode == .bilingual {
+            if language == .latinOnly || language == .bilingual {
                 Text(prayer.latin)
                     .font(.body)
                     .foregroundColor(colorScheme == .dark ? .nightText : .primary)
             }
             
-            if displayMode == .englishOnly || displayMode == .bilingual {
+            if language == .englishOnly || language == .bilingual {
                 Text(prayer.english)
                     .font(.body)
-                    .foregroundColor(displayMode == .bilingual ? .secondary : (colorScheme == .dark ? .nightText : .primary))
-                    .italic(displayMode == .bilingual)
+                    .foregroundColor(language == .bilingual ? .secondary : (colorScheme == .dark ? .nightText : .primary))
+                    .italic(language == .bilingual)
             }
         }
         .padding()
