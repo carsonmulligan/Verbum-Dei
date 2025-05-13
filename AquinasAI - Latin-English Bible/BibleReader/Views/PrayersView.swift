@@ -1,19 +1,31 @@
 import SwiftUI
 
+enum PrayerCategory: String, CaseIterable {
+    case basic = "Basic Prayers"
+    case mass = "Mass Prayers"
+    case rosary = "Rosary"
+    case divine = "Divine Mercy"
+    case other = "Other Prayers"
+}
+
 struct PrayersView: View {
     @StateObject private var prayerStore = PrayerStore()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var viewModel: BibleViewModel
     @State private var searchText = ""
+    @State private var selectedCategory: PrayerCategory = .basic
     
     var filteredPrayers: [Prayer] {
+        let categoryPrayers = prayerStore.getPrayers(for: selectedCategory)
+        
         if searchText.isEmpty {
-            return prayerStore.prayers
+            return categoryPrayers
         }
-        return prayerStore.prayers.filter { prayer in
-            prayer.title_english.localizedCaseInsensitiveContains(searchText) ||
-            prayer.title_latin.localizedCaseInsensitiveContains(searchText) ||
+        
+        return categoryPrayers.filter { prayer in
+            prayer.displayTitleEnglish.localizedCaseInsensitiveContains(searchText) ||
+            prayer.displayTitleLatin.localizedCaseInsensitiveContains(searchText) ||
             prayer.latin.localizedCaseInsensitiveContains(searchText) ||
             prayer.english.localizedCaseInsensitiveContains(searchText)
         }
@@ -26,9 +38,26 @@ struct PrayersView: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
+                    // Search Bar
                     SearchBar(searchText: $searchText)
                         .padding()
                     
+                    // Category Selector
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(PrayerCategory.allCases, id: \.self) { category in
+                                TestamentPillButton(
+                                    title: category.rawValue,
+                                    isSelected: selectedCategory == category,
+                                    action: { selectedCategory = category }
+                                )
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .padding(.vertical, 8)
+                    
+                    // Prayer List
                     if filteredPrayers.isEmpty {
                         EmptyPrayersView()
                     } else {
@@ -112,19 +141,19 @@ private struct PrayerCard: View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
                 if displayMode == .latinOnly || displayMode == .bilingual {
-                    Text(prayer.title_latin)
+                    Text(prayer.displayTitleLatin)
                         .font(.headline)
                         .foregroundColor(colorScheme == .dark ? .nightText : .primary)
                 }
                 
                 if displayMode == .englishOnly || displayMode == .bilingual {
                     if displayMode == .bilingual {
-                        Text(prayer.title_english)
+                        Text(prayer.displayTitleEnglish)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .italic()
                     } else {
-                        Text(prayer.title_english)
+                        Text(prayer.displayTitleEnglish)
                             .font(.headline)
                             .foregroundColor(colorScheme == .dark ? .nightText : .primary)
                     }
