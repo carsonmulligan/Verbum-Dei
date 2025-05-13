@@ -37,18 +37,8 @@ struct RosaryView: View {
     }
     
     private var mysteryDescription: String {
-        switch mysteryType {
-        case "joyful":
-            return "The Joyful Mysteries focus on the events surrounding Christ's birth and early life."
-        case "sorrowful":
-            return "The Sorrowful Mysteries meditate on Christ's Passion and death."
-        case "glorious":
-            return "The Glorious Mysteries contemplate Christ's Resurrection and the glories of Heaven."
-        case "luminous":
-            return "The Luminous Mysteries reflect on key moments in Christ's public ministry."
-        default:
-            return ""
-        }
+        guard let type = mysteryType else { return "" }
+        return prayerStore.getMysteryDescription(for: type)
     }
     
     var body: some View {
