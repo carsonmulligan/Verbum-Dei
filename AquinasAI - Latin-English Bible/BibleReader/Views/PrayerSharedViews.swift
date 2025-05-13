@@ -17,7 +17,7 @@ struct PrayerCard: View {
                 if language == .latinOnly || language == .bilingual {
                     Text(prayer.displayTitleLatin)
                         .font(.headline)
-                        .foregroundColor(colorScheme == .dark ? .nightText : .primary)
+                        .foregroundColor(.purple)
                 }
                 
                 if language == .englishOnly || language == .bilingual {
@@ -29,7 +29,7 @@ struct PrayerCard: View {
                     } else {
                         Text(prayer.displayTitleEnglish)
                             .font(.headline)
-                            .foregroundColor(colorScheme == .dark ? .nightText : .primary)
+                            .foregroundColor(.purple)
                     }
                 }
             }
@@ -37,19 +37,27 @@ struct PrayerCard: View {
             if language == .latinOnly || language == .bilingual {
                 Text(prayer.latin)
                     .font(.body)
-                    .foregroundColor(colorScheme == .dark ? .nightText : .primary)
+                    .foregroundColor(colorScheme == .dark ? .white : .primary)
+                    .padding(.top, 4)
             }
             
             if language == .englishOnly || language == .bilingual {
                 Text(prayer.english)
                     .font(.body)
-                    .foregroundColor(language == .bilingual ? .secondary : (colorScheme == .dark ? .nightText : .primary))
+                    .foregroundColor(language == .bilingual ? .secondary : (colorScheme == .dark ? .white : .primary))
                     .italic(language == .bilingual)
+                    .padding(.top, language == .bilingual ? 2 : 4)
             }
         }
         .padding()
-        .background(colorScheme == .dark ? Color.white.opacity(0.05) : Color.white)
-        .cornerRadius(12)
-        .shadow(color: colorScheme == .dark ? .clear : Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(colorScheme == .dark ? Color.black.opacity(0.3) : Color.white)
+                .shadow(color: colorScheme == .dark ? .clear : Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(Color.purple.opacity(0.2), lineWidth: 1)
+        )
     }
 } 

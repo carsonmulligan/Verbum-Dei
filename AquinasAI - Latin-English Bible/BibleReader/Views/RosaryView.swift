@@ -216,7 +216,7 @@ private struct MysteriesView: View {
     let selectedLanguage: PrayerLanguage
     
     var body: some View {
-        ForEach(mysteries, id: \.number) { mystery in
+        ForEach(mysteries) { mystery in
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Text("Mystery \(mystery.number)")
@@ -259,23 +259,62 @@ private struct MysteriesView: View {
 
 private struct LoadingErrorView: View {
     let isLoading: Bool
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 20) {
             if isLoading {
-                ProgressView()
-                    .scaleEffect(1.5)
+                Circle()
+                    .trim(from: 0, to: 0.7)
+                    .stroke(Color.purple, lineWidth: 4)
+                    .frame(width: 50, height: 50)
+                    .rotationEffect(Angle(degrees: 360))
+                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false), value: UUID())
+                
                 Text("Loading prayers...")
+                    .font(.headline)
+                    .foregroundColor(.purple)
+                
+                Text("Preparing your spiritual journey")
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
             } else {
-                Image(systemName: "exclamationmark.triangle")
-                    .font(.system(size: 40))
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.system(size: 50))
                     .foregroundColor(.orange)
-                Text("Unable to load prayers")
+                
+                Text("Unable to Load Prayers")
+                    .font(.headline)
+                    .foregroundColor(colorScheme == .dark ? .white : .primary)
+                
+                Text("Please check your connection and try again")
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                
+                Button(action: {
+                    // Trigger reload in PrayerStore
+                    if let prayerStore = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController?.view.window?.windowScene?.windows.first?.rootViewController?.view.environmentObject(PrayerStore()) as? PrayerStore {
+                        prayerStore.loadPrayers()
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "arrow.clockwise")
+                        Text("Retry")
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .background(Color.purple)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(colorScheme == .dark ? Color.black.opacity(0.6) : Color.white.opacity(0.9))
     }
 }
 

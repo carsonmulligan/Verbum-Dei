@@ -86,7 +86,8 @@ struct RosaryPrayer: Codable {
     }
 }
 
-struct RosaryMystery: Codable {
+struct RosaryMystery: Codable, Identifiable {
+    var id: Int { number }
     let number: Int
     let latin: String
     let english: String
