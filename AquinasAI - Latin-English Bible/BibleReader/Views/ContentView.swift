@@ -16,11 +16,12 @@ struct ContentView: View {
     @AppStorage("isDarkMode") private var isDarkMode = true
     @State private var showingBookmarks = false
     @State private var showingSearch = false
+    @State private var showingPrayers = false
     
     var body: some View {
         NavigationView {
             if !viewModel.books.isEmpty {
-                BookList(books: viewModel.books, viewModel: viewModel, isDarkMode: $isDarkMode, showingBookmarks: $showingBookmarks)
+                BookList(books: viewModel.books, viewModel: viewModel, isDarkMode: $isDarkMode, showingBookmarks: $showingBookmarks, showingPrayers: $showingPrayers)
             } else if let error = viewModel.errorMessage {
                 ErrorView(message: error)
             } else {
@@ -63,6 +64,7 @@ struct TestamentSelectorView: View {
     @Binding var isDarkMode: Bool
     @Binding var showingBookmarks: Bool
     @Binding var showingSearch: Bool
+    @Binding var showingPrayers: Bool
     
     var body: some View {
         VStack(spacing: 12) {
@@ -92,6 +94,12 @@ struct TestamentSelectorView: View {
                     isSelected: false,
                     action: { showingBookmarks = true }
                 )
+                
+                TestamentPillButton(
+                    title: "Prayers",
+                    isSelected: false,
+                    action: { showingPrayers = true }
+                )
             }
         }
         .padding()
@@ -104,6 +112,7 @@ struct BookList: View {
     @ObservedObject var viewModel: BibleViewModel
     @Binding var isDarkMode: Bool
     @Binding var showingBookmarks: Bool
+    @Binding var showingPrayers: Bool
     @State private var selectedTestament: Testament = .old
     @State private var showingSearch = false
     @State private var navigationPath = NavigationPath()
@@ -156,7 +165,8 @@ struct BookList: View {
                         selectedTestament: $selectedTestament,
                         isDarkMode: $isDarkMode,
                         showingBookmarks: $showingBookmarks,
-                        showingSearch: $showingSearch
+                        showingSearch: $showingSearch,
+                        showingPrayers: $showingPrayers
                     )
                     
                     bookListContent
@@ -224,6 +234,9 @@ struct BookList: View {
                     }
                     showingBookmarks = false
                 }
+            }
+            .sheet(isPresented: $showingPrayers) {
+                PrayersView()
             }
         }
     }
