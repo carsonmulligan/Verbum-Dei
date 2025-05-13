@@ -165,7 +165,7 @@ class PrayerStore: ObservableObject {
                     switch filename {
                     case "rosay_prayers.json":
                         rosaryPrayers = try JSONDecoder().decode(RosaryPrayersContainer.self, from: data)
-                        let prayers = rosaryPrayers?.common_prayers.values.map { var prayer = $0; prayer.category = category; return prayer } ?? []
+                        let prayers = Array(rosaryPrayers?.common_prayers.values ?? []).map { var prayer = $0; prayer.category = category; return prayer }
                         allPrayers.append(contentsOf: prayers)
                         
                     case "order_of_mass.json":
@@ -175,12 +175,12 @@ class PrayerStore: ObservableObject {
                         
                     case "angelus_domini.json":
                         angelusPrayers = try JSONDecoder().decode(AngelusContainer.self, from: data)
-                        let prayers = angelusPrayers?.angelus.common_prayers.values.map { var prayer = $0; prayer.category = category; return prayer } ?? []
+                        let prayers = Array(angelusPrayers?.angelus.common_prayers.values ?? []).map { var prayer = $0; prayer.category = category; return prayer }
                         allPrayers.append(contentsOf: prayers)
                         
                     case "divine_mercy_chaplet.json":
                         divineMercyPrayers = try JSONDecoder().decode(DivineMercyContainer.self, from: data)
-                        let prayers = divineMercyPrayers?.divine_mercy_chaplet.common_prayers.values.map { var prayer = $0; prayer.category = category; return prayer } ?? []
+                        let prayers = Array(divineMercyPrayers?.divine_mercy_chaplet.common_prayers.values ?? []).map { var prayer = $0; prayer.category = category; return prayer }
                         allPrayers.append(contentsOf: prayers)
                         
                     default:
