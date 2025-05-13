@@ -6,6 +6,10 @@ enum PrayerCategory: String, CaseIterable {
     case rosary = "Rosary"
     case divine = "Divine Mercy"
     case other = "Other Prayers"
+    
+    var displayName: String {
+        self.rawValue
+    }
 }
 
 struct PrayersView: View {

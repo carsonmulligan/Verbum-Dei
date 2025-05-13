@@ -195,32 +195,6 @@ struct RosaryView: View {
     }
 }
 
-struct PrayerCard: View {
-    let prayer: Prayer
-    let language: PrayerLanguage
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(prayer.displayTitleEnglish)
-                .font(.headline)
-            
-            if language != .english {
-                Text(prayer.latin)
-                    .font(.body)
-            }
-            
-            if language != .latin {
-                Text(prayer.english)
-                    .font(.body)
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
-    }
-}
-
 #Preview {
     NavigationView {
         RosaryView()
