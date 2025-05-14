@@ -103,6 +103,11 @@ struct TemplateObject: Codable, Hashable {
     }
 }
 
+struct PrayerIntention: Codable {
+    let count: Int
+    let intentions: [String]
+}
+
 struct RosaryTemplate: Codable {
     let opening: [OrderItem]
     let decade: [OrderItem]
@@ -120,11 +125,9 @@ struct RosaryTemplate: Codable {
             } else if let dict = try? openingArrayContainer.decode([String: Int].self),
                       let (key, count) = dict.first {
                 openingItems.append(.prayerCount(key, count))
-            } else if let dict = try? openingArrayContainer.decode([String: [String: Any]].self),
-                      let (key, value) = dict.first,
-                      let count = value["count"] as? Int,
-                      let intentions = value["intentions"] as? [String] {
-                openingItems.append(.prayerWithIntentions(key, count, intentions))
+            } else if let dict = try? openingArrayContainer.decode([String: PrayerIntention].self),
+                      let (key, intention) = dict.first {
+                openingItems.append(.prayerWithIntentions(key, intention.count, intention.intentions))
             }
         }
         opening = openingItems
@@ -210,11 +213,9 @@ enum OrderItem: Codable, Hashable {
         } else if let dict = try? container.decode([String: Int].self),
                   let (key, count) = dict.first {
             self = .prayerCount(key, count)
-        } else if let dict = try? container.decode([String: [String: Any]].self),
-                  let (key, value) = dict.first,
-                  let count = value["count"] as? Int,
-                  let intentions = value["intentions"] as? [String] {
-            self = .prayerWithIntentions(key, count, intentions)
+        } else if let dict = try? container.decode([String: PrayerIntention].self),
+                  let (key, intention) = dict.first {
+            self = .prayerWithIntentions(key, intention.count, intention.intentions)
         } else {
             throw DecodingError.dataCorruptedError(
                 in: container,
