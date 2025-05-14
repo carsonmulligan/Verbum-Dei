@@ -17,7 +17,7 @@ struct PrayerCard: View {
                 if language == .latinOnly || language == .bilingual {
                     Text(prayer.displayTitleLatin)
                         .font(.headline)
-                        .foregroundColor(.purple)
+                        .foregroundColor(.deepPurple)
                 }
                 
                 if language == .englishOnly || language == .bilingual {
@@ -29,7 +29,7 @@ struct PrayerCard: View {
                     } else {
                         Text(prayer.displayTitleEnglish)
                             .font(.headline)
-                            .foregroundColor(.purple)
+                            .foregroundColor(.deepPurple)
                     }
                 }
             }
@@ -57,7 +57,7 @@ struct PrayerCard: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.purple.opacity(0.2), lineWidth: 1)
+                .strokeBorder(Color.deepPurple.opacity(0.2), lineWidth: 1)
         )
     }
 } 

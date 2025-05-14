@@ -95,13 +95,13 @@ private struct DayButton: View {
                 .padding(.vertical, 8)
                 .background(
                     Capsule()
-                        .fill(isSelected ? Color.purple : Color.clear)
+                        .fill(isSelected ? Color.deepPurple : Color.clear)
                         .overlay(
                             Capsule()
-                                .strokeBorder(Color.purple, lineWidth: 1)
+                                .strokeBorder(Color.deepPurple, lineWidth: 1)
                         )
                 )
-                .foregroundColor(isSelected ? .white : .purple)
+                .foregroundColor(isSelected ? .white : .deepPurple)
         }
     }
 }
@@ -174,7 +174,7 @@ private struct MysteryHeaderView: View {
             Text(title)
                 .font(.title)
                 .fontWeight(.bold)
-                .foregroundColor(.purple)
+                .foregroundColor(.deepPurple)
             
             Text(description)
                 .font(.subheadline)
@@ -195,7 +195,7 @@ private struct PrayerSectionView: View {
         Section(header:
             Text(title)
                 .font(.headline)
-                .foregroundColor(.purple)
+                .foregroundColor(.deepPurple)
                 .padding(.bottom, 4)
         ) {
             ForEach(Array(prayers.enumerated()), id: \.offset) { index, item in
@@ -246,12 +246,12 @@ private struct MysteriesView: View {
                     HStack {
                         Text("Mystery \(mystery.number)")
                             .font(.headline)
-                            .foregroundColor(.purple)
+                            .foregroundColor(.deepPurple)
                         
                         Spacer()
                         
                         Image(systemName: "rosette")
-                            .foregroundColor(.purple)
+                            .foregroundColor(.deepPurple)
                     }
                     .padding(.bottom, 4)
                     
@@ -304,14 +304,14 @@ private struct LoadingErrorView: View {
             if isLoading {
                 Circle()
                     .trim(from: 0, to: 0.7)
-                    .stroke(Color.purple, lineWidth: 4)
+                    .stroke(Color.deepPurple, lineWidth: 4)
                     .frame(width: 50, height: 50)
                     .rotationEffect(Angle(degrees: 360))
                     .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false), value: UUID())
                 
                 Text("Loading prayers...")
                     .font(.headline)
-                    .foregroundColor(.purple)
+                    .foregroundColor(.deepPurple)
                 
                 Text("Preparing your spiritual journey")
                     .font(.subheadline)
@@ -342,7 +342,7 @@ private struct LoadingErrorView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
-                    .background(Color.purple)
+                    .background(Color.deepPurple)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                 }

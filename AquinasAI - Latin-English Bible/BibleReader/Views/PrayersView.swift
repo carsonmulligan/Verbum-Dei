@@ -50,13 +50,13 @@ struct PrayersView: View {
                                         .padding(.vertical, 8)
                                         .background(
                                             Capsule()
-                                                .fill(selectedCategory == category ? Color.purple : Color.clear)
+                                                .fill(selectedCategory == category ? Color.deepPurple : Color.clear)
                                                 .overlay(
                                                     Capsule()
-                                                        .strokeBorder(Color.purple, lineWidth: 1)
+                                                        .strokeBorder(Color.deepPurple, lineWidth: 1)
                                                 )
                                         )
-                                        .foregroundColor(selectedCategory == category ? .white : .purple)
+                                        .foregroundColor(selectedCategory == category ? .white : .deepPurple)
                                 }
                             } else {
                                 Button(action: {
@@ -67,13 +67,13 @@ struct PrayersView: View {
                                         .padding(.vertical, 8)
                                         .background(
                                             Capsule()
-                                                .fill(selectedCategory == category ? Color.purple : Color.clear)
+                                                .fill(selectedCategory == category ? Color.deepPurple : Color.clear)
                                                 .overlay(
                                                     Capsule()
-                                                        .strokeBorder(Color.purple, lineWidth: 1)
+                                                        .strokeBorder(Color.deepPurple, lineWidth: 1)
                                                 )
                                         )
-                                        .foregroundColor(selectedCategory == category ? .white : .purple)
+                                        .foregroundColor(selectedCategory == category ? .white : .deepPurple)
                                 }
                             }
                         }
