@@ -93,6 +93,16 @@ struct RosaryMystery: Codable, Identifiable {
     let english: String
 }
 
+struct TemplateObject: Codable, Hashable {
+    let count: Int
+    let intentions: [String]?
+    
+    init(count: Int, intentions: [String]? = nil) {
+        self.count = count
+        self.intentions = intentions
+    }
+}
+
 struct RosaryTemplate: Codable {
     let opening: [OrderItem]
     let decade: [OrderItem]
@@ -103,34 +113,31 @@ struct RosaryTemplate: Codable {
         
         // Decode opening array
         var openingItems: [OrderItem] = []
-        let openingArray = try container.decode([Any].self, forKey: .opening)
-        for item in openingArray {
-            if let str = item as? String {
+        var openingArrayContainer = try container.nestedUnkeyedContainer(forKey: .opening)
+        while !openingArrayContainer.isAtEnd {
+            if let str = try? openingArrayContainer.decode(String.self) {
                 openingItems.append(.string(str))
-            } else if let dict = item as? [String: Any],
-                      let (key, value) = dict.first {
-                if let count = value as? Int {
-                    openingItems.append(.prayerCount(key, count))
-                } else if let obj = value as? [String: Any],
-                          let count = obj["count"] as? Int,
-                          let intentions = obj["intentions"] as? [String] {
-                    openingItems.append(.prayerWithIntentions(key, count, intentions))
-                }
+            } else if let dict = try? openingArrayContainer.decode([String: Int].self),
+                      let (key, count) = dict.first {
+                openingItems.append(.prayerCount(key, count))
+            } else if let dict = try? openingArrayContainer.decode([String: [String: Any]].self),
+                      let (key, value) = dict.first,
+                      let count = value["count"] as? Int,
+                      let intentions = value["intentions"] as? [String] {
+                openingItems.append(.prayerWithIntentions(key, count, intentions))
             }
         }
         opening = openingItems
         
         // Decode decade array
         var decadeItems: [OrderItem] = []
-        let decadeArray = try container.decode([Any].self, forKey: .decade)
-        for item in decadeArray {
-            if let str = item as? String {
+        var decadeArrayContainer = try container.nestedUnkeyedContainer(forKey: .decade)
+        while !decadeArrayContainer.isAtEnd {
+            if let str = try? decadeArrayContainer.decode(String.self) {
                 decadeItems.append(.string(str))
-            } else if let dict = item as? [String: Any],
-                      let (key, value) = dict.first {
-                if let count = value as? Int {
-                    decadeItems.append(.prayerCount(key, count))
-                }
+            } else if let dict = try? decadeArrayContainer.decode([String: Int].self),
+                      let (key, count) = dict.first {
+                decadeItems.append(.prayerCount(key, count))
             }
         }
         decade = decadeItems
@@ -365,30 +372,26 @@ struct DivineMercyTemplate: Codable {
         
         // Decode decade array
         var decadeItems: [OrderItem] = []
-        let decadeArray = try container.decode([Any].self, forKey: .decade)
-        for item in decadeArray {
-            if let str = item as? String {
+        var decadeArrayContainer = try container.nestedUnkeyedContainer(forKey: .decade)
+        while !decadeArrayContainer.isAtEnd {
+            if let str = try? decadeArrayContainer.decode(String.self) {
                 decadeItems.append(.string(str))
-            } else if let dict = item as? [String: Any],
-                      let (key, value) = dict.first {
-                if let count = value as? Int {
-                    decadeItems.append(.prayerCount(key, count))
-                }
+            } else if let dict = try? decadeArrayContainer.decode([String: Int].self),
+                      let (key, count) = dict.first {
+                decadeItems.append(.prayerCount(key, count))
             }
         }
         decade = decadeItems
         
         // Decode closing array
         var closingItems: [OrderItem] = []
-        let closingArray = try container.decode([Any].self, forKey: .closing)
-        for item in closingArray {
-            if let str = item as? String {
+        var closingArrayContainer = try container.nestedUnkeyedContainer(forKey: .closing)
+        while !closingArrayContainer.isAtEnd {
+            if let str = try? closingArrayContainer.decode(String.self) {
                 closingItems.append(.string(str))
-            } else if let dict = item as? [String: Any],
-                      let (key, value) = dict.first {
-                if let count = value as? Int {
-                    closingItems.append(.prayerCount(key, count))
-                }
+            } else if let dict = try? closingArrayContainer.decode([String: Int].self),
+                      let (key, count) = dict.first {
+                closingItems.append(.prayerCount(key, count))
             }
         }
         closing = closingItems
