@@ -269,8 +269,8 @@ struct PrayersView: View {
             print("⭐️ Searching all prayers for Anima Christi")
             for searchCategory in PrayerCategory.allCases where searchCategory != .rosary {
                 let allPrayers = prayerStore.getPrayers(for: searchCategory)
-                if let prayer = allPrayers.first(where: { 
-                    $0.title.lowercased().contains("anima") || 
+                if let prayer = allPrayers.first(where: { prayer in 
+                    prayer.title.lowercased().contains("anima") || 
                     (prayer.title_latin != nil && prayer.title_latin!.lowercased().contains("anima"))
                 }) {
                     print("✅ Found Anima Christi in category: \(searchCategory.rawValue)")
