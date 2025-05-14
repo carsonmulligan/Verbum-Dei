@@ -17,6 +17,7 @@ struct PrayerCard: View {
                 if language == .latinOnly || language == .bilingual {
                     Text(prayer.displayTitleLatin)
                         .font(.headline)
+                        .fontWeight(.semibold)
                         .foregroundColor(.deepPurple)
                 }
                 
@@ -24,11 +25,12 @@ struct PrayerCard: View {
                     if language == .bilingual {
                         Text(prayer.displayTitleEnglish)
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8))
                             .italic()
                     } else {
                         Text(prayer.displayTitleEnglish)
                             .font(.headline)
+                            .fontWeight(.semibold)
                             .foregroundColor(.deepPurple)
                     }
                 }
