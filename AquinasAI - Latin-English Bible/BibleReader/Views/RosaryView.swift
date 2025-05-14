@@ -396,6 +396,14 @@ private struct MysteriesView: View {
                             .font(.body)
                     }
                     
+                    if let description = mystery.description {
+                        Text(description)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .padding(.vertical, 4)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    
                     ForEach(template.decade, id: \.self) { item in
                         switch item {
                         case .string(let prayerId):

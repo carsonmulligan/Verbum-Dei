@@ -103,6 +103,7 @@ struct RosaryMystery: Codable, Identifiable {
     let number: Int
     let latin: String
     let english: String
+    let description: String?
 }
 
 struct TemplateObject: Codable, Hashable {

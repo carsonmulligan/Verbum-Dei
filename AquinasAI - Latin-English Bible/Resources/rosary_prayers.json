@@ -51,32 +51,32 @@
     },
     "mysteries": {
         "joyful": [
-            { "number": 1, "latin": "Annuntiátio", "english": "The Annunciation" },
-            { "number": 2, "latin": "Visitátio", "english": "The Visitation" },
-            { "number": 3, "latin": "Natívitas", "english": "The Nativity" },
-            { "number": 4, "latin": "Præsentátio", "english": "The Presentation in the Temple" },
-            { "number": 5, "latin": "Invéntio in Templo", "english": "The Finding of Jesus in the Temple" }
+            { "number": 1, "latin": "Annuntiátio", "english": "The Annunciation", "description": "The Angel Gabriel announces to Mary that she is to be the Mother of God. (Luke 1:26-38)" },
+            { "number": 2, "latin": "Visitátio", "english": "The Visitation", "description": "Mary visits her cousin Elizabeth, who tells her that she will be blessed among women. (Luke 1:39-56)" },
+            { "number": 3, "latin": "Natívitas", "english": "The Nativity", "description": "Jesus is born in a stable in Bethlehem. (Luke 2:1-21)" },
+            { "number": 4, "latin": "Præsentátio", "english": "The Presentation in the Temple", "description": "Mary and Joseph present Jesus in the Temple where they meet Simeon. (Luke 2:22-38)" },
+            { "number": 5, "latin": "Invéntio in Templo", "english": "The Finding of Jesus in the Temple", "description": "After searching for three days, Mary and Joseph find the young Jesus teaching in the Temple. (Luke 2:41-52)" }
         ],
         "sorrowful": [
-            { "number": 1, "latin": "Agónia in Hortu", "english": "The Agony in the Garden" },
-            { "number": 2, "latin": "Flagellátio", "english": "The Scourging at the Pillar" },
-            { "number": 3, "latin": "Coronátio Spinæ", "english": "The Crowning with Thorns" },
-            { "number": 4, "latin": "Baiulátio Crucis", "english": "The Carrying of the Cross" },
-            { "number": 5, "latin": "Crucifíxio", "english": "The Crucifixion" }
+            { "number": 1, "latin": "Agónia in Hortu", "english": "The Agony in the Garden", "description": "Jesus prays in the Garden of Gethsemane on the night before His death. (Matthew 26:36-46)" },
+            { "number": 2, "latin": "Flagellátio", "english": "The Scourging at the Pillar", "description": "Jesus is bound to a pillar and scourged. (John 19:1)" },
+            { "number": 3, "latin": "Coronátio Spinæ", "english": "The Crowning with Thorns", "description": "Jesus is mocked and crowned with thorns. (Matthew 27:27-31)" },
+            { "number": 4, "latin": "Baiulátio Crucis", "english": "The Carrying of the Cross", "description": "Jesus carries His cross to Calvary. (John 19:17)" },
+            { "number": 5, "latin": "Crucifíxio", "english": "The Crucifixion", "description": "Jesus is nailed to the cross and dies. (John 19:18-30)" }
         ],
         "glorious": [
-            { "number": 1, "latin": "Resurréctio", "english": "The Resurrection" },
-            { "number": 2, "latin": "Ascénsio", "english": "The Ascension" },
-            { "number": 3, "latin": "Descénsus Spíritus Sancti", "english": "The Descent of the Holy Spirit" },
-            { "number": 4, "latin": "Assúmptio Mariæ", "english": "The Assumption" },
-            { "number": 5, "latin": "Coronátio Mariæ", "english": "The Coronation of Mary" }
+            { "number": 1, "latin": "Resurréctio", "english": "The Resurrection", "description": "Jesus rises from the dead on the third day. (Mark 16:1-8)" },
+            { "number": 2, "latin": "Ascénsio", "english": "The Ascension", "description": "Jesus ascends into Heaven forty days after His Resurrection. (Acts 1:6-11)" },
+            { "number": 3, "latin": "Descénsus Spíritus Sancti", "english": "The Descent of the Holy Spirit", "description": "The Holy Spirit descends upon Mary and the Apostles at Pentecost. (Acts 2:1-4)" },
+            { "number": 4, "latin": "Assúmptio Mariæ", "english": "The Assumption", "description": "Mary is assumed body and soul into Heaven at the end of her life." },
+            { "number": 5, "latin": "Coronátio Mariæ", "english": "The Coronation of Mary", "description": "Mary is crowned Queen of Heaven and Earth. (Revelation 12:1)" }
         ],
         "luminous": [
-            { "number": 1, "latin": "Baptísma in Iordáne", "english": "The Baptism in the Jordan" },
-            { "number": 2, "latin": "Núptiæ Cana", "english": "The Wedding at Cana" },
-            { "number": 3, "latin": "Prædicátio Regni Dei", "english": "The Proclamation of the Kingdom" },
-            { "number": 4, "latin": "Transfigurátio", "english": "The Transfiguration" },
-            { "number": 5, "latin": "Institútio Eucharístiæ", "english": "The Institution of the Eucharist" }
+            { "number": 1, "latin": "Baptísma in Iordáne", "english": "The Baptism in the Jordan", "description": "Jesus is baptized in the Jordan River by John the Baptist. (Matthew 3:13-17)" },
+            { "number": 2, "latin": "Núptiæ Cana", "english": "The Wedding at Cana", "description": "At Mary's request, Jesus performs His first miracle, turning water into wine. (John 2:1-12)" },
+            { "number": 3, "latin": "Prædicátio Regni Dei", "english": "The Proclamation of the Kingdom", "description": "Jesus proclaims the Kingdom of God and calls all to conversion. (Mark 1:14-15)" },
+            { "number": 4, "latin": "Transfigurátio", "english": "The Transfiguration", "description": "Jesus is transfigured on Mount Tabor, revealing His divine glory. (Matthew 17:1-8)" },
+            { "number": 5, "latin": "Institútio Eucharístiæ", "english": "The Institution of the Eucharist", "description": "At the Last Supper, Jesus institutes the Eucharist. (Matthew 26:26-28)" }
         ]
     },
     "schedule": {
