@@ -232,12 +232,13 @@ private struct PrayerSectionView: View {
     let scrollToId: String?
     
     var body: some View {
-        Section(header:
+        VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.deepPurple)
                 .padding(.bottom, 4)
-        ) {
+                .padding(.horizontal)
+            
             VStack(spacing: 12) {
                 ForEach(prayers, id: \.self) { item in
                     switch item {
