@@ -94,85 +94,59 @@ struct RosaryMystery: Codable, Identifiable {
 }
 
 struct RosaryTemplate: Codable {
-    let opening: [TemplateItem]
-    let decade: [TemplateItem]
+    let opening: [OrderItem]
+    let decade: [OrderItem]
     let closing: [String]
     
-    enum TemplateItem: Codable, Hashable {
-        case string(String)
-        case object([String: TemplateObject])
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            if let str = try? container.decode(String.self) {
-                self = .string(str)
-            } else if let dict = try? container.decode([String: TemplateObject].self) {
-                self = .object(dict)
-            } else {
-                throw DecodingError.dataCorruptedError(
-                    in: container,
-                    debugDescription: "Expected String or Dictionary with TemplateObject"
-                )
-            }
-        }
-        
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.singleValueContainer()
-            switch self {
-            case .string(let str):
-                try container.encode(str)
-            case .object(let dict):
-                try container.encode(dict)
-            }
-        }
-        
-        func hash(into hasher: inout Hasher) {
-            switch self {
-            case .string(let str):
-                hasher.combine(0) // Discriminator for string case
-                hasher.combine(str)
-            case .object(let dict):
-                hasher.combine(1) // Discriminator for object case
-                // Convert dictionary to array of tuples to ensure consistent hashing
-                let sortedPairs = dict.sorted(by: { $0.key < $1.key })
-                for (key, value) in sortedPairs {
-                    hasher.combine(key)
-                    hasher.combine(value)
+        // Decode opening array
+        var openingItems: [OrderItem] = []
+        let openingArray = try container.decode([Any].self, forKey: .opening)
+        for item in openingArray {
+            if let str = item as? String {
+                openingItems.append(.string(str))
+            } else if let dict = item as? [String: Any],
+                      let (key, value) = dict.first {
+                if let count = value as? Int {
+                    openingItems.append(.prayerCount(key, count))
+                } else if let obj = value as? [String: Any],
+                          let count = obj["count"] as? Int,
+                          let intentions = obj["intentions"] as? [String] {
+                    openingItems.append(.prayerWithIntentions(key, count, intentions))
                 }
             }
         }
+        opening = openingItems
         
-        static func == (lhs: TemplateItem, rhs: TemplateItem) -> Bool {
-            switch (lhs, rhs) {
-            case (.string(let lhs), .string(let rhs)):
-                return lhs == rhs
-            case (.object(let lhs), .object(let rhs)):
-                return lhs == rhs
-            default:
-                return false
+        // Decode decade array
+        var decadeItems: [OrderItem] = []
+        let decadeArray = try container.decode([Any].self, forKey: .decade)
+        for item in decadeArray {
+            if let str = item as? String {
+                decadeItems.append(.string(str))
+            } else if let dict = item as? [String: Any],
+                      let (key, value) = dict.first {
+                if let count = value as? Int {
+                    decadeItems.append(.prayerCount(key, count))
+                }
             }
         }
+        decade = decadeItems
+        
+        closing = try container.decode([String].self, forKey: .closing)
     }
     
-    struct TemplateObject: Codable, Hashable {
-        let count: Int
-        let intentions: [String]?
-        
-        init(from decoder: Decoder) throws {
-            if let intValue = try? decoder.singleValueContainer().decode(Int.self) {
-                self.count = intValue
-                self.intentions = nil
-            } else {
-                let container = try decoder.container(keyedBy: CodingKeys.self)
-                count = try container.decode(Int.self, forKey: .count)
-                intentions = try container.decodeIfPresent([String].self, forKey: .intentions)
-            }
-        }
-        
-        private enum CodingKeys: String, CodingKey {
-            case count
-            case intentions
-        }
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(opening, forKey: .opening)
+        try container.encode(decade, forKey: .decade)
+        try container.encode(closing, forKey: .closing)
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case opening, decade, closing
     }
 }
 
@@ -208,10 +182,13 @@ struct OrderOfMass: Codable {
     let concluding_rites: [String]
 }
 
-enum OrderItem: Codable {
+enum OrderItem: Codable, Hashable {
     case string(String)
     case array([String])
     case dictionary([String: [String]])
+    case templateObject([String: TemplateObject])
+    case prayerCount(String, Int)
+    case prayerWithIntentions(String, Int, [String])
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -221,8 +198,85 @@ enum OrderItem: Codable {
             self = .array(arr)
         } else if let dict = try? container.decode([String: [String]].self) {
             self = .dictionary(dict)
+        } else if let dict = try? container.decode([String: TemplateObject].self) {
+            self = .templateObject(dict)
+        } else if let dict = try? container.decode([String: Int].self),
+                  let (key, count) = dict.first {
+            self = .prayerCount(key, count)
+        } else if let dict = try? container.decode([String: [String: Any]].self),
+                  let (key, value) = dict.first,
+                  let count = value["count"] as? Int,
+                  let intentions = value["intentions"] as? [String] {
+            self = .prayerWithIntentions(key, count, intentions)
         } else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode OrderItem")
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Cannot decode OrderItem"
+            )
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .string(let str):
+            try container.encode(str)
+        case .array(let arr):
+            try container.encode(arr)
+        case .dictionary(let dict):
+            try container.encode(dict)
+        case .templateObject(let dict):
+            try container.encode(dict)
+        case .prayerCount(let prayer, let count):
+            try container.encode([prayer: count])
+        case .prayerWithIntentions(let prayer, let count, let intentions):
+            try container.encode([prayer: ["count": count, "intentions": intentions]])
+        }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case .string(let str):
+            hasher.combine(0)
+            hasher.combine(str)
+        case .array(let arr):
+            hasher.combine(1)
+            hasher.combine(arr)
+        case .dictionary(let dict):
+            hasher.combine(2)
+            hasher.combine(dict)
+        case .templateObject(let dict):
+            hasher.combine(3)
+            hasher.combine(dict)
+        case .prayerCount(let prayer, let count):
+            hasher.combine(4)
+            hasher.combine(prayer)
+            hasher.combine(count)
+        case .prayerWithIntentions(let prayer, let count, let intentions):
+            hasher.combine(5)
+            hasher.combine(prayer)
+            hasher.combine(count)
+            hasher.combine(intentions)
+        }
+    }
+    
+    static func == (lhs: OrderItem, rhs: OrderItem) -> Bool {
+        switch (lhs, rhs) {
+        case (.string(let lhs), .string(let rhs)):
+            return lhs == rhs
+        case (.array(let lhs), .array(let rhs)):
+            return lhs == rhs
+        case (.dictionary(let lhs), .dictionary(let rhs)):
+            return lhs == rhs
+        case (.templateObject(let lhs), .templateObject(let rhs)):
+            return lhs == rhs
+        case (.prayerCount(let lhsPrayer, let lhsCount), .prayerCount(let rhsPrayer, let rhsCount)):
+            return lhsPrayer == rhsPrayer && lhsCount == rhsCount
+        case (.prayerWithIntentions(let lhsPrayer, let lhsCount, let lhsIntentions),
+              .prayerWithIntentions(let rhsPrayer, let rhsCount, let rhsIntentions)):
+            return lhsPrayer == rhsPrayer && lhsCount == rhsCount && lhsIntentions == rhsIntentions
+        default:
+            return false
         }
     }
 }
@@ -304,6 +358,55 @@ struct DivineMercyTemplate: Codable {
     let decade: [OrderItem]
     let closing: [OrderItem]
     let structure: DivineMercyStructure
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        opening = try container.decode([String].self, forKey: .opening)
+        
+        // Decode decade array
+        var decadeItems: [OrderItem] = []
+        let decadeArray = try container.decode([Any].self, forKey: .decade)
+        for item in decadeArray {
+            if let str = item as? String {
+                decadeItems.append(.string(str))
+            } else if let dict = item as? [String: Any],
+                      let (key, value) = dict.first {
+                if let count = value as? Int {
+                    decadeItems.append(.prayerCount(key, count))
+                }
+            }
+        }
+        decade = decadeItems
+        
+        // Decode closing array
+        var closingItems: [OrderItem] = []
+        let closingArray = try container.decode([Any].self, forKey: .closing)
+        for item in closingArray {
+            if let str = item as? String {
+                closingItems.append(.string(str))
+            } else if let dict = item as? [String: Any],
+                      let (key, value) = dict.first {
+                if let count = value as? Int {
+                    closingItems.append(.prayerCount(key, count))
+                }
+            }
+        }
+        closing = closingItems
+        
+        structure = try container.decode(DivineMercyStructure.self, forKey: .structure)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(opening, forKey: .opening)
+        try container.encode(decade, forKey: .decade)
+        try container.encode(closing, forKey: .closing)
+        try container.encode(structure, forKey: .structure)
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case opening, decade, closing, structure
+    }
 }
 
 struct DivineMercyStructure: Codable {
