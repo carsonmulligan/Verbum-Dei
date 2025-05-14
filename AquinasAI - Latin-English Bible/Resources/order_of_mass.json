@@ -1,12 +1,14 @@
 {
-    "common_prayers": {
-        "sign_of_the_cross": {
+    "prayers": [
+        {
+            "id": "sign_of_the_cross",
             "title_latin": "Signum Crucis",
             "title_english": "Sign of the Cross",
             "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
             "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
         },
-        "greeting": {
+        {
+            "id": "greeting",
             "title_latin": "Salutatio",
             "title_english": "Greeting",
             "latin": "Dominus vobiscum.",
@@ -14,69 +16,28 @@
             "response_latin": "Et cum spiritu tuo.",
             "response_english": "And with your spirit."
         },
-        "penitential_act": {
+        {
+            "id": "penitential_act",
             "title_latin": "Actus Paenitentialis",
             "title_english": "Penitential Act",
             "latin": "Confiteor Deo omnipotenti et vobis, fratres, quia peccavi nimis cogitatione, verbo, opere et omissione: mea culpa, mea culpa, mea maxima culpa.",
             "english": "I confess to almighty God and to you, my brothers and sisters, that I have greatly sinned, in my thoughts and in my words, in what I have done and in what I have failed to do, through my fault, through my fault, through my most grievous fault."
         },
-        "kyrie": {
+        {
+            "id": "kyrie",
             "title_latin": "Kyrie",
             "title_english": "Lord Have Mercy",
             "latin": "Kyrie eleison. Christe eleison. Kyrie eleison.",
             "english": "Lord have mercy. Christ have mercy. Lord have mercy."
         },
-        "gloria": {
+        {
+            "id": "gloria",
             "title_latin": "Gloria",
             "title_english": "Glory to God",
             "latin": "Gloria in excelsis Deo et in terra pax hominibus bonae voluntatis...",
             "english": "Glory to God in the highest, and on earth peace to people of good will..."
-        },
-        "collect": {
-            "title_latin": "Collecta",
-            "title_english": "Collect",
-            "latin": "Oremus...",
-            "english": "Let us pray..."
-        },
-        "creed": {
-            "title_latin": "Credo",
-            "title_english": "Nicene Creed",
-            "latin": "Credo in unum Deum, Patrem omnipotentem, factorem caeli et terrae, visibilium omnium et invisibilium...",
-            "english": "I believe in one God, the Father almighty, maker of heaven and earth, of all things visible and invisible..."
-        },
-        "offertory": {
-            "title_latin": "Offertorium",
-            "title_english": "Offertory",
-            "latin": "Benedictus es, Domine, Deus universi...",
-            "english": "Blessed are you, Lord God of all creation..."
-        },
-        "sanctus": {
-            "title_latin": "Sanctus",
-            "title_english": "Holy, Holy, Holy",
-            "latin": "Sanctus, Sanctus, Sanctus Dominus Deus Sabaoth. Pleni sunt caeli et terra gloria tua. Hosanna in excelsis. Benedictus qui venit in nomine Domini. Hosanna in excelsis.",
-            "english": "Holy, Holy, Holy Lord God of hosts. Heaven and earth are full of your glory. Hosanna in the highest. Blessed is he who comes in the name of the Lord. Hosanna in the highest."
-        },
-        "lords_prayer": {
-            "title_latin": "Pater Noster",
-            "title_english": "The Lord's Prayer",
-            "latin": "Pater noster, qui es in caelis...",
-            "english": "Our Father, who art in heaven..."
-        },
-        "agnus_dei": {
-            "title_latin": "Agnus Dei",
-            "title_english": "Lamb of God",
-            "latin": "Agnus Dei, qui tollis peccata mundi, miserere nobis...",
-            "english": "Lamb of God, you take away the sins of the world, have mercy on us..."
-        },
-        "dismissal": {
-            "title_latin": "Dimissio",
-            "title_english": "Dismissal",
-            "latin": "Ite, missa est.",
-            "english": "Go forth, the Mass is ended.",
-            "response_latin": "Deo gratias.",
-            "response_english": "Thanks be to God."
         }
-    },
+    ],
     "order_of_mass": {
         "introductory_rites": [
             {"prayer": "sign_of_the_cross"},

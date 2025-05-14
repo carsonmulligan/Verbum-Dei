@@ -43,66 +43,64 @@
             "english": "Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve. To thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary."
         }
     },
-    "rosary": {
-        "mysteries": {
-            "joyful": [
-                { "number": 1, "latin": "Annuntiátio", "english": "The Annunciation" },
-                { "number": 2, "latin": "Visitátio", "english": "The Visitation" },
-                { "number": 3, "latin": "Natívitas", "english": "The Nativity" },
-                { "number": 4, "latin": "Præsentátio", "english": "The Presentation in the Temple" },
-                { "number": 5, "latin": "Invéntio in Templo", "english": "The Finding of Jesus in the Temple" }
-            ],
-            "sorrowful": [
-                { "number": 1, "latin": "Agónia in Hortu", "english": "The Agony in the Garden" },
-                { "number": 2, "latin": "Flagellátio", "english": "The Scourging at the Pillar" },
-                { "number": 3, "latin": "Coronátio Spinæ", "english": "The Crowning with Thorns" },
-                { "number": 4, "latin": "Baiulátio Crucis", "english": "The Carrying of the Cross" },
-                { "number": 5, "latin": "Crucifíxio", "english": "The Crucifixion" }
-            ],
-            "glorious": [
-                { "number": 1, "latin": "Resurréctio", "english": "The Resurrection" },
-                { "number": 2, "latin": "Ascénsio", "english": "The Ascension" },
-                { "number": 3, "latin": "Descénsus Spíritus Sancti", "english": "The Descent of the Holy Spirit" },
-                { "number": 4, "latin": "Assúmptio Mariæ", "english": "The Assumption" },
-                { "number": 5, "latin": "Coronátio Mariæ", "english": "The Coronation of Mary" }
-            ],
-            "luminous": [
-                { "number": 1, "latin": "Baptísma in Iordáne", "english": "The Baptism in the Jordan" },
-                { "number": 2, "latin": "Núptiæ Cana", "english": "The Wedding at Cana" },
-                { "number": 3, "latin": "Prædicátio Regni Dei", "english": "The Proclamation of the Kingdom" },
-                { "number": 4, "latin": "Transfigurátio", "english": "The Transfiguration" },
-                { "number": 5, "latin": "Institútio Eucharístiæ", "english": "The Institution of the Eucharist" }
-            ]
-        },
-        "schedule": {
-            "Monday": "joyful",
-            "Tuesday": "sorrowful",
-            "Wednesday": "glorious",
-            "Thursday": "luminous",
-            "Friday": "sorrowful",
-            "Saturday": "joyful",
-            "Sunday": "glorious"
-        },
-        "template": {
-            "opening": [
-                {"sign_of_the_cross": 1},
-                {"apostles_creed": 1},
-                {"our_father": 1},
-                {"hail_mary": {"count": 3, "intentions": ["Faith", "Hope", "Charity"]}},
-                {"glory_be": 1}
-            ],
-            "decade": [
-                {"our_father": 1},
-                {"hail_mary": 10},
-                {"glory_be": 1},
-                {"fatima_prayer": 1}
-            ],
-            "closing": [
-                "hail_holy_queen",
-                "final_prayer",
-                "sign_of_the_cross"
-            ]
-        }
+    "mysteries": {
+        "joyful": [
+            { "number": 1, "latin": "Annuntiátio", "english": "The Annunciation" },
+            { "number": 2, "latin": "Visitátio", "english": "The Visitation" },
+            { "number": 3, "latin": "Natívitas", "english": "The Nativity" },
+            { "number": 4, "latin": "Præsentátio", "english": "The Presentation in the Temple" },
+            { "number": 5, "latin": "Invéntio in Templo", "english": "The Finding of Jesus in the Temple" }
+        ],
+        "sorrowful": [
+            { "number": 1, "latin": "Agónia in Hortu", "english": "The Agony in the Garden" },
+            { "number": 2, "latin": "Flagellátio", "english": "The Scourging at the Pillar" },
+            { "number": 3, "latin": "Coronátio Spinæ", "english": "The Crowning with Thorns" },
+            { "number": 4, "latin": "Baiulátio Crucis", "english": "The Carrying of the Cross" },
+            { "number": 5, "latin": "Crucifíxio", "english": "The Crucifixion" }
+        ],
+        "glorious": [
+            { "number": 1, "latin": "Resurréctio", "english": "The Resurrection" },
+            { "number": 2, "latin": "Ascénsio", "english": "The Ascension" },
+            { "number": 3, "latin": "Descénsus Spíritus Sancti", "english": "The Descent of the Holy Spirit" },
+            { "number": 4, "latin": "Assúmptio Mariæ", "english": "The Assumption" },
+            { "number": 5, "latin": "Coronátio Mariæ", "english": "The Coronation of Mary" }
+        ],
+        "luminous": [
+            { "number": 1, "latin": "Baptísma in Iordáne", "english": "The Baptism in the Jordan" },
+            { "number": 2, "latin": "Núptiæ Cana", "english": "The Wedding at Cana" },
+            { "number": 3, "latin": "Prædicátio Regni Dei", "english": "The Proclamation of the Kingdom" },
+            { "number": 4, "latin": "Transfigurátio", "english": "The Transfiguration" },
+            { "number": 5, "latin": "Institútio Eucharístiæ", "english": "The Institution of the Eucharist" }
+        ]
+    },
+    "schedule": {
+        "Monday": "joyful",
+        "Tuesday": "sorrowful",
+        "Wednesday": "glorious",
+        "Thursday": "luminous",
+        "Friday": "sorrowful",
+        "Saturday": "joyful",
+        "Sunday": "glorious"
+    },
+    "template": {
+        "opening": [
+            {"prayer": "sign_of_the_cross", "count": 1},
+            {"prayer": "apostles_creed", "count": 1},
+            {"prayer": "our_father", "count": 1},
+            {"prayer": "hail_mary", "count": 3, "intentions": ["Faith", "Hope", "Charity"]},
+            {"prayer": "glory_be", "count": 1}
+        ],
+        "decade": [
+            {"prayer": "our_father", "count": 1},
+            {"prayer": "hail_mary", "count": 10},
+            {"prayer": "glory_be", "count": 1},
+            {"prayer": "fatima_prayer", "count": 1}
+        ],
+        "closing": [
+            {"prayer": "hail_holy_queen", "count": 1},
+            {"prayer": "final_prayer", "count": 1},
+            {"prayer": "sign_of_the_cross", "count": 1}
+        ]
     }
 }
   
