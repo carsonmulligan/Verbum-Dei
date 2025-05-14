@@ -131,8 +131,23 @@ struct PrayersView: View {
                                             .id(prayer.id)
                                             .background(
                                                 // Debug highlight for the target prayer
-                                                scrollToId == prayer.id ? Color.yellow.opacity(0.2) : Color.clear
+                                                scrollToId == prayer.id ? Color.yellow.opacity(0.3) : Color.clear
                                             )
+                                            .overlay(
+                                                // Add a visual border for debugging
+                                                ZStack {
+                                                    if scrollToId == prayer.id {
+                                                        RoundedRectangle(cornerRadius: 12)
+                                                            .stroke(Color.red, lineWidth: 2)
+                                                            .padding(.horizontal, -2)
+                                                    }
+                                                }
+                                            )
+                                            .onAppear {
+                                                if scrollToId == prayer.id {
+                                                    print("⭐️ TARGET PRAYER APPEARED IN VIEW: \(prayer.title)")
+                                                }
+                                            }
                                     }
                                 }
                                 .padding(.vertical)
@@ -140,7 +155,7 @@ struct PrayersView: View {
                             }
                             .onChange(of: selectedCategory) { oldValue, newValue in
                                 if let id = scrollToId {
-                                    print("📋 Category changed from \(oldValue) to \(newValue)")
+                                    print("📋 Category changed from \(oldValue) to \(newValue), scrollToId: \(id)")
                                     self.scrollAttempts += 1
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                         findAndScrollToPrayer(id: id, in: newValue, using: scrollProxy)
@@ -171,13 +186,29 @@ struct PrayersView: View {
                                             print("📋 Using provided category: \(category.rawValue)")
                                             selectedCategory = category
                                             
-                                            // Force a long initial delay for more reliable scrolling
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                            // Force a staggered approach to scrolling
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                                 // Reset scroll attempts to force view refresh
                                                 self.scrollAttempts += 1
                                                 
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                                // First attempt to scroll
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                    print("⭐️ First scroll attempt...")
                                                     findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                                    
+                                                    // Second attempt to scroll with a delay
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                        print("⭐️ Second scroll attempt...")
+                                                        self.scrollAttempts += 1
+                                                        findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                                        
+                                                        // Third attempt after another delay
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                                                            print("⭐️ Third scroll attempt...")
+                                                            self.scrollAttempts += 1
+                                                            findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                                        }
+                                                    }
                                                 }
                                             }
                                         } else {
@@ -188,11 +219,30 @@ struct PrayersView: View {
                                                     print("📋 Found prayer in category: \(category.rawValue)")
                                                     selectedCategory = category
                                                     
-                                                    // Reset scroll attempts to force view refresh
-                                                    self.scrollAttempts += 1
-                                                    
-                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                                        findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                                    // Force a staggered approach to scrolling
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                        // Reset scroll attempts to force view refresh
+                                                        self.scrollAttempts += 1
+                                                        
+                                                        // First attempt to scroll
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                            print("⭐️ First scroll attempt...")
+                                                            findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                                            
+                                                            // Second attempt after a delay
+                                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                                print("⭐️ Second scroll attempt...")
+                                                                self.scrollAttempts += 1
+                                                                findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                                                
+                                                                // Third attempt after another delay
+                                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                                                                    print("⭐️ Third scroll attempt...")
+                                                                    self.scrollAttempts += 1
+                                                                    findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                                                }
+                                                            }
+                                                        }
                                                     }
                                                 } else {
                                                     print("❌ Could not find prayer in any category")
@@ -220,6 +270,23 @@ struct PrayersView: View {
         let prayerIds = prayers.map { $0.id }
         print("📋 Available prayer IDs: \(prayerIds.joined(separator: ", "))")
         
+        // Special case for "oratio_fatimae" prayer
+        if id == "oratio_fatimae" || id.lowercased().contains("fatima") || id.lowercased().contains("fatimae") {
+            print("⭐️ Special case for Fatima Prayer")
+            if let prayer = prayers.first(where: { prayer in
+                prayer.title.lowercased().contains("fatima") ||
+                (prayer.title_latin != nil && prayer.title_latin!.lowercased().contains("fatima")) ||
+                prayer.id.lowercased().contains("fatima") ||
+                prayer.title.lowercased().contains("fatimae") ||
+                prayer.id.lowercased().contains("fatimae")
+            }) {
+                print("✅ Special case: Found Fatima Prayer: \(prayer.title) (ID: \(prayer.id))")
+                scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
+                scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
+                return
+            }
+        }
+        
         // Try exact match first
         if let prayer = prayers.first(where: { $0.id == id }) {
             print("✅ Found exact prayer match: \(prayer.title) (ID: \(prayer.id)) in category: \(category.rawValue)")
@@ -242,6 +309,7 @@ struct PrayersView: View {
         
         if let prayer = prayers.first(where: { $0.id == normalizedId }) {
             print("✅ Found prayer match with normalized ID: \(prayer.title) (ID: \(prayer.id)) in category: \(category.rawValue)")
+            scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
             scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
             return
         }
@@ -249,18 +317,20 @@ struct PrayersView: View {
         // Special case for "anima_christi" which seems problematic
         if id == "anima_christi" || normalizedId == "anima_christi" {
             print("⭐️ Special case for Anima Christi prayer")
-            if let prayer = prayers.first(where: { 
-                $0.title.lowercased().contains("anima") && 
-                $0.title.lowercased().contains("christi")
+            if let prayer = prayers.first(where: { prayer in 
+                prayer.title.lowercased().contains("anima") && 
+                prayer.title.lowercased().contains("christi")
             }) {
                 print("✅ Special case: Found Anima Christi prayer: \(prayer.title) (ID: \(prayer.id))")
+                scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
                 scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
                 return
             }
             
             // Try with just part of the name
-            if let prayer = prayers.first(where: { $0.title.lowercased().contains("anima") }) {
+            if let prayer = prayers.first(where: { prayer in prayer.title.lowercased().contains("anima") }) {
                 print("✅ Special case: Found partial match for Anima Christi: \(prayer.title) (ID: \(prayer.id))")
+                scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
                 scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
                 return
             }
@@ -274,6 +344,7 @@ struct PrayersView: View {
                     (prayer.title_latin != nil && prayer.title_latin!.lowercased().contains("anima"))
                 }) {
                     print("✅ Found Anima Christi in category: \(searchCategory.rawValue)")
+                    scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
                     if searchCategory != category {
                         selectedCategory = searchCategory
                         // Wait for category change to take effect
@@ -295,6 +366,7 @@ struct PrayersView: View {
                 $0.title.lowercased().contains("spei") 
             }) {
                 print("✅ Special case: Found Actus Spei prayer: \(prayer.title) (ID: \(prayer.id))")
+                scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
                 scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
                 return
             }
@@ -305,6 +377,7 @@ struct PrayersView: View {
                    prayer.title.lowercased().contains("spei") ||
                    (prayer.title_latin != nil && prayer.title_latin!.lowercased().contains("spei")) {
                     print("✅ Partial match for Actus Spei: \(prayer.title) (ID: \(prayer.id))")
+                    scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
                     scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
                     return
                 }
@@ -317,6 +390,7 @@ struct PrayersView: View {
             if prayer.title.lowercased().contains(id.lowercased()) || 
                id.lowercased().contains(prayer.title.lowercased()) {
                 print("✅ Found partial match: \(prayer.title) (ID: \(prayer.id)) for ID: \(id)")
+                scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
                 scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
                 return
             }
@@ -326,6 +400,7 @@ struct PrayersView: View {
                (englishTitle.lowercased().contains(id.lowercased()) || 
                 id.lowercased().contains(englishTitle.lowercased())) {
                 print("✅ Found partial match in English title: \(englishTitle) (ID: \(prayer.id)) for ID: \(id)")
+                scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
                 scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
                 return
             }
@@ -334,6 +409,7 @@ struct PrayersView: View {
                (latinTitle.lowercased().contains(id.lowercased()) || 
                 id.lowercased().contains(latinTitle.lowercased())) {
                 print("✅ Found partial match in Latin title: \(latinTitle) (ID: \(prayer.id)) for ID: \(id)")
+                scrollToId = prayer.id // Update scrollToId to match the actual prayer ID
                 scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
                 return
             }
@@ -347,38 +423,27 @@ struct PrayersView: View {
         let title = prayer.title
         print("📋 Attempting to scroll to: \(title) with ID: \(id)")
         
-        // Force a slight delay for the first scroll attempt if this is the initial load
-        let initialDelay: Double = isInitial ? 0.6 : 0.0
+        // Force immediate scroll
+        withAnimation {
+            print("📋 Immediate scroll attempt to: \(title)")
+            proxy.scrollTo(id, anchor: .top)
+        }
         
-        // Schedule the scrolling attempts with increasing delays
-        DispatchQueue.main.asyncAfter(deadline: .now() + initialDelay) {
-            print("📋 Initial scroll attempt to: \(title)")
-            withAnimation {
-                proxy.scrollTo(id, anchor: .top)
-            }
-            
-            // Second attempt after a short delay
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                print("📋 Second scroll attempt to: \(title)")
+        // Schedule multiple attempts with increasing delays
+        [0.2, 0.4, 0.7, 1.0, 1.5].forEach { delay in
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 withAnimation {
+                    print("📋 Delayed scroll attempt after \(delay)s to: \(title)")
                     proxy.scrollTo(id, anchor: .top)
                 }
-                
-                // Third attempt after another delay
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                    print("📋 Third scroll attempt to: \(title)")
-                    withAnimation {
-                        proxy.scrollTo(id, anchor: .top)
-                    }
-                    
-                    // Final attempt with a longer delay
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        print("📋 Final scroll attempt to: \(title)")
-                        withAnimation {
-                            proxy.scrollTo(id, anchor: .center)
-                        }
-                    }
-                }
+            }
+        }
+        
+        // Final attempt with center alignment
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+            print("📋 Final scroll attempt with center alignment to: \(title)")
+            withAnimation {
+                proxy.scrollTo(id, anchor: .center)
             }
         }
     }
@@ -396,6 +461,20 @@ struct PrayersView: View {
             if prayers.contains(where: { $0.id == id }) {
                 completion(category)
                 return
+            }
+            
+            // Special case for Fatima Prayer
+            if id == "oratio_fatimae" || id.lowercased().contains("fatima") {
+                if prayers.contains(where: { 
+                    $0.title.lowercased().contains("fatima") || 
+                    ($0.title_latin != nil && $0.title_latin!.lowercased().contains("fatima")) || 
+                    $0.id.lowercased().contains("fatima") ||
+                    $0.title.lowercased().contains("fatimae") ||
+                    $0.id.lowercased().contains("fatimae")
+                }) {
+                    completion(category)
+                    return
+                }
             }
             
             // Special case for Anima Christi

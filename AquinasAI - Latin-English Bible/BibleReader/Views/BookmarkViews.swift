@@ -149,7 +149,7 @@ struct BookmarksListView: View {
     @EnvironmentObject private var bookmarkStore: BookmarkStore
     @EnvironmentObject private var viewModel: BibleViewModel
     @EnvironmentObject private var prayerStore: PrayerStore
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) var dismiss
     @State private var editingBookmark: Bookmark?
     @State private var showingPrayers = false
     @State private var selectedPrayerId: String?
@@ -214,10 +214,9 @@ struct BookmarksListView: View {
                                                 print("⭐️ No category found, defaulting to Basic Prayers")
                                             }
                                             
-                                            // Dismiss any current sheets before opening the prayers view
-                                            DispatchQueue.main.async {
-                                                showingPrayers = true
-                                            }
+                                            // Present the prayer view after parameters are set
+                                            print("⭐️ Setting showingPrayers = true with ID: \(prayerId), Category: \(selectedPrayerCategory?.rawValue ?? "nil")")
+                                            showingPrayers = true
                                         } else {
                                             print("⚠️ Prayer bookmark has no prayerId!")
                                         }
@@ -253,27 +252,41 @@ struct BookmarksListView: View {
                     PrayerBookmarkEditView(bookmark: bookmark)
                 }
             }
-            .sheet(isPresented: $showingPrayers, onDismiss: {
-                // Reset the prayer ID and category when the sheet is dismissed
-                selectedPrayerId = nil
-                selectedPrayerCategory = nil
-                
-                // Dismiss bookmarks view after prayer view is dismissed
-                dismiss()
-            }) {
-                // Create the prayers view with the ID and category we want to navigate to
-                if let prayerId = selectedPrayerId {
-                    PrayersView(initialPrayerId: prayerId, initialCategory: selectedPrayerCategory)
-                        .environmentObject(prayerStore)
-                        .onAppear {
-                            print("⭐️ Opening PrayersView with ID: \(prayerId), Category: \(selectedPrayerCategory?.rawValue ?? "nil")")
-                        }
-                } else {
-                    PrayersView()
+            // Use a custom sheet presentation to ensure parameters aren't lost
+            .background(
+                EmptyView().sheet(isPresented: $showingPrayers, onDismiss: {
+                    print("⭐️ Prayer sheet dismissed")
+                    // Dismiss bookmarks view after prayer view is dismissed
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        dismiss()
+                    }
+                }) {
+                    PrayerSheetView(prayerId: selectedPrayerId, category: selectedPrayerCategory)
                         .environmentObject(prayerStore)
                 }
-            }
+            )
         }
+    }
+}
+
+// Helper view to ensure parameters are preserved during sheet presentation
+struct PrayerSheetView: View {
+    let prayerId: String?
+    let category: PrayerCategory?
+    @EnvironmentObject var prayerStore: PrayerStore
+    
+    init(prayerId: String?, category: PrayerCategory?) {
+        self.prayerId = prayerId
+        self.category = category
+        print("⭐️ PrayerSheetView init with ID: \(prayerId ?? "nil"), Category: \(category?.rawValue ?? "nil")")
+    }
+    
+    var body: some View {
+        PrayersView(initialPrayerId: prayerId, initialCategory: category)
+            .environmentObject(prayerStore)
+            .onAppear {
+                print("⭐️ PrayerSheetView appeared with ID: \(prayerId ?? "nil"), Category: \(category?.rawValue ?? "nil")")
+            }
     }
 }
 
