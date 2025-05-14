@@ -115,37 +115,83 @@ struct RosaryTemplate: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        print("Starting to decode RosaryTemplate...")
         
         // Decode opening array
         var openingItems: [OrderItem] = []
         var openingArrayContainer = try container.nestedUnkeyedContainer(forKey: .opening)
+        print("Decoding opening prayers...")
+        
         while !openingArrayContainer.isAtEnd {
-            if let str = try? openingArrayContainer.decode(String.self) {
-                openingItems.append(.string(str))
-            } else if let dict = try? openingArrayContainer.decode([String: Int].self),
-                      let (key, count) = dict.first {
-                openingItems.append(.prayerCount(key, count))
-            } else if let dict = try? openingArrayContainer.decode([String: PrayerIntention].self),
-                      let (key, intention) = dict.first {
-                openingItems.append(.prayerWithIntentions(key, intention.count, intention.intentions))
+            do {
+                if let str = try? openingArrayContainer.decode(String.self) {
+                    print("Decoded string prayer: \(str)")
+                    openingItems.append(.string(str))
+                } else if let dict = try? openingArrayContainer.decode([String: Int].self),
+                          let (key, count) = dict.first {
+                    print("Decoded prayer with count: \(key) (\(count)x)")
+                    openingItems.append(.prayerCount(key, count))
+                } else if let dict = try? openingArrayContainer.decode([String: [String: [String]]].self),
+                          let (key, intentionsDict) = dict.first,
+                          let intentions = intentionsDict["intentions"] {
+                    print("Decoded prayer with intentions: \(key) (intentions: \(intentions))")
+                    openingItems.append(.prayerWithIntentions(key, 1, intentions))
+                } else if let dict = try? openingArrayContainer.decode([String: [String: Int]].self),
+                          let (key, countDict) = dict.first,
+                          let count = countDict["count"] {
+                    print("Decoded prayer with count dict: \(key) (\(count)x)")
+                    openingItems.append(.prayerCount(key, count))
+                } else if let dict = try? openingArrayContainer.decode([String: PrayerIntention].self),
+                          let (key, intention) = dict.first {
+                    print("Decoded prayer with intention object: \(key) (\(intention.count)x, intentions: \(intention.intentions))")
+                    openingItems.append(.prayerWithIntentions(key, intention.count, intention.intentions))
+                } else {
+                    print("⚠️ Failed to decode opening prayer item")
+                    let data = try? openingArrayContainer.decode(String.self)
+                    print("Raw data: \(String(describing: data))")
+                }
+            } catch {
+                print("❌ Error decoding opening prayer item: \(error)")
             }
         }
         opening = openingItems
+        print("Successfully decoded \(openingItems.count) opening prayers")
         
         // Decode decade array
         var decadeItems: [OrderItem] = []
         var decadeArrayContainer = try container.nestedUnkeyedContainer(forKey: .decade)
+        print("Decoding decade prayers...")
+        
         while !decadeArrayContainer.isAtEnd {
-            if let str = try? decadeArrayContainer.decode(String.self) {
-                decadeItems.append(.string(str))
-            } else if let dict = try? decadeArrayContainer.decode([String: Int].self),
-                      let (key, count) = dict.first {
-                decadeItems.append(.prayerCount(key, count))
+            do {
+                if let str = try? decadeArrayContainer.decode(String.self) {
+                    print("Decoded string prayer: \(str)")
+                    decadeItems.append(.string(str))
+                } else if let dict = try? decadeArrayContainer.decode([String: Int].self),
+                          let (key, count) = dict.first {
+                    print("Decoded prayer with count: \(key) (\(count)x)")
+                    decadeItems.append(.prayerCount(key, count))
+                } else if let dict = try? decadeArrayContainer.decode([String: [String: Int]].self),
+                          let (key, countDict) = dict.first,
+                          let count = countDict["count"] {
+                    print("Decoded prayer with count dict: \(key) (\(count)x)")
+                    decadeItems.append(.prayerCount(key, count))
+                } else {
+                    print("⚠️ Failed to decode decade prayer item")
+                    let data = try? decadeArrayContainer.decode(String.self)
+                    print("Raw data: \(String(describing: data))")
+                }
+            } catch {
+                print("❌ Error decoding decade prayer item: \(error)")
             }
         }
         decade = decadeItems
+        print("Successfully decoded \(decadeItems.count) decade prayers")
         
         closing = try container.decode([String].self, forKey: .closing)
+        print("Successfully decoded \(closing.count) closing prayers")
+        
+        print("✅ Completed decoding RosaryTemplate")
     }
     
     func encode(to encoder: Encoder) throws {
@@ -207,49 +253,72 @@ enum OrderItem: Codable, Hashable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
+        print("Decoding OrderItem...")
         
-        // Try decoding as String first
-        if let str = try? container.decode(String.self) {
-            self = .string(str)
-            return
+        do {
+            // Try decoding as String first
+            if let str = try? container.decode(String.self) {
+                print("Decoded as string: \(str)")
+                self = .string(str)
+                return
+            }
+            
+            // Try decoding as String array
+            if let arr = try? container.decode([String].self) {
+                print("Decoded as string array: \(arr)")
+                self = .array(arr)
+                return
+            }
+            
+            // Try decoding as dictionary with string array values
+            if let dict = try? container.decode([String: [String]].self) {
+                print("Decoded as dictionary with string array: \(dict)")
+                self = .dictionary(dict)
+                return
+            }
+            
+            // Try decoding as template object
+            if let dict = try? container.decode([String: TemplateObject].self) {
+                print("Decoded as template object: \(dict)")
+                self = .templateObject(dict)
+                return
+            }
+            
+            // Try decoding as simple prayer count
+            if let dict = try? container.decode([String: Int].self),
+               let (key, count) = dict.first {
+                print("Decoded as prayer count: \(key) (\(count)x)")
+                self = .prayerCount(key, count)
+                return
+            }
+            
+            // Try decoding as prayer with intentions
+            if let dict = try? container.decode([String: IntentionWrapper].self),
+               let (key, wrapper) = dict.first {
+                print("Decoded as prayer with intentions: \(key) (\(wrapper.count)x, intentions: \(wrapper.intentions))")
+                self = .prayerWithIntentions(key, wrapper.count, wrapper.intentions)
+                return
+            }
+            
+            // Try decoding as prayer with count and intentions in nested structure
+            if let dict = try? container.decode([String: [String: Any]].self),
+               let (key, details) = dict.first {
+                if let count = details["count"] as? Int,
+                   let intentions = details["intentions"] as? [String] {
+                    print("Decoded as prayer with nested count and intentions: \(key) (\(count)x, intentions: \(intentions))")
+                    self = .prayerWithIntentions(key, count, intentions)
+                    return
+                }
+            }
+            
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Cannot decode OrderItem: data doesn't match any expected format"
+            )
+        } catch {
+            print("❌ Error decoding OrderItem: \(error)")
+            throw error
         }
-        
-        // Try decoding as String array
-        if let arr = try? container.decode([String].self) {
-            self = .array(arr)
-            return
-        }
-        
-        // Try decoding as dictionary with string array values
-        if let dict = try? container.decode([String: [String]].self) {
-            self = .dictionary(dict)
-            return
-        }
-        
-        // Try decoding as template object
-        if let dict = try? container.decode([String: TemplateObject].self) {
-            self = .templateObject(dict)
-            return
-        }
-        
-        // Try decoding as simple prayer count
-        if let dict = try? container.decode([String: Int].self),
-           let (key, count) = dict.first {
-            self = .prayerCount(key, count)
-            return
-        }
-        
-        // Try decoding as prayer with intentions
-        if let dict = try? container.decode([String: IntentionWrapper].self),
-           let (key, wrapper) = dict.first {
-            self = .prayerWithIntentions(key, wrapper.count, wrapper.intentions)
-            return
-        }
-        
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "Cannot decode OrderItem: data doesn't match any expected format"
-        )
     }
     
     func encode(to encoder: Encoder) throws {
