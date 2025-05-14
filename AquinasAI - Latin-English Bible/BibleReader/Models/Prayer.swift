@@ -106,10 +106,13 @@ struct RosaryTemplate: Codable {
             let container = try decoder.singleValueContainer()
             if let str = try? container.decode(String.self) {
                 self = .string(str)
-            } else if let obj = try? container.decode([String: TemplateObject].self) {
-                self = .object(obj)
+            } else if let dict = try? container.decode([String: TemplateObject].self) {
+                self = .object(dict)
             } else {
-                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode TemplateItem")
+                throw DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Expected String or Dictionary with TemplateObject"
+                )
             }
         }
         
@@ -118,8 +121,8 @@ struct RosaryTemplate: Codable {
             switch self {
             case .string(let str):
                 try container.encode(str)
-            case .object(let obj):
-                try container.encode(obj)
+            case .object(let dict):
+                try container.encode(dict)
             }
         }
         
@@ -128,10 +131,10 @@ struct RosaryTemplate: Codable {
             case .string(let str):
                 hasher.combine(0) // Discriminator for string case
                 hasher.combine(str)
-            case .object(let obj):
+            case .object(let dict):
                 hasher.combine(1) // Discriminator for object case
                 // Convert dictionary to array of tuples to ensure consistent hashing
-                let sortedPairs = obj.sorted(by: { $0.key < $1.key })
+                let sortedPairs = dict.sorted(by: { $0.key < $1.key })
                 for (key, value) in sortedPairs {
                     hasher.combine(key)
                     hasher.combine(value)
@@ -155,14 +158,20 @@ struct RosaryTemplate: Codable {
         let count: Int
         let intentions: [String]?
         
-        private enum CodingKeys: CodingKey {
-            case count, intentions
+        init(from decoder: Decoder) throws {
+            if let intValue = try? decoder.singleValueContainer().decode(Int.self) {
+                self.count = intValue
+                self.intentions = nil
+            } else {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                count = try container.decode(Int.self, forKey: .count)
+                intentions = try container.decodeIfPresent([String].self, forKey: .intentions)
+            }
         }
         
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            count = try container.decode(Int.self, forKey: .count)
-            intentions = try container.decodeIfPresent([String].self, forKey: .intentions)
+        private enum CodingKeys: String, CodingKey {
+            case count
+            case intentions
         }
     }
 }
