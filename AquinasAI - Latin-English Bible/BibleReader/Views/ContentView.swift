@@ -235,11 +235,15 @@ struct BookList: View {
             }
             .sheet(isPresented: $showingBookmarks) {
                 BookmarksListView { bookmark in
-                    if let book = books.first(where: { $0.name == bookmark.bookName }) {
+                    if bookmark.type == .verse,
+                       let bookName = bookmark.bookName,
+                       let chapterNumber = bookmark.chapterNumber,
+                       let verseNumber = bookmark.verseNumber,
+                       let book = books.first(where: { $0.name == bookName }) {
                         navigationPath.append(BookNavigation(
                             book: book,
-                            chapterNumber: bookmark.chapterNumber,
-                            verseNumber: bookmark.verseNumber
+                            chapterNumber: chapterNumber,
+                            verseNumber: verseNumber
                         ))
                     }
                     showingBookmarks = false

@@ -72,7 +72,7 @@ struct BookmarkEditView: View {
             Form {
                 Section(header: Text("Verse")) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(bookmark.verseText)
+                        Text(bookmark.verseText ?? "")
                             .foregroundColor(.primary)
                         if let latinText = bookmark.latinText {
                             Text(latinText)
@@ -256,7 +256,7 @@ private struct BookmarkRow: View {
         Button(action: onSelect) {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text("\(viewModel.getEnglishName(for: bookmark.bookName)) \(bookmark.chapterNumber):\(bookmark.verseNumber)")
+                    Text("\(viewModel.getEnglishName(for: bookmark.bookName ?? "")) \(bookmark.chapterNumber ?? 0):\(bookmark.verseNumber ?? 0)")
                         .font(.headline)
                         .foregroundColor(.primary)
                     Spacer()
@@ -264,7 +264,7 @@ private struct BookmarkRow: View {
                         .foregroundColor(.deepPurple)
                 }
                 
-                Text(bookmark.verseText)
+                Text(bookmark.verseText ?? "")
                     .font(.subheadline)
                     .foregroundColor(.primary)
                     .lineLimit(2)

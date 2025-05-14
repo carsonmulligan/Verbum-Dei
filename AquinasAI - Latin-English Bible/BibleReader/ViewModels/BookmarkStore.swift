@@ -29,7 +29,7 @@ class BookmarkStore: ObservableObject {
     func isVerseBookmarked(bookName: String, chapterNumber: Int, verseNumber: Int) -> Bool {
         bookmarks.contains { bookmark in
             bookmark.type == .verse &&
-            bookmark.bookName == bookName &&
+            bookmark.bookName?.lowercased() == bookName.lowercased() &&
             bookmark.chapterNumber == chapterNumber &&
             bookmark.verseNumber == verseNumber
         }
@@ -38,7 +38,7 @@ class BookmarkStore: ObservableObject {
     func getBookmark(bookName: String, chapterNumber: Int, verseNumber: Int) -> Bookmark? {
         bookmarks.first { bookmark in
             bookmark.type == .verse &&
-            bookmark.bookName == bookName &&
+            bookmark.bookName?.lowercased() == bookName.lowercased() &&
             bookmark.chapterNumber == chapterNumber &&
             bookmark.verseNumber == verseNumber
         }
