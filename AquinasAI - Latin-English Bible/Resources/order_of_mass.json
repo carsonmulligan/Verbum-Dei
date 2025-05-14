@@ -1,67 +1,114 @@
 {
-    "prayers": [
-        {
-            "title": "Sign of the Cross",
+    "common_prayers": {
+        "sign_of_the_cross": {
             "title_latin": "Signum Crucis",
             "title_english": "Sign of the Cross",
             "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
             "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
         },
-        {
-            "title": "Greeting",
+        "greeting": {
             "title_latin": "Salutatio",
             "title_english": "Greeting",
             "latin": "Dominus vobiscum.",
-            "english": "The Lord be with you."
-        }
-    ],
-    "order_of_mass": {
-        "metadata": {
-            "title": "Order of Mass",
-            "description": "The structure and prayers of the Roman Catholic Mass"
+            "english": "The Lord be with you.",
+            "response_latin": "Et cum spiritu tuo.",
+            "response_english": "And with your spirit."
         },
+        "penitential_act": {
+            "title_latin": "Actus Paenitentialis",
+            "title_english": "Penitential Act",
+            "latin": "Confiteor Deo omnipotenti et vobis, fratres, quia peccavi nimis cogitatione, verbo, opere et omissione: mea culpa, mea culpa, mea maxima culpa.",
+            "english": "I confess to almighty God and to you, my brothers and sisters, that I have greatly sinned, in my thoughts and in my words, in what I have done and in what I have failed to do, through my fault, through my fault, through my most grievous fault."
+        },
+        "kyrie": {
+            "title_latin": "Kyrie",
+            "title_english": "Lord Have Mercy",
+            "latin": "Kyrie eleison. Christe eleison. Kyrie eleison.",
+            "english": "Lord have mercy. Christ have mercy. Lord have mercy."
+        },
+        "gloria": {
+            "title_latin": "Gloria",
+            "title_english": "Glory to God",
+            "latin": "Gloria in excelsis Deo et in terra pax hominibus bonae voluntatis...",
+            "english": "Glory to God in the highest, and on earth peace to people of good will..."
+        },
+        "collect": {
+            "title_latin": "Collecta",
+            "title_english": "Collect",
+            "latin": "Oremus...",
+            "english": "Let us pray..."
+        },
+        "creed": {
+            "title_latin": "Credo",
+            "title_english": "Nicene Creed",
+            "latin": "Credo in unum Deum, Patrem omnipotentem, factorem caeli et terrae, visibilium omnium et invisibilium...",
+            "english": "I believe in one God, the Father almighty, maker of heaven and earth, of all things visible and invisible..."
+        },
+        "offertory": {
+            "title_latin": "Offertorium",
+            "title_english": "Offertory",
+            "latin": "Benedictus es, Domine, Deus universi...",
+            "english": "Blessed are you, Lord God of all creation..."
+        },
+        "sanctus": {
+            "title_latin": "Sanctus",
+            "title_english": "Holy, Holy, Holy",
+            "latin": "Sanctus, Sanctus, Sanctus Dominus Deus Sabaoth. Pleni sunt caeli et terra gloria tua. Hosanna in excelsis. Benedictus qui venit in nomine Domini. Hosanna in excelsis.",
+            "english": "Holy, Holy, Holy Lord God of hosts. Heaven and earth are full of your glory. Hosanna in the highest. Blessed is he who comes in the name of the Lord. Hosanna in the highest."
+        },
+        "lords_prayer": {
+            "title_latin": "Pater Noster",
+            "title_english": "The Lord's Prayer",
+            "latin": "Pater noster, qui es in caelis...",
+            "english": "Our Father, who art in heaven..."
+        },
+        "agnus_dei": {
+            "title_latin": "Agnus Dei",
+            "title_english": "Lamb of God",
+            "latin": "Agnus Dei, qui tollis peccata mundi, miserere nobis...",
+            "english": "Lamb of God, you take away the sins of the world, have mercy on us..."
+        },
+        "dismissal": {
+            "title_latin": "Dimissio",
+            "title_english": "Dismissal",
+            "latin": "Ite, missa est.",
+            "english": "Go forth, the Mass is ended.",
+            "response_latin": "Deo gratias.",
+            "response_english": "Thanks be to God."
+        }
+    },
+    "order_of_mass": {
         "introductory_rites": [
-            "sign_of_the_cross",
-            {
-                "greeting": {
-                    "count": 1,
-                    "intentions": ["Opening greeting to the faithful"]
-                }
-            }
+            {"prayer": "sign_of_the_cross"},
+            {"prayer": "greeting"},
+            {"prayer": "penitential_act"},
+            {"prayer": "kyrie"},
+            {"prayer": "gloria", "condition": "not_advent_or_lent"},
+            {"prayer": "collect"}
         ],
         "liturgy_of_the_word": [
-            "first_reading",
-            "responsorial_psalm",
-            "second_reading",
-            "gospel_acclamation",
-            "gospel",
-            "homily",
-            "creed",
-            "intercessions"
+            {"prayer": "first_reading"},
+            {"prayer": "responsorial_psalm"},
+            {"prayer": "second_reading", "condition": "sundays_and_solemnities"},
+            {"prayer": "gospel_acclamation"},
+            {"prayer": "gospel"},
+            {"prayer": "homily"},
+            {"prayer": "creed", "condition": "sundays_and_solemnities"},
+            {"prayer": "intercessions"}
         ],
-        "liturgy_of_the_eucharist": {
-            "preparation_of_the_gifts": [
-                "preparation_prayer",
-                "prayer_over_offerings"
-            ],
-            "eucharistic_prayer": [
-                "preface_dialogue",
-                "sanctus",
-                "eucharistic_prayer_i",
-                "memorial_acclamation",
-                "doxology"
-            ],
-            "communion_rite": [
-                "lords_prayer",
-                "sign_of_peace",
-                "agnus_dei",
-                "communion",
-                "prayer_after_communion"
-            ]
-        },
+        "liturgy_of_the_eucharist": [
+            {"prayer": "offertory"},
+            {"prayer": "sanctus"},
+            {"prayer": "eucharistic_prayer"},
+            {"prayer": "lords_prayer"},
+            {"prayer": "sign_of_peace"},
+            {"prayer": "agnus_dei"},
+            {"prayer": "communion"}
+        ],
         "concluding_rites": [
-            "blessing",
-            "dismissal"
+            {"prayer": "prayer_after_communion"},
+            {"prayer": "blessing"},
+            {"prayer": "dismissal"}
         ]
     }
 }
