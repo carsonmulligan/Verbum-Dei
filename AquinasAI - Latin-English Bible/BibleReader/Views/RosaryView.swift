@@ -155,7 +155,7 @@ private struct RosaryContentView: View {
                 
                 PrayerSectionView(
                     title: "Closing Prayers",
-                    prayers: template.closing.map { RosaryTemplate.TemplateItem.string($0) },
+                    prayers: template.closing.map { OrderItem.string($0) },
                     commonPrayers: commonPrayers,
                     selectedLanguage: selectedLanguage
                 )
@@ -187,7 +187,7 @@ private struct MysteryHeaderView: View {
 
 private struct PrayerSectionView: View {
     let title: String
-    let prayers: [RosaryTemplate.TemplateItem]
+    let prayers: [OrderItem]
     let commonPrayers: [String: RosaryPrayer]
     let selectedLanguage: PrayerLanguage
     
@@ -199,9 +199,33 @@ private struct PrayerSectionView: View {
                 .padding(.bottom, 4)
         ) {
             ForEach(Array(prayers.enumerated()), id: \.offset) { index, item in
-                if case .string(let prayerKey) = item,
-                   let prayer = commonPrayers[prayerKey] {
-                    PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                switch item {
+                case .string(let prayerKey):
+                    if let prayer = commonPrayers[prayerKey] {
+                        PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                    }
+                case .prayerCount(let prayerKey, let count):
+                    if let prayer = commonPrayers[prayerKey] {
+                        ForEach(0..<count, id: \.self) { _ in
+                            PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                        }
+                    }
+                case .prayerWithIntentions(let prayerKey, let count, let intentions):
+                    if let prayer = commonPrayers[prayerKey] {
+                        ForEach(0..<count, id: \.self) { index in
+                            VStack(alignment: .leading, spacing: 4) {
+                                if index < intentions.count {
+                                    Text("For \(intentions[index])")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .padding(.horizontal)
+                                }
+                                PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                            }
+                        }
+                    }
+                default:
+                    EmptyView()
                 }
             }
         }
@@ -243,10 +267,21 @@ private struct MysteriesView: View {
                     }
                     
                     ForEach(Array(template.decade.enumerated()), id: \.0) { decadeIndex, item in
-                        if case .string(let prayerKey) = item,
-                           let prayer = commonPrayers[prayerKey] {
-                            PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                                .padding(.leading)
+                        switch item {
+                        case .string(let prayerKey):
+                            if let prayer = commonPrayers[prayerKey] {
+                                PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                                    .padding(.leading)
+                            }
+                        case .prayerCount(let prayerKey, let count):
+                            if let prayer = commonPrayers[prayerKey] {
+                                ForEach(0..<count, id: \.self) { _ in
+                                    PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+                                        .padding(.leading)
+                                }
+                            }
+                        default:
+                            EmptyView()
                         }
                     }
                 }
