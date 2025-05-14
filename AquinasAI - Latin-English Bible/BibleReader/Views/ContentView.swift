@@ -22,7 +22,14 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             if !viewModel.books.isEmpty {
-                BookList(books: viewModel.books, viewModel: viewModel, isDarkMode: $isDarkMode, showingBookmarks: $showingBookmarks, showingPrayers: $showingPrayers)
+                BookList(
+                    books: viewModel.books,
+                    viewModel: viewModel,
+                    prayerStore: prayerStore,
+                    isDarkMode: $isDarkMode,
+                    showingBookmarks: $showingBookmarks,
+                    showingPrayers: $showingPrayers
+                )
             } else if let error = viewModel.errorMessage {
                 ErrorView(message: error)
             } else {
@@ -112,6 +119,7 @@ struct TestamentSelectorView: View {
 struct BookList: View {
     let books: [Book]
     @ObservedObject var viewModel: BibleViewModel
+    let prayerStore: PrayerStore
     @Binding var isDarkMode: Bool
     @Binding var showingBookmarks: Bool
     @Binding var showingPrayers: Bool
