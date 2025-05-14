@@ -1,5 +1,16 @@
 import SwiftUI
 
+// Environment object to store prayer navigation data
+class PrayerNavigation: ObservableObject {
+    @Published var targetPrayerId: String?
+    @Published var targetCategory: PrayerCategory?
+    
+    func navigateTo(prayerId: String?, category: PrayerCategory?) {
+        self.targetPrayerId = prayerId
+        self.targetCategory = category
+    }
+}
+
 struct BookmarkCreationView: View {
     let verse: Verse
     let bookName: String
@@ -154,6 +165,10 @@ struct BookmarksListView: View {
     @State private var showingPrayers = false
     @State private var selectedPrayerId: String?
     @State private var selectedPrayerCategory: PrayerCategory?
+    
+    // Create the environment object for prayer navigation
+    @StateObject private var prayerNavigation = PrayerNavigation()
+    
     var onBookmarkSelected: (Bookmark) -> Void
     
     // Store the actual values that will be passed to the sheet
@@ -191,52 +206,32 @@ struct BookmarksListView: View {
                                     onSelect: {
                                         // Store the prayer ID and show prayers view
                                         if let prayerId = bookmark.prayerId {
-                                            print("⭐️ Selected prayer bookmark with ID: '\(prayerId)', title: '\(bookmark.prayerTitle ?? "unknown")'")
-                                            
-                                            // Set the prayer ID that we want to navigate to
-                                            selectedPrayerId = prayerId
-                                            
-                                            // Copy to the value that will be passed to the sheet
-                                            sheetPrayerId = prayerId
-                                            
                                             // Convert prayerCategory string to PrayerCategory enum
+                                            var category: PrayerCategory = .basic
                                             if let categoryStr = bookmark.prayerCategory {
                                                 switch categoryStr {
                                                 case PrayerCategory.basic.rawValue:
-                                                    selectedPrayerCategory = .basic
-                                                    sheetPrayerCategory = .basic
+                                                    category = .basic
                                                 case PrayerCategory.mass.rawValue:
-                                                    selectedPrayerCategory = .mass
-                                                    sheetPrayerCategory = .mass
+                                                    category = .mass
                                                 case PrayerCategory.rosary.rawValue:
-                                                    selectedPrayerCategory = .rosary
-                                                    sheetPrayerCategory = .rosary
+                                                    category = .rosary
                                                 case PrayerCategory.divine.rawValue:
-                                                    selectedPrayerCategory = .divine
-                                                    sheetPrayerCategory = .divine
+                                                    category = .divine
                                                 case PrayerCategory.other.rawValue:
-                                                    selectedPrayerCategory = .other
-                                                    sheetPrayerCategory = .other
+                                                    category = .other
                                                 default:
-                                                    selectedPrayerCategory = .basic  // Default to basic if not found
-                                                    sheetPrayerCategory = .basic
+                                                    category = .basic
                                                 }
-                                                print("⭐️ Setting prayer category to: \(selectedPrayerCategory?.rawValue ?? "nil")")
-                                            } else {
-                                                // Default to basic prayers if category is missing
-                                                selectedPrayerCategory = .basic
-                                                sheetPrayerCategory = .basic
-                                                print("⭐️ No category found, defaulting to Basic Prayers")
                                             }
                                             
-                                            // Present the prayer view after parameters are set
-                                            print("⭐️ Setting showingPrayers = true with ID: \(prayerId), Category: \(selectedPrayerCategory?.rawValue ?? "nil")")
-                                            // Use a small delay to ensure state updates are applied first
+                                            // Set the navigation parameters in the environment object
+                                            prayerNavigation.navigateTo(prayerId: prayerId, category: category)
+                                            
+                                            // Present the prayer view
                                             DispatchQueue.main.async {
                                                 showingPrayers = true
                                             }
-                                        } else {
-                                            print("⚠️ Prayer bookmark has no prayerId!")
                                         }
                                     },
                                     onEdit: {
@@ -271,41 +266,44 @@ struct BookmarksListView: View {
                 }
             }
             .fullScreenCover(isPresented: $showingPrayers, onDismiss: {
-                print("⭐️ Prayer sheet dismissed")
+                // Clear the navigation parameters
+                prayerNavigation.navigateTo(prayerId: nil, category: nil)
+                
                 // Dismiss bookmarks view after prayer view is dismissed
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     dismiss()
                 }
             }) {
-                // Use a direct reference to our captured values instead of the state variables
-                PrayersView(initialPrayerId: sheetPrayerId, initialCategory: sheetPrayerCategory)
+                NavigationToPrayerView(prayerNavigation: prayerNavigation)
                     .environmentObject(prayerStore)
-                    .onAppear {
-                        print("⭐️ Direct PrayersView opened with ID: \(sheetPrayerId ?? "nil"), Category: \(sheetPrayerCategory?.rawValue ?? "nil")")
-                    }
             }
         }
     }
 }
 
-// Helper view to ensure parameters are preserved during sheet presentation
-struct PrayerSheetView: View {
-    let prayerId: String?
-    let category: PrayerCategory?
+// Navigation wrapper view that reads from the environment object
+struct NavigationToPrayerView: View {
+    @ObservedObject var prayerNavigation: PrayerNavigation
     @EnvironmentObject var prayerStore: PrayerStore
     
-    init(prayerId: String?, category: PrayerCategory?) {
-        print("⭐️ PrayerSheetView init with ID: \(prayerId ?? "nil"), Category: \(category?.rawValue ?? "nil")")
-        self.prayerId = prayerId
-        self.category = category
+    var body: some View {
+        let prayerId = prayerNavigation.targetPrayerId
+        let category = prayerNavigation.targetCategory
+        
+        return PrayersViewWrapper(initialPrayerId: prayerId, initialCategory: category)
+            .environmentObject(prayerStore)
     }
+}
+
+// Wrapper to ensure the parameters are captured at initialization time
+struct PrayersViewWrapper: View {
+    let initialPrayerId: String?
+    let initialCategory: PrayerCategory?
+    @EnvironmentObject var prayerStore: PrayerStore
     
     var body: some View {
-        PrayersView(initialPrayerId: prayerId, initialCategory: category)
+        return PrayersView(initialPrayerId: initialPrayerId, initialCategory: initialCategory)
             .environmentObject(prayerStore)
-            .onAppear {
-                print("⭐️ PrayerSheetView appeared with ID: \(prayerId ?? "nil"), Category: \(category?.rawValue ?? "nil")")
-            }
     }
 }
 
