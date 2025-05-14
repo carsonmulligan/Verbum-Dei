@@ -10,14 +10,14 @@
             "angelus_verse_1": {
                 "title_latin": "Angelus Domini I",
                 "title_english": "The Angel of the Lord I",
-                "latin": "Angelus Domini nuntiavit Mariæ.",
+                "latin": "Angelus Domini nuntiavit Mariae.",
                 "english": "The Angel of the Lord declared unto Mary."
             },
-            "hail_mary_1": {
-                "title_latin": "Ave Maria I",
-                "title_english": "Hail Mary I",
-                "latin": "Ave María, grátia plena, Dóminus tecum; benedícta tu in muliéribus, et benedíctus fructus ventris tui, Iesus. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.",
-                "english": "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
+            "ave_maria": {
+                "title_latin": "Ave Maria",
+                "title_english": "Hail Mary",
+                "latin": "Ave Maria, gratia plena...",
+                "english": "Hail Mary, full of grace..."
             },
             "angelus_verse_2": {
                 "title_latin": "Angelus Domini II",
@@ -25,42 +25,29 @@
                 "latin": "Ecce ancilla Domini.",
                 "english": "Behold the handmaid of the Lord."
             },
-            "hail_mary_2": {
-                "title_latin": "Ave Maria II",
-                "title_english": "Hail Mary II",
-                "latin": "Ave María, grátia plena, Dóminus tecum; benedícta tu in muliéribus, et benedíctus fructus ventris tui, Iesus. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.",
-                "english": "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
-            },
             "angelus_verse_3": {
                 "title_latin": "Angelus Domini III",
                 "title_english": "The Angel of the Lord III",
                 "latin": "Et Verbum caro factum est.",
                 "english": "And the Word was made flesh."
             },
-            "hail_mary_3": {
-                "title_latin": "Ave Maria III",
-                "title_english": "Hail Mary III",
-                "latin": "Ave María, grátia plena, Dóminus tecum; benedícta tu in muliéribus, et benedíctus fructus ventris tui, Iesus. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.",
-                "english": "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
-            },
-            "final_prayer": {
+            "oremus": {
                 "title_latin": "Oremus",
                 "title_english": "Let us pray",
-                "latin": "Gratiam tuam, quæsumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui incarnationem cognovimus, per passionem eius et crucem, ad resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.",
-                "english": "Pour forth, we beseech Thee, O Lord, Thy grace into our hearts; that we, to whom the incarnation of Christ, Thy Son, was made known by the message of an angel, may by His Passion and Cross be brought to the glory of His Resurrection. Through the same Christ our Lord. Amen."
+                "latin": "Gratiam tuam, quaesumus, Domine...",
+                "english": "Pour forth, we beseech Thee, O Lord..."
             }
         },
         "template": {
             "sequence": [
-                {"prayer": "sign_of_the_cross", "count": 1},
-                {"prayer": "angelus_verse_1", "count": 1},
-                {"prayer": "hail_mary_1", "count": 1},
-                {"prayer": "angelus_verse_2", "count": 1},
-                {"prayer": "hail_mary_2", "count": 1},
-                {"prayer": "angelus_verse_3", "count": 1},
-                {"prayer": "hail_mary_3", "count": 1},
-                {"prayer": "final_prayer", "count": 1},
-                {"prayer": "sign_of_the_cross", "count": 1}
+                "sign_of_the_cross",
+                "angelus_verse_1",
+                "ave_maria",
+                "angelus_verse_2",
+                "ave_maria",
+                "angelus_verse_3",
+                "ave_maria",
+                "oremus"
             ],
             "structure": {
                 "times_per_day": 3,

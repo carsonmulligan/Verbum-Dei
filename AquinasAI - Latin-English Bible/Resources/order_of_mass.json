@@ -1,207 +1,68 @@
 {
+    "prayers": [
+        {
+            "title": "Sign of the Cross",
+            "title_latin": "Signum Crucis",
+            "title_english": "Sign of the Cross",
+            "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+            "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
+        },
+        {
+            "title": "Greeting",
+            "title_latin": "Salutatio",
+            "title_english": "Greeting",
+            "latin": "Dominus vobiscum.",
+            "english": "The Lord be with you."
+        }
+    ],
     "order_of_mass": {
         "metadata": {
             "title": "Order of Mass",
             "description": "The structure and prayers of the Roman Catholic Mass"
         },
-        "sections": {
-            "introductory_rites": {
-                "title": "Introductory Rites",
-                "sequence": [
-                    {
-                        "prayer_id": "sign_of_cross",
-                        "rubric": "The priest and people make the Sign of the Cross"
-                    },
-                    {
-                        "prayer_id": "lord_be_with_you",
-                        "response_id": "and_with_your_spirit",
-                        "rubric": "The priest greets the people"
-                    },
-                    {
-                        "prayer_id": "confiteor",
-                        "rubric": "The Penitential Act"
-                    },
-                    {
-                        "prayer_id": "kyrie_eleison",
-                        "rubric": "The Kyrie follows, unless already included in the Penitential Act"
-                    },
-                    {
-                        "prayer_id": "gloria",
-                        "rubric": "The Gloria is sung or said on Sundays outside Advent and Lent, on solemnities and feasts, and at special celebrations",
-                        "conditional": {
-                            "omit_during": ["advent", "lent"],
-                            "except": ["solemnities", "feasts"]
-                        }
-                    }
-                ]
-            },
-            "liturgy_of_the_word": {
-                "title": "Liturgy of the Word",
-                "sequence": [
-                    {
-                        "type": "reading",
-                        "name": "First Reading",
-                        "response": {
-                            "latin": "Verbum Domini",
-                            "english": "The Word of the Lord",
-                            "people_response": {
-                                "latin": "Deo gratias",
-                                "english": "Thanks be to God"
-                            }
-                        }
-                    },
-                    {
-                        "type": "psalm",
-                        "name": "Responsorial Psalm"
-                    },
-                    {
-                        "type": "reading",
-                        "name": "Second Reading",
-                        "when": "Sundays and Solemnities",
-                        "response": {
-                            "latin": "Verbum Domini",
-                            "english": "The Word of the Lord",
-                            "people_response": {
-                                "latin": "Deo gratias",
-                                "english": "Thanks be to God"
-                            }
-                        }
-                    },
-                    {
-                        "prayer_id": "alleluia",
-                        "rubric": "Before the Gospel (except during Lent)",
-                        "conditional": {
-                            "replace_during": {
-                                "lent": "Gospel Acclamation"
-                            }
-                        }
-                    },
-                    {
-                        "type": "gospel",
-                        "name": "Gospel",
-                        "introduction": {
-                            "priest": {
-                                "latin": "Dominus vobiscum",
-                                "english": "The Lord be with you"
-                            },
-                            "people": {
-                                "latin": "Et cum spiritu tuo",
-                                "english": "And with your spirit"
-                            }
-                        },
-                        "conclusion": {
-                            "priest": {
-                                "latin": "Verbum Domini",
-                                "english": "The Gospel of the Lord"
-                            },
-                            "people": {
-                                "latin": "Laus tibi, Christe",
-                                "english": "Praise to you, Lord Jesus Christ"
-                            }
-                        }
-                    },
-                    {
-                        "type": "homily",
-                        "name": "Homily"
-                    },
-                    {
-                        "prayer_id": "credo",
-                        "name": "Profession of Faith",
-                        "rubric": "On Sundays and Solemnities"
-                    },
-                    {
-                        "type": "intercessions",
-                        "name": "Universal Prayer (Prayer of the Faithful)"
-                    }
-                ]
-            },
-            "liturgy_of_the_eucharist": {
-                "title": "Liturgy of the Eucharist",
-                "sequence": [
-                    {
-                        "type": "preparation",
-                        "name": "Preparation of the Gifts"
-                    },
-                    {
-                        "type": "eucharistic_prayer",
-                        "name": "Eucharistic Prayer",
-                        "parts": [
-                            {
-                                "prayer_id": "preface_dialogue",
-                                "rubric": "The Preface Dialogue"
-                            },
-                            {
-                                "prayer_id": "sanctus",
-                                "rubric": "The Sanctus (Holy, Holy, Holy)"
-                            },
-                            {
-                                "type": "consecration",
-                                "name": "Consecration"
-                            },
-                            {
-                                "prayer_id": "memorial_acclamation",
-                                "rubric": "Memorial Acclamation"
-                            },
-                            {
-                                "type": "concluding_doxology",
-                                "name": "Concluding Doxology"
-                            }
-                        ]
-                    },
-                    {
-                        "prayer_id": "pater_noster",
-                        "name": "The Lord's Prayer"
-                    },
-                    {
-                        "type": "peace",
-                        "name": "Sign of Peace"
-                    },
-                    {
-                        "prayer_id": "agnus_dei",
-                        "name": "Breaking of the Bread"
-                    },
-                    {
-                        "prayer_id": "domine_non_sum_dignus",
-                        "name": "Communion"
-                    }
-                ]
-            },
-            "concluding_rites": {
-                "title": "Concluding Rites",
-                "sequence": [
-                    {
-                        "prayer_id": "final_blessing",
-                        "rubric": "The Final Blessing"
-                    },
-                    {
-                        "type": "dismissal",
-                        "name": "Dismissal",
-                        "options": [
-                            {
-                                "latin": "Ite, missa est",
-                                "english": "Go forth, the Mass is ended"
-                            },
-                            {
-                                "latin": "Ite ad Evangelium Domini annuntiandum",
-                                "english": "Go and announce the Gospel of the Lord"
-                            },
-                            {
-                                "latin": "Ite in pace, glorificando vita vestra Dominum",
-                                "english": "Go in peace, glorifying the Lord by your life"
-                            },
-                            {
-                                "latin": "Ite in pace",
-                                "english": "Go in peace"
-                            }
-                        ],
-                        "response": {
-                            "latin": "Deo gratias",
-                            "english": "Thanks be to God"
-                        }
-                    }
-                ]
+        "introductory_rites": [
+            "sign_of_the_cross",
+            {
+                "greeting": {
+                    "count": 1,
+                    "intentions": ["Opening greeting to the faithful"]
+                }
             }
-        }
+        ],
+        "liturgy_of_the_word": [
+            "first_reading",
+            "responsorial_psalm",
+            "second_reading",
+            "gospel_acclamation",
+            "gospel",
+            "homily",
+            "creed",
+            "intercessions"
+        ],
+        "liturgy_of_the_eucharist": {
+            "preparation_of_the_gifts": [
+                "preparation_prayer",
+                "prayer_over_offerings"
+            ],
+            "eucharistic_prayer": [
+                "preface_dialogue",
+                "sanctus",
+                "eucharistic_prayer_i",
+                "memorial_acclamation",
+                "doxology"
+            ],
+            "communion_rite": [
+                "lords_prayer",
+                "sign_of_peace",
+                "agnus_dei",
+                "communion",
+                "prayer_after_communion"
+            ]
+        },
+        "concluding_rites": [
+            "blessing",
+            "dismissal"
+        ]
     }
 }
   

@@ -16,31 +16,31 @@
         "our_father": {
           "title_latin": "Pater Noster",
           "title_english": "Our Father",
-          "latin": "Pater noster, qui es in cælis, sanctificétur nomen tuum. Advéniat regnum tuum. Fiat volúntas tua, sicut in cælo et in terra. Panem nostrum quotidiánum da nobis hódie, et dimítte nobis débita nostra sicut et nos dimíttimus debitóribus nostris. Et ne nos indúcas in tentatiónem, sed líbera nos a malo. Amen.",
-          "english": "Our Father, Who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen."
+          "latin": "Pater noster, qui es in caelis...",
+          "english": "Our Father, who art in heaven..."
         },
         "hail_mary": {
           "title_latin": "Ave Maria",
           "title_english": "Hail Mary",
-          "latin": "Ave María, grátia plena, Dóminus tecum; benedícta tu in muliéribus, et benedíctus fructus ventris tui, Iesus. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.",
-          "english": "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
+          "latin": "Ave Maria, gratia plena...",
+          "english": "Hail Mary, full of grace..."
         },
         "apostles_creed": {
-          "title_latin": "Credo",
+          "title_latin": "Symbolum Apostolorum",
           "title_english": "Apostles' Creed",
-          "latin": "Credo in Deum Patrem omnipoténtem, Creatórem cæli et terræ; et in Iesum Christum, Fílium Eius únicum, Dóminum nostrum, qui concéptus est de Spíritu Sancto, natus ex María Vírgine, passus sub Póntio Piláto, crucifíxus, mórtuus, et sepúltus; descéndit ad ínferos; tértia die resurréxit a mórtuis; ascéndit ad cælos, sedet ad déxteram Dei Patris omnipoténtis; inde ventúrus est iudicáre vivos et mórtuos. Credo in Spíritum Sanctum, sanctam Ecclésiam cathólicam, sanctórum communiónem, remissiónem peccatórum, carnis resurrectiónem, vitam ætérnam. Amen.",
-          "english": "I believe in God, the Father Almighty, Creator of heaven and earth; and in Jesus Christ, His only Son, our Lord; Who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father Almighty; from there He shall come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen."
+          "latin": "Credo in Deum Patrem omnipotentem...",
+          "english": "I believe in God, the Father almighty..."
         },
         "eternal_father": {
           "title_latin": "Pater Aeterne",
           "title_english": "Eternal Father",
-          "latin": "Pater Aeterne, offero Tibi Corpus et Sanguinem, animam et divinitatem dilectissimi Filii Tui, Domini nostri, Iesu Christi, in propitiatione pro peccatis nostris et totius mundi.",
-          "english": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of Your Dearly Beloved Son, Our Lord, Jesus Christ, in atonement for our sins and those of the whole world."
+          "latin": "Pater aeterne, offero tibi Corpus et Sanguinem...",
+          "english": "Eternal Father, I offer you the Body and Blood..."
         },
-        "for_the_sake": {
-          "title_latin": "Pro Dolorosa Passione",
-          "title_english": "For the Sake",
-          "latin": "Pro dolorosa Passione eius, miserere nobis et totius mundi.",
+        "for_his_sorrowful_passion": {
+          "title_latin": "Pro Dolorosa Passione Eius",
+          "title_english": "For His Sorrowful Passion",
+          "latin": "Pro dolorosa passione eius, miserere nobis et totius mundi.",
           "english": "For the sake of His sorrowful Passion, have mercy on us and on the whole world."
         },
         "holy_god": {
@@ -59,21 +59,22 @@
   
       "template": {
         "opening": [
-          {"prayer": "sign_of_the_cross", "count": 1},
-          {"prayer": "opening_prayer", "count": 1},
-          {"prayer": "our_father", "count": 1},
-          {"prayer": "hail_mary", "count": 1},
-          {"prayer": "apostles_creed", "count": 1}
+          "sign_of_the_cross",
+          "our_father",
+          "hail_mary",
+          "apostles_creed"
         ],
         "decade": [
-          {"prayer": "eternal_father", "count": 1},
-          {"prayer": "for_the_sake", "count": 10}
+          {"eternal_father": 1},
+          {"for_his_sorrowful_passion": 10}
         ],
         "closing": [
-          {"prayer": "holy_god", "count": 3},
-          {"prayer": "closing_prayer", "count": 1},
-          {"prayer": "sign_of_the_cross", "count": 1}
-        ]
+          {"holy_god": 3},
+          "sign_of_the_cross"
+        ],
+        "structure": {
+          "decades": 5
+        }
       },
       "structure": {
         "decades": 5
