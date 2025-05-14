@@ -330,11 +330,19 @@ struct PrayersViewWrapper: View {
 struct NavigationToRosaryView: View {
     let prayerId: String?
     @EnvironmentObject var prayerStore: PrayerStore
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationView {
             RosaryView(initialPrayerId: prayerId)
                 .environmentObject(prayerStore)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Back") {
+                            dismiss()
+                        }
+                    }
+                }
         }
     }
 }

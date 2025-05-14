@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RosaryView: View {
     @EnvironmentObject var prayerStore: PrayerStore
+    @Environment(\.dismiss) var dismiss
     @State private var selectedDay: String = getCurrentDay()
     @State private var selectedLanguage: PrayerLanguage = .bilingual
     @State private var scrollToId: String?
@@ -71,6 +72,16 @@ struct RosaryView: View {
             }
         }
         .navigationTitle("Rosary")
+        // Add back button if we're opened from a bookmark via initialPrayerId
+        .toolbar {
+            if initialPrayerId != nil {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Back") {
+                        dismiss()
+                    }
+                }
+            }
+        }
     }
 }
 
