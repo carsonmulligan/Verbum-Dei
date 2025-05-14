@@ -27,14 +27,13 @@ struct PrayersView: View {
     var initialCategory: PrayerCategory?
     
     init(initialPrayerId: String? = nil, initialCategory: PrayerCategory? = nil) {
+        print("⭐️ PRAYERS VIEW INIT - Prayer ID: \(initialPrayerId ?? "nil"), Category: \(initialCategory?.rawValue ?? "nil")")
         self.initialPrayerId = initialPrayerId
         self.initialCategory = initialCategory
         self._scrollToId = State(initialValue: initialPrayerId)
         if let category = initialCategory {
             self._selectedCategory = State(initialValue: category)
         }
-        
-        print("📋 PrayersView initialized with prayerId: \(initialPrayerId ?? "nil"), category: \(initialCategory?.rawValue ?? "nil")")
     }
     
     var filteredPrayers: [Prayer] {
@@ -149,14 +148,16 @@ struct PrayersView: View {
                                 }
                             }
                             .onAppear {
-                                print("📋 PrayersView appeared")
+                                // Extra logging to diagnose initialPrayerId issues
+                                print("⭐️ PRAYERS VIEW APPEARED - Prayer ID: \(initialPrayerId ?? "nil"), Category: \(initialCategory?.rawValue ?? "nil"), scrollToId: \(scrollToId ?? "nil")")
+                                
                                 if !viewHasAppeared {
                                     viewHasAppeared = true
                                     
                                     // When view appears, find the prayer and its category
                                     if let id = initialPrayerId {
                                         scrollToId = id
-                                        print("📋 Looking for prayer with ID: \(id)")
+                                        print("⭐️ Attempting to locate prayer with ID: \(id)")
                                         
                                         // List all prayers in the selected category to debug
                                         let prayers = prayerStore.getPrayers(for: selectedCategory)
@@ -169,8 +170,15 @@ struct PrayersView: View {
                                         if let category = initialCategory, category != .rosary {
                                             print("📋 Using provided category: \(category.rawValue)")
                                             selectedCategory = category
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                                                findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                            
+                                            // Force a long initial delay for more reliable scrolling
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                                // Reset scroll attempts to force view refresh
+                                                self.scrollAttempts += 1
+                                                
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                                    findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
+                                                }
                                             }
                                         } else {
                                             // Otherwise search through all categories
@@ -179,7 +187,11 @@ struct PrayersView: View {
                                                 if let category = foundCategory, category != .rosary {
                                                     print("📋 Found prayer in category: \(category.rawValue)")
                                                     selectedCategory = category
-                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                                    
+                                                    // Reset scroll attempts to force view refresh
+                                                    self.scrollAttempts += 1
+                                                    
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                                                         findAndScrollToPrayer(id: id, in: category, using: scrollProxy, isInitial: true)
                                                     }
                                                 } else {
@@ -232,6 +244,48 @@ struct PrayersView: View {
             print("✅ Found prayer match with normalized ID: \(prayer.title) (ID: \(prayer.id)) in category: \(category.rawValue)")
             scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
             return
+        }
+        
+        // Special case for "anima_christi" which seems problematic
+        if id == "anima_christi" || normalizedId == "anima_christi" {
+            print("⭐️ Special case for Anima Christi prayer")
+            if let prayer = prayers.first(where: { 
+                $0.title.lowercased().contains("anima") && 
+                $0.title.lowercased().contains("christi")
+            }) {
+                print("✅ Special case: Found Anima Christi prayer: \(prayer.title) (ID: \(prayer.id))")
+                scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
+                return
+            }
+            
+            // Try with just part of the name
+            if let prayer = prayers.first(where: { $0.title.lowercased().contains("anima") }) {
+                print("✅ Special case: Found partial match for Anima Christi: \(prayer.title) (ID: \(prayer.id))")
+                scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
+                return
+            }
+            
+            // Last resort - search all prayers regardless of category
+            print("⭐️ Searching all prayers for Anima Christi")
+            for searchCategory in PrayerCategory.allCases where searchCategory != .rosary {
+                let allPrayers = prayerStore.getPrayers(for: searchCategory)
+                if let prayer = allPrayers.first(where: { 
+                    $0.title.lowercased().contains("anima") || 
+                    (prayer.title_latin != nil && prayer.title_latin!.lowercased().contains("anima"))
+                }) {
+                    print("✅ Found Anima Christi in category: \(searchCategory.rawValue)")
+                    if searchCategory != category {
+                        selectedCategory = searchCategory
+                        // Wait for category change to take effect
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: true)
+                        }
+                    } else {
+                        scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer, isInitial: isInitial)
+                    }
+                    return
+                }
+            }
         }
         
         // Special case for "actus_spei" which seems problematic
@@ -342,6 +396,17 @@ struct PrayersView: View {
             if prayers.contains(where: { $0.id == id }) {
                 completion(category)
                 return
+            }
+            
+            // Special case for Anima Christi
+            if id == "anima_christi" {
+                if prayers.contains(where: { 
+                    $0.title.lowercased().contains("anima") && 
+                    $0.title.lowercased().contains("christi") 
+                }) {
+                    completion(category)
+                    return
+                }
             }
             
             // Special case for Actus Spei

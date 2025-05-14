@@ -186,7 +186,9 @@ struct BookmarksListView: View {
                                     onSelect: {
                                         // Store the prayer ID and show prayers view
                                         if let prayerId = bookmark.prayerId {
-                                            print("Selected prayer bookmark with ID: '\(prayerId)', title: '\(bookmark.prayerTitle ?? "unknown")'")
+                                            print("⭐️ Selected prayer bookmark with ID: '\(prayerId)', title: '\(bookmark.prayerTitle ?? "unknown")'")
+                                            
+                                            // Set the prayer ID that we want to navigate to
                                             selectedPrayerId = prayerId
                                             
                                             // Convert prayerCategory string to PrayerCategory enum
@@ -203,13 +205,19 @@ struct BookmarksListView: View {
                                                 case PrayerCategory.other.rawValue:
                                                     selectedPrayerCategory = .other
                                                 default:
-                                                    selectedPrayerCategory = nil
+                                                    selectedPrayerCategory = .basic  // Default to basic if not found
                                                 }
-                                                print("Setting prayer category to: \(selectedPrayerCategory?.rawValue ?? "nil")")
+                                                print("⭐️ Setting prayer category to: \(selectedPrayerCategory?.rawValue ?? "nil")")
+                                            } else {
+                                                // Default to basic prayers if category is missing
+                                                selectedPrayerCategory = .basic
+                                                print("⭐️ No category found, defaulting to Basic Prayers")
                                             }
                                             
-                                            showingPrayers = true
-                                            // Don't dismiss here - let prayer view stay on screen
+                                            // Dismiss any current sheets before opening the prayers view
+                                            DispatchQueue.main.async {
+                                                showingPrayers = true
+                                            }
                                         } else {
                                             print("⚠️ Prayer bookmark has no prayerId!")
                                         }
@@ -246,11 +254,24 @@ struct BookmarksListView: View {
                 }
             }
             .sheet(isPresented: $showingPrayers, onDismiss: {
+                // Reset the prayer ID and category when the sheet is dismissed
+                selectedPrayerId = nil
+                selectedPrayerCategory = nil
+                
                 // Dismiss bookmarks view after prayer view is dismissed
                 dismiss()
             }) {
-                PrayersView(initialPrayerId: selectedPrayerId, initialCategory: selectedPrayerCategory)
-                    .environmentObject(prayerStore)
+                // Create the prayers view with the ID and category we want to navigate to
+                if let prayerId = selectedPrayerId {
+                    PrayersView(initialPrayerId: prayerId, initialCategory: selectedPrayerCategory)
+                        .environmentObject(prayerStore)
+                        .onAppear {
+                            print("⭐️ Opening PrayersView with ID: \(prayerId), Category: \(selectedPrayerCategory?.rawValue ?? "nil")")
+                        }
+                } else {
+                    PrayersView()
+                        .environmentObject(prayerStore)
+                }
             }
         }
     }
