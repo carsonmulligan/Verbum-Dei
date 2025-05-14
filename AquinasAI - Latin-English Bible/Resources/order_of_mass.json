@@ -1,96 +1,206 @@
 {
-    "mass": {
-        "common_prayers": {
-            "sign_of_the_cross": {
-                "title_latin": "Signum Crucis",
-                "title_english": "Sign of the Cross",
-                "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
-                "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
-            },
-            "lord_be_with_you": {
-                "title_latin": "Dominus Vobiscum",
-                "title_english": "The Lord Be with You",
-                "latin": "Dominus vobiscum.",
-                "english": "The Lord be with you."
-            },
-            "and_with_your_spirit": {
-                "title_latin": "Et Cum Spiritu Tuo",
-                "title_english": "And with Your Spirit",
-                "latin": "Et cum spiritu tuo.",
-                "english": "And with your spirit."
-            },
-            "confiteor": {
-                "title_latin": "Confiteor",
-                "title_english": "I Confess",
-                "latin": "Confiteor Deo omnipotenti, beatae Mariae semper Virgini, beato Michaeli Archangelo, beato Ioanni Baptistae, sanctis Apostolis Petro et Paulo, omnibus Sanctis, et vobis, fratres: quia peccavi nimis cogitatione, verbo et opere: mea culpa, mea culpa, mea maxima culpa. Ideo precor beatam Mariam semper Virginem, beatum Michaelem Archangelum, beatum Ioannem Baptistam, sanctos Apostolos Petrum et Paulum, omnes Sanctos, et vos, fratres, orare pro me ad Dominum Deum nostrum. Amen.",
-                "english": "I confess to almighty God and to you, my brothers and sisters, that I have greatly sinned, in my thoughts and in my words, in what I have done and in what I have failed to do, through my fault, through my fault, through my most grievous fault; therefore I ask blessed Mary ever-Virgin, all the Angels and Saints, and you, my brothers and sisters, to pray for me to the Lord our God. Amen."
-            },
-            "kyrie": {
-                "title_latin": "Kyrie Eleison",
-                "title_english": "Lord Have Mercy",
-                "latin": "Kyrie eleison. Christe eleison. Kyrie eleison.",
-                "english": "Lord, have mercy. Christ, have mercy. Lord, have mercy."
-            },
-            "gloria": {
-                "title_latin": "Gloria in Excelsis",
-                "title_english": "Glory to God",
-                "latin": "Gloria in excelsis Deo, et in terra pax hominibus bonae voluntatis. Laudamus te, benedicimus te, adoramus te, glorificamus te, gratias agimus tibi propter magnam gloriam tuam, Domine Deus, Rex caelestis, Deus Pater omnipotens. Domine Fili unigenite, Iesu Christe, Domine Deus, Agnus Dei, Filius Patris. Qui tollis peccata mundi, miserere nobis; qui tollis peccata mundi, suscipe deprecationem nostram. Qui sedes ad dexteram Patris, miserere nobis. Quoniam tu solus Sanctus, tu solus Dominus, tu solus Altissimus, Iesu Christe, cum Sancto Spiritu: in gloria Dei Patris. Amen.",
-                "english": "Glory to God in the highest, and on earth peace to people of good will. We praise you, we bless you, we adore you, we glorify you, we give you thanks for your great glory, Lord God, heavenly King, O God, almighty Father. Lord Jesus Christ, Only Begotten Son, Lord God, Lamb of God, Son of the Father, you take away the sins of the world, have mercy on us; you take away the sins of the world, receive our prayer; you are seated at the right hand of the Father, have mercy on us. For you alone are the Holy One, you alone are the Lord, you alone are the Most High, Jesus Christ, with the Holy Spirit, in the glory of God the Father. Amen."
-            },
-            "nicene_creed": {
-                "title_latin": "Credo",
-                "title_english": "Nicene Creed",
-                "latin": "Credo in unum Deum, Patrem omnipotentem, factorem caeli et terrae, visibilium omnium et invisibilium. Et in unum Dominum Iesum Christum, Filium Dei unigenitum, et ex Patre natum ante omnia saecula: Deum de Deo, Lumen de Lumine, Deum verum de Deo vero, genitum, non factum, consubstantialem Patri; per quem omnia facta sunt...",
-                "english": "I believe in one God, the Father almighty, maker of heaven and earth, of all things visible and invisible. I believe in one Lord Jesus Christ, the Only Begotten Son of God, born of the Father before all ages..."
-            },
-            "sanctus": {
-                "title_latin": "Sanctus",
-                "title_english": "Holy, Holy, Holy",
-                "latin": "Sanctus, Sanctus, Sanctus Dominus Deus Sabaoth. Pleni sunt caeli et terra gloria tua. Hosanna in excelsis. Benedictus qui venit in nomine Domini. Hosanna in excelsis.",
-                "english": "Holy, holy, holy Lord God of hosts. Heaven and earth are full of your glory. Hosanna in the highest. Blessed is he who comes in the name of the Lord. Hosanna in the highest."
-            },
-            "agnus_dei": {
-                "title_latin": "Agnus Dei",
-                "title_english": "Lamb of God",
-                "latin": "Agnus Dei, qui tollis peccata mundi, miserere nobis. Agnus Dei, qui tollis peccata mundi, miserere nobis. Agnus Dei, qui tollis peccata mundi, dona nobis pacem.",
-                "english": "Lamb of God, you take away the sins of the world, have mercy on us. Lamb of God, you take away the sins of the world, have mercy on us. Lamb of God, you take away the sins of the world, grant us peace."
-            }
+    "order_of_mass": {
+        "metadata": {
+            "title": "Order of Mass",
+            "description": "The structure and prayers of the Roman Catholic Mass"
         },
-        "template": {
-            "introductory_rites": [
-                {"prayer": "sign_of_the_cross", "count": 1},
-                {"prayer": "lord_be_with_you", "count": 1},
-                {"prayer": "and_with_your_spirit", "count": 1},
-                {"prayer": "confiteor", "count": 1},
-                {"prayer": "kyrie", "count": 1},
-                {"prayer": "gloria", "count": 1, "omit_during": ["Advent", "Lent"]}
-            ],
-            "liturgy_of_the_word": [
-                {"type": "reading", "name": "First Reading"},
-                {"type": "psalm", "name": "Responsorial Psalm"},
-                {"type": "reading", "name": "Second Reading", "condition": "Sundays/Solemnities"},
-                {"type": "acclamation", "name": "Gospel Acclamation"},
-                {"type": "gospel", "name": "Gospel"},
-                {"type": "homily", "name": "Homily"},
-                {"prayer": "nicene_creed", "count": 1}
-            ],
-            "liturgy_of_the_eucharist": {
-                "preparation": [
-                    {"type": "offertory", "name": "Presentation of Gifts"}
-                ],
-                "eucharistic_prayer": [
-                    {"prayer": "sanctus", "count": 1},
-                    {"type": "consecration", "name": "Eucharistic Prayer"}
-                ],
-                "communion": [
-                    {"prayer": "agnus_dei", "count": 1},
-                    {"type": "communion", "name": "Distribution of Communion"}
+        "sections": {
+            "introductory_rites": {
+                "title": "Introductory Rites",
+                "sequence": [
+                    {
+                        "prayer_id": "sign_of_cross",
+                        "rubric": "The priest and people make the Sign of the Cross"
+                    },
+                    {
+                        "prayer_id": "lord_be_with_you",
+                        "response_id": "and_with_your_spirit",
+                        "rubric": "The priest greets the people"
+                    },
+                    {
+                        "prayer_id": "confiteor",
+                        "rubric": "The Penitential Act"
+                    },
+                    {
+                        "prayer_id": "kyrie_eleison",
+                        "rubric": "The Kyrie follows, unless already included in the Penitential Act"
+                    },
+                    {
+                        "prayer_id": "gloria",
+                        "rubric": "The Gloria is sung or said on Sundays outside Advent and Lent, on solemnities and feasts, and at special celebrations",
+                        "conditional": {
+                            "omit_during": ["advent", "lent"],
+                            "except": ["solemnities", "feasts"]
+                        }
+                    }
                 ]
             },
-            "concluding_rites": [
-                {"prayer": "sign_of_the_cross", "count": 1},
-                {"type": "dismissal", "name": "Dismissal"}
-            ]
+            "liturgy_of_the_word": {
+                "title": "Liturgy of the Word",
+                "sequence": [
+                    {
+                        "type": "reading",
+                        "name": "First Reading",
+                        "response": {
+                            "latin": "Verbum Domini",
+                            "english": "The Word of the Lord",
+                            "people_response": {
+                                "latin": "Deo gratias",
+                                "english": "Thanks be to God"
+                            }
+                        }
+                    },
+                    {
+                        "type": "psalm",
+                        "name": "Responsorial Psalm"
+                    },
+                    {
+                        "type": "reading",
+                        "name": "Second Reading",
+                        "when": "Sundays and Solemnities",
+                        "response": {
+                            "latin": "Verbum Domini",
+                            "english": "The Word of the Lord",
+                            "people_response": {
+                                "latin": "Deo gratias",
+                                "english": "Thanks be to God"
+                            }
+                        }
+                    },
+                    {
+                        "prayer_id": "alleluia",
+                        "rubric": "Before the Gospel (except during Lent)",
+                        "conditional": {
+                            "replace_during": {
+                                "lent": "Gospel Acclamation"
+                            }
+                        }
+                    },
+                    {
+                        "type": "gospel",
+                        "name": "Gospel",
+                        "introduction": {
+                            "priest": {
+                                "latin": "Dominus vobiscum",
+                                "english": "The Lord be with you"
+                            },
+                            "people": {
+                                "latin": "Et cum spiritu tuo",
+                                "english": "And with your spirit"
+                            }
+                        },
+                        "conclusion": {
+                            "priest": {
+                                "latin": "Verbum Domini",
+                                "english": "The Gospel of the Lord"
+                            },
+                            "people": {
+                                "latin": "Laus tibi, Christe",
+                                "english": "Praise to you, Lord Jesus Christ"
+                            }
+                        }
+                    },
+                    {
+                        "type": "homily",
+                        "name": "Homily"
+                    },
+                    {
+                        "prayer_id": "credo",
+                        "name": "Profession of Faith",
+                        "rubric": "On Sundays and Solemnities"
+                    },
+                    {
+                        "type": "intercessions",
+                        "name": "Universal Prayer (Prayer of the Faithful)"
+                    }
+                ]
+            },
+            "liturgy_of_the_eucharist": {
+                "title": "Liturgy of the Eucharist",
+                "sequence": [
+                    {
+                        "type": "preparation",
+                        "name": "Preparation of the Gifts"
+                    },
+                    {
+                        "type": "eucharistic_prayer",
+                        "name": "Eucharistic Prayer",
+                        "parts": [
+                            {
+                                "prayer_id": "preface_dialogue",
+                                "rubric": "The Preface Dialogue"
+                            },
+                            {
+                                "prayer_id": "sanctus",
+                                "rubric": "The Sanctus (Holy, Holy, Holy)"
+                            },
+                            {
+                                "type": "consecration",
+                                "name": "Consecration"
+                            },
+                            {
+                                "prayer_id": "memorial_acclamation",
+                                "rubric": "Memorial Acclamation"
+                            },
+                            {
+                                "type": "concluding_doxology",
+                                "name": "Concluding Doxology"
+                            }
+                        ]
+                    },
+                    {
+                        "prayer_id": "pater_noster",
+                        "name": "The Lord's Prayer"
+                    },
+                    {
+                        "type": "peace",
+                        "name": "Sign of Peace"
+                    },
+                    {
+                        "prayer_id": "agnus_dei",
+                        "name": "Breaking of the Bread"
+                    },
+                    {
+                        "prayer_id": "domine_non_sum_dignus",
+                        "name": "Communion"
+                    }
+                ]
+            },
+            "concluding_rites": {
+                "title": "Concluding Rites",
+                "sequence": [
+                    {
+                        "prayer_id": "final_blessing",
+                        "rubric": "The Final Blessing"
+                    },
+                    {
+                        "type": "dismissal",
+                        "name": "Dismissal",
+                        "options": [
+                            {
+                                "latin": "Ite, missa est",
+                                "english": "Go forth, the Mass is ended"
+                            },
+                            {
+                                "latin": "Ite ad Evangelium Domini annuntiandum",
+                                "english": "Go and announce the Gospel of the Lord"
+                            },
+                            {
+                                "latin": "Ite in pace, glorificando vita vestra Dominum",
+                                "english": "Go in peace, glorifying the Lord by your life"
+                            },
+                            {
+                                "latin": "Ite in pace",
+                                "english": "Go in peace"
+                            }
+                        ],
+                        "response": {
+                            "latin": "Deo gratias",
+                            "english": "Thanks be to God"
+                        }
+                    }
+                ]
+            }
         }
     }
 }
