@@ -62,17 +62,27 @@
             "creed",
             "intercessions"
         ],
-        "liturgy_of_the_eucharist": [
-            "offertory",
-            "sanctus",
-            "eucharistic_prayer",
-            "lords_prayer",
-            "sign_of_peace",
-            "agnus_dei",
-            "communion"
-        ],
+        "liturgy_of_the_eucharist": {
+            "preparation_of_the_gifts": [
+                "offertory",
+                "prayer_over_offerings"
+            ],
+            "eucharistic_prayer": [
+                "preface_dialogue",
+                "sanctus",
+                "eucharistic_prayer_i",
+                "memorial_acclamation",
+                "doxology"
+            ],
+            "communion_rite": [
+                "lords_prayer",
+                "sign_of_peace",
+                "agnus_dei",
+                "communion",
+                "prayer_after_communion"
+            ]
+        },
       "concluding_rites": [
-            "prayer_after_communion",
             "blessing",
             "dismissal"
       ]
