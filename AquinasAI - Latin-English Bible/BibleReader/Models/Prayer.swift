@@ -200,28 +200,56 @@ enum OrderItem: Codable, Hashable {
     case prayerCount(String, Int)
     case prayerWithIntentions(String, Int, [String])
     
+    private struct IntentionWrapper: Codable {
+        let count: Int
+        let intentions: [String]
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
+        
+        // Try decoding as String first
         if let str = try? container.decode(String.self) {
             self = .string(str)
-        } else if let arr = try? container.decode([String].self) {
-            self = .array(arr)
-        } else if let dict = try? container.decode([String: [String]].self) {
-            self = .dictionary(dict)
-        } else if let dict = try? container.decode([String: TemplateObject].self) {
-            self = .templateObject(dict)
-        } else if let dict = try? container.decode([String: Int].self),
-                  let (key, count) = dict.first {
-            self = .prayerCount(key, count)
-        } else if let dict = try? container.decode([String: PrayerIntention].self),
-                  let (key, intention) = dict.first {
-            self = .prayerWithIntentions(key, intention.count, intention.intentions)
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Cannot decode OrderItem"
-            )
+            return
         }
+        
+        // Try decoding as String array
+        if let arr = try? container.decode([String].self) {
+            self = .array(arr)
+            return
+        }
+        
+        // Try decoding as dictionary with string array values
+        if let dict = try? container.decode([String: [String]].self) {
+            self = .dictionary(dict)
+            return
+        }
+        
+        // Try decoding as template object
+        if let dict = try? container.decode([String: TemplateObject].self) {
+            self = .templateObject(dict)
+            return
+        }
+        
+        // Try decoding as simple prayer count
+        if let dict = try? container.decode([String: Int].self),
+           let (key, count) = dict.first {
+            self = .prayerCount(key, count)
+            return
+        }
+        
+        // Try decoding as prayer with intentions
+        if let dict = try? container.decode([String: IntentionWrapper].self),
+           let (key, wrapper) = dict.first {
+            self = .prayerWithIntentions(key, wrapper.count, wrapper.intentions)
+            return
+        }
+        
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "Cannot decode OrderItem: data doesn't match any expected format"
+        )
     }
     
     func encode(to encoder: Encoder) throws {
@@ -238,7 +266,8 @@ enum OrderItem: Codable, Hashable {
         case .prayerCount(let prayer, let count):
             try container.encode([prayer: count])
         case .prayerWithIntentions(let prayer, let count, let intentions):
-            try container.encode([prayer: ["count": count, "intentions": intentions]])
+            let wrapper = IntentionWrapper(count: count, intentions: intentions)
+            try container.encode([prayer: wrapper])
         }
     }
     
