@@ -250,6 +250,28 @@ private struct PrayerSectionView: View {
                             )
                             .id(prayer.asPrayer.id)
                         }
+                    case .prayerCount(let prayerId, let count):
+                        if let prayer = commonPrayers[prayerId] {
+                            RepeatedPrayerView(
+                                prayer: prayer.asPrayer,
+                                count: count,
+                                intentions: nil,
+                                selectedLanguage: selectedLanguage,
+                                shouldHighlight: scrollToId == prayer.asPrayer.id
+                            )
+                            .id(prayer.asPrayer.id)
+                        }
+                    case .prayerWithIntentions(let prayerId, let count, let intentions):
+                        if let prayer = commonPrayers[prayerId] {
+                            RepeatedPrayerView(
+                                prayer: prayer.asPrayer,
+                                count: count,
+                                intentions: intentions,
+                                selectedLanguage: selectedLanguage,
+                                shouldHighlight: scrollToId == prayer.asPrayer.id
+                            )
+                            .id(prayer.asPrayer.id)
+                        }
                     case .object(let obj):
                         if let prayer = commonPrayers[obj.id] {
                             RepeatedPrayerView(
@@ -261,7 +283,7 @@ private struct PrayerSectionView: View {
                             )
                             .id(prayer.asPrayer.id)
                         }
-                    case .array, .dictionary, .templateObject, .prayerCount, .prayerWithIntentions:
+                    case .array, .dictionary, .templateObject:
                         // Handle other cases if needed
                         EmptyView()
                     }
@@ -382,6 +404,30 @@ private struct MysteriesView: View {
                                 .id(prayer.asPrayer.id)
                                 .padding(.leading)
                             }
+                        case .prayerCount(let prayerId, let count):
+                            if let prayer = commonPrayers[prayerId] {
+                                RepeatedPrayerView(
+                                    prayer: prayer.asPrayer,
+                                    count: count,
+                                    intentions: nil,
+                                    selectedLanguage: selectedLanguage,
+                                    shouldHighlight: scrollToId == prayer.asPrayer.id
+                                )
+                                .id(prayer.asPrayer.id)
+                                .padding(.leading)
+                            }
+                        case .prayerWithIntentions(let prayerId, let count, let intentions):
+                            if let prayer = commonPrayers[prayerId] {
+                                RepeatedPrayerView(
+                                    prayer: prayer.asPrayer,
+                                    count: count,
+                                    intentions: intentions,
+                                    selectedLanguage: selectedLanguage,
+                                    shouldHighlight: scrollToId == prayer.asPrayer.id
+                                )
+                                .id(prayer.asPrayer.id)
+                                .padding(.leading)
+                            }
                         case .object(let obj):
                             if let prayer = commonPrayers[obj.id] {
                                 RepeatedPrayerView(
@@ -394,7 +440,7 @@ private struct MysteriesView: View {
                                 .id(prayer.asPrayer.id)
                                 .padding(.leading)
                             }
-                        case .array, .dictionary, .templateObject, .prayerCount, .prayerWithIntentions:
+                        case .array, .dictionary, .templateObject:
                             // Handle other cases if needed
                             EmptyView()
                         }
