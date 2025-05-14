@@ -1,19 +1,19 @@
 {
     "prayers": [
-        {
+      {
             "id": "sign_of_the_cross",
             "title": "Sign of the Cross",
-            "title_latin": "Signum Crucis",
-            "title_english": "Sign of the Cross",
-            "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
-            "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
-        },
-        {
+        "title_latin": "Signum Crucis",
+        "title_english": "Sign of the Cross",
+        "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+        "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
+      },
+      {
             "id": "greeting",
             "title": "Greeting",
             "title_latin": "Salutatio",
             "title_english": "Greeting",
-            "latin": "Dominus vobiscum.",
+        "latin": "Dominus vobiscum.",
             "english": "The Lord be with you.",
             "response_latin": "Et cum spiritu tuo.",
             "response_english": "And with your spirit."
@@ -23,8 +23,8 @@
             "title": "Penitential Act",
             "title_latin": "Actus Paenitentialis",
             "title_english": "Penitential Act",
-            "latin": "Confiteor Deo omnipotenti et vobis, fratres, quia peccavi nimis cogitatione, verbo, opere et omissione: mea culpa, mea culpa, mea maxima culpa.",
-            "english": "I confess to almighty God and to you, my brothers and sisters, that I have greatly sinned, in my thoughts and in my words, in what I have done and in what I have failed to do, through my fault, through my fault, through my most grievous fault."
+            "latin": "Confiteor Deo omnipotenti et vobis, fratres...",
+            "english": "I confess to almighty God and to you, my brothers and sisters..."
         },
         {
             "id": "kyrie",
@@ -39,43 +39,43 @@
             "title": "Glory to God",
             "title_latin": "Gloria",
             "title_english": "Glory to God",
-            "latin": "Gloria in excelsis Deo et in terra pax hominibus bonae voluntatis...",
-            "english": "Glory to God in the highest, and on earth peace to people of good will..."
+            "latin": "Gloria in excelsis Deo...",
+            "english": "Glory to God in the highest..."
         }
     ],
     "order_of_mass": {
-        "introductory_rites": [
-            {"prayer": "sign_of_the_cross"},
-            {"prayer": "greeting"},
-            {"prayer": "penitential_act"},
-            {"prayer": "kyrie"},
-            {"prayer": "gloria", "condition": "not_advent_or_lent"},
-            {"prayer": "collect"}
+      "introductory_rites": [
+            "sign_of_the_cross",
+            "greeting",
+            "penitential_act",
+            "kyrie",
+            "gloria",
+            "collect"
         ],
-        "liturgy_of_the_word": [
-            {"prayer": "first_reading"},
-            {"prayer": "responsorial_psalm"},
-            {"prayer": "second_reading", "condition": "sundays_and_solemnities"},
-            {"prayer": "gospel_acclamation"},
-            {"prayer": "gospel"},
-            {"prayer": "homily"},
-            {"prayer": "creed", "condition": "sundays_and_solemnities"},
-            {"prayer": "intercessions"}
+      "liturgy_of_the_word": [
+            "first_reading",
+            "responsorial_psalm",
+            "second_reading",
+            "gospel_acclamation",
+            "gospel",
+            "homily",
+            "creed",
+            "intercessions"
         ],
         "liturgy_of_the_eucharist": [
-            {"prayer": "offertory"},
-            {"prayer": "sanctus"},
-            {"prayer": "eucharistic_prayer"},
-            {"prayer": "lords_prayer"},
-            {"prayer": "sign_of_peace"},
-            {"prayer": "agnus_dei"},
-            {"prayer": "communion"}
+            "offertory",
+            "sanctus",
+            "eucharistic_prayer",
+            "lords_prayer",
+            "sign_of_peace",
+            "agnus_dei",
+            "communion"
         ],
-        "concluding_rites": [
-            {"prayer": "prayer_after_communion"},
-            {"prayer": "blessing"},
-            {"prayer": "dismissal"}
-        ]
+      "concluding_rites": [
+            "prayer_after_communion",
+            "blessing",
+            "dismissal"
+      ]
     }
-}
+  }
   

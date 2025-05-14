@@ -87,12 +87,12 @@
             "sign_of_the_cross",
             "apostles_creed",
             "our_father",
-            {"prayer": "hail_mary", "count": 3, "intentions": ["Faith", "Hope", "Charity"]},
+            {"hail_mary": 3},
             "glory_be"
         ],
         "decade": [
             "our_father",
-            {"prayer": "hail_mary", "count": 10},
+            {"hail_mary": 10},
             "glory_be",
             "fatima_prayer"
         ],
