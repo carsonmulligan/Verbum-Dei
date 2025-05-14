@@ -316,6 +316,7 @@ private struct RepeatedPrayerView: View {
     let intentions: [String]?
     let selectedLanguage: PrayerLanguage
     let shouldHighlight: Bool
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -334,13 +335,16 @@ private struct RepeatedPrayerView: View {
             if selectedLanguage == .latinOnly || selectedLanguage == .bilingual {
                 Text(prayer.latin)
                     .font(.body)
+                    .foregroundColor(colorScheme == .dark ? .white : .primary)
                     .padding(.top, 4)
             }
             
             if selectedLanguage == .englishOnly || selectedLanguage == .bilingual {
                 Text(prayer.english)
                     .font(.body)
-                    .foregroundColor(selectedLanguage == .bilingual ? .secondary : .primary)
+                    .foregroundColor(selectedLanguage == .bilingual ? 
+                                    (colorScheme == .dark ? .gray : .secondary) : 
+                                    (colorScheme == .dark ? .white : .primary))
                     .italic(selectedLanguage == .bilingual)
                     .padding(.top, selectedLanguage == .bilingual ? 2 : 4)
             }
@@ -348,8 +352,8 @@ private struct RepeatedPrayerView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white)
-                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                .fill(colorScheme == .dark ? Color.black.opacity(0.3) : Color.white)
+                .shadow(color: colorScheme == .dark ? Color.clear : Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
