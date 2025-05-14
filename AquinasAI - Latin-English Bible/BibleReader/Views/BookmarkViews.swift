@@ -4,10 +4,12 @@ import SwiftUI
 class PrayerNavigation: ObservableObject {
     @Published var targetPrayerId: String?
     @Published var targetCategory: PrayerCategory?
+    @Published var navigateToRosary: Bool = false
     
     func navigateTo(prayerId: String?, category: PrayerCategory?) {
         self.targetPrayerId = prayerId
         self.targetCategory = category
+        self.navigateToRosary = category == .rosary
     }
 }
 
@@ -163,6 +165,7 @@ struct BookmarksListView: View {
     @Environment(\.dismiss) var dismiss
     @State private var editingBookmark: Bookmark?
     @State private var showingPrayers = false
+    @State private var showingRosary = false
     @State private var selectedPrayerId: String?
     @State private var selectedPrayerCategory: PrayerCategory?
     
@@ -228,9 +231,13 @@ struct BookmarksListView: View {
                                             // Set the navigation parameters in the environment object
                                             prayerNavigation.navigateTo(prayerId: prayerId, category: category)
                                             
-                                            // Present the prayer view
+                                            // Present the appropriate view based on category
                                             DispatchQueue.main.async {
-                                                showingPrayers = true
+                                                if category == .rosary {
+                                                    showingRosary = true
+                                                } else {
+                                                    showingPrayers = true
+                                                }
                                             }
                                         }
                                     },
@@ -277,6 +284,18 @@ struct BookmarksListView: View {
                 NavigationToPrayerView(prayerNavigation: prayerNavigation)
                     .environmentObject(prayerStore)
             }
+            .fullScreenCover(isPresented: $showingRosary, onDismiss: {
+                // Clear the navigation parameters
+                prayerNavigation.navigateTo(prayerId: nil, category: nil)
+                
+                // Dismiss bookmarks view after rosary view is dismissed
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    dismiss()
+                }
+            }) {
+                NavigationToRosaryView(prayerId: prayerNavigation.targetPrayerId)
+                    .environmentObject(prayerStore)
+            }
         }
     }
 }
@@ -304,6 +323,19 @@ struct PrayersViewWrapper: View {
     var body: some View {
         return PrayersView(initialPrayerId: initialPrayerId, initialCategory: initialCategory)
             .environmentObject(prayerStore)
+    }
+}
+
+// New wrapper view for rosary navigation
+struct NavigationToRosaryView: View {
+    let prayerId: String?
+    @EnvironmentObject var prayerStore: PrayerStore
+    
+    var body: some View {
+        NavigationView {
+            RosaryView(initialPrayerId: prayerId)
+                .environmentObject(prayerStore)
+        }
     }
 }
 

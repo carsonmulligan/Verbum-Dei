@@ -4,6 +4,15 @@ struct RosaryView: View {
     @EnvironmentObject var prayerStore: PrayerStore
     @State private var selectedDay: String = getCurrentDay()
     @State private var selectedLanguage: PrayerLanguage = .bilingual
+    @State private var scrollToId: String?
+    
+    // Add parameter for initial prayer ID
+    let initialPrayerId: String?
+    
+    init(initialPrayerId: String? = nil) {
+        self.initialPrayerId = initialPrayerId
+        self._scrollToId = State(initialValue: initialPrayerId)
+    }
     
     private static func getCurrentDay() -> String {
         let dateFormatter = DateFormatter()
@@ -54,7 +63,8 @@ struct RosaryView: View {
                     mysteries: mysteries,
                     mysteryTitle: mysteryTitle,
                     mysteryDescription: mysteryDescription,
-                    selectedLanguage: selectedLanguage
+                    selectedLanguage: selectedLanguage,
+                    scrollToId: scrollToId
                 )
             } else {
                 LoadingErrorView(isLoading: prayerStore.rosaryPrayers == nil)
@@ -129,38 +139,66 @@ private struct RosaryContentView: View {
     let mysteryTitle: String
     let mysteryDescription: String
     let selectedLanguage: PrayerLanguage
+    let scrollToId: String?
+    
+    @State private var viewHasAppeared = false
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                if !mysteryTitle.isEmpty {
-                    MysteryHeaderView(title: mysteryTitle, description: mysteryDescription)
-                }
-                
-                PrayerSectionView(
-                    title: "Opening Prayers",
-                    prayers: template.opening,
-                    commonPrayers: commonPrayers,
-                    selectedLanguage: selectedLanguage
-                )
-                
-                if let mysteries = mysteries {
-                    MysteriesView(
-                        mysteries: mysteries,
-                        template: template,
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    if !mysteryTitle.isEmpty {
+                        MysteryHeaderView(title: mysteryTitle, description: mysteryDescription)
+                    }
+                    
+                    PrayerSectionView(
+                        title: "Opening Prayers",
+                        prayers: template.opening,
                         commonPrayers: commonPrayers,
-                        selectedLanguage: selectedLanguage
+                        selectedLanguage: selectedLanguage,
+                        scrollToId: scrollToId
+                    )
+                    
+                    if let mysteries = mysteries {
+                        MysteriesView(
+                            mysteries: mysteries,
+                            template: template,
+                            commonPrayers: commonPrayers,
+                            selectedLanguage: selectedLanguage,
+                            scrollToId: scrollToId
+                        )
+                    }
+                    
+                    PrayerSectionView(
+                        title: "Closing Prayers",
+                        prayers: template.closing.map { OrderItem.string($0) },
+                        commonPrayers: commonPrayers,
+                        selectedLanguage: selectedLanguage,
+                        scrollToId: scrollToId
                     )
                 }
-                
-                PrayerSectionView(
-                    title: "Closing Prayers",
-                    prayers: template.closing.map { OrderItem.string($0) },
-                    commonPrayers: commonPrayers,
-                    selectedLanguage: selectedLanguage
-                )
+                .padding(.vertical)
+                .id("rosary-content")
+                .onAppear {
+                    if !viewHasAppeared {
+                        viewHasAppeared = true
+                        
+                        // Attempt to find and scroll to the prayer if an ID is provided
+                        if let prayerId = scrollToId {
+                            // Give time for the view to fully render
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                scrollToPrayer(id: prayerId, proxy: scrollProxy)
+                            }
+                        }
+                    }
+                }
             }
-            .padding(.vertical)
+        }
+    }
+    
+    private func scrollToPrayer(id: String, proxy: ScrollViewProxy) {
+        withAnimation {
+            proxy.scrollTo(id, anchor: .top)
         }
     }
 }
@@ -190,6 +228,7 @@ private struct PrayerSectionView: View {
     let prayers: [OrderItem]
     let commonPrayers: [String: RosaryPrayer]
     let selectedLanguage: PrayerLanguage
+    let scrollToId: String?
     
     var body: some View {
         Section(header:
@@ -198,38 +237,98 @@ private struct PrayerSectionView: View {
                 .foregroundColor(.deepPurple)
                 .padding(.bottom, 4)
         ) {
-            ForEach(Array(prayers.enumerated()), id: \.offset) { index, item in
-                switch item {
-                case .string(let prayerKey):
-                    if let prayer = commonPrayers[prayerKey] {
-                        PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                    }
-                case .prayerCount(let prayerKey, let count):
-                    if let prayer = commonPrayers[prayerKey] {
-                        ForEach(0..<count, id: \.self) { _ in
-                            PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
+            VStack(spacing: 12) {
+                ForEach(prayers, id: \.self) { item in
+                    switch item {
+                    case .string(let prayerId):
+                        if let prayer = commonPrayers[prayerId] {
+                            PrayerCardView(
+                                prayer: prayer.asPrayer,
+                                selectedLanguage: selectedLanguage,
+                                shouldHighlight: scrollToId == prayer.asPrayer.id
+                            )
+                            .id(prayer.asPrayer.id)
+                        }
+                    case .object(let obj):
+                        if let prayerId = obj.id, let prayer = commonPrayers[prayerId] {
+                            RepeatedPrayerView(
+                                prayer: prayer.asPrayer,
+                                count: obj.count,
+                                intentions: obj.intentions,
+                                selectedLanguage: selectedLanguage,
+                                shouldHighlight: scrollToId == prayer.asPrayer.id
+                            )
+                            .id(prayer.asPrayer.id)
                         }
                     }
-                case .prayerWithIntentions(let prayerKey, let count, let intentions):
-                    if let prayer = commonPrayers[prayerKey] {
-                        ForEach(0..<count, id: \.self) { index in
-                            VStack(alignment: .leading, spacing: 4) {
-                                if index < intentions.count {
-                                    Text("For \(intentions[index])")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                        .padding(.horizontal)
-                                }
-                                PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                            }
-                        }
-                    }
-                default:
-                    EmptyView()
                 }
             }
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
+    }
+}
+
+// Helper view for prayers in the rosary
+private struct PrayerCardView: View {
+    let prayer: Prayer
+    let selectedLanguage: PrayerLanguage
+    let shouldHighlight: Bool
+    
+    var body: some View {
+        PrayerCard(prayer: prayer, language: selectedLanguage)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(shouldHighlight ? Color.deepPurple : Color.clear, lineWidth: shouldHighlight ? 2 : 0)
+            )
+    }
+}
+
+// Modified RepeatedPrayerView to handle scrolling
+private struct RepeatedPrayerView: View {
+    let prayer: Prayer
+    let count: Int
+    let intentions: [String]?
+    let selectedLanguage: PrayerLanguage
+    let shouldHighlight: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("\(prayer.displayTitleEnglish) (\(count)x)")
+                .font(.headline)
+                .foregroundColor(.deepPurple)
+                .padding(.bottom, 2)
+            
+            if let intentions = intentions {
+                Text("For: \(intentions.joined(separator: ", "))")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 4)
+            }
+            
+            if selectedLanguage == .latinOnly || selectedLanguage == .bilingual {
+                Text(prayer.latin)
+                    .font(.body)
+                    .padding(.top, 4)
+            }
+            
+            if selectedLanguage == .englishOnly || selectedLanguage == .bilingual {
+                Text(prayer.english)
+                    .font(.body)
+                    .foregroundColor(selectedLanguage == .bilingual ? .secondary : .primary)
+                    .italic(selectedLanguage == .bilingual)
+                    .padding(.top, selectedLanguage == .bilingual ? 2 : 4)
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(shouldHighlight ? Color.deepPurple : Color.deepPurple.opacity(0.2), lineWidth: shouldHighlight ? 2 : 1)
+        )
     }
 }
 
@@ -238,6 +337,7 @@ private struct MysteriesView: View {
     let template: RosaryTemplate
     let commonPrayers: [String: RosaryPrayer]
     let selectedLanguage: PrayerLanguage
+    let scrollToId: String?
     
     var body: some View {
         VStack(spacing: 16) {
@@ -266,22 +366,30 @@ private struct MysteriesView: View {
                             .font(.body)
                     }
                     
-                    ForEach(Array(template.decade.enumerated()), id: \.0) { decadeIndex, item in
+                    ForEach(template.decade, id: \.self) { item in
                         switch item {
-                        case .string(let prayerKey):
-                            if let prayer = commonPrayers[prayerKey] {
-                                PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                                    .padding(.leading)
+                        case .string(let prayerId):
+                            if let prayer = commonPrayers[prayerId] {
+                                PrayerCardView(
+                                    prayer: prayer.asPrayer,
+                                    selectedLanguage: selectedLanguage,
+                                    shouldHighlight: scrollToId == prayer.asPrayer.id
+                                )
+                                .id(prayer.asPrayer.id)
+                                .padding(.leading)
                             }
-                        case .prayerCount(let prayerKey, let count):
-                            if let prayer = commonPrayers[prayerKey] {
-                                ForEach(0..<count, id: \.self) { _ in
-                                    PrayerCard(prayer: prayer.asPrayer, language: selectedLanguage)
-                                        .padding(.leading)
-                                }
+                        case .object(let obj):
+                            if let prayerId = obj.id, let prayer = commonPrayers[prayerId] {
+                                RepeatedPrayerView(
+                                    prayer: prayer.asPrayer,
+                                    count: obj.count,
+                                    intentions: obj.intentions,
+                                    selectedLanguage: selectedLanguage,
+                                    shouldHighlight: scrollToId == prayer.asPrayer.id
+                                )
+                                .id(prayer.asPrayer.id)
+                                .padding(.leading)
                             }
-                        default:
-                            EmptyView()
                         }
                     }
                 }

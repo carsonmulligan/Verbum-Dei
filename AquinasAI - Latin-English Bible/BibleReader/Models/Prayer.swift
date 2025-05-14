@@ -220,10 +220,42 @@ enum OrderItem: Codable, Hashable {
     case templateObject([String: TemplateObject])
     case prayerCount(String, Int)
     case prayerWithIntentions(String, Int, [String])
+    case object(PrayerObject)
     
     private struct IntentionWrapper: Codable {
         let count: Int
         let intentions: [String]
+    }
+    
+    var id: String? {
+        switch self {
+        case .string(let id):
+            return id
+        case .prayerCount(let id, _):
+            return id
+        case .prayerWithIntentions(let id, _, _):
+            return id
+        case .object(let obj):
+            return obj.id
+        default:
+            return nil
+        }
+    }
+    
+    // Helper function to convert to PrayerObject
+    var asPrayerObject: PrayerObject? {
+        switch self {
+        case .string(let id):
+            return PrayerObject(id: id, count: 1, intentions: nil)
+        case .prayerCount(let id, let count):
+            return PrayerObject(id: id, count: count, intentions: nil)
+        case .prayerWithIntentions(let id, let count, let intentions):
+            return PrayerObject(id: id, count: count, intentions: intentions)
+        case .object(let obj):
+            return obj
+        default:
+            return nil
+        }
     }
     
     init(from decoder: Decoder) throws {
@@ -308,6 +340,8 @@ enum OrderItem: Codable, Hashable {
         case .prayerWithIntentions(let prayer, let count, let intentions):
             let wrapper = IntentionWrapper(count: count, intentions: intentions)
             try container.encode([prayer: wrapper])
+        case .object(let obj):
+            try container.encode(obj)
         }
     }
     
@@ -334,6 +368,9 @@ enum OrderItem: Codable, Hashable {
             hasher.combine(prayer)
             hasher.combine(count)
             hasher.combine(intentions)
+        case .object(let obj):
+            hasher.combine(6)
+            hasher.combine(obj)
         }
     }
     
@@ -352,10 +389,19 @@ enum OrderItem: Codable, Hashable {
         case (.prayerWithIntentions(let lhsPrayer, let lhsCount, let lhsIntentions),
               .prayerWithIntentions(let rhsPrayer, let rhsCount, let rhsIntentions)):
             return lhsPrayer == rhsPrayer && lhsCount == rhsCount && lhsIntentions == rhsIntentions
+        case (.object(let lhs), .object(let rhs)):
+            return lhs == rhs
         default:
             return false
         }
     }
+}
+
+// New struct to represent a prayer with count and optional intentions
+struct PrayerObject: Codable, Hashable {
+    let id: String
+    let count: Int
+    let intentions: [String]?
 }
 
 struct EucharistLiturgy: Codable {
