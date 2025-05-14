@@ -2,7 +2,7 @@ import SwiftUI
 
 // Custom colors
 extension Color {
-    static let deepPurple = Color(red: 76/255, green: 40/255, blue: 90/255)
+    static let deepPurple = Color(red: 110/255, green: 60/255, blue: 130/255)
     static let paperWhite = Color(red: 249/255, green: 245/255, blue: 235/255) // Slightly darker, warm paper-like color
     static let nightBackground = Color(red: 28/255, green: 28/255, blue: 30/255) // Soft black for dark mode
     static let nightText = Color.white.opacity(0.92) // Slightly softened white for dark mode
