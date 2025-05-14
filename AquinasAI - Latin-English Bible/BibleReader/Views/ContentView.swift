@@ -13,6 +13,7 @@ extension Color {
 struct ContentView: View {
     @StateObject private var viewModel = BibleViewModel()
     @StateObject private var bookmarkStore = BookmarkStore()
+    @StateObject private var prayerStore = PrayerStore()
     @AppStorage("isDarkMode") private var isDarkMode = true
     @State private var showingBookmarks = false
     @State private var showingSearch = false
@@ -31,6 +32,7 @@ struct ContentView: View {
         .preferredColorScheme(isDarkMode ? .dark : .light)
         .environmentObject(bookmarkStore)
         .environmentObject(viewModel)
+        .environmentObject(prayerStore)
         .sheet(isPresented: $showingSearch) {
             SearchView(bibleViewModel: viewModel)
         }
@@ -237,6 +239,7 @@ struct BookList: View {
             }
             .sheet(isPresented: $showingPrayers) {
                 PrayersView()
+                    .environmentObject(prayerStore)
             }
         }
     }

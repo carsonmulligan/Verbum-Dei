@@ -44,7 +44,7 @@ struct PrayersView: View {
                     HStack(spacing: 8) {
                         ForEach(PrayerCategory.allCases, id: \.self) { category in
                             if category == .rosary {
-                                NavigationLink(destination: RosaryView()) {
+                                NavigationLink(destination: RosaryView().environmentObject(prayerStore)) {
                                     Text(category.displayName)
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 8)
