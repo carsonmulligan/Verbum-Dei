@@ -1,0 +1,117 @@
+{
+    "common_prayers": {
+      "sign_of_the_cross": {
+        "title_latin": "Signum Crucis",
+        "title_english": "Sign of the Cross",
+        "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+        "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
+      },
+      "apostles_creed": {
+        "title_latin": "Credo",
+        "title_english": "Apostles' Creed",
+        "latin": "Credo in Deum Patrem omnipoténtem, Creatórem cæli et terræ; et in Iesum Christum, Fílium Eius únicum, Dóminum nostrum, qui concéptus est de Spíritu Sancto, natus ex María Vírgine, passus sub Póntio Piláto, crucifíxus, mórtuus, et sepúltus; descéndit ad ínferos; tértia die resurréxit a mórtuis; ascéndit ad cælos, sedet ad déxteram Dei Patris omnipoténtis; inde ventúrus est iudicáre vivos et mórtuos. Credo in Spíritum Sanctum, sanctam Ecclésiam cathólicam, sanctórum communiónem, remissiónem peccatórum, carnis resurrectiónem, vitam ætérnam. Amen.",
+        "english": "I believe in God, the Father Almighty, Creator of heaven and earth; and in Jesus Christ, His only Son, our Lord; Who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father Almighty; from there He shall come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen."
+      },
+      "our_father": {
+        "title_latin": "Pater Noster",
+        "title_english": "Our Father",
+        "latin": "Pater noster, qui es in cælis, sanctificétur nomen tuum. Advéniat regnum tuum. Fiat volúntas tua, sicut in cælo et in terra. Panem nostrum quotidiánum da nobis hódie, et dimítte nobis débita nostra sicut et nos dimíttimus debitóribus nostris. Et ne nos indúcas in tentatiónem, sed líbera nos a malo. Amen.",
+        "english": "Our Father, Who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen."
+      },
+      "hail_mary": {
+        "title_latin": "Ave Maria",
+        "title_english": "Hail Mary",
+        "latin": "Ave María, grátia plena, Dóminus tecum; benedícta tu in muliéribus, et benedíctus fructus ventris tui, Iesus. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.",
+        "english": "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
+      },
+      "glory_be": {
+        "title_latin": "Gloria Patri",
+        "title_english": "Glory Be",
+        "latin": "Glória Patri, et Fílio, et Spirítui Sancto. Sicut erat in princípio, et nunc, et semper, et in sǽcula sæculórum. Amen.",
+        "english": "Glory be to the Father, and to the Son, and to the Holy Spirit; as it was in the beginning, is now, and ever shall be, world without end. Amen."
+      },
+      "fatima_prayer": {
+        "title_latin": "Oratio Fatimae",
+        "title_english": "Fatima Prayer",
+        "latin": "Domine Iesu, dimitte nobis debita nostra, libera nos ab ignibus inferni, perduc in caelum omnes animas, praesertim eas quae maxime indigent misericordia tua. Amen.",
+        "english": "O my Jesus, forgive us our sins, save us from the fires of hell, and lead all souls to Heaven, especially those in most need of Thy mercy. Amen."
+      },
+      "hail_holy_queen": {
+        "title_latin": "Salve Regina",
+        "title_english": "Hail Holy Queen",
+        "latin": "Salve, Regína, Mater misericórdiæ, vita, dulcédo, et spes nostra, salve. Ad te clamámus, éxsules fílii Hevæ. Ad te suspirámus, geméntes et flentes in hac lacrimárum valle. Eia ergo, advocáta nostra, illos tuos misericórdes óculos ad nos convérte; et Iesum, benedíctum fructum ventris tui, nobis post hoc exsílium osténde. O clemens, o pia, o dulcis Virgo María.",
+        "english": "Hail, holy Queen, Mother of mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious Advocate, thine eyes of mercy toward us; and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary."
+      },
+      "final_prayer": {
+        "title_latin": "Oratio Finalis Rosarii",
+        "title_english": "Final Rosary Prayer",
+        "latin": "Deus, cuius Unigenitus per vitam, mortem et resurrectionem suam nobis salutis aeternae praemia comparavit, concede, quaesumus, ut haec mysteria sacratissimo beatae Mariae Virginis Rosario recolentes, et imitemur quod continent, et quod promittunt assequamur. Per eundem Christum Dominum nostrum. Amen.",
+        "english": "O God, whose Only-Begotten Son by His life, death and resurrection has purchased for us the rewards of eternal life; grant, we beseech Thee, that while meditating upon these mysteries of the most holy Rosary of the Blessed Virgin Mary, we may imitate what they contain and obtain what they promise, through the same Christ Our Lord. Amen."
+      }
+    },
+  
+    "mysteries": {
+      "joyful": [
+        { "number": 1, "latin": "Annuntiátio", "english": "The Annunciation" },
+        { "number": 2, "latin": "Visitátio", "english": "The Visitation" },
+        { "number": 3, "latin": "Natívitas", "english": "The Nativity" },
+        { "number": 4, "latin": "Præsentátio", "english": "The Presentation in the Temple" },
+        { "number": 5, "latin": "Invéntio in Templo", "english": "The Finding of Jesus in the Temple" }
+      ],
+      "sorrowful": [
+        { "number": 1, "latin": "Agónia in Hortu", "english": "The Agony in the Garden" },
+        { "number": 2, "latin": "Flagellátio", "english": "The Scourging at the Pillar" },
+        { "number": 3, "latin": "Coronátio Spinæ", "english": "The Crowning with Thorns" },
+        { "number": 4, "latin": "Baiulátio Crucis", "english": "The Carrying of the Cross" },
+        { "number": 5, "latin": "Crucifíxio", "english": "The Crucifixion" }
+      ],
+      "glorious": [
+        { "number": 1, "latin": "Resurréctio", "english": "The Resurrection" },
+        { "number": 2, "latin": "Ascénsio", "english": "The Ascension" },
+        { "number": 3, "latin": "Descénsus Spíritus Sancti", "english": "The Descent of the Holy Spirit" },
+        { "number": 4, "latin": "Assúmptio Mariæ", "english": "The Assumption" },
+        { "number": 5, "latin": "Coronátio Mariæ", "english": "The Coronation of Mary" }
+      ],
+      "luminous": [
+        { "number": 1, "latin": "Baptísma in Iordáne", "english": "The Baptism in the Jordan" },
+        { "number": 2, "latin": "Núptiæ Cana", "english": "The Wedding at Cana" },
+        { "number": 3, "latin": "Prædicátio Regni Dei", "english": "The Proclamation of the Kingdom" },
+        { "number": 4, "latin": "Transfigurátio", "english": "The Transfiguration" },
+        { "number": 5, "latin": "Institútio Eucharístiæ", "english": "The Institution of the Eucharist" }
+      ]
+    },
+  
+    "schedule": {
+      "Monday":   "joyful",
+      "Tuesday":  "sorrowful",
+      "Wednesday":"glorious",
+      "Thursday": "luminous",
+      "Friday":   "sorrowful",
+      "Saturday": "joyful",
+      "Sunday":   "glorious"
+    },
+  
+    "template": {
+      "opening": [
+        "sign_of_the_cross",
+        "apostles_creed",
+        "our_father",
+        { "hail_mary": 3, "intentions": ["Faith", "Hope", "Charity"] },
+        "glory_be"
+      ],
+  
+      "decade": [
+        "our_father",
+        { "hail_mary": 10 },
+        "glory_be",
+        "fatima_prayer"
+      ],
+  
+      "closing": [
+        "hail_holy_queen",
+        "final_prayer",
+        "sign_of_the_cross"
+      ]
+    }
+  }
+  
