@@ -155,11 +155,11 @@ struct VerseView: View {
     }
     
     private func deleteBookmark() {
-        if let bookmark = bookmarkStore.bookmarks.first(where: { 
-            $0.bookName == bookName &&
-            $0.chapterNumber == chapterNumber &&
-            $0.verseNumber == verse.number
-        }) {
+        if let bookmark = bookmarkStore.getBookmark(
+            bookName: bookName,
+            chapterNumber: chapterNumber,
+            verseNumber: verse.number
+        ) {
             bookmarkStore.removeBookmark(withId: bookmark.id)
         }
     }

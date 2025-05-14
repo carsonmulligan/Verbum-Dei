@@ -148,8 +148,11 @@ struct EmptyBookmarksView: View {
 struct BookmarksListView: View {
     @EnvironmentObject private var bookmarkStore: BookmarkStore
     @EnvironmentObject private var viewModel: BibleViewModel
+    @EnvironmentObject private var prayerStore: PrayerStore
     @Environment(\.dismiss) private var dismiss
     @State private var editingBookmark: Bookmark?
+    @State private var showingPrayerSheet = false
+    @State private var selectedPrayer: Prayer?
     var onBookmarkSelected: (Bookmark) -> Void
     
     var sortedBookmarks: [Bookmark] {
@@ -164,17 +167,34 @@ struct BookmarksListView: View {
                 } else {
                     List {
                         ForEach(sortedBookmarks) { bookmark in
-                            BookmarkRow(
-                                bookmark: bookmark,
-                                viewModel: viewModel,
-                                onSelect: {
-                                    onBookmarkSelected(bookmark)
-                                    dismiss()
-                                },
-                                onEdit: {
-                                    editingBookmark = bookmark
-                                }
-                            )
+                            if bookmark.type == .verse {
+                                BookmarkRow(
+                                    bookmark: bookmark,
+                                    viewModel: viewModel,
+                                    onSelect: {
+                                        onBookmarkSelected(bookmark)
+                                        dismiss()
+                                    },
+                                    onEdit: {
+                                        editingBookmark = bookmark
+                                    }
+                                )
+                            } else {
+                                PrayerBookmarkRow(
+                                    bookmark: bookmark,
+                                    onSelect: {
+                                        // Find the prayer in the store
+                                        if let prayerId = bookmark.prayerId,
+                                           let prayer = prayerStore.prayers.first(where: { $0.id == prayerId }) {
+                                            selectedPrayer = prayer
+                                            showingPrayerSheet = true
+                                        }
+                                    },
+                                    onEdit: {
+                                        editingBookmark = bookmark
+                                    }
+                                )
+                            }
                         }
                         .onDelete { indexSet in
                             for index in indexSet {
@@ -195,7 +215,30 @@ struct BookmarksListView: View {
                 }
             }
             .sheet(item: $editingBookmark) { bookmark in
-                BookmarkEditView(bookmark: bookmark)
+                if bookmark.type == .verse {
+                    BookmarkEditView(bookmark: bookmark)
+                } else {
+                    PrayerBookmarkEditView(bookmark: bookmark)
+                }
+            }
+            .sheet(isPresented: $showingPrayerSheet) {
+                if let prayer = selectedPrayer {
+                    NavigationView {
+                        ScrollView {
+                            PrayerCard(prayer: prayer, language: .bilingual)
+                                .padding()
+                        }
+                        .navigationTitle(prayer.displayTitleEnglish)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button("Done") {
+                                    showingPrayerSheet = false
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -231,6 +274,67 @@ private struct BookmarkRow: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .italic()
+                        .lineLimit(2)
+                }
+                
+                if !bookmark.note.isEmpty {
+                    Text(bookmark.note)
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .lineLimit(1)
+                        .padding(.top, 2)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .swipeActions(edge: .trailing) {
+            Button(role: .destructive) {
+                withAnimation {
+                    bookmarkStore.removeBookmark(withId: bookmark.id)
+                }
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+            
+            Button {
+                onEdit()
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.blue)
+        }
+    }
+}
+
+private struct PrayerBookmarkRow: View {
+    let bookmark: Bookmark
+    let onSelect: () -> Void
+    let onEdit: () -> Void
+    @EnvironmentObject private var bookmarkStore: BookmarkStore
+    
+    var body: some View {
+        Button(action: onSelect) {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text(bookmark.prayerTitleEnglish ?? bookmark.prayerTitle ?? "Prayer")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Image(systemName: "bookmark.fill")
+                        .foregroundColor(.deepPurple)
+                }
+                
+                if let prayerTitleLatin = bookmark.prayerTitleLatin {
+                    Text(prayerTitleLatin)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .italic()
+                }
+                
+                if let prayerEnglish = bookmark.prayerEnglish {
+                    Text(prayerEnglish)
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
                         .lineLimit(2)
                 }
                 
