@@ -16,8 +16,8 @@
             "ave_maria": {
                 "title_latin": "Ave Maria",
                 "title_english": "Hail Mary",
-                "latin": "Ave Maria, gratia plena...",
-                "english": "Hail Mary, full of grace..."
+                "latin": "Ave Maria, gratia plena, Dominus tecum. Benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+                "english": "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
             },
             "angelus_verse_2": {
                 "title_latin": "Angelus Domini II",
@@ -34,8 +34,8 @@
             "oremus": {
                 "title_latin": "Oremus",
                 "title_english": "Let us pray",
-                "latin": "Gratiam tuam, quaesumus, Domine...",
-                "english": "Pour forth, we beseech Thee, O Lord..."
+                "latin": "Gratiam tuam, quaesumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui incarnationem cognovimus, per passionem eius et crucem, ad resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.",
+                "english": "Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, that we, to whom the Incarnation of Christ, Thy Son, was made known by the message of an Angel, may by His Passion and Cross be brought to the glory of His Resurrection, through the same Christ our Lord. Amen."
             }
         },
         "template": {
