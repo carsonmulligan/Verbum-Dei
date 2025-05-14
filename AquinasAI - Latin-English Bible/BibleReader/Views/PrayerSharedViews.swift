@@ -14,9 +14,6 @@ struct PrayerCard: View {
     @State private var showingBookmarkSheet = false
     @State private var showingEditBookmarkSheet = false
     
-    // Optional speech service parameter - if not provided, speech controls won't appear
-    var speechService: SpeechService?
-    
     var isBookmarked: Bool {
         bookmarkStore.isPrayerBookmarked(prayerId: prayer.id)
     }
@@ -76,40 +73,6 @@ struct PrayerCard: View {
                     .foregroundColor(language == .bilingual ? .secondary : (colorScheme == .dark ? .white : .primary))
                     .italic(language == .bilingual)
                     .padding(.top, language == .bilingual ? 2 : 4)
-            }
-            
-            // Speech controls if speech service is provided
-            if let speechService = speechService {
-                HStack {
-                    if language != .englishOnly {
-                        SpeechControlButton(
-                            speechService: speechService,
-                            text: prayer.latin,
-                            language: "latin"
-                        )
-                    }
-                    
-                    if language != .latinOnly {
-                        SpeechControlButton(
-                            speechService: speechService,
-                            text: prayer.english,
-                            language: "english"
-                        )
-                    }
-                    
-                    Spacer()
-                    
-                    if speechService.isSpeaking {
-                        Button(action: {
-                            speechService.stopSpeaking()
-                        }) {
-                            Image(systemName: "stop.circle")
-                                .foregroundColor(.red)
-                                .imageScale(.large)
-                        }
-                    }
-                }
-                .padding(.top, 8)
             }
         }
         .padding()

@@ -20,7 +20,6 @@ struct PrayersView: View {
     @State private var selectedLanguage: PrayerLanguage = .bilingual
     @State private var scrollToId: String?
     @State private var viewHasAppeared = false
-    @StateObject private var speechService = SpeechService()
     
     // Add optional initial prayer ID and category
     let initialPrayerId: String?
@@ -128,7 +127,7 @@ struct PrayersView: View {
                             ScrollView {
                                 LazyVStack(spacing: 16) {
                                     ForEach(filteredPrayers) { prayer in
-                                        PrayerCard(prayer: prayer, language: selectedLanguage, speechService: speechService)
+                                        PrayerCard(prayer: prayer, language: selectedLanguage)
                                             .padding(.horizontal)
                                             .id(prayer.id)
                                     }
@@ -163,10 +162,6 @@ struct PrayersView: View {
             }
             .navigationTitle("Prayers")
             .navigationBarItems(trailing: Button("Done") { dismiss() })
-            .onDisappear {
-                // Stop any speech when navigating away
-                speechService.stopSpeaking()
-            }
         }
     }
     

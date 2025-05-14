@@ -6,7 +6,6 @@ struct RosaryView: View {
     @State private var selectedDay: String = getCurrentDay()
     @State private var selectedLanguage: PrayerLanguage = .bilingual
     @State private var scrollToId: String?
-    @StateObject private var speechService = SpeechService()
     
     // Add parameter for initial prayer ID
     let initialPrayerId: String?
@@ -66,18 +65,13 @@ struct RosaryView: View {
                     mysteryTitle: mysteryTitle,
                     mysteryDescription: mysteryDescription,
                     selectedLanguage: selectedLanguage,
-                    scrollToId: scrollToId,
-                    speechService: speechService
+                    scrollToId: scrollToId
                 )
             } else {
                 LoadingErrorView(isLoading: prayerStore.rosaryPrayers == nil)
             }
         }
         .navigationTitle("Rosary")
-        .onDisappear {
-            // Stop any speech when navigating away
-            speechService.stopSpeaking()
-        }
     }
 }
 
@@ -147,7 +141,6 @@ private struct RosaryContentView: View {
     let mysteryDescription: String
     let selectedLanguage: PrayerLanguage
     let scrollToId: String?
-    let speechService: SpeechService
     
     @State private var viewHasAppeared = false
     
@@ -164,8 +157,7 @@ private struct RosaryContentView: View {
                         prayers: template.opening,
                         commonPrayers: commonPrayers,
                         selectedLanguage: selectedLanguage,
-                        scrollToId: scrollToId,
-                        speechService: speechService
+                        scrollToId: scrollToId
                     )
                     
                     if let mysteries = mysteries {
@@ -174,8 +166,7 @@ private struct RosaryContentView: View {
                             template: template,
                             commonPrayers: commonPrayers,
                             selectedLanguage: selectedLanguage,
-                            scrollToId: scrollToId,
-                            speechService: speechService
+                            scrollToId: scrollToId
                         )
                     }
                     
@@ -184,8 +175,7 @@ private struct RosaryContentView: View {
                         prayers: template.closing.map { OrderItem.string($0) },
                         commonPrayers: commonPrayers,
                         selectedLanguage: selectedLanguage,
-                        scrollToId: scrollToId,
-                        speechService: speechService
+                        scrollToId: scrollToId
                     )
                 }
                 .padding(.vertical)
@@ -240,7 +230,6 @@ private struct PrayerSectionView: View {
     let commonPrayers: [String: RosaryPrayer]
     let selectedLanguage: PrayerLanguage
     let scrollToId: String?
-    let speechService: SpeechService
     
     var body: some View {
         Section(header:
@@ -257,8 +246,7 @@ private struct PrayerSectionView: View {
                             PrayerCardView(
                                 prayer: prayer.asPrayer,
                                 selectedLanguage: selectedLanguage,
-                                shouldHighlight: scrollToId == prayer.asPrayer.id,
-                                speechService: speechService
+                                shouldHighlight: scrollToId == prayer.asPrayer.id
                             )
                             .id(prayer.asPrayer.id)
                         }
@@ -269,8 +257,7 @@ private struct PrayerSectionView: View {
                                 count: count,
                                 intentions: nil,
                                 selectedLanguage: selectedLanguage,
-                                shouldHighlight: scrollToId == prayer.asPrayer.id,
-                                speechService: speechService
+                                shouldHighlight: scrollToId == prayer.asPrayer.id
                             )
                             .id(prayer.asPrayer.id)
                         }
@@ -281,8 +268,7 @@ private struct PrayerSectionView: View {
                                 count: count,
                                 intentions: intentions,
                                 selectedLanguage: selectedLanguage,
-                                shouldHighlight: scrollToId == prayer.asPrayer.id,
-                                speechService: speechService
+                                shouldHighlight: scrollToId == prayer.asPrayer.id
                             )
                             .id(prayer.asPrayer.id)
                         }
@@ -293,8 +279,7 @@ private struct PrayerSectionView: View {
                                 count: obj.count,
                                 intentions: obj.intentions,
                                 selectedLanguage: selectedLanguage,
-                                shouldHighlight: scrollToId == prayer.asPrayer.id,
-                                speechService: speechService
+                                shouldHighlight: scrollToId == prayer.asPrayer.id
                             )
                             .id(prayer.asPrayer.id)
                         }
@@ -314,10 +299,9 @@ private struct PrayerCardView: View {
     let prayer: Prayer
     let selectedLanguage: PrayerLanguage
     let shouldHighlight: Bool
-    let speechService: SpeechService
     
     var body: some View {
-        PrayerCard(prayer: prayer, language: selectedLanguage, speechService: speechService)
+        PrayerCard(prayer: prayer, language: selectedLanguage)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(shouldHighlight ? Color.deepPurple : Color.clear, lineWidth: shouldHighlight ? 2 : 0)
@@ -325,14 +309,13 @@ private struct PrayerCardView: View {
     }
 }
 
-// Modified RepeatedPrayerView to handle scrolling and speech
+// Modified RepeatedPrayerView to handle scrolling
 private struct RepeatedPrayerView: View {
     let prayer: Prayer
     let count: Int
     let intentions: [String]?
     let selectedLanguage: PrayerLanguage
     let shouldHighlight: Bool
-    let speechService: SpeechService
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -365,38 +348,6 @@ private struct RepeatedPrayerView: View {
                     .italic(selectedLanguage == .bilingual)
                     .padding(.top, selectedLanguage == .bilingual ? 2 : 4)
             }
-            
-            HStack {
-                if selectedLanguage != .englishOnly {
-                    SpeechControlButton(
-                        speechService: speechService,
-                        text: prayer.latin,
-                        language: "latin"
-                    )
-                }
-                
-                if selectedLanguage != .latinOnly {
-                    SpeechControlButton(
-                        speechService: speechService,
-                        text: prayer.english,
-                        language: "english"
-                    )
-                }
-                
-                Spacer()
-                
-                if speechService.isSpeaking {
-                    Button(action: {
-                        speechService.stopSpeaking()
-                    }) {
-                        Image(systemName: "stop.circle")
-                            .foregroundColor(.red)
-                            .imageScale(.large)
-                    }
-                    .padding(.horizontal)
-                }
-            }
-            .padding(.top, 8)
         }
         .padding()
         .background(
@@ -417,7 +368,6 @@ private struct MysteriesView: View {
     let commonPrayers: [String: RosaryPrayer]
     let selectedLanguage: PrayerLanguage
     let scrollToId: String?
-    let speechService: SpeechService
     
     var body: some View {
         VStack(spacing: 16) {
@@ -454,26 +404,6 @@ private struct MysteriesView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     
-                    // Speech controls for the mystery title and description
-                    HStack {
-                        if selectedLanguage != .englishOnly {
-                            SpeechControlButton(
-                                speechService: speechService,
-                                text: mystery.latin,
-                                language: "latin"
-                            )
-                        }
-                        
-                        if selectedLanguage != .latinOnly {
-                            SpeechControlButton(
-                                speechService: speechService,
-                                text: mystery.english + (mystery.description != nil ? ". " + mystery.description! : ""),
-                                language: "english"
-                            )
-                        }
-                    }
-                    .padding(.vertical, 4)
-                    
                     ForEach(template.decade, id: \.self) { item in
                         switch item {
                         case .string(let prayerId):
@@ -481,8 +411,7 @@ private struct MysteriesView: View {
                                 PrayerCardView(
                                     prayer: prayer.asPrayer,
                                     selectedLanguage: selectedLanguage,
-                                    shouldHighlight: scrollToId == prayer.asPrayer.id,
-                                    speechService: speechService
+                                    shouldHighlight: scrollToId == prayer.asPrayer.id
                                 )
                                 .id(prayer.asPrayer.id)
                                 .padding(.leading)
@@ -494,8 +423,7 @@ private struct MysteriesView: View {
                                     count: count,
                                     intentions: nil,
                                     selectedLanguage: selectedLanguage,
-                                    shouldHighlight: scrollToId == prayer.asPrayer.id,
-                                    speechService: speechService
+                                    shouldHighlight: scrollToId == prayer.asPrayer.id
                                 )
                                 .id(prayer.asPrayer.id)
                                 .padding(.leading)
@@ -507,8 +435,7 @@ private struct MysteriesView: View {
                                     count: count,
                                     intentions: intentions,
                                     selectedLanguage: selectedLanguage,
-                                    shouldHighlight: scrollToId == prayer.asPrayer.id,
-                                    speechService: speechService
+                                    shouldHighlight: scrollToId == prayer.asPrayer.id
                                 )
                                 .id(prayer.asPrayer.id)
                                 .padding(.leading)
@@ -520,8 +447,7 @@ private struct MysteriesView: View {
                                     count: obj.count,
                                     intentions: obj.intentions,
                                     selectedLanguage: selectedLanguage,
-                                    shouldHighlight: scrollToId == prayer.asPrayer.id,
-                                    speechService: speechService
+                                    shouldHighlight: scrollToId == prayer.asPrayer.id
                                 )
                                 .id(prayer.asPrayer.id)
                                 .padding(.leading)
