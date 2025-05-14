@@ -1,58 +1,82 @@
 {
     "divine_mercy_chaplet": {
       "common_prayers": {
+        "sign_of_the_cross": {
+          "title_latin": "Signum Crucis",
+          "title_english": "Sign of the Cross",
+          "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+          "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
+        },
         "opening_prayer": {
-          "title_latin": "Oratio Apertoria",
+          "title_latin": "Oratio Initialis",
           "title_english": "Opening Prayer",
-          "latin": "Expirásti, Iesu, sed fons vitæ erupit pro animis, et mare misericórdiæ patefáctum est toti mundo. O fons vitæ, misericórdia Divina infinita, circumde totum mundum et effúnde Te super nos.",
-          "english": "You expired, Jesus, but the source of life gushed forth for souls and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us."
+          "latin": "Tu expirasti, Iesu, sed fons vitae pro animabus scaturivit et oceanus misericordiae universo mundo patuit. O Fons Vitae, insondabilis Divinae Misericordiae abyssus, complectere universum mundum et effunde te super nos.",
+          "english": "You expired, Jesus, but the source of life gushed forth for souls, and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us."
+        },
+        "our_father": {
+          "title_latin": "Pater Noster",
+          "title_english": "Our Father",
+          "latin": "Pater noster, qui es in cælis, sanctificétur nomen tuum. Advéniat regnum tuum. Fiat volúntas tua, sicut in cælo et in terra. Panem nostrum quotidiánum da nobis hódie, et dimítte nobis débita nostra sicut et nos dimíttimus debitóribus nostris. Et ne nos indúcas in tentatiónem, sed líbera nos a malo. Amen.",
+          "english": "Our Father, Who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen."
+        },
+        "hail_mary": {
+          "title_latin": "Ave Maria",
+          "title_english": "Hail Mary",
+          "latin": "Ave María, grátia plena, Dóminus tecum; benedícta tu in muliéribus, et benedíctus fructus ventris tui, Iesus. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.",
+          "english": "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
+        },
+        "apostles_creed": {
+          "title_latin": "Credo",
+          "title_english": "Apostles' Creed",
+          "latin": "Credo in Deum Patrem omnipoténtem, Creatórem cæli et terræ; et in Iesum Christum, Fílium Eius únicum, Dóminum nostrum, qui concéptus est de Spíritu Sancto, natus ex María Vírgine, passus sub Póntio Piláto, crucifíxus, mórtuus, et sepúltus; descéndit ad ínferos; tértia die resurréxit a mórtuis; ascéndit ad cælos, sedet ad déxteram Dei Patris omnipoténtis; inde ventúrus est iudicáre vivos et mórtuos. Credo in Spíritum Sanctum, sanctam Ecclésiam cathólicam, sanctórum communiónem, remissiónem peccatórum, carnis resurrectiónem, vitam ætérnam. Amen.",
+          "english": "I believe in God, the Father Almighty, Creator of heaven and earth; and in Jesus Christ, His only Son, our Lord; Who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father Almighty; from there He shall come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen."
         },
         "eternal_father": {
-          "title_latin": "Pater Ætérne",
-          "title_english": "Eternal Father Prayer",
-          "latin": "Pater ætérne, tibi offero Corpus et Sánguinem, Ánimam et Divinitátem dilectíssimi Fílii tui, Dómini nostri Iesu Christi, in propitiatiónem pro peccátis nostris et totíus mundi.",
-          "english": "Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."
+          "title_latin": "Pater Aeterne",
+          "title_english": "Eternal Father",
+          "latin": "Pater Aeterne, offero Tibi Corpus et Sanguinem, animam et divinitatem dilectissimi Filii Tui, Domini nostri, Iesu Christi, in propitiatione pro peccatis nostris et totius mundi.",
+          "english": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of Your Dearly Beloved Son, Our Lord, Jesus Christ, in atonement for our sins and those of the whole world."
         },
-        "sorrowful_passion": {
-          "title_latin": "Pro Dolorósa Passióne Eius",
-          "title_english": "For the Sake of His Sorrowful Passion",
-          "latin": "Pro dolorósa Passióne eius, miserére nobis et totíus mundi.",
+        "for_the_sake": {
+          "title_latin": "Pro Dolorosa Passione",
+          "title_english": "For the Sake",
+          "latin": "Pro dolorosa Passione eius, miserere nobis et totius mundi.",
           "english": "For the sake of His sorrowful Passion, have mercy on us and on the whole world."
         },
         "holy_god": {
           "title_latin": "Sanctus Deus",
           "title_english": "Holy God",
-          "latin": "Sanctus Deus, Sanctus Fortis, Sanctus Immortális, miserére nobis et totíus mundi.",
+          "latin": "Sanctus Deus, Sanctus Fortis, Sanctus Immortalis, miserere nobis et totius mundi.",
           "english": "Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world."
         },
         "closing_prayer": {
-          "title_latin": "Oratio Conclusiva",
+          "title_latin": "Oratio Finalis",
           "title_english": "Closing Prayer",
-          "latin": "Deus ætérne, in quo misericórdia est infiníta et compassionis thesaurus inexhauríbilis, réspice in nos benígnus et multíplica in nobis misericórdiam tuam, ut in difficílibus momentis non desperémus neque desperátio nos opprimat, sed magna cum fidúcia nos submíttere nosmetípsos sanctíssimæ voluntáti tuæ, quæ est amor et misericórdia ipsa. Amen.",
-          "english": "Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen."
+          "latin": "Deus Aeterne, in quo misericordia est infinita et thesaurus compassionis inexhaustus, respice propitius super nos et multiplica super nos misericordiam tuam, ut in rebus arduis non desperemus, sed cum fiducia nos divinae voluntati tuae conformemus, quae est ipsa misericordia et amor. Per Christum Dominum nostrum. Amen.",
+          "english": "Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Through Christ our Lord. Amen."
         }
       },
   
       "template": {
         "opening": [
-          "sign_of_the_cross",
-          "opening_prayer",
-          "our_father",
-          "hail_mary",
-          "apostles_creed"
+          {"prayer": "sign_of_the_cross", "count": 1},
+          {"prayer": "opening_prayer", "count": 1},
+          {"prayer": "our_father", "count": 1},
+          {"prayer": "hail_mary", "count": 1},
+          {"prayer": "apostles_creed", "count": 1}
         ],
         "decade": [
-          "eternal_father",
-          { "sorrowful_passion": 10 }
+          {"prayer": "eternal_father", "count": 1},
+          {"prayer": "for_the_sake", "count": 10}
         ],
         "closing": [
-          { "holy_god": 3 },
-          "closing_prayer",
-          "sign_of_the_cross"
-        ],
-        "structure": {
-          "decades": 5
-        }
+          {"prayer": "holy_god", "count": 3},
+          {"prayer": "closing_prayer", "count": 1},
+          {"prayer": "sign_of_the_cross", "count": 1}
+        ]
+      },
+      "structure": {
+        "decades": 5
       }
     }
   }
