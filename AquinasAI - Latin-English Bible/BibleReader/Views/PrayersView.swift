@@ -20,12 +20,17 @@ struct PrayersView: View {
     @State private var selectedLanguage: PrayerLanguage = .bilingual
     @State private var scrollToId: String?
     
-    // Add optional initial prayer ID
+    // Add optional initial prayer ID and category
     var initialPrayerId: String?
+    var initialCategory: PrayerCategory?
     
-    init(initialPrayerId: String? = nil) {
+    init(initialPrayerId: String? = nil, initialCategory: PrayerCategory? = nil) {
         self.initialPrayerId = initialPrayerId
+        self.initialCategory = initialCategory
         self._scrollToId = State(initialValue: initialPrayerId)
+        if let category = initialCategory {
+            self._selectedCategory = State(initialValue: category)
+        }
     }
     
     var filteredPrayers: [Prayer] {
@@ -126,13 +131,8 @@ struct PrayersView: View {
                             }
                             .onChange(of: selectedCategory) { oldValue, newValue in
                                 if let id = scrollToId {
-                                    // If category changes, check if our target prayer is in this category
-                                    let prayersInCategory = prayerStore.getPrayers(for: newValue)
-                                    if prayersInCategory.contains(where: { $0.id == id }) {
-                                        // If yes, scroll to it
-                                        withAnimation {
-                                            scrollProxy.scrollTo(id, anchor: .top)
-                                        }
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                        findAndScrollToPrayer(id: id, in: newValue, using: scrollProxy)
                                     }
                                 }
                             }
@@ -142,62 +142,22 @@ struct PrayersView: View {
                                     scrollToId = id
                                     print("Looking for prayer with ID: \(id)")
                                     
-                                    // Find the prayer in all categories
-                                    var foundPrayer = false
-                                    for category in PrayerCategory.allCases {
-                                        if category == .rosary {
-                                            continue // Skip rosary as it's handled separately
+                                    // If we already know the category, use it
+                                    if let category = initialCategory, category != .rosary {
+                                        selectedCategory = category
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            findAndScrollToPrayer(id: id, in: category, using: scrollProxy)
                                         }
-                                        let prayers = prayerStore.getPrayers(for: category)
-                                        print("Checking \(prayers.count) prayers in category: \(category.rawValue)")
-                                        
-                                        // Try exact match
-                                        if let prayer = prayers.first(where: { $0.id == id }) {
-                                            print("Found exact prayer match: \(prayer.title) in category: \(category.rawValue)")
-                                            selectedCategory = category
-                                            foundPrayer = true
-                                            
-                                            // Delay scrolling to ensure view is fully loaded
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                print("Scrolling to prayer: \(prayer.title)")
-                                                withAnimation {
-                                                    scrollProxy.scrollTo(id, anchor: .top)
-                                                }
-                                            }
-                                            break
-                                        }
-                                        
-                                        // Try case-insensitive or partial match if exact match fails
-                                        if !foundPrayer {
-                                            for prayer in prayers {
-                                                if prayer.title.lowercased().contains(id.lowercased()) || 
-                                                   id.lowercased().contains(prayer.title.lowercased()) {
-                                                    print("Found partial match: \(prayer.title) for ID: \(id)")
-                                                    selectedCategory = category
-                                                    foundPrayer = true
-                                                    
-                                                    // Set the scroll ID to this prayer's ID
-                                                    let actualId = prayer.id
-                                                    scrollToId = actualId
-                                                    
-                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                        print("Scrolling to prayer with partial match: \(prayer.title)")
-                                                        withAnimation {
-                                                            scrollProxy.scrollTo(actualId, anchor: .top)
-                                                        }
-                                                    }
-                                                    break
+                                    } else {
+                                        // Otherwise search through all categories
+                                        findPrayerCategory(for: id) { foundCategory in
+                                            if let category = foundCategory, category != .rosary {
+                                                selectedCategory = category
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                    findAndScrollToPrayer(id: id, in: category, using: scrollProxy)
                                                 }
                                             }
                                         }
-                                        
-                                        if foundPrayer {
-                                            break
-                                        }
-                                    }
-                                    
-                                    if !foundPrayer {
-                                        print("⚠️ Could not find prayer with ID: \(id)")
                                     }
                                 }
                             }
@@ -208,6 +168,123 @@ struct PrayersView: View {
             .navigationTitle("Prayers")
             .navigationBarItems(trailing: Button("Done") { dismiss() })
         }
+    }
+    
+    // Helper function to find and scroll to a prayer by ID
+    private func findAndScrollToPrayer(id: String, in category: PrayerCategory, using scrollProxy: ScrollViewProxy) {
+        let prayers = prayerStore.getPrayers(for: category)
+        print("Looking for prayer \(id) in \(prayers.count) prayers in category \(category.rawValue)")
+        
+        // Try exact match first
+        if let prayer = prayers.first(where: { $0.id == id }) {
+            print("Found exact prayer match: \(prayer.title) in category: \(category.rawValue)")
+            // Use multiple scroll attempts with different delays to improve reliability
+            scrollWithMultipleAttempts(to: id, proxy: scrollProxy, prayer: prayer)
+            return
+        }
+        
+        // Try normalized ID match
+        let normalizedId = id.lowercased()
+            .replacingOccurrences(of: " ", with: "_")
+            .replacingOccurrences(of: ",", with: "")
+            .replacingOccurrences(of: ".", with: "")
+            .replacingOccurrences(of: "'", with: "")
+            .replacingOccurrences(of: "\"", with: "")
+            .replacingOccurrences(of: "(", with: "")
+            .replacingOccurrences(of: ")", with: "")
+        
+        if let prayer = prayers.first(where: { $0.id == normalizedId }) {
+            print("Found prayer match with normalized ID: \(prayer.title) in category: \(category.rawValue)")
+            scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer)
+            return
+        }
+        
+        // Try case-insensitive or partial match
+        for prayer in prayers {
+            // Check if prayer title contains the ID or vice versa
+            if prayer.title.lowercased().contains(id.lowercased()) || 
+               id.lowercased().contains(prayer.title.lowercased()) {
+                print("Found partial match: \(prayer.title) for ID: \(id)")
+                scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer)
+                return
+            }
+            
+            // Also check English and Latin titles
+            if let englishTitle = prayer.title_english, 
+               (englishTitle.lowercased().contains(id.lowercased()) || 
+                id.lowercased().contains(englishTitle.lowercased())) {
+                print("Found partial match in English title: \(englishTitle) for ID: \(id)")
+                scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer)
+                return
+            }
+            
+            if let latinTitle = prayer.title_latin,
+               (latinTitle.lowercased().contains(id.lowercased()) || 
+                id.lowercased().contains(latinTitle.lowercased())) {
+                print("Found partial match in Latin title: \(latinTitle) for ID: \(id)")
+                scrollWithMultipleAttempts(to: prayer.id, proxy: scrollProxy, prayer: prayer)
+                return
+            }
+        }
+        
+        print("⚠️ Could not find prayer with ID: \(id) in category \(category.rawValue)")
+    }
+    
+    // Try multiple scroll attempts to improve reliability
+    private func scrollWithMultipleAttempts(to id: String, proxy: ScrollViewProxy, prayer: Prayer) {
+        let title = prayer.title
+        print("Attempting to scroll to: \(title) with ID: \(id)")
+        
+        // Immediate attempt
+        withAnimation {
+            proxy.scrollTo(id, anchor: .top)
+        }
+        
+        // Follow-up attempts with delays
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            print("First delayed scroll attempt to: \(title)")
+            withAnimation {
+                proxy.scrollTo(id, anchor: .top)
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            print("Second delayed scroll attempt to: \(title)")
+            withAnimation {
+                proxy.scrollTo(id, anchor: .top)
+            }
+        }
+    }
+    
+    // Find the category containing a prayer with the given ID
+    private func findPrayerCategory(for id: String, completion: @escaping (PrayerCategory?) -> Void) {
+        for category in PrayerCategory.allCases {
+            if category == .rosary {
+                continue // Skip rosary as it's handled separately
+            }
+            
+            let prayers = prayerStore.getPrayers(for: category)
+            
+            // Try exact match
+            if prayers.contains(where: { $0.id == id }) {
+                completion(category)
+                return
+            }
+            
+            // Try partial matches on title and ID
+            for prayer in prayers {
+                if prayer.title.lowercased().contains(id.lowercased()) || 
+                   id.lowercased().contains(prayer.title.lowercased()) ||
+                   (prayer.title_english != nil && prayer.title_english!.lowercased().contains(id.lowercased())) ||
+                   (prayer.title_latin != nil && prayer.title_latin!.lowercased().contains(id.lowercased())) {
+                    completion(category)
+                    return
+                }
+            }
+        }
+        
+        // No match found
+        completion(nil)
     }
 }
 

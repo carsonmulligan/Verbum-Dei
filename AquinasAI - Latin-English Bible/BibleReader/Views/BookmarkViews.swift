@@ -153,6 +153,7 @@ struct BookmarksListView: View {
     @State private var editingBookmark: Bookmark?
     @State private var showingPrayers = false
     @State private var selectedPrayerId: String?
+    @State private var selectedPrayerCategory: PrayerCategory?
     var onBookmarkSelected: (Bookmark) -> Void
     
     var sortedBookmarks: [Bookmark] {
@@ -187,6 +188,26 @@ struct BookmarksListView: View {
                                         if let prayerId = bookmark.prayerId {
                                             print("Selected prayer bookmark with ID: '\(prayerId)', title: '\(bookmark.prayerTitle ?? "unknown")'")
                                             selectedPrayerId = prayerId
+                                            
+                                            // Convert prayerCategory string to PrayerCategory enum
+                                            if let categoryStr = bookmark.prayerCategory {
+                                                switch categoryStr {
+                                                case PrayerCategory.basic.rawValue:
+                                                    selectedPrayerCategory = .basic
+                                                case PrayerCategory.mass.rawValue:
+                                                    selectedPrayerCategory = .mass
+                                                case PrayerCategory.rosary.rawValue:
+                                                    selectedPrayerCategory = .rosary
+                                                case PrayerCategory.divine.rawValue:
+                                                    selectedPrayerCategory = .divine
+                                                case PrayerCategory.other.rawValue:
+                                                    selectedPrayerCategory = .other
+                                                default:
+                                                    selectedPrayerCategory = nil
+                                                }
+                                                print("Setting prayer category to: \(selectedPrayerCategory?.rawValue ?? "nil")")
+                                            }
+                                            
                                             showingPrayers = true
                                             // Don't dismiss here - let prayer view stay on screen
                                         } else {
@@ -228,7 +249,7 @@ struct BookmarksListView: View {
                 // Dismiss bookmarks view after prayer view is dismissed
                 dismiss()
             }) {
-                PrayersView(initialPrayerId: selectedPrayerId)
+                PrayersView(initialPrayerId: selectedPrayerId, initialCategory: selectedPrayerCategory)
                     .environmentObject(prayerStore)
             }
         }
@@ -320,6 +341,13 @@ private struct PrayerBookmarkRow: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .italic()
+                }
+                
+                if let prayerCategory = bookmark.prayerCategory, !prayerCategory.isEmpty {
+                    Text(prayerCategory)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.top, 1)
                 }
                 
                 if let prayerEnglish = bookmark.prayerEnglish {
