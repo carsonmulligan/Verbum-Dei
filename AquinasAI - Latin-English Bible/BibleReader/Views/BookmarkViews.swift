@@ -156,6 +156,11 @@ struct BookmarksListView: View {
     @State private var selectedPrayerCategory: PrayerCategory?
     var onBookmarkSelected: (Bookmark) -> Void
     
+    // Store the actual values that will be passed to the sheet
+    // These won't be affected by state resets during view updates
+    @State private var sheetPrayerId: String?
+    @State private var sheetPrayerCategory: PrayerCategory?
+    
     var sortedBookmarks: [Bookmark] {
         bookmarkStore.bookmarks.sorted(by: { $0.timestamp > $1.timestamp })
     }
@@ -191,32 +196,45 @@ struct BookmarksListView: View {
                                             // Set the prayer ID that we want to navigate to
                                             selectedPrayerId = prayerId
                                             
+                                            // Copy to the value that will be passed to the sheet
+                                            sheetPrayerId = prayerId
+                                            
                                             // Convert prayerCategory string to PrayerCategory enum
                                             if let categoryStr = bookmark.prayerCategory {
                                                 switch categoryStr {
                                                 case PrayerCategory.basic.rawValue:
                                                     selectedPrayerCategory = .basic
+                                                    sheetPrayerCategory = .basic
                                                 case PrayerCategory.mass.rawValue:
                                                     selectedPrayerCategory = .mass
+                                                    sheetPrayerCategory = .mass
                                                 case PrayerCategory.rosary.rawValue:
                                                     selectedPrayerCategory = .rosary
+                                                    sheetPrayerCategory = .rosary
                                                 case PrayerCategory.divine.rawValue:
                                                     selectedPrayerCategory = .divine
+                                                    sheetPrayerCategory = .divine
                                                 case PrayerCategory.other.rawValue:
                                                     selectedPrayerCategory = .other
+                                                    sheetPrayerCategory = .other
                                                 default:
                                                     selectedPrayerCategory = .basic  // Default to basic if not found
+                                                    sheetPrayerCategory = .basic
                                                 }
                                                 print("⭐️ Setting prayer category to: \(selectedPrayerCategory?.rawValue ?? "nil")")
                                             } else {
                                                 // Default to basic prayers if category is missing
                                                 selectedPrayerCategory = .basic
+                                                sheetPrayerCategory = .basic
                                                 print("⭐️ No category found, defaulting to Basic Prayers")
                                             }
                                             
                                             // Present the prayer view after parameters are set
                                             print("⭐️ Setting showingPrayers = true with ID: \(prayerId), Category: \(selectedPrayerCategory?.rawValue ?? "nil")")
-                                            showingPrayers = true
+                                            // Use a small delay to ensure state updates are applied first
+                                            DispatchQueue.main.async {
+                                                showingPrayers = true
+                                            }
                                         } else {
                                             print("⚠️ Prayer bookmark has no prayerId!")
                                         }
@@ -252,19 +270,20 @@ struct BookmarksListView: View {
                     PrayerBookmarkEditView(bookmark: bookmark)
                 }
             }
-            // Use a custom sheet presentation to ensure parameters aren't lost
-            .background(
-                EmptyView().sheet(isPresented: $showingPrayers, onDismiss: {
-                    print("⭐️ Prayer sheet dismissed")
-                    // Dismiss bookmarks view after prayer view is dismissed
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        dismiss()
-                    }
-                }) {
-                    PrayerSheetView(prayerId: selectedPrayerId, category: selectedPrayerCategory)
-                        .environmentObject(prayerStore)
+            .fullScreenCover(isPresented: $showingPrayers, onDismiss: {
+                print("⭐️ Prayer sheet dismissed")
+                // Dismiss bookmarks view after prayer view is dismissed
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    dismiss()
                 }
-            )
+            }) {
+                // Use a direct reference to our captured values instead of the state variables
+                PrayersView(initialPrayerId: sheetPrayerId, initialCategory: sheetPrayerCategory)
+                    .environmentObject(prayerStore)
+                    .onAppear {
+                        print("⭐️ Direct PrayersView opened with ID: \(sheetPrayerId ?? "nil"), Category: \(sheetPrayerCategory?.rawValue ?? "nil")")
+                    }
+            }
         }
     }
 }
@@ -276,9 +295,9 @@ struct PrayerSheetView: View {
     @EnvironmentObject var prayerStore: PrayerStore
     
     init(prayerId: String?, category: PrayerCategory?) {
+        print("⭐️ PrayerSheetView init with ID: \(prayerId ?? "nil"), Category: \(category?.rawValue ?? "nil")")
         self.prayerId = prayerId
         self.category = category
-        print("⭐️ PrayerSheetView init with ID: \(prayerId ?? "nil"), Category: \(category?.rawValue ?? "nil")")
     }
     
     var body: some View {
