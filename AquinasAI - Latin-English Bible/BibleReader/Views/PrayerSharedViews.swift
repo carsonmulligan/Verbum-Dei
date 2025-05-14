@@ -50,6 +50,7 @@ struct PrayerCard: View {
                     if isBookmarked {
                         showingEditBookmarkSheet = true
                     } else {
+                        print("Bookmarking prayer: '\(prayer.title)' with ID: '\(prayer.id)'")
                         showingBookmarkSheet = true
                     }
                 }) {
@@ -154,6 +155,7 @@ struct PrayerBookmarkCreationView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
+                        print("Creating bookmark for prayer: '\(prayer.title)' with ID: '\(prayer.id)'")
                         let bookmark = Bookmark(prayer: prayer, note: note)
                         bookmarkStore.addBookmark(bookmark)
                         dismiss()

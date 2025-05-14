@@ -185,9 +185,12 @@ struct BookmarksListView: View {
                                     onSelect: {
                                         // Store the prayer ID and show prayers view
                                         if let prayerId = bookmark.prayerId {
+                                            print("Selected prayer bookmark with ID: '\(prayerId)', title: '\(bookmark.prayerTitle ?? "unknown")'")
                                             selectedPrayerId = prayerId
                                             showingPrayers = true
                                             // Don't dismiss here - let prayer view stay on screen
+                                        } else {
+                                            print("⚠️ Prayer bookmark has no prayerId!")
                                         }
                                     },
                                     onEdit: {

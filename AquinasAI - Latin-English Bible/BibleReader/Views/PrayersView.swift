@@ -140,22 +140,64 @@ struct PrayersView: View {
                                 // When view appears, find the prayer and its category
                                 if let id = initialPrayerId {
                                     scrollToId = id
+                                    print("Looking for prayer with ID: \(id)")
                                     
                                     // Find the prayer in all categories
+                                    var foundPrayer = false
                                     for category in PrayerCategory.allCases {
+                                        if category == .rosary {
+                                            continue // Skip rosary as it's handled separately
+                                        }
                                         let prayers = prayerStore.getPrayers(for: category)
-                                        if let _ = prayers.first(where: { $0.id == id }) {
-                                            // Set the category to the one containing our prayer
+                                        print("Checking \(prayers.count) prayers in category: \(category.rawValue)")
+                                        
+                                        // Try exact match
+                                        if let prayer = prayers.first(where: { $0.id == id }) {
+                                            print("Found exact prayer match: \(prayer.title) in category: \(category.rawValue)")
                                             selectedCategory = category
+                                            foundPrayer = true
                                             
-                                            // Delay scrolling slightly to ensure view is loaded
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            // Delay scrolling to ensure view is fully loaded
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                print("Scrolling to prayer: \(prayer.title)")
                                                 withAnimation {
                                                     scrollProxy.scrollTo(id, anchor: .top)
                                                 }
                                             }
                                             break
                                         }
+                                        
+                                        // Try case-insensitive or partial match if exact match fails
+                                        if !foundPrayer {
+                                            for prayer in prayers {
+                                                if prayer.title.lowercased().contains(id.lowercased()) || 
+                                                   id.lowercased().contains(prayer.title.lowercased()) {
+                                                    print("Found partial match: \(prayer.title) for ID: \(id)")
+                                                    selectedCategory = category
+                                                    foundPrayer = true
+                                                    
+                                                    // Set the scroll ID to this prayer's ID
+                                                    let actualId = prayer.id
+                                                    scrollToId = actualId
+                                                    
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                        print("Scrolling to prayer with partial match: \(prayer.title)")
+                                                        withAnimation {
+                                                            scrollProxy.scrollTo(actualId, anchor: .top)
+                                                        }
+                                                    }
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        
+                                        if foundPrayer {
+                                            break
+                                        }
+                                    }
+                                    
+                                    if !foundPrayer {
+                                        print("⚠️ Could not find prayer with ID: \(id)")
                                     }
                                 }
                             }

@@ -2,7 +2,19 @@ import Foundation
 
 // MARK: - Prayer Models
 struct Prayer: Identifiable, Codable {
-    var id: String { title }
+    var id: String {
+        // Create a normalized ID from the title by removing spaces and special characters
+        let normalized = title
+            .lowercased()
+            .replacingOccurrences(of: " ", with: "_")
+            .replacingOccurrences(of: ",", with: "")
+            .replacingOccurrences(of: ".", with: "")
+            .replacingOccurrences(of: "'", with: "")
+            .replacingOccurrences(of: "\"", with: "")
+            .replacingOccurrences(of: "(", with: "")
+            .replacingOccurrences(of: ")", with: "")
+        return normalized
+    }
     let title: String
     let title_latin: String?
     let title_english: String?
