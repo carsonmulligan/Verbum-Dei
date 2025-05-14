@@ -250,7 +250,7 @@ private struct PrayerSectionView: View {
                             .id(prayer.asPrayer.id)
                         }
                     case .object(let obj):
-                        if let prayerId = obj.id, let prayer = commonPrayers[prayerId] {
+                        if let prayer = commonPrayers[obj.id] {
                             RepeatedPrayerView(
                                 prayer: prayer.asPrayer,
                                 count: obj.count,
@@ -382,7 +382,7 @@ private struct MysteriesView: View {
                                 .padding(.leading)
                             }
                         case .object(let obj):
-                            if let prayerId = obj.id, let prayer = commonPrayers[prayerId] {
+                            if let prayer = commonPrayers[obj.id] {
                                 RepeatedPrayerView(
                                     prayer: prayer.asPrayer,
                                     count: obj.count,
