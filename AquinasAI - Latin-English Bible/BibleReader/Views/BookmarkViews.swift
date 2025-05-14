@@ -276,10 +276,7 @@ struct BookmarksListView: View {
                 // Clear the navigation parameters
                 prayerNavigation.navigateTo(prayerId: nil, category: nil)
                 
-                // Dismiss bookmarks view after prayer view is dismissed
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    dismiss()
-                }
+                // Note: Not dismissing bookmarks view anymore
             }) {
                 NavigationToPrayerView(prayerNavigation: prayerNavigation)
                     .environmentObject(prayerStore)
@@ -288,10 +285,7 @@ struct BookmarksListView: View {
                 // Clear the navigation parameters
                 prayerNavigation.navigateTo(prayerId: nil, category: nil)
                 
-                // Dismiss bookmarks view after rosary view is dismissed
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    dismiss()
-                }
+                // Note: Not dismissing bookmarks view anymore
             }) {
                 NavigationToRosaryView(prayerId: prayerNavigation.targetPrayerId)
                     .environmentObject(prayerStore)

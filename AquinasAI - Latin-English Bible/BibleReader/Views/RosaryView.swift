@@ -72,16 +72,6 @@ struct RosaryView: View {
             }
         }
         .navigationTitle("Rosary")
-        // Add back button if we're opened from a bookmark via initialPrayerId
-        .toolbar {
-            if initialPrayerId != nil {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Back") {
-                        dismiss()
-                    }
-                }
-            }
-        }
     }
 }
 
