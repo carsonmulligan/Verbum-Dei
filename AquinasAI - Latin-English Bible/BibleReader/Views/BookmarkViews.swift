@@ -151,8 +151,8 @@ struct BookmarksListView: View {
     @EnvironmentObject private var prayerStore: PrayerStore
     @Environment(\.dismiss) private var dismiss
     @State private var editingBookmark: Bookmark?
-    @State private var showingPrayerSheet = false
-    @State private var selectedPrayer: Prayer?
+    @State private var showingPrayers = false
+    @State private var selectedPrayerId: String?
     var onBookmarkSelected: (Bookmark) -> Void
     
     var sortedBookmarks: [Bookmark] {
@@ -183,11 +183,11 @@ struct BookmarksListView: View {
                                 PrayerBookmarkRow(
                                     bookmark: bookmark,
                                     onSelect: {
-                                        // Find the prayer in the store
-                                        if let prayerId = bookmark.prayerId,
-                                           let prayer = prayerStore.prayers.first(where: { $0.id == prayerId }) {
-                                            selectedPrayer = prayer
-                                            showingPrayerSheet = true
+                                        // Store the prayer ID and show prayers view
+                                        if let prayerId = bookmark.prayerId {
+                                            selectedPrayerId = prayerId
+                                            showingPrayers = true
+                                            dismiss()
                                         }
                                     },
                                     onEdit: {
@@ -221,24 +221,8 @@ struct BookmarksListView: View {
                     PrayerBookmarkEditView(bookmark: bookmark)
                 }
             }
-            .sheet(isPresented: $showingPrayerSheet) {
-                if let prayer = selectedPrayer {
-                    NavigationView {
-                        ScrollView {
-                            PrayerCard(prayer: prayer, language: .bilingual)
-                                .padding()
-                        }
-                        .navigationTitle(prayer.displayTitleEnglish)
-                        .navigationBarTitleDisplayMode(.inline)
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button("Done") {
-                                    showingPrayerSheet = false
-                                }
-                            }
-                        }
-                    }
-                }
+            .sheet(isPresented: $showingPrayers) {
+                PrayersView(initialPrayerId: selectedPrayerId)
             }
         }
     }

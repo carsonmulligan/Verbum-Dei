@@ -18,6 +18,15 @@ struct PrayersView: View {
     @State private var searchText = ""
     @State private var selectedCategory: PrayerCategory = .basic
     @State private var selectedLanguage: PrayerLanguage = .bilingual
+    @State private var scrollToId: String?
+    
+    // Add optional initial prayer ID
+    var initialPrayerId: String?
+    
+    init(initialPrayerId: String? = nil) {
+        self.initialPrayerId = initialPrayerId
+        self._scrollToId = State(initialValue: initialPrayerId)
+    }
     
     var filteredPrayers: [Prayer] {
         let prayers = prayerStore.getPrayers(for: selectedCategory)
@@ -104,14 +113,52 @@ struct PrayersView: View {
                         }
                         Spacer()
                     } else {
-                        ScrollView {
-                            LazyVStack(spacing: 16) {
-                                ForEach(filteredPrayers) { prayer in
-                                    PrayerCard(prayer: prayer, language: selectedLanguage)
-                                        .padding(.horizontal)
+                        ScrollViewReader { scrollProxy in
+                            ScrollView {
+                                LazyVStack(spacing: 16) {
+                                    ForEach(filteredPrayers) { prayer in
+                                        PrayerCard(prayer: prayer, language: selectedLanguage)
+                                            .padding(.horizontal)
+                                            .id(prayer.id)
+                                    }
+                                }
+                                .padding(.vertical)
+                            }
+                            .onChange(of: selectedCategory) { oldValue, newValue in
+                                if let id = scrollToId {
+                                    // If category changes, check if our target prayer is in this category
+                                    let prayersInCategory = prayerStore.getPrayers(for: newValue)
+                                    if prayersInCategory.contains(where: { $0.id == id }) {
+                                        // If yes, scroll to it
+                                        withAnimation {
+                                            scrollProxy.scrollTo(id, anchor: .top)
+                                        }
+                                    }
                                 }
                             }
-                            .padding(.vertical)
+                            .onAppear {
+                                // When view appears, find the prayer and its category
+                                if let id = initialPrayerId {
+                                    scrollToId = id
+                                    
+                                    // Find the prayer in all categories
+                                    for category in PrayerCategory.allCases {
+                                        let prayers = prayerStore.getPrayers(for: category)
+                                        if let _ = prayers.first(where: { $0.id == id }) {
+                                            // Set the category to the one containing our prayer
+                                            selectedCategory = category
+                                            
+                                            // Delay scrolling slightly to ensure view is loaded
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                withAnimation {
+                                                    scrollProxy.scrollTo(id, anchor: .top)
+                                                }
+                                            }
+                                            break
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

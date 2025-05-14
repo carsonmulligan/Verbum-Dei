@@ -250,7 +250,7 @@ struct BookList: View {
                 }
             }
             .sheet(isPresented: $showingPrayers) {
-                PrayersView()
+                PrayersView(initialPrayerId: nil)
                     .environmentObject(prayerStore)
             }
         }
