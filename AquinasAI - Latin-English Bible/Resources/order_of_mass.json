@@ -2,6 +2,7 @@
     "prayers": [
         {
             "id": "sign_of_the_cross",
+            "title": "Sign of the Cross",
             "title_latin": "Signum Crucis",
             "title_english": "Sign of the Cross",
             "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
@@ -9,6 +10,7 @@
         },
         {
             "id": "greeting",
+            "title": "Greeting",
             "title_latin": "Salutatio",
             "title_english": "Greeting",
             "latin": "Dominus vobiscum.",
@@ -18,6 +20,7 @@
         },
         {
             "id": "penitential_act",
+            "title": "Penitential Act",
             "title_latin": "Actus Paenitentialis",
             "title_english": "Penitential Act",
             "latin": "Confiteor Deo omnipotenti et vobis, fratres, quia peccavi nimis cogitatione, verbo, opere et omissione: mea culpa, mea culpa, mea maxima culpa.",
@@ -25,6 +28,7 @@
         },
         {
             "id": "kyrie",
+            "title": "Lord Have Mercy",
             "title_latin": "Kyrie",
             "title_english": "Lord Have Mercy",
             "latin": "Kyrie eleison. Christe eleison. Kyrie eleison.",
@@ -32,6 +36,7 @@
         },
         {
             "id": "gloria",
+            "title": "Glory to God",
             "title_latin": "Gloria",
             "title_english": "Glory to God",
             "latin": "Gloria in excelsis Deo et in terra pax hominibus bonae voluntatis...",

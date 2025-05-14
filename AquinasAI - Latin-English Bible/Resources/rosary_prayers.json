@@ -84,22 +84,22 @@
     },
     "template": {
         "opening": [
-            {"prayer": "sign_of_the_cross", "count": 1},
-            {"prayer": "apostles_creed", "count": 1},
-            {"prayer": "our_father", "count": 1},
+            "sign_of_the_cross",
+            "apostles_creed",
+            "our_father",
             {"prayer": "hail_mary", "count": 3, "intentions": ["Faith", "Hope", "Charity"]},
-            {"prayer": "glory_be", "count": 1}
+            "glory_be"
         ],
         "decade": [
-            {"prayer": "our_father", "count": 1},
+            "our_father",
             {"prayer": "hail_mary", "count": 10},
-            {"prayer": "glory_be", "count": 1},
-            {"prayer": "fatima_prayer", "count": 1}
+            "glory_be",
+            "fatima_prayer"
         ],
         "closing": [
-            {"prayer": "hail_holy_queen", "count": 1},
-            {"prayer": "final_prayer", "count": 1},
-            {"prayer": "sign_of_the_cross", "count": 1}
+            "hail_holy_queen",
+            "final_prayer",
+            "sign_of_the_cross"
         ]
     }
 }
