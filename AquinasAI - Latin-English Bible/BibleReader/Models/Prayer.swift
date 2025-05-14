@@ -317,7 +317,7 @@ class PrayerStore: ObservableObject {
         print("Starting to load prayers...")
         let prayerFiles = [
             ("prayers.json", PrayerCategory.basic),
-            ("rosay_prayers.json", PrayerCategory.rosary),
+            ("rosary_prayers.json", PrayerCategory.rosary),
             ("divine_mercy_chaplet.json", PrayerCategory.divine),
             ("order_of_mass.json", PrayerCategory.mass),
             ("angelus_domini.json", PrayerCategory.other)
@@ -333,8 +333,10 @@ class PrayerStore: ObservableObject {
                     print("Successfully loaded data from \(filename)")
                     
                     switch filename {
-                    case "rosay_prayers.json":
+                    case "rosary_prayers.json":
+                        print("Decoding rosary prayers...")
                         let container = try JSONDecoder().decode(RosaryPrayersContainer.self, from: data)
+                        print("Successfully decoded rosary prayers. Mysteries count: \(container.mysteries.count)")
                         rosaryPrayers = container
                         let prayerArray = container.common_prayers.values.map { $0.asPrayer }
                         print("Loaded \(prayerArray.count) rosary prayers")
