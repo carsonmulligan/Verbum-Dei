@@ -260,6 +260,9 @@ private struct PrayerSectionView: View {
                             )
                             .id(prayer.asPrayer.id)
                         }
+                    case .array, .dictionary, .templateObject, .prayerCount, .prayerWithIntentions:
+                        // Handle other cases if needed
+                        EmptyView()
                     }
                 }
             }
@@ -390,6 +393,9 @@ private struct MysteriesView: View {
                                 .id(prayer.asPrayer.id)
                                 .padding(.leading)
                             }
+                        case .array, .dictionary, .templateObject, .prayerCount, .prayerWithIntentions:
+                            // Handle other cases if needed
+                            EmptyView()
                         }
                     }
                 }
