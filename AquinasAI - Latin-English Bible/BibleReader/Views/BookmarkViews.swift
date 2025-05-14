@@ -187,7 +187,7 @@ struct BookmarksListView: View {
                                         if let prayerId = bookmark.prayerId {
                                             selectedPrayerId = prayerId
                                             showingPrayers = true
-                                            dismiss()
+                                            // Don't dismiss here - let prayer view stay on screen
                                         }
                                     },
                                     onEdit: {
@@ -221,8 +221,12 @@ struct BookmarksListView: View {
                     PrayerBookmarkEditView(bookmark: bookmark)
                 }
             }
-            .sheet(isPresented: $showingPrayers) {
+            .sheet(isPresented: $showingPrayers, onDismiss: {
+                // Dismiss bookmarks view after prayer view is dismissed
+                dismiss()
+            }) {
                 PrayersView(initialPrayerId: selectedPrayerId)
+                    .environmentObject(prayerStore)
             }
         }
     }
