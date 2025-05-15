@@ -1,8 +1,8 @@
 import SwiftUI
 
 enum PrayerCategory: String, CaseIterable {
-    case basic = "Basic Prayers"
-    case mass = "Mass Prayers"
+    case basic = "All Prayers"
+    case mass = "Order of Mass"
     case rosary = "Rosary"
     case divine = "Divine Mercy"
     case other = "Other Prayers"
