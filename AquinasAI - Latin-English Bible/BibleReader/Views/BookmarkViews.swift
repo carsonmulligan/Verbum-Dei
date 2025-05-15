@@ -183,6 +183,48 @@ struct BookmarksListView: View {
         bookmarkStore.bookmarks.sorted(by: { $0.timestamp > $1.timestamp })
     }
     
+    // Helper function to convert string category to enum type
+    private func getPrayerCategory(from categoryString: String?) -> PrayerCategory {
+        guard let categoryStr = categoryString else { return .basic }
+        
+        switch categoryStr {
+        case PrayerCategory.basic.rawValue:
+            return .basic
+        case PrayerCategory.mass.rawValue:
+            return .mass
+        case PrayerCategory.rosary.rawValue:
+            return .rosary
+        case PrayerCategory.divine.rawValue:
+            return .divine
+        case PrayerCategory.angelus.rawValue:
+            return .angelus
+        case PrayerCategory.hours.rawValue:
+            return .hours
+        default:
+            return .basic
+        }
+    }
+    
+    // Helper function to handle prayer selection
+    private func handlePrayerSelection(bookmark: Bookmark) {
+        guard let prayerId = bookmark.prayerId else { return }
+        
+        // Convert category string to enum
+        let category = getPrayerCategory(from: bookmark.prayerCategory)
+        
+        // Set navigation parameters
+        prayerNavigation.navigateTo(prayerId: prayerId, category: category)
+        
+        // Navigate based on category
+        DispatchQueue.main.async {
+            if category == .rosary {
+                showingRosary = true
+            } else {
+                showingPrayers = true
+            }
+        }
+    }
+    
     var body: some View {
         NavigationView {
             Group {
@@ -207,39 +249,7 @@ struct BookmarksListView: View {
                                 PrayerBookmarkRow(
                                     bookmark: bookmark,
                                     onSelect: {
-                                        // Store the prayer ID and show prayers view
-                                        if let prayerId = bookmark.prayerId {
-                                            // Convert prayerCategory string to PrayerCategory enum
-                                            var category: PrayerCategory = .basic
-                                            if let categoryStr = bookmark.prayerCategory {
-                                                switch categoryStr {
-                                                case PrayerCategory.basic.rawValue:
-                                                    category = .basic
-                                                case PrayerCategory.mass.rawValue:
-                                                    category = .mass
-                                                case PrayerCategory.rosary.rawValue:
-                                                    category = .rosary
-                                                case PrayerCategory.divine.rawValue:
-                                                    category = .divine
-                                                case PrayerCategory.other.rawValue:
-                                                    category = .other
-                                                default:
-                                                    category = .basic
-                                                }
-                                            }
-                                            
-                                            // Set the navigation parameters in the environment object
-                                            prayerNavigation.navigateTo(prayerId: prayerId, category: category)
-                                            
-                                            // Present the appropriate view based on category
-                                            DispatchQueue.main.async {
-                                                if category == .rosary {
-                                                    showingRosary = true
-                                                } else {
-                                                    showingPrayers = true
-                                                }
-                                            }
-                                        }
+                                        handlePrayerSelection(bookmark: bookmark)
                                     },
                                     onEdit: {
                                         editingBookmark = bookmark
