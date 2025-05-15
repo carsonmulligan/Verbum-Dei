@@ -422,36 +422,29 @@ struct AngelusContainer: Codable {
 }
 
 struct AngelusContent: Codable {
-    let common_prayers: [String: AngelusPrayer]
-    let template: AngelusTemplate
+    let prayers: [AngelusPrayer]
 }
 
 struct AngelusPrayer: Codable {
-    let title_latin: String?
-    let title_english: String?
+    let order: Int
+    let instructions: String
+    let title: String
+    let title_latin: String
+    let title_english: String
     let latin: String
     let english: String
     
     var asPrayer: Prayer {
         Prayer(
-            title: title_english ?? title_latin ?? "",
+            title: title,
             title_latin: title_latin,
             title_english: title_english,
             latin: latin,
             english: english,
-            category: .other
+            category: .angelus,
+            instructions: instructions
         )
     }
-}
-
-struct AngelusTemplate: Codable {
-    let sequence: [String]
-    let structure: AngelusStructure
-}
-
-struct AngelusStructure: Codable {
-    let times_per_day: Int
-    let customary_hours: [String]
 }
 
 // MARK: - Divine Mercy Container
@@ -572,7 +565,7 @@ class PrayerStore: ObservableObject {
             ("rosary_prayers.json", PrayerCategory.rosary),
             ("divine_mercy_chaplet.json", PrayerCategory.divine),
             ("order_of_mass.json", PrayerCategory.mass),
-            ("angelus_domini.json", PrayerCategory.other),
+            ("angelus_domini.json", PrayerCategory.angelus),
             ("liturgy_of_hours.json", PrayerCategory.hours)
         ]
         
@@ -605,7 +598,7 @@ class PrayerStore: ObservableObject {
                     case "angelus_domini.json":
                         let container = try JSONDecoder().decode(AngelusContainer.self, from: data)
                         angelusPrayers = container
-                        let prayerArray = container.angelus.common_prayers.values.map { $0.asPrayer }
+                        let prayerArray = container.angelus.prayers.map { $0.asPrayer }
                         print("Loaded \(prayerArray.count) angelus prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
@@ -620,7 +613,7 @@ class PrayerStore: ObservableObject {
                         let container = try JSONDecoder().decode(LiturgyOfHoursContainer.self, from: data)
                         liturgyOfHoursPrayers = container
                         let prayerArray = container.liturgy_of_hours.prayers.map { prayer -> Prayer in
-                            var mutablePrayer = Prayer(
+                            let mutablePrayer = Prayer(
                                 title: prayer.title,
                                 title_latin: prayer.title_latin,
                                 title_english: prayer.title_english,
@@ -685,10 +678,6 @@ class PrayerStore: ObservableObject {
         default:
             return nil
         }
-    }
-    
-    func getAngelusSequence() -> [String]? {
-        angelusPrayers?.angelus.template.sequence
     }
     
     func getDivineMercyTemplate() -> DivineMercyTemplate? {
