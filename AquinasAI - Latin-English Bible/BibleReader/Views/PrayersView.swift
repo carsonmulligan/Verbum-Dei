@@ -5,6 +5,7 @@ enum PrayerCategory: String, CaseIterable {
     case mass = "Order of Mass"
     case rosary = "Rosary"
     case divine = "Divine Mercy"
+    case hours = "Liturgy of the Hours"
     case other = "Other Prayers"
     
     var displayName: String {
@@ -77,21 +78,6 @@ struct PrayersView: View {
                                         )
                                         .foregroundColor(selectedCategory == category ? .white : .deepPurple)
                                 }
-                            } else if category == .divine {
-                                NavigationLink(destination: DivineMercyView().environmentObject(prayerStore)) {
-                                    Text(category.displayName)
-                                        .padding(.horizontal, 16)
-                                        .padding(.vertical, 8)
-                                        .background(
-                                            Capsule()
-                                                .fill(selectedCategory == category ? Color.deepPurple : Color.clear)
-                                                .overlay(
-                                                    Capsule()
-                                                        .strokeBorder(Color.deepPurple, lineWidth: 1)
-                                                )
-                                        )
-                                        .foregroundColor(selectedCategory == category ? .white : .deepPurple)
-                                }
                             } else {
                                 Button(action: {
                                     selectedCategory = category
@@ -125,7 +111,7 @@ struct PrayersView: View {
                 .padding(.horizontal)
                 
                 // Prayer list
-                if selectedCategory != .rosary && selectedCategory != .divine {
+                if selectedCategory != .rosary {
                     if filteredPrayers.isEmpty {
                         Spacer()
                         VStack {

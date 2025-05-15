@@ -21,6 +21,7 @@ struct Prayer: Identifiable, Codable {
     let latin: String
     let english: String
     var category: PrayerCategory = .basic
+    var instructions: String?
     
     var displayTitleLatin: String {
         title_latin ?? title
@@ -36,15 +37,17 @@ struct Prayer: Identifiable, Codable {
         case title_english
         case latin
         case english
+        case instructions
     }
     
-    init(title: String, title_latin: String?, title_english: String?, latin: String, english: String, category: PrayerCategory = .basic) {
+    init(title: String, title_latin: String?, title_english: String?, latin: String, english: String, category: PrayerCategory = .basic, instructions: String? = nil) {
         self.title = title
         self.title_latin = title_latin
         self.title_english = title_english
         self.latin = latin
         self.english = english
         self.category = category
+        self.instructions = instructions
     }
     
     init(from decoder: Decoder) throws {
@@ -54,6 +57,7 @@ struct Prayer: Identifiable, Codable {
         title_english = try container.decodeIfPresent(String.self, forKey: .title_english)
         latin = try container.decode(String.self, forKey: .latin)
         english = try container.decode(String.self, forKey: .english)
+        instructions = try container.decodeIfPresent(String.self, forKey: .instructions)
         category = .basic // Default category, will be set after decoding
     }
     
@@ -64,6 +68,7 @@ struct Prayer: Identifiable, Codable {
         try container.encode(title_english, forKey: .title_english)
         try container.encode(latin, forKey: .latin)
         try container.encode(english, forKey: .english)
+        try container.encodeIfPresent(instructions, forKey: .instructions)
     }
 }
 
@@ -554,6 +559,7 @@ class PrayerStore: ObservableObject {
     @Published var massOrder: OrderOfMassContainer?
     @Published var angelusPrayers: AngelusContainer?
     @Published var divineMercyPrayers: DivineMercyContainer?
+    @Published var liturgyOfHoursPrayers: LiturgyOfHoursContainer?
     
     init() {
         loadPrayers()
@@ -566,7 +572,8 @@ class PrayerStore: ObservableObject {
             ("rosary_prayers.json", PrayerCategory.rosary),
             ("divine_mercy_chaplet.json", PrayerCategory.divine),
             ("order_of_mass.json", PrayerCategory.mass),
-            ("angelus_domini.json", PrayerCategory.other)
+            ("angelus_domini.json", PrayerCategory.other),
+            ("liturgy_of_hours.json", PrayerCategory.hours)
         ]
         
         var allPrayers: [Prayer] = []
@@ -607,6 +614,24 @@ class PrayerStore: ObservableObject {
                         divineMercyPrayers = container
                         let prayerArray = container.divine_mercy_chaplet.common_prayers.values.map { $0.asPrayer }
                         print("Loaded \(prayerArray.count) divine mercy prayers")
+                        allPrayers.append(contentsOf: prayerArray)
+                        
+                    case "liturgy_of_hours.json":
+                        let container = try JSONDecoder().decode(LiturgyOfHoursContainer.self, from: data)
+                        liturgyOfHoursPrayers = container
+                        let prayerArray = container.liturgy_of_hours.prayers.map { prayer -> Prayer in
+                            var mutablePrayer = Prayer(
+                                title: prayer.title,
+                                title_latin: prayer.title_latin,
+                                title_english: prayer.title_english,
+                                latin: prayer.latin,
+                                english: prayer.english,
+                                category: .hours,
+                                instructions: prayer.instructions
+                            )
+                            return mutablePrayer
+                        }
+                        print("Loaded \(prayerArray.count) liturgy of hours prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     default:
@@ -685,4 +710,23 @@ class PrayerStore: ObservableObject {
             return ""
         }
     }
+}
+
+// MARK: - Liturgy of Hours Container
+struct LiturgyOfHoursContainer: Codable {
+    let liturgy_of_hours: LiturgyOfHoursContent
+}
+
+struct LiturgyOfHoursContent: Codable {
+    let prayers: [LiturgyOfHoursPrayer]
+}
+
+struct LiturgyOfHoursPrayer: Codable {
+    let order: Int
+    let instructions: String
+    let title: String
+    let title_latin: String
+    let title_english: String
+    let latin: String
+    let english: String
 } 
