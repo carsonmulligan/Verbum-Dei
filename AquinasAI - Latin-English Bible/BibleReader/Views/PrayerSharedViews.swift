@@ -60,6 +60,15 @@ struct PrayerCard: View {
                 }
             }
             
+            // Prayer Instructions (if available)
+            if let instructions = prayer.instructions {
+                Text(instructions)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .italic()
+                    .padding(.bottom, 4)
+            }
+            
             if language == .latinOnly || language == .bilingual {
                 Text(prayer.latin)
                     .font(.body)
