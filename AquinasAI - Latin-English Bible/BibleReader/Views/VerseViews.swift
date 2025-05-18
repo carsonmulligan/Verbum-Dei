@@ -24,6 +24,18 @@ struct LatinOnlyVerseView: View {
                         Button(role: .destructive, action: { onDeleteBookmark?() }) {
                             Label("Remove Bookmark", systemImage: "bookmark.slash")
                         }
+                    } else {
+                        Button {
+                            NotificationCenter.default.post(name: NSNotification.Name("AddBookmark"), object: nil)
+                        } label: {
+                            Label("Add Bookmark", systemImage: "bookmark")
+                        }
+                    }
+                    
+                    Button {
+                        UIPasteboard.general.string = text
+                    } label: {
+                        Label("Copy", systemImage: "doc.on.doc")
                     }
                 }
         }
@@ -54,6 +66,18 @@ struct EnglishOnlyVerseView: View {
                         Button(role: .destructive, action: { onDeleteBookmark?() }) {
                             Label("Remove Bookmark", systemImage: "bookmark.slash")
                         }
+                    } else {
+                        Button {
+                            NotificationCenter.default.post(name: NSNotification.Name("AddBookmark"), object: nil)
+                        } label: {
+                            Label("Add Bookmark", systemImage: "bookmark")
+                        }
+                    }
+                    
+                    Button {
+                        UIPasteboard.general.string = text
+                    } label: {
+                        Label("Copy", systemImage: "doc.on.doc")
                     }
                 }
         }
@@ -91,6 +115,30 @@ struct BilingualVerseView: View {
                     Button(role: .destructive, action: { onDeleteBookmark?() }) {
                         Label("Remove Bookmark", systemImage: "bookmark.slash")
                     }
+                } else {
+                    Button {
+                        NotificationCenter.default.post(name: NSNotification.Name("AddBookmark"), object: nil)
+                    } label: {
+                        Label("Add Bookmark", systemImage: "bookmark")
+                    }
+                }
+                
+                Button {
+                    UIPasteboard.general.string = latinText + "\n\n" + englishText
+                } label: {
+                    Label("Copy Both", systemImage: "doc.on.doc")
+                }
+                
+                Button {
+                    UIPasteboard.general.string = latinText
+                } label: {
+                    Label("Copy Latin", systemImage: "doc.on.doc.fill")
+                }
+                
+                Button {
+                    UIPasteboard.general.string = englishText
+                } label: {
+                    Label("Copy English", systemImage: "doc.on.clipboard")
                 }
             }
         }
@@ -143,6 +191,11 @@ struct VerseView: View {
                 bookName: bookName,
                 chapterNumber: chapterNumber
             )
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("AddBookmark"))) { _ in
+            if !isBookmarked {
+                showingBookmarkSheet = true
+            }
         }
     }
     
