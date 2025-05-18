@@ -26,7 +26,11 @@ struct LatinOnlyVerseView: View {
                         }
                     } else {
                         Button {
-                            NotificationCenter.default.post(name: NSNotification.Name("AddBookmark"), object: nil)
+                            NotificationCenter.default.post(
+                                name: NSNotification.Name("AddBookmark"), 
+                                object: nil, 
+                                userInfo: ["verseNumber": number]
+                            )
                         } label: {
                             Label("Add Bookmark", systemImage: "bookmark")
                         }
@@ -68,7 +72,11 @@ struct EnglishOnlyVerseView: View {
                         }
                     } else {
                         Button {
-                            NotificationCenter.default.post(name: NSNotification.Name("AddBookmark"), object: nil)
+                            NotificationCenter.default.post(
+                                name: NSNotification.Name("AddBookmark"), 
+                                object: nil, 
+                                userInfo: ["verseNumber": number]
+                            )
                         } label: {
                             Label("Add Bookmark", systemImage: "bookmark")
                         }
@@ -117,7 +125,11 @@ struct BilingualVerseView: View {
                     }
                 } else {
                     Button {
-                        NotificationCenter.default.post(name: NSNotification.Name("AddBookmark"), object: nil)
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name("AddBookmark"), 
+                            object: nil, 
+                            userInfo: ["verseNumber": number]
+                        )
                     } label: {
                         Label("Add Bookmark", systemImage: "bookmark")
                     }
@@ -192,9 +204,13 @@ struct VerseView: View {
                 chapterNumber: chapterNumber
             )
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("AddBookmark"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("AddBookmark"))) { notification in
             if !isBookmarked {
-                showingBookmarkSheet = true
+                if let userInfo = notification.userInfo,
+                   let notificationVerseNumber = userInfo["verseNumber"] as? Int,
+                   notificationVerseNumber == verse.number {
+                    showingBookmarkSheet = true
+                }
             }
         }
     }

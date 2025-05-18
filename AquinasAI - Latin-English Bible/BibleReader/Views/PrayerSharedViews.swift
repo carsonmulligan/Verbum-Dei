@@ -117,20 +117,31 @@ struct PrayerCard: View {
                 }
             }
             
-            // Add Copy button
-            Button {
-                let textToCopy: String
-                switch language {
-                case .latinOnly:
-                    textToCopy = prayer.latin
-                case .englishOnly:
-                    textToCopy = prayer.english
-                case .bilingual:
-                    textToCopy = "\(prayer.latin)\n\n\(prayer.english)"
+            // Copy options
+            if language == .bilingual {
+                Button {
+                    UIPasteboard.general.string = "\(prayer.latin)\n\n\(prayer.english)"
+                } label: {
+                    Label("Copy Both", systemImage: "doc.on.doc")
                 }
-                UIPasteboard.general.string = textToCopy
-            } label: {
-                Label("Copy", systemImage: "doc.on.doc")
+                
+                Button {
+                    UIPasteboard.general.string = prayer.latin
+                } label: {
+                    Label("Copy Latin", systemImage: "doc.on.doc.fill")
+                }
+                
+                Button {
+                    UIPasteboard.general.string = prayer.english
+                } label: {
+                    Label("Copy English", systemImage: "doc.on.clipboard")
+                }
+            } else {
+                Button {
+                    UIPasteboard.general.string = language == .latinOnly ? prayer.latin : prayer.english
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                }
             }
         }
         .sheet(isPresented: $showingBookmarkSheet) {
