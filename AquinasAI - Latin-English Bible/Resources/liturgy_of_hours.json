@@ -3,7 +3,7 @@
     "prayers": [
       {
         "order": 1,
-        "instructions": "Begin the day standing and make the Sign of the Cross, then say this versicle before the Invitatory Psalm.",
+        "instructions": "Pray at the very start of the day—before your first Hour (Office of Readings or Morning Prayer)—around dawn, roughly 5:00-6:00 AM. Stand, make the Sign of the Cross, then say this versicle before the Invitatory Psalm.",
         "title": "Lord, open my lips",
         "title_latin": "Domine, labia mea aperies",
         "title_english": "Lord, open my lips",
@@ -12,7 +12,7 @@
       },
       {
         "order": 2,
-        "instructions": "Recite (or sing) Psalm 95 with the antiphon of the day; remain standing and bow at the doxology.",
+        "instructions": "Immediately after the versicle, recite (or sing) Psalm 95 with the day’s antiphon. This Invitatory still belongs to dawn—about 5:00-6:00 AM—before Office of Readings or Morning Prayer; remain standing and bow at the doxology.",
         "title": "Invitatory Psalm 95",
         "title_latin": "Psalmus 94 (95) «Venite, exultemus Domino»",
         "title_english": "Invitatory Psalm 95",
@@ -21,7 +21,7 @@
       },
       {
         "order": 3,
-        "instructions": "Used at the very start of every Hour except the Invitatory; trace the Sign of the Cross while saying it.",
+        "instructions": "Used at the very start of **every Hour except the Invitatory**—Office of Readings (any time after midnight, commonly 2:00-5:00 AM), Morning Prayer (~6 AM), Mid-Morning (Terce ~9 AM), Mid-Day (Sext ~12 PM), Mid-Afternoon (None ~3 PM), Evening Prayer (~6 PM) and Night Prayer (~9 PM). Trace the Sign of the Cross while saying it.",
         "title": "O God, come to my assistance",
         "title_latin": "Deus, in adiutorium meum intende",
         "title_english": "O God, come to my assistance",
@@ -30,7 +30,7 @@
       },
       {
         "order": 4,
-        "instructions": "Added at the end of every psalm or canticle; make a slight bow while reciting.",
+        "instructions": "Added at the end of every psalm or canticle throughout **all Hours and times listed in prayer 3**; make a slight bow while reciting.",
         "title": "Glory Be (Doxology)",
         "title_latin": "Gloria Patri",
         "title_english": "Glory Be (Doxology)",
@@ -39,7 +39,7 @@
       },
       {
         "order": 5,
-        "instructions": "Chanted or recited standing after the psalms and short reading of Morning Prayer (Lauds).",
+        "instructions": "Chanted or recited standing after the psalms and short reading of **Morning Prayer (Lauds)**, which is prayed at dawn or sunrise—about 6 AM.",
         "title": "Canticle of Zechariah",
         "title_latin": "Benedictus",
         "title_english": "Canticle of Zechariah",
@@ -48,7 +48,7 @@
       },
       {
         "order": 6,
-        "instructions": "Chanted or recited standing after the psalms and short reading of Evening Prayer (Vespers).",
+        "instructions": "Chanted or recited standing after the psalms and short reading of **Evening Prayer (Vespers)**, prayed at dusk—roughly 4:00-6:00 PM depending on season, normally about 6 PM.",
         "title": "Canticle of Mary",
         "title_latin": "Magnificat",
         "title_english": "Canticle of Mary",
@@ -57,7 +57,7 @@
       },
       {
         "order": 7,
-        "instructions": "Recited sitting (or standing) after the psalmody of Night Prayer (Compline); traditionally said with the lights dimmed.",
+        "instructions": "Recited after the psalmody of **Night Prayer (Compline)**—just before going to bed, typically about 9:00-10:00 PM; tradition dims the lights at this Hour.",
         "title": "Canticle of Simeon",
         "title_latin": "Nunc Dimittis",
         "title_english": "Canticle of Simeon",
@@ -66,4 +66,4 @@
       }
     ]
   }
-} 
+}

@@ -6,7 +6,7 @@ enum PrayerCategory: String, CaseIterable {
     case rosary = "Rosary"
     case divine = "Divine Mercy"
     case hours = "Liturgy of the Hours"
-    case other = "Other Prayers"
+    case angelus = "Angelus Domini"
     
     var displayName: String {
         self.rawValue

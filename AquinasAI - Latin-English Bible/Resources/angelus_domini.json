@@ -1,59 +1,52 @@
 {
     "angelus": {
-        "common_prayers": {
-            "sign_of_the_cross": {
-                "title_latin": "Signum Crucis",
-                "title_english": "Sign of the Cross",
-                "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
-                "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
+        "prayers": [
+            {
+                "order": 1,
+                "instructions": "Pray the Angelus three times a day—traditionally at 6 a.m., 12 p.m., and 6 p.m. (or when the church bells ring). Stand, face east if possible, and make the Sign of the Cross before beginning.",
+                "title": "The Angel of the Lord declared unto Mary",
+                "title_latin": "Angelus Domini nuntiavit Mariae",
+                "title_english": "The Angel of the Lord declared unto Mary",
+                "latin": "℣. Angelus Domini nuntiavit Mariae. \n℟. Et concepit de Spiritu Sancto. \nAve Maria, gratia plena, Dominus tecum; benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+                "english": "V/. The Angel of the Lord declared unto Mary. \nR/. And she conceived of the Holy Spirit. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
             },
-            "angelus_verse_1": {
-                "title_latin": "Angelus Domini I",
-                "title_english": "The Angel of the Lord I",
-                "latin": "Angelus Domini nuntiavit Mariae.",
-                "english": "The Angel of the Lord declared unto Mary."
+            {
+                "order": 2,
+                "instructions": "Remain standing; bow the head at the Holy Name of Jesus. Repeat the Hail Mary after the versicle and response.",
+                "title": "Behold the handmaid of the Lord",
+                "title_latin": "Ecce ancilla Domini",
+                "title_english": "Behold the handmaid of the Lord",
+                "latin": "℣. Ecce ancilla Domini. \n℟. Fiat mihi secundum verbum tuum. \nAve Maria, gratia plena, Dominus tecum; benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+                "english": "V/. Behold the handmaid of the Lord. \nR/. Be it done unto me according to Thy word. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
             },
-            "ave_maria": {
-                "title_latin": "Ave Maria",
-                "title_english": "Hail Mary",
-                "latin": "Ave Maria, gratia plena, Dominus tecum. Benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
-                "english": "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
+            {
+                "order": 3,
+                "instructions": "Genuflect or bow deeply at the words 'And the Word was made flesh,' then rise to finish the verse and Hail Mary.",
+                "title": "And the Word was made Flesh",
+                "title_latin": "Et Verbum caro factum est",
+                "title_english": "And the Word was made Flesh",
+                "latin": "℣. Et Verbum caro factum est. \n℟. Et habitavit in nobis. \nAve Maria, gratia plena, Dominus tecum; benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+                "english": "V/. And the Word was made Flesh. \nR/. And dwelt among us. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
             },
-            "angelus_verse_2": {
-                "title_latin": "Angelus Domini II",
-                "title_english": "The Angel of the Lord II",
-                "latin": "Ecce ancilla Domini.",
-                "english": "Behold the handmaid of the Lord."
+            {
+                "order": 4,
+                "instructions": "Concluding versicle; remain standing.",
+                "title": "Pray for us, O holy Mother of God",
+                "title_latin": "Ora pro nobis, sancta Dei Genetrix",
+                "title_english": "Pray for us, O holy Mother of God",
+                "latin": "℣. Ora pro nobis, sancta Dei Genetrix. \n℟. Ut digni efficiamur promissionibus Christi.",
+                "english": "V/. Pray for us, O holy Mother of God. \nR/. That we may be made worthy of the promises of Christ."
             },
-            "angelus_verse_3": {
-                "title_latin": "Angelus Domini III",
-                "title_english": "The Angel of the Lord III",
-                "latin": "Et Verbum caro factum est.",
-                "english": "And the Word was made flesh."
-            },
-            "oremus": {
+            {
+                "order": 5,
+                "instructions": "Collect (closing prayer); said with hands joined. Finish with the Sign of the Cross.",
+                "title": "Let us pray",
                 "title_latin": "Oremus",
                 "title_english": "Let us pray",
-                "latin": "Gratiam tuam, quaesumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui incarnationem cognovimus, per passionem eius et crucem, ad resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.",
-                "english": "Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, that we, to whom the Incarnation of Christ, Thy Son, was made known by the message of an Angel, may by His Passion and Cross be brought to the glory of His Resurrection, through the same Christ our Lord. Amen."
+                "latin": "Gratiam tuam, quaesumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui Incarnationem cognovimus, per Passionem eius et Crucem ad Resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.",
+                "english": "Pour forth, we beseech Thee, O Lord, Thy grace into our hearts; that we, to whom the Incarnation of Christ Thy Son was made known by the message of an angel, may by His Passion and Cross be brought to the glory of His Resurrection. Through the same Christ our Lord. Amen."
             }
-        },
-        "template": {
-            "sequence": [
-                "sign_of_the_cross",
-                "angelus_verse_1",
-                "ave_maria",
-                "angelus_verse_2",
-                "ave_maria",
-                "angelus_verse_3",
-                "ave_maria",
-                "oremus"
-            ],
-            "structure": {
-                "times_per_day": 3,
-                "customary_hours": ["6:00", "12:00", "18:00"]
-            }
-        }
+        ]
     }
 }
   

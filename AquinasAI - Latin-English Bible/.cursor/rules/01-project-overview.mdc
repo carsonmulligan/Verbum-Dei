@@ -3,3 +3,15 @@ description:
 globs:
 alwaysApply: false
 ---
+# AquinasAI Latin-English Bible App Structure
+
+This iOS app provides a parallel Latin-English Bible reading experience. The project follows MVVM architecture with SwiftUI.
+
+## Key Entry Points
+- [AquinasAI___Latin_English_BibleApp.swift](mdc:AquinasAI___Latin_English_BibleApp.swift) - Main app entry point
+- [BibleReader/Views/ContentView.swift](mdc:BibleReader/Views/ContentView.swift) - Root view of the application
+
+## Data Sources
+- [english_books.csv](mdc:english_books.csv) - English Bible content
+- [latin_books.csv](mdc:latin_books.csv) - Latin Bible content
+- [mappings.json](mdc:mappings.json) - Mapping between Latin and English verses

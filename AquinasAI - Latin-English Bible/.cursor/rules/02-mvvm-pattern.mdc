@@ -3,3 +3,25 @@ description:
 globs:
 alwaysApply: false
 ---
+# MVVM Architecture Pattern
+
+The app follows the Model-View-ViewModel (MVVM) pattern:
+
+## Models
+Located in [BibleReader/Models/](mdc:BibleReader/Models/):
+- [BibleContent.swift](mdc:BibleReader/Models/BibleContent.swift) - Core Bible content data structures
+- [BibleMetadata.swift](mdc:BibleReader/Models/BibleMetadata.swift) - Bible metadata and configuration
+- [Bookmark.swift](mdc:BibleReader/Models/Bookmark.swift) - User bookmark data model
+
+## Views
+Located in [BibleReader/Views/](mdc:BibleReader/Views/):
+- [ContentView.swift](mdc:BibleReader/Views/ContentView.swift) - Main navigation and layout
+- [VerseViews.swift](mdc:BibleReader/Views/VerseViews.swift) - Bible verse display components
+- [SearchView.swift](mdc:BibleReader/Views/SearchView.swift) - Search interface
+- [BookmarkViews.swift](mdc:BibleReader/Views/BookmarkViews.swift) - Bookmark management UI
+
+## ViewModels
+Located in [BibleReader/ViewModels/](mdc:BibleReader/ViewModels/):
+- [BibleViewModel.swift](mdc:BibleReader/ViewModels/BibleViewModel.swift) - Main Bible content management
+- [SearchViewModel.swift](mdc:BibleReader/ViewModels/SearchViewModel.swift) - Search functionality
+- [BookmarkStore.swift](mdc:BibleReader/ViewModels/BookmarkStore.swift) - Bookmark persistence

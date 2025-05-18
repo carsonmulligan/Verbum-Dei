@@ -3,3 +3,23 @@ description:
 globs:
 alwaysApply: false
 ---
+# Assets and Resources
+
+## Asset Catalogs
+The [Assets.xcassets/](mdc:Assets.xcassets/) directory contains:
+- AccentColor.colorset/ - App accent color definition
+- app_home_image.imageset/ - Home screen imagery
+- AppIcon.appiconset/ - App icon in various sizes
+
+## Image Resources
+Additional image assets are organized in the [images/](mdc:images/) directory:
+- app icon/ - Source files for app icon
+- app icon 2/ - Alternative app icon designs
+- app images/ - General app imagery
+- Midjourney Images/ - AI-generated artwork
+
+## Data Resources
+Bible content and mapping files:
+- [english_books.csv](mdc:english_books.csv) - English translation data
+- [latin_books.csv](mdc:latin_books.csv) - Latin Vulgate data
+- [mappings.json](mdc:mappings.json) - Verse mapping between translations
