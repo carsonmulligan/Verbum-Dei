@@ -287,11 +287,24 @@ class BibleViewModel: ObservableObject {
     }
     
     private func mergeThreeLanguages(latin: [Book], english: [Book], spanish: [Book]) -> [Book] {
+        print("🔍 MERGE DEBUG: Starting three-way merge")
+        print("🔍 MERGE DEBUG: Latin books: \(latin.count)")
+        print("🔍 MERGE DEBUG: English books: \(english.count)")
+        print("🔍 MERGE DEBUG: Spanish books: \(spanish.count)")
+        
+        // Print first few book names from each language
+        print("🔍 MERGE DEBUG: First 5 Latin books: \(latin.prefix(5).map { $0.name })")
+        print("🔍 MERGE DEBUG: First 5 English books: \(english.prefix(5).map { $0.name })")
+        print("🔍 MERGE DEBUG: First 5 Spanish books: \(spanish.prefix(5).map { $0.name })")
+        
         // Create dictionaries for faster lookup
         var englishBooksDictionary: [String: Book] = [:]
         for englishBook in english {
             if let latinName = bookNameMappings?.english_to_vulgate[englishBook.name] {
                 englishBooksDictionary[latinName] = englishBook
+                print("🔍 MERGE DEBUG: Mapped English '\(englishBook.name)' -> Latin '\(latinName)'")
+            } else {
+                print("⚠️ MERGE DEBUG: No mapping found for English book '\(englishBook.name)'")
             }
         }
         
@@ -299,21 +312,32 @@ class BibleViewModel: ObservableObject {
         for spanishBook in spanish {
             if let latinName = bookNameMappings?.spanish_to_vulgate[spanishBook.name] {
                 spanishBooksDictionary[latinName] = spanishBook
+                print("🔍 MERGE DEBUG: Mapped Spanish '\(spanishBook.name)' -> Latin '\(latinName)'")
+            } else {
+                print("⚠️ MERGE DEBUG: No mapping found for Spanish book '\(spanishBook.name)'")
             }
         }
+        
+        print("🔍 MERGE DEBUG: English dictionary has \(englishBooksDictionary.count) entries")
+        print("🔍 MERGE DEBUG: Spanish dictionary has \(spanishBooksDictionary.count) entries")
         
         var mergedBooks: [Book] = []
         
         for latinBook in latin {
+            print("🔍 MERGE DEBUG: Processing Latin book '\(latinBook.name)'")
+            
             guard let englishBook = englishBooksDictionary[latinBook.name] else {
-                print("Warning: No matching English book found for \(latinBook.name)")
+                print("❌ MERGE DEBUG: No matching English book found for '\(latinBook.name)'")
                 continue
             }
+            print("✅ MERGE DEBUG: Found English match for '\(latinBook.name)'")
             
             // Spanish book is optional
             let spanishBook = spanishBooksDictionary[latinBook.name]
-            if spanishBook == nil {
-                print("Info: No Spanish version available for \(latinBook.name)")
+            if let spanishBook = spanishBook {
+                print("✅ MERGE DEBUG: Found Spanish match for '\(latinBook.name)': '\(spanishBook.name)'")
+            } else {
+                print("⚠️ MERGE DEBUG: No Spanish version available for '\(latinBook.name)'")
             }
             
             // Merge chapters
@@ -330,11 +354,13 @@ class BibleViewModel: ObservableObject {
                     chapters: mergedChapters
                 )
                 mergedBooks.append(book)
+                print("✅ MERGE DEBUG: Successfully merged book '\(latinBook.name)' with \(mergedChapters.count) chapters")
             } else {
-                print("Warning: No chapters found for \(latinBook.name)")
+                print("❌ MERGE DEBUG: No chapters found for '\(latinBook.name)'")
             }
         }
         
+        print("🔍 MERGE DEBUG: Final merged books count: \(mergedBooks.count)")
         return mergedBooks
     }
     
@@ -381,6 +407,9 @@ class BibleViewModel: ObservableObject {
     }
     
     private func mergeVerses(latinVerses: [Verse], englishVerses: [Verse], spanishVerses: [Verse], bookName: String, chapterNumber: Int) -> [Verse] {
+        print("🔍 VERSE DEBUG: Merging verses for \(bookName) chapter \(chapterNumber)")
+        print("🔍 VERSE DEBUG: Latin verses: \(latinVerses.count), English verses: \(englishVerses.count), Spanish verses: \(spanishVerses.count)")
+        
         // Create dictionaries for faster lookup
         let englishVersesDictionary = Dictionary(
             uniqueKeysWithValues: englishVerses.map { ("\($0.number)", $0) }
@@ -392,13 +421,19 @@ class BibleViewModel: ObservableObject {
         
         let mergedVerses = latinVerses.compactMap { latinVerse -> Verse? in
             guard let englishVerse = englishVersesDictionary["\(latinVerse.number)"] else {
-                print("Warning: No matching English verse found for \(bookName) \(chapterNumber):\(latinVerse.number)")
+                print("❌ VERSE DEBUG: No matching English verse found for \(bookName) \(chapterNumber):\(latinVerse.number)")
                 return nil
             }
             
             // Spanish verse is optional
             let spanishVerse = spanishVersesDictionary["\(latinVerse.number)"]
             let spanishText = spanishVerse?.latinText ?? "" // Use latinText field from Spanish JSON
+            
+            if spanishVerse != nil {
+                print("✅ VERSE DEBUG: Found Spanish verse for \(bookName) \(chapterNumber):\(latinVerse.number)")
+            } else {
+                print("⚠️ VERSE DEBUG: No Spanish verse for \(bookName) \(chapterNumber):\(latinVerse.number)")
+            }
             
             return Verse(
                 id: latinVerse.id,
@@ -409,6 +444,7 @@ class BibleViewModel: ObservableObject {
             )
         }
         
+        print("🔍 VERSE DEBUG: Merged \(mergedVerses.count) verses for \(bookName) chapter \(chapterNumber)")
         return mergedVerses
     }
 }
