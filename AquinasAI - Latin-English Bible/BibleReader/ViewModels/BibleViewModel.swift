@@ -297,6 +297,21 @@ class BibleViewModel: ObservableObject {
         print("🔍 MERGE DEBUG: First 5 English books: \(english.prefix(5).map { $0.name })")
         print("🔍 MERGE DEBUG: First 5 Spanish books: \(spanish.prefix(5).map { $0.name })")
         
+        // Sort Spanish books to match Latin order using mappings
+        let sortedSpanish = spanish.sorted { book1, book2 in
+            guard let mappings = bookNameMappings else { return book1.name < book2.name }
+            
+            let latin1 = mappings.spanish_to_vulgate[book1.name] ?? book1.name
+            let latin2 = mappings.spanish_to_vulgate[book2.name] ?? book2.name
+            
+            let order1 = BibleBookMetadata.getOrder(for: latin1)
+            let order2 = BibleBookMetadata.getOrder(for: latin2)
+            
+            return order1 < order2
+        }
+        
+        print("🔍 MERGE DEBUG: After sorting - First 5 Spanish books: \(sortedSpanish.prefix(5).map { $0.name })")
+        
         // Create dictionaries for faster lookup
         var englishBooksDictionary: [String: Book] = [:]
         for englishBook in english {
@@ -309,7 +324,7 @@ class BibleViewModel: ObservableObject {
         }
         
         var spanishBooksDictionary: [String: Book] = [:]
-        for spanishBook in spanish {
+        for spanishBook in sortedSpanish {
             if let latinName = bookNameMappings?.spanish_to_vulgate[spanishBook.name] {
                 spanishBooksDictionary[latinName] = spanishBook
                 print("🔍 MERGE DEBUG: Mapped Spanish '\(spanishBook.name)' -> Latin '\(latinName)'")
