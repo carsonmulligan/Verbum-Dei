@@ -1,0 +1,122 @@
+{
+  "description": "Combined prayer collections for AquinasAI Bible App",
+  "collections": {
+    "main_prayers": {
+      "source": "prayers.json",
+      "prayers": [
+        {
+          "title": "Pater Noster",
+          "title_latin": "Pater Noster",
+          "title_english": "Our Father",
+          "latin": "Pater noster, qui es in caelis, sanctificetur nomen tuum. Adveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra. Panem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris. Et ne nos inducas in tentationem, sed libera nos a malo. Amen.",
+          "english": "Our Father, who art in heaven, hallowed be Thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen."
+        },
+        {
+          "title": "Ave Maria",
+          "title_latin": "Ave Maria",
+          "title_english": "Hail Mary",
+          "latin": "Ave Maria, gratia plena, Dominus tecum. Benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+          "english": "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
+        },
+        {
+          "title": "Gloria Patri",
+          "title_latin": "Gloria Patri",
+          "title_english": "Glory Be",
+          "latin": "Gloria Patri, et Filio, et Spiritui Sancto. Sicut erat in principio, et nunc, et semper, et in saecula saeculorum. Amen.",
+          "english": "Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen."
+        }
+      ]
+    },
+    "order_of_mass": {
+      "source": "order_of_mass.json",
+      "structure": {
+        "introductory_rites": ["sign_of_the_cross", "greeting", "confiteor", "kyrie", "gloria", "collect"],
+        "liturgy_of_the_word": ["first_reading", "responsorial_psalm", "second_reading", "gospel_acclamation", "gospel", "homily", "creed", "intercessions"],
+        "liturgy_of_the_eucharist": {
+          "preparation_of_the_gifts": ["offertory", "prayer_over_offerings"],
+          "eucharistic_prayer": ["preface_dialogue", "sanctus", "eucharistic_prayer_i", "memorial_acclamation", "doxology"],
+          "communion_rite": ["lords_prayer", "sign_of_peace", "agnus_dei", "ecce_agnus_dei", "domine_non_sum_dignus", "communion", "prayer_after_communion"]
+        },
+        "concluding_rites": ["blessing", "ite_missa_est"]
+      },
+      "key_prayers": [
+        {
+          "id": "sign_of_the_cross",
+          "title": "Sign of the Cross",
+          "title_latin": "Signum Crucis",
+          "title_english": "Sign of the Cross",
+          "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+          "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
+        },
+        {
+          "id": "gloria",
+          "title": "Gloria in Excelsis",
+          "title_latin": "Gloria in Excelsis Deo",
+          "title_english": "Glory to God in the Highest",
+          "latin": "Gloria in excelsis Deo, et in terra pax hominibus bonae voluntatis. Laudamus te, benedicimus te, adoramus te, glorificamus te, gratias agimus tibi propter magnam gloriam tuam, Domine Deus, Rex caelestis, Deus Pater omnipotens. Domine Fili unigenite, Iesu Christe, Domine Deus, Agnus Dei, Filius Patris. Qui tollis peccata mundi, miserere nobis; qui tollis peccata mundi, suscipe deprecationem nostram. Qui sedes ad dexteram Patris, miserere nobis. Quoniam tu solus Sanctus, tu solus Dominus, tu solus Altissimus, Iesu Christe, cum Sancto Spiritu: in gloria Dei Patris. Amen.",
+          "english": "Glory to God in the highest, and on earth peace to people of good will. We praise you, we bless you, we adore you, we glorify you, we give you thanks for your great glory, Lord God, heavenly King, O God, almighty Father. Lord Jesus Christ, Only Begotten Son, Lord God, Lamb of God, Son of the Father, you take away the sins of the world, have mercy on us; you take away the sins of the world, receive our prayer; you are seated at the right hand of the Father, have mercy on us. For you alone are the Holy One, you alone are the Lord, you alone are the Most High, Jesus Christ, with the Holy Spirit, in the glory of God the Father. Amen."
+        }
+      ]
+    },
+    "liturgy_of_hours": {
+      "source": "liturgy_of_hours.json",
+      "prayers": [
+        {
+          "order": 1,
+          "instructions": "Pray at the very start of the day—before your first Hour (Office of Readings or Morning Prayer)—around dawn, roughly 5:00-6:00 AM.",
+          "title": "Lord, open my lips",
+          "title_latin": "Domine, labia mea aperies",
+          "title_english": "Lord, open my lips",
+          "latin": "Domine, labia mea aperies; et os meum annuntiabit laudem tuam.",
+          "english": "Lord, open my lips, and my mouth will proclaim your praise."
+        },
+        {
+          "order": 5,
+          "instructions": "Chanted or recited standing after the psalms and short reading of Morning Prayer (Lauds), which is prayed at dawn or sunrise—about 6 AM.",
+          "title": "Canticle of Zechariah",
+          "title_latin": "Benedictus",
+          "title_english": "Canticle of Zechariah",
+          "latin": "Benedictus Dominus Deus Israel, quia visitavit et fecit redemptionem plebis suae...",
+          "english": "Blessed be the Lord, God of Israel, because He has visited us and wrought redemption for His people..."
+        }
+      ]
+    },
+    "divine_mercy_chaplet": {
+      "source": "divine_mercy_chaplet.json",
+      "structure": {
+        "opening": ["sign_of_the_cross", "our_father", "hail_mary", "apostles_creed"],
+        "decade": [{"eternal_father": 1}, {"for_his_sorrowful_passion": 10}],
+        "closing": [{"holy_god": 3}, "sign_of_the_cross"],
+        "decades": 5
+      },
+      "key_prayers": [
+        {
+          "title_latin": "Pater Aeterne",
+          "title_english": "Eternal Father",
+          "latin": "Pater aeterne, offero tibi Corpus et Sanguinem, animam et divinitatem dilectissimi Filii Tui, Domini nostri, Iesu Christi, in propitiatione pro peccatis nostris et totius mundi.",
+          "english": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of Your Dearly Beloved Son, Our Lord, Jesus Christ, in atonement for our sins and those of the whole world."
+        }
+      ]
+    },
+    "angelus": {
+      "source": "angelus_domini.json",
+      "instructions": "Pray the Angelus three times a day—traditionally at 6 a.m., 12 p.m., and 6 p.m.",
+      "prayers": [
+        {
+          "order": 1,
+          "title": "The Angel of the Lord declared unto Mary",
+          "title_latin": "Angelus Domini nuntiavit Mariae",
+          "title_english": "The Angel of the Lord declared unto Mary",
+          "latin": "℣. Angelus Domini nuntiavit Mariae. ℟. Et concepit de Spiritu Sancto.",
+          "english": "V/. The Angel of the Lord declared unto Mary. R/. And she conceived of the Holy Spirit."
+        }
+      ]
+    }
+  },
+  "statistics": {
+    "total_collections": 5,
+    "estimated_prayers": "60+",
+    "languages_supported": ["latin", "english"],
+    "planned_languages": ["spanish"]
+  }
+} 
