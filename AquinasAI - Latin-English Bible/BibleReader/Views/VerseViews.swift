@@ -5,7 +5,10 @@ struct LatinOnlyVerseView: View {
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    let bookName: String
+    let chapterNumber: Int
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var viewModel: BibleViewModel
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -37,7 +40,9 @@ struct LatinOnlyVerseView: View {
                     }
                     
                     Button {
-                        UIPasteboard.general.string = text
+                        let englishBookName = viewModel.getEnglishName(for: bookName)
+                        let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
+                        UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
                     } label: {
                         Label("Copy", systemImage: "doc.on.doc")
                     }
@@ -51,7 +56,10 @@ struct EnglishOnlyVerseView: View {
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    let bookName: String
+    let chapterNumber: Int
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var viewModel: BibleViewModel
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -83,7 +91,9 @@ struct EnglishOnlyVerseView: View {
                     }
                     
                     Button {
-                        UIPasteboard.general.string = text
+                        let englishBookName = viewModel.getEnglishName(for: bookName)
+                        let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
+                        UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
                     } label: {
                         Label("Copy", systemImage: "doc.on.doc")
                     }
@@ -97,7 +107,10 @@ struct SpanishOnlyVerseView: View {
     let text: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    let bookName: String
+    let chapterNumber: Int
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var viewModel: BibleViewModel
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -129,7 +142,9 @@ struct SpanishOnlyVerseView: View {
                     }
                     
                     Button {
-                        UIPasteboard.general.string = text
+                        let englishBookName = viewModel.getEnglishName(for: bookName)
+                        let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
+                        UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
                     } label: {
                         Label("Copy", systemImage: "doc.on.doc")
                     }
@@ -144,7 +159,10 @@ struct BilingualVerseView: View {
     let secondaryText: String
     let isBookmarked: Bool
     let onDeleteBookmark: (() -> Void)?
+    let bookName: String
+    let chapterNumber: Int
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var viewModel: BibleViewModel
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -182,7 +200,9 @@ struct BilingualVerseView: View {
                 }
                 
                 Button {
-                    UIPasteboard.general.string = "\(primaryText)\n\n\(secondaryText)"
+                    let englishBookName = viewModel.getEnglishName(for: bookName)
+                    let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
+                    UIPasteboard.general.string = "\(sourceInfo)\n\n\(primaryText)\n\n\(secondaryText)"
                 } label: {
                     Label("Copy", systemImage: "doc.on.doc")
                 }
@@ -208,21 +228,27 @@ struct VerseView: View {
                     number: verse.number,
                     text: verse.latinText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    bookName: bookName,
+                    chapterNumber: chapterNumber
                 )
             case .englishOnly:
                 EnglishOnlyVerseView(
                     number: verse.number,
                     text: verse.englishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    bookName: bookName,
+                    chapterNumber: chapterNumber
                 )
             case .spanishOnly:
                 SpanishOnlyVerseView(
                     number: verse.number,
                     text: verse.spanishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    bookName: bookName,
+                    chapterNumber: chapterNumber
                 )
             case .latinEnglish:
                 BilingualVerseView(
@@ -230,7 +256,9 @@ struct VerseView: View {
                     primaryText: verse.latinText,
                     secondaryText: verse.englishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    bookName: bookName,
+                    chapterNumber: chapterNumber
                 )
             case .latinSpanish:
                 BilingualVerseView(
@@ -238,7 +266,9 @@ struct VerseView: View {
                     primaryText: verse.latinText,
                     secondaryText: verse.spanishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    bookName: bookName,
+                    chapterNumber: chapterNumber
                 )
             case .englishSpanish:
                 BilingualVerseView(
@@ -246,7 +276,9 @@ struct VerseView: View {
                     primaryText: verse.englishText,
                     secondaryText: verse.spanishText,
                     isBookmarked: isBookmarked,
-                    onDeleteBookmark: deleteBookmark
+                    onDeleteBookmark: deleteBookmark,
+                    bookName: bookName,
+                    chapterNumber: chapterNumber
                 )
             }
         }

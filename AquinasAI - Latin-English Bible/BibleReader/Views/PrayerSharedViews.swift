@@ -201,14 +201,15 @@ struct PrayerCard: View {
             // Copy options based on language mode
             if language.isBilingual {
                 Button {
-                    var copyText = ""
+                    let prayerName = prayer.displayTitleEnglish
+                    var copyText = "\(prayerName)\n\n"
                     if language.showsLatin { copyText += prayer.latin }
                     if language.showsEnglish { 
-                        if !copyText.isEmpty { copyText += "\n\n" }
+                        if !copyText.hasSuffix("\n\n") { copyText += "\n\n" }
                         copyText += prayer.english 
                     }
                     if language.showsSpanish, let spanish = prayer.spanish { 
-                        if !copyText.isEmpty { copyText += "\n\n" }
+                        if !copyText.hasSuffix("\n\n") { copyText += "\n\n" }
                         copyText += spanish 
                     }
                     UIPasteboard.general.string = copyText
@@ -218,7 +219,8 @@ struct PrayerCard: View {
                 
                 if language.showsLatin {
                     Button {
-                        UIPasteboard.general.string = prayer.latin
+                        let prayerName = prayer.displayTitleEnglish
+                        UIPasteboard.general.string = "\(prayerName)\n\n\(prayer.latin)"
                     } label: {
                         Label("Copy Latin", systemImage: "doc.on.doc.fill")
                     }
@@ -226,7 +228,8 @@ struct PrayerCard: View {
                 
                 if language.showsEnglish {
                     Button {
-                        UIPasteboard.general.string = prayer.english
+                        let prayerName = prayer.displayTitleEnglish
+                        UIPasteboard.general.string = "\(prayerName)\n\n\(prayer.english)"
                     } label: {
                         Label("Copy English", systemImage: "doc.on.clipboard")
                     }
@@ -234,18 +237,20 @@ struct PrayerCard: View {
                 
                 if language.showsSpanish {
                     Button {
-                        UIPasteboard.general.string = prayer.spanish ?? ""
+                        let prayerName = prayer.displayTitleEnglish
+                        UIPasteboard.general.string = "\(prayerName)\n\n\(prayer.spanish ?? "")"
                     } label: {
                         Label("Copy Spanish", systemImage: "doc.on.clipboard.fill")
                     }
                 }
             } else {
                 Button {
+                    let prayerName = prayer.displayTitleEnglish
                     var copyText = ""
                     if language.showsLatin { copyText = prayer.latin }
                     else if language.showsEnglish { copyText = prayer.english }
                     else if language.showsSpanish { copyText = prayer.spanish ?? "" }
-                    UIPasteboard.general.string = copyText
+                    UIPasteboard.general.string = "\(prayerName)\n\n\(copyText)"
                 } label: {
                     Label("Copy", systemImage: "doc.on.doc")
                 }
