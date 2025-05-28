@@ -1,9 +1,4 @@
 {
-  "truncated_prayers_to_complete": {
-    "veni_creator_spiritus": "Ven, Espíritu Creador, visita las almas de tus fieles y llena de la divina gracia los corazones que Tú mismo creaste...",
-    "veni_sancte_spiritus_(sequence)": "Ven, Espíritu divino, manda tu luz desde el cielo. Padre amoroso del pobre, dador de los dones, luz de los corazones...",
-    "ave_maris_stella": "Salve, estrella del mar, madre y puerta del cielo, Virgen eternamente feliz...",
-    "te_deum": "Te alabamos, Señor, y te reconocemos como Dios; te ensalza el universo entero. Los ángeles todos, los cielos y sus poderes...",
     "benedictus_(canticle_of_zechariah)": "Bendito sea el Señor, Dios de Israel, porque ha visitado y redimido a su pueblo, suscitándonos una fuerza de salvación en la casa de David, su siervo, según lo había predicho desde antiguo por boca de sus santos profetas. Es la salvación que nos libra de nuestros enemigos y de la mano de todos los que nos odian; ha realizado así la misericordia que tuvo con nuestros padres, recordando su santa alianza y el juramento que juró a nuestro padre Abraham. Para concedernos que, libres de temor, arrancados de la mano de los enemigos, le sirvamos con santidad y justicia, en su presencia, todos nuestros días. Y a ti, niño, te llamarán profeta del Altísimo, porque irás delante del Señor a preparar sus caminos, anunciando a su pueblo la salvación, el perdón de sus pecados. Por la entrañable misericordia de nuestro Dios, nos visitará el sol que nace de lo alto, para iluminar a los que viven en tinieblas y en sombra de muerte, para guiar nuestros pasos por el camino de la paz.",
     "magnificat_(canticle_of_mary)": "Proclama mi alma la grandeza del Señor, se alegra mi espíritu en Dios, mi salvador; porque ha mirado la humillación de su esclava. Desde ahora me felicitarán todas las generaciones, porque el Poderoso ha hecho obras grandes por mí: su nombre es santo, y su misericordia llega a sus fieles de generación en generación. Él hace proezas con su brazo: dispersa a los soberbios de corazón, derriba del trono a los poderosos y enaltece a los humildes, a los hambrientos los colma de bienes y a los ricos los despide vacíos. Auxilia a Israel, su siervo, acordándose de la misericordia —como lo había prometido a nuestros padres— en favor de Abraham y su descendencia por siempre.",
     "nunc_dimittis_(canticle_of_simeon)": "Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz, porque mis ojos han visto a tu Salvador, a quien has presentado ante todos los pueblos: luz para alumbrar a las naciones y gloria de tu pueblo Israel.",
@@ -26,51 +21,6 @@
     "lh_5": "Bendito sea el Señor, Dios de Israel, porque ha visitado y redimido a su pueblo, suscitándonos una fuerza de salvación en la casa de David, su siervo, según lo había predicho desde antiguo por boca de sus santos profetas. Es la salvación que nos libra de nuestros enemigos y de la mano de todos los que nos odian; ha realizado así la misericordia que tuvo con nuestros padres, recordando su santa alianza y el juramento que juró a nuestro padre Abraham. Para concedernos que, libres de temor, arrancados de la mano de los enemigos, le sirvamos con santidad y justicia, en su presencia, todos nuestros días. Y a ti, niño, te llamarán profeta del Altísimo, porque irás delante del Señor a preparar sus caminos, anunciando a su pueblo la salvación, el perdón de sus pecados. Por la entrañable misericordia de nuestro Dios, nos visitará el sol que nace de lo alto, para iluminar a los que viven en tinieblas y en sombra de muerte, para guiar nuestros pasos por el camino de la paz.",
     "lh_6": "Proclama mi alma la grandeza del Señor, se alegra mi espíritu en Dios, mi salvador; porque ha mirado la humillación de su esclava. Desde ahora me felicitarán todas las generaciones, porque el Poderoso ha hecho obras grandes por mí: su nombre es santo, y su misericordia llega a sus fieles de generación en generación. Él hace proezas con su brazo: dispersa a los soberbios de corazón, derriba del trono a los poderosos y enaltece a los humildes, a los hambrientos los colma de bienes y a los ricos los despide vacíos. Auxilia a Israel, su siervo, acordándose de la misericordia —como lo había prometido a nuestros padres— en favor de Abraham y su descendencia por siempre.",
     "lh_7": "Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz, porque mis ojos han visto a tu Salvador, a quien has presentado ante todos los pueblos: luz para alumbrar a las naciones y gloria de tu pueblo Israel."
-  },
-  "notes": {
-    "total_truncated_prayers": 25,
-    "instructions": "Replace the '...' with the complete Spanish text for each prayer. When complete, these can be merged back into the main spanish_prayers.json file.",
-    "prayer_categories": {
-      "liturgical_hymns": [
-        "veni_creator_spiritus",
-        "veni_sancte_spiritus_(sequence)",
-        "ave_maris_stella",
-        "te_deum"
-      ],
-      "biblical_canticles": [
-        "benedictus_(canticle_of_zechariah)",
-        "magnificat_(canticle_of_mary)",
-        "nunc_dimittis_(canticle_of_simeon)",
-        "benedicite_omnia_opera_domini"
-      ],
-      "devotional_prayers": [
-        "prayer_of_st._francis",
-        "angelus_domini",
-        "fatima_prayer",
-        "opening_prayer",
-        "closing_prayer"
-      ],
-      "basic_prayers": [
-        "our_father",
-        "hail_mary",
-        "glory_be",
-        "hail_holy_queen"
-      ],
-      "angelus_parts": [
-        "angelus_1",
-        "angelus_2",
-        "angelus_3"
-      ],
-      "liturgy_of_hours": [
-        "lh_2",
-        "lh_4",
-        "lh_5",
-        "lh_6",
-        "lh_7"
-      ],
-      "rosary_prayers": [
-        "final_prayer"
-      ]
-    }
-  }
 }
+   
+  
