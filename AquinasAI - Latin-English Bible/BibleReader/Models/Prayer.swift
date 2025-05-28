@@ -594,7 +594,36 @@ class PrayerStore: ObservableObject {
     }
     
     func loadPrayers() {
-        print("Starting to load prayers...")
+        print("🔍 PRAYER DEBUG: Starting to load prayers...")
+        print("🔍 PRAYER DEBUG: Bundle path: \(Bundle.main.bundlePath)")
+        print("🔍 PRAYER DEBUG: Bundle resource path: \(Bundle.main.resourcePath ?? "nil")")
+        
+        // Check what's in the Prayers directory
+        let prayerJsonPaths = Bundle.main.paths(forResourcesOfType: "json", inDirectory: "Prayers")
+        print("🔍 PRAYER DEBUG: JSON files in Prayers subdirectory (\(prayerJsonPaths.count) total):")
+        for path in prayerJsonPaths {
+            print("  - \(path)")
+        }
+        
+        // Check if Prayers directory exists in file system
+        if let resourcePath = Bundle.main.resourcePath {
+            let prayersDir = "\(resourcePath)/Prayers"
+            print("🔍 PRAYER DEBUG: Checking Prayers directory: \(prayersDir)")
+            
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: prayersDir) {
+                print("🔍 PRAYER DEBUG: Prayers directory exists!")
+                do {
+                    let contents = try fileManager.contentsOfDirectory(atPath: prayersDir)
+                    print("🔍 PRAYER DEBUG: Prayers directory contents: \(contents)")
+                } catch {
+                    print("🔍 PRAYER DEBUG: Error reading Prayers directory: \(error)")
+                }
+            } else {
+                print("🔍 PRAYER DEBUG: Prayers directory does NOT exist!")
+            }
+        }
+        
         let prayerFiles = [
             ("prayers", PrayerCategory.basic),
             ("rosary", PrayerCategory.rosary),
@@ -607,30 +636,46 @@ class PrayerStore: ObservableObject {
         var allPrayers: [Prayer] = []
         
         // Load Spanish translations first
+        print("🔍 PRAYER DEBUG: Loading Spanish translations...")
         let spanishTranslations = loadSpanishTranslations()
+        print("🔍 PRAYER DEBUG: Loaded \(spanishTranslations.count) Spanish translations")
         
         for (filename, category) in prayerFiles {
-            print("Processing \(filename)...")
-            if let url = Bundle.main.url(forResource: filename, withExtension: "json", subdirectory: "Prayers") {
+            print("🔍 PRAYER DEBUG: Processing \(filename)...")
+            
+            // Try multiple methods to find the file
+            let url1 = Bundle.main.url(forResource: filename, withExtension: "json", subdirectory: "Prayers")
+            let url2 = Bundle.main.url(forResource: "Prayers/\(filename)", withExtension: "json")
+            let url3 = Bundle.main.url(forResource: filename, withExtension: "json")
+            
+            print("🔍 PRAYER DEBUG: Method 1 (subdirectory): \(url1?.absoluteString ?? "nil")")
+            print("🔍 PRAYER DEBUG: Method 2 (path-based): \(url2?.absoluteString ?? "nil")")
+            print("🔍 PRAYER DEBUG: Method 3 (root): \(url3?.absoluteString ?? "nil")")
+            
+            let url = url1 ?? url2 ?? url3
+            
+            if let url = url {
+                print("✅ PRAYER DEBUG: Found \(filename) at: \(url.absoluteString)")
                 do {
                     let data = try Data(contentsOf: url)
-                    print("Successfully loaded data from \(filename)")
+                    print("✅ PRAYER DEBUG: Successfully loaded data from \(filename): \(data.count) bytes")
                     
                     switch filename {
                     case "rosary":
-                        print("Decoding rosary prayers...")
+                        print("🔍 PRAYER DEBUG: Decoding rosary prayers...")
                         let container = try JSONDecoder().decode(RosaryPrayersContainer.self, from: data)
-                        print("Successfully decoded rosary prayers. Mysteries count: \(container.mysteries.count)")
+                        print("✅ PRAYER DEBUG: Successfully decoded rosary prayers. Mysteries count: \(container.mysteries.count)")
                         rosaryPrayers = container
                         let prayerArray = container.common_prayers.values.map { rosaryPrayer in
                             var prayer = rosaryPrayer.asPrayer
                             prayer = mergeSpanishTranslation(prayer: prayer, translations: spanishTranslations)
                             return prayer
                         }
-                        print("Loaded \(prayerArray.count) rosary prayers")
+                        print("✅ PRAYER DEBUG: Loaded \(prayerArray.count) rosary prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "mass":
+                        print("🔍 PRAYER DEBUG: Decoding mass prayers...")
                         let container = try JSONDecoder().decode(OrderOfMassContainer.self, from: data)
                         massOrder = container
                         let prayerArray = container.prayers.map { massPrayer in
@@ -638,10 +683,11 @@ class PrayerStore: ObservableObject {
                             prayer = mergeSpanishTranslation(prayer: prayer, translations: spanishTranslations)
                             return prayer
                         }
-                        print("Loaded \(prayerArray.count) mass prayers")
+                        print("✅ PRAYER DEBUG: Loaded \(prayerArray.count) mass prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "angelus":
+                        print("🔍 PRAYER DEBUG: Decoding angelus prayers...")
                         let container = try JSONDecoder().decode(AngelusContainer.self, from: data)
                         angelusPrayers = container
                         let prayerArray = container.angelus.prayers.map { angelusPrayer in
@@ -649,10 +695,11 @@ class PrayerStore: ObservableObject {
                             prayer = mergeSpanishTranslation(prayer: prayer, translations: spanishTranslations)
                             return prayer
                         }
-                        print("Loaded \(prayerArray.count) angelus prayers")
+                        print("✅ PRAYER DEBUG: Loaded \(prayerArray.count) angelus prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "divine_mercy":
+                        print("🔍 PRAYER DEBUG: Decoding divine mercy prayers...")
                         let container = try JSONDecoder().decode(DivineMercyContainer.self, from: data)
                         divineMercyPrayers = container
                         let prayerArray = container.divine_mercy_chaplet.common_prayers.values.map { divineMercyPrayer in
@@ -660,10 +707,11 @@ class PrayerStore: ObservableObject {
                             prayer = mergeSpanishTranslation(prayer: prayer, translations: spanishTranslations)
                             return prayer
                         }
-                        print("Loaded \(prayerArray.count) divine mercy prayers")
+                        print("✅ PRAYER DEBUG: Loaded \(prayerArray.count) divine mercy prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "liturgy_hours":
+                        print("🔍 PRAYER DEBUG: Decoding liturgy of hours prayers...")
                         let container = try JSONDecoder().decode(LiturgyOfHoursContainer.self, from: data)
                         liturgyOfHoursPrayers = container
                         let prayerArray = container.liturgy_of_hours.prayers.map { prayer -> Prayer in
@@ -681,10 +729,11 @@ class PrayerStore: ObservableObject {
                             mutablePrayer = mergeSpanishTranslation(prayer: mutablePrayer, translations: spanishTranslations)
                             return mutablePrayer
                         }
-                        print("Loaded \(prayerArray.count) liturgy of hours prayers")
+                        print("✅ PRAYER DEBUG: Loaded \(prayerArray.count) liturgy of hours prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     default:
+                        print("🔍 PRAYER DEBUG: Decoding basic prayers...")
                         if let prayersContainer = try? JSONDecoder().decode(BasicPrayersContainer.self, from: data) {
                             let mappedPrayers = prayersContainer.prayers.map { prayer -> Prayer in
                                 var mutablePrayer = prayer
@@ -692,26 +741,34 @@ class PrayerStore: ObservableObject {
                                 mutablePrayer = mergeSpanishTranslation(prayer: mutablePrayer, translations: spanishTranslations)
                                 return mutablePrayer
                             }
-                            print("Loaded \(mappedPrayers.count) basic prayers")
+                            print("✅ PRAYER DEBUG: Loaded \(mappedPrayers.count) basic prayers")
                             allPrayers.append(contentsOf: mappedPrayers)
+                        } else {
+                            print("❌ PRAYER DEBUG: Failed to decode as BasicPrayersContainer")
                         }
                     }
                 } catch {
-                    print("❌ Error loading prayers from \(filename): \(error)")
+                    print("❌ PRAYER DEBUG: Error loading prayers from \(filename): \(error)")
                     // Print the data for debugging
                     if let data = try? Data(contentsOf: url),
                        let jsonString = String(data: data, encoding: .utf8) {
-                        print("JSON content for \(filename):")
-                        print(jsonString.prefix(200)) // Print first 200 characters for debugging
+                        print("🔍 PRAYER DEBUG: JSON content for \(filename) (first 200 chars):")
+                        print(jsonString.prefix(200))
                     }
                 }
             } else {
-                print("❌ Could not find \(filename) in bundle")
+                print("❌ PRAYER DEBUG: Could not find \(filename) in bundle using any method")
             }
         }
         
-        print("Total prayers loaded: \(allPrayers.count)")
+        print("✅ PRAYER DEBUG: Total prayers loaded: \(allPrayers.count)")
         prayers = allPrayers
+        
+        // Print summary by category
+        for category in PrayerCategory.allCases {
+            let count = allPrayers.filter { $0.category == category }.count
+            print("📊 PRAYER DEBUG: \(category.rawValue): \(count) prayers")
+        }
     }
     
     private func loadSpanishTranslations() -> [String: String] {
