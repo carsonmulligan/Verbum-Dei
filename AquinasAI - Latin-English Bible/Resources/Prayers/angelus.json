@@ -55,5 +55,12 @@
         "spanish": "Oremos por nuestro Santo Padre N.: que el Señor lo conserve, le dé vida, lo haga dichoso en la tierra y no lo entregue a la maldad de sus enemigos."
       }
     ]
+  },
+  "metadata": {
+    "name": "Angelus Prayers",
+    "category": "angelus",
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-28T07:08:09.917211",
+    "description": "Collection of angelus prayers in Latin, English, and Spanish"
   }
 }

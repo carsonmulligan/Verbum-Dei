@@ -219,5 +219,12 @@
       "final_prayer",
       "sign_of_the_cross"
     ]
+  },
+  "metadata": {
+    "name": "Rosary Prayers",
+    "category": "rosary",
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-28T07:08:09.915948",
+    "description": "Collection of rosary prayers in Latin, English, and Spanish"
   }
 }

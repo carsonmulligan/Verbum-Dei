@@ -447,5 +447,12 @@
       ],
       "spanish": "Gloria a Dios en el cielo, y en la tierra paz a los hombres que ama el Señor. Te alabamos, te bendecimos, te adoramos, te glorificamos, te damos gracias, Señor Dios, Rey celestial, Dios Padre todopoderoso. Señor, Hijo único, Jesucristo, Señor Dios, Cordero de Dios, Hijo del Padre; Tú que quitas el pecado del mundo, ten piedad de nosotros; Tú que quitas el pecado del mundo, atiende nuestra súplica; Tú que estás sentado a la derecha del Padre, ten piedad de nosotros. Porque sólo Tú eres Santo, sólo Tú Señor, sólo Tú Altísimo Jesucristo, con el Espíritu Santo, en la gloria de Dios Padre. Amén."
     }
-  ]
+  ],
+  "metadata": {
+    "name": "Basic Prayers",
+    "category": "basic",
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-28T07:08:09.915186",
+    "description": "Collection of basic prayers in Latin, English, and Spanish"
+  }
 }

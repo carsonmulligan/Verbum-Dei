@@ -65,8 +65,8 @@ class BibleViewModel: ObservableObject {
     // MARK: - Private Methods
     
     private func loadBookNameMappings() {
-        guard let url = Bundle.main.url(forResource: "mappings_three_languages", withExtension: "json") else {
-            print("Warning: Could not find mappings_three_languages.json")
+        guard let url = Bundle.main.url(forResource: "Bible/mappings_three_languages", withExtension: "json") else {
+            print("Warning: Could not find Bible/mappings_three_languages.json")
             // Fallback to old mappings
             loadLegacyMappings()
             return
@@ -77,7 +77,7 @@ class BibleViewModel: ObservableObject {
             bookNameMappings = try JSONDecoder().decode(BookNameMappings.self, from: data)
             print("Successfully loaded three-language book name mappings")
         } catch {
-            print("Error loading mappings_three_languages.json: \(error)")
+            print("Error loading Bible/mappings_three_languages.json: \(error)")
             // Fallback to old mappings
             loadLegacyMappings()
         }
@@ -118,14 +118,14 @@ class BibleViewModel: ObservableObject {
         let resourcePaths = Bundle.main.paths(forResourcesOfType: "json", inDirectory: nil)
         print("Found JSON files in bundle: \(resourcePaths)")
         
-        guard let latinUrl = Bundle.main.url(forResource: "vulgate_latin", withExtension: "json"),
-              let englishUrl = Bundle.main.url(forResource: "vulgate_english", withExtension: "json") else {
+        guard let latinUrl = Bundle.main.url(forResource: "Bible/vulgate_latin", withExtension: "json"),
+              let englishUrl = Bundle.main.url(forResource: "Bible/vulgate_english", withExtension: "json") else {
             errorMessage = "Could not find required Bible content files in bundle."
             return
         }
         
         // Spanish is optional for now
-        let spanishUrl = Bundle.main.url(forResource: "vulgate_spanish_RV", withExtension: "json")
+        let spanishUrl = Bundle.main.url(forResource: "Bible/vulgate_spanish_RV", withExtension: "json")
         
         do {
             let latinData = try Data(contentsOf: latinUrl)

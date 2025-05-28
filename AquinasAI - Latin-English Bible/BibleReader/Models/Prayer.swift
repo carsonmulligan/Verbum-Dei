@@ -596,12 +596,12 @@ class PrayerStore: ObservableObject {
     func loadPrayers() {
         print("Starting to load prayers...")
         let prayerFiles = [
-            ("prayers.json", PrayerCategory.basic),
-            ("rosary_prayers.json", PrayerCategory.rosary),
-            ("divine_mercy_chaplet.json", PrayerCategory.divine),
-            ("order_of_mass.json", PrayerCategory.mass),
-            ("angelus_domini.json", PrayerCategory.angelus),
-            ("liturgy_of_hours.json", PrayerCategory.hours)
+            ("Prayers/prayers", PrayerCategory.basic),
+            ("Prayers/rosary", PrayerCategory.rosary),
+            ("Prayers/divine_mercy", PrayerCategory.divine),
+            ("Prayers/mass", PrayerCategory.mass),
+            ("Prayers/angelus", PrayerCategory.angelus),
+            ("Prayers/liturgy_hours", PrayerCategory.hours)
         ]
         
         var allPrayers: [Prayer] = []
@@ -617,7 +617,7 @@ class PrayerStore: ObservableObject {
                     print("Successfully loaded data from \(filename)")
                     
                     switch filename {
-                    case "rosary_prayers.json":
+                    case "Prayers/rosary.json":
                         print("Decoding rosary prayers...")
                         let container = try JSONDecoder().decode(RosaryPrayersContainer.self, from: data)
                         print("Successfully decoded rosary prayers. Mysteries count: \(container.mysteries.count)")
@@ -630,7 +630,7 @@ class PrayerStore: ObservableObject {
                         print("Loaded \(prayerArray.count) rosary prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
-                    case "order_of_mass.json":
+                    case "Prayers/mass.json":
                         let container = try JSONDecoder().decode(OrderOfMassContainer.self, from: data)
                         massOrder = container
                         let prayerArray = container.prayers.map { massPrayer in
@@ -641,7 +641,7 @@ class PrayerStore: ObservableObject {
                         print("Loaded \(prayerArray.count) mass prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
-                    case "angelus_domini.json":
+                    case "Prayers/angelus.json":
                         let container = try JSONDecoder().decode(AngelusContainer.self, from: data)
                         angelusPrayers = container
                         let prayerArray = container.angelus.prayers.map { angelusPrayer in
@@ -652,7 +652,7 @@ class PrayerStore: ObservableObject {
                         print("Loaded \(prayerArray.count) angelus prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
-                    case "divine_mercy_chaplet.json":
+                    case "Prayers/divine_mercy.json":
                         let container = try JSONDecoder().decode(DivineMercyContainer.self, from: data)
                         divineMercyPrayers = container
                         let prayerArray = container.divine_mercy_chaplet.common_prayers.values.map { divineMercyPrayer in
@@ -663,7 +663,7 @@ class PrayerStore: ObservableObject {
                         print("Loaded \(prayerArray.count) divine mercy prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
-                    case "liturgy_of_hours.json":
+                    case "Prayers/liturgy_hours.json":
                         let container = try JSONDecoder().decode(LiturgyOfHoursContainer.self, from: data)
                         liturgyOfHoursPrayers = container
                         let prayerArray = container.liturgy_of_hours.prayers.map { prayer -> Prayer in
@@ -715,7 +715,7 @@ class PrayerStore: ObservableObject {
     }
     
     private func loadSpanishTranslations() -> [String: String] {
-        guard let url = Bundle.main.url(forResource: "spanish_prayers", withExtension: "json") else {
+        guard let url = Bundle.main.url(forResource: "Archive/spanish_prayers", withExtension: "json") else {
             print("❌ Could not find spanish_prayers.json in bundle")
             return [:]
         }

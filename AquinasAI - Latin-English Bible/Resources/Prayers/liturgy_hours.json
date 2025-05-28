@@ -75,5 +75,12 @@
         "spanish": "Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz, porque mis ojos han visto a tu Salvador, a quien has presentado ante todos los pueblos: luz para alumbrar a las naciones y gloria de tu pueblo Israel."
       }
     ]
+  },
+  "metadata": {
+    "name": "Hours Prayers",
+    "category": "hours",
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-28T07:08:09.917491",
+    "description": "Collection of hours prayers in Latin, English, and Spanish"
   }
 }

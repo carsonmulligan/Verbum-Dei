@@ -93,5 +93,12 @@
     "structure": {
       "decades": 5
     }
+  },
+  "metadata": {
+    "name": "Divine Prayers",
+    "category": "divine",
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-28T07:08:09.916921",
+    "description": "Collection of divine prayers in Latin, English, and Spanish"
   }
 }

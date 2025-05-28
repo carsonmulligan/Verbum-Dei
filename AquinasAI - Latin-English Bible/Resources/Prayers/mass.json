@@ -434,5 +434,12 @@
       "blessing",
       "ite_missa_est"
     ]
+  },
+  "metadata": {
+    "name": "Mass Prayers",
+    "category": "mass",
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-28T07:08:09.916429",
+    "description": "Collection of mass prayers in Latin, English, and Spanish"
   }
 }
