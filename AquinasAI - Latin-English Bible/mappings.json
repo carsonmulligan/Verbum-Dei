@@ -3,7 +3,7 @@
     "vulgate_to_english": {
         "Actus Apostolorum": "Acts",
         "Apocalypsis": "Revelation",
-        "Canticum Canticorum": "Song2",
+        "Canticum Canticorum": "Song of Songs",
         "Deuteronomium": "Deuteronomy",
         "Ecclesiasticus": "Sirach",
         "Esdrae": "Ezra",
@@ -78,7 +78,7 @@
     "english_to_vulgate": {
         "Acts": "Actus Apostolorum",
         "Revelation": "Apocalypsis",
-        "Song2": "Canticum Canticorum",
+        "Song of Songs": "Canticum Canticorum",
         "Deuteronomy": "Deuteronomium",
         "Sirach": "Ecclesiasticus",
         "Ezra": "Esdrae",
