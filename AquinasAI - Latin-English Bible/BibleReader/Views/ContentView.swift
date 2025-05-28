@@ -139,14 +139,7 @@ struct BookList: View {
     }
     
     var navigationTitle: String {
-        switch viewModel.displayMode {
-        case .latinOnly:
-            return "Biblia Sacra"
-        case .englishOnly:
-            return "Holy Bible"
-        case .bilingual:
-            return "Biblia Sacra"
-        }
+        return viewModel.displayMode.navigationTitle
     }
     
     var body: some View {
@@ -221,13 +214,41 @@ struct BookList: View {
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Picker("Display Mode", selection: $viewModel.displayMode) {
-                        Text("Latin").tag(DisplayMode.latinOnly)
-                        Text("English").tag(DisplayMode.englishOnly)
-                        Text("Bilingual").tag(DisplayMode.bilingual)
+                    Menu {
+                        // Single Language Options
+                        Section("Single Language") {
+                            Button("Latin") {
+                                viewModel.displayMode = .latinOnly
+                            }
+                            Button("English") {
+                                viewModel.displayMode = .englishOnly
+                            }
+                            Button("Español") {
+                                viewModel.displayMode = .spanishOnly
+                            }
+                        }
+                        
+                        // Bilingual Options
+                        Section("Bilingual") {
+                            Button("Latin-English") {
+                                viewModel.displayMode = .latinEnglish
+                            }
+                            Button("Latin-Español") {
+                                viewModel.displayMode = .latinSpanish
+                            }
+                            Button("English-Español") {
+                                viewModel.displayMode = .englishSpanish
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(viewModel.displayMode.description)
+                                .font(.caption)
+                            Image(systemName: "chevron.down")
+                                .font(.caption2)
+                        }
+                        .foregroundColor(isDarkMode ? .white : Color.deepPurple)
                     }
-                    .pickerStyle(.menu)
-                    .tint(isDarkMode ? .white : Color.deepPurple)
                 }
             }
             .sheet(isPresented: $showingSearch) {
@@ -280,14 +301,8 @@ struct BookList: View {
     }
     
     private func getDisplayName(for book: Book) -> String {
-        switch viewModel.displayMode {
-        case .latinOnly:
-            return book.name
-        case .englishOnly:
-            return viewModel.getEnglishName(for: book.name)
-        case .bilingual:
-            return viewModel.getEnglishName(for: book.name)
-        }
+        let primaryLanguage = viewModel.displayMode.primaryLanguage
+        return viewModel.getBookName(for: book.name, in: primaryLanguage)
     }
     
     private func isOldTestament(_ bookName: String) -> Bool {
