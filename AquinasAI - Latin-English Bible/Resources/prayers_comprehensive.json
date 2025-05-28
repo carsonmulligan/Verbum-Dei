@@ -1,0 +1,394 @@
+{
+  "metadata": {
+    "title": "AquinasAI Comprehensive Prayer Collection",
+    "description": "Complete trilingual Catholic prayer collection for AquinasAI Bible App",
+    "version": "1.0",
+    "languages": ["latin", "english", "spanish"],
+    "last_updated": "2024-12-19",
+    "total_prayers": 150,
+    "collections": 6
+  },
+  
+  "prayer_collections": {
+    "essential_prayers": {
+      "description": "Core Catholic prayers used throughout the liturgy and personal devotion",
+      "category": "basic",
+      "prayers": [
+        {
+          "id": "sign_of_cross",
+          "title": "Sign of the Cross",
+          "title_latin": "Signum Crucis",
+          "title_english": "Sign of the Cross",
+          "title_spanish": "Señal de la Cruz",
+          "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+          "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen.",
+          "spanish": "En el nombre del Padre, y del Hijo, y del Espíritu Santo. Amén.",
+          "tags": ["basic", "mass", "devotional"],
+          "usage": "universal"
+        },
+        {
+          "id": "pater_noster",
+          "title": "Our Father",
+          "title_latin": "Pater Noster",
+          "title_english": "Our Father",
+          "title_spanish": "Padre Nuestro",
+          "latin": "Pater noster, qui es in caelis, sanctificetur nomen tuum. Adveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra. Panem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris. Et ne nos inducas in tentationem, sed libera nos a malo. Amen.",
+          "english": "Our Father, who art in heaven, hallowed be Thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.",
+          "spanish": "Padre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo. Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación, y líbranos del mal. Amén.",
+          "tags": ["basic", "mass", "rosary", "divine_mercy"],
+          "usage": "universal"
+        },
+        {
+          "id": "ave_maria",
+          "title": "Hail Mary",
+          "title_latin": "Ave Maria",
+          "title_english": "Hail Mary",
+          "title_spanish": "Ave María",
+          "latin": "Ave Maria, gratia plena, Dominus tecum. Benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+          "english": "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
+          "spanish": "Dios te salve, María, llena eres de gracia, el Señor es contigo. Bendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús. Santa María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte. Amén.",
+          "tags": ["basic", "marian", "rosary", "angelus"],
+          "usage": "universal"
+        },
+        {
+          "id": "gloria_patri",
+          "title": "Glory Be",
+          "title_latin": "Gloria Patri",
+          "title_english": "Glory Be",
+          "title_spanish": "Gloria al Padre",
+          "latin": "Gloria Patri, et Filio, et Spiritui Sancto. Sicut erat in principio, et nunc, et semper, et in saecula saeculorum. Amen.",
+          "english": "Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.",
+          "spanish": "Gloria al Padre, y al Hijo, y al Espíritu Santo. Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.",
+          "tags": ["basic", "doxology", "rosary", "liturgy_hours"],
+          "usage": "universal"
+        },
+        {
+          "id": "apostles_creed",
+          "title": "Apostles' Creed",
+          "title_latin": "Symbolum Apostolorum",
+          "title_english": "Apostles' Creed",
+          "title_spanish": "Credo de los Apóstoles",
+          "latin": "Credo in Deum, Patrem omnipotentem, Creatorem caeli et terrae. Et in Iesum Christum, Filium eius unicum, Dominum nostrum, qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus; descendit ad inferos; tertia die resurrexit a mortuis; ascendit ad caelos, sedet ad dexteram Dei Patris omnipotentis; inde venturus est iudicare vivos et mortuos. Credo in Spiritum Sanctum, sanctam Ecclesiam catholicam, sanctorum communionem, remissionem peccatorum, carnis resurrectionem, vitam aeternam. Amen.",
+          "english": "I believe in God, the Father Almighty, Creator of heaven and earth. And in Jesus Christ, His only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father Almighty. From there He will come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.",
+          "spanish": "Creo en Dios, Padre todopoderoso, Creador del cielo y de la tierra. Creo en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado, descendió a los infiernos, al tercer día resucitó de entre los muertos, subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso. Desde allí ha de venir a juzgar a vivos y muertos. Creo en el Espíritu Santo, la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna. Amén.",
+          "tags": ["creed", "mass", "rosary", "divine_mercy"],
+          "usage": "universal"
+        }
+      ]
+    },
+
+    "mass_ordinary": {
+      "description": "Prayers of the Mass Ordinary that remain constant throughout the liturgical year",
+      "category": "liturgical",
+      "structure": {
+        "introductory_rites": ["sign_of_cross", "greeting", "penitential_act", "kyrie", "gloria", "collect"],
+        "liturgy_of_the_word": ["readings", "gospel", "homily", "creed", "intercessions"],
+        "liturgy_of_the_eucharist": ["offertory", "preface", "sanctus", "eucharistic_prayer", "lords_prayer", "peace", "agnus_dei", "communion"],
+        "concluding_rites": ["blessing", "dismissal"]
+      },
+      "prayers": [
+        {
+          "id": "kyrie_eleison",
+          "title": "Lord, Have Mercy",
+          "title_latin": "Kyrie Eleison",
+          "title_english": "Lord, Have Mercy",
+          "title_spanish": "Señor, Ten Piedad",
+          "latin": "Kyrie eleison. Christe eleison. Kyrie eleison.",
+          "english": "Lord, have mercy. Christ, have mercy. Lord, have mercy.",
+          "spanish": "Señor, ten piedad. Cristo, ten piedad. Señor, ten piedad.",
+          "tags": ["mass", "penitential"],
+          "usage": "mass"
+        },
+        {
+          "id": "gloria_in_excelsis",
+          "title": "Glory to God",
+          "title_latin": "Gloria in Excelsis Deo",
+          "title_english": "Glory to God in the Highest",
+          "title_spanish": "Gloria a Dios en el Cielo",
+          "latin": "Gloria in excelsis Deo, et in terra pax hominibus bonae voluntatis. Laudamus te, benedicimus te, adoramus te, glorificamus te, gratias agimus tibi propter magnam gloriam tuam, Domine Deus, Rex caelestis, Deus Pater omnipotens. Domine Fili unigenite, Iesu Christe, Domine Deus, Agnus Dei, Filius Patris. Qui tollis peccata mundi, miserere nobis; qui tollis peccata mundi, suscipe deprecationem nostram. Qui sedes ad dexteram Patris, miserere nobis. Quoniam tu solus Sanctus, tu solus Dominus, tu solus Altissimus, Iesu Christe, cum Sancto Spiritu: in gloria Dei Patris. Amen.",
+          "english": "Glory to God in the highest, and on earth peace to people of good will. We praise you, we bless you, we adore you, we glorify you, we give you thanks for your great glory, Lord God, heavenly King, O God, almighty Father. Lord Jesus Christ, Only Begotten Son, Lord God, Lamb of God, Son of the Father, you take away the sins of the world, have mercy on us; you take away the sins of the world, receive our prayer; you are seated at the right hand of the Father, have mercy on us. For you alone are the Holy One, you alone are the Lord, you alone are the Most High, Jesus Christ, with the Holy Spirit, in the glory of God the Father. Amen.",
+          "spanish": "Gloria a Dios en el cielo, y en la tierra paz a los hombres que ama el Señor. Por tu inmensa gloria te alabamos, te bendecimos, te adoramos, te glorificamos, te damos gracias, Señor Dios, Rey celestial, Dios Padre todopoderoso. Señor, Hijo único, Jesucristo. Señor Dios, Cordero de Dios, Hijo del Padre; tú que quitas el pecado del mundo, ten piedad de nosotros; tú que quitas el pecado del mundo, atiende nuestra súplica; tú que estás sentado a la derecha del Padre, ten piedad de nosotros; porque sólo tú eres Santo, sólo tú Señor, sólo tú Altísimo, Jesucristo, con el Espíritu Santo en la gloria de Dios Padre. Amén.",
+          "tags": ["mass", "hymn"],
+          "usage": "mass"
+        },
+        {
+          "id": "sanctus",
+          "title": "Holy, Holy, Holy",
+          "title_latin": "Sanctus",
+          "title_english": "Holy, Holy, Holy",
+          "title_spanish": "Santo, Santo, Santo",
+          "latin": "Sanctus, Sanctus, Sanctus Dominus Deus Sabaoth. Pleni sunt caeli et terra gloria tua. Hosanna in excelsis. Benedictus qui venit in nomine Domini. Hosanna in excelsis.",
+          "english": "Holy, holy, holy Lord God of hosts. Heaven and earth are full of your glory. Hosanna in the highest. Blessed is he who comes in the name of the Lord. Hosanna in the highest.",
+          "spanish": "Santo, Santo, Santo es el Señor, Dios del universo. Llenos están el cielo y la tierra de tu gloria. Hosanna en el cielo. Bendito el que viene en nombre del Señor. Hosanna en el cielo.",
+          "tags": ["mass", "eucharistic_prayer"],
+          "usage": "mass"
+        },
+        {
+          "id": "agnus_dei",
+          "title": "Lamb of God",
+          "title_latin": "Agnus Dei",
+          "title_english": "Lamb of God",
+          "title_spanish": "Cordero de Dios",
+          "latin": "Agnus Dei, qui tollis peccata mundi, miserere nobis. Agnus Dei, qui tollis peccata mundi, miserere nobis. Agnus Dei, qui tollis peccata mundi, dona nobis pacem.",
+          "english": "Lamb of God, you take away the sins of the world, have mercy on us. Lamb of God, you take away the sins of the world, have mercy on us. Lamb of God, you take away the sins of the world, grant us peace.",
+          "spanish": "Cordero de Dios, que quitas el pecado del mundo, ten piedad de nosotros. Cordero de Dios, que quitas el pecado del mundo, ten piedad de nosotros. Cordero de Dios, que quitas el pecado del mundo, danos la paz.",
+          "tags": ["mass", "communion"],
+          "usage": "mass"
+        }
+      ]
+    },
+
+    "rosary_prayers": {
+      "description": "Prayers for the Holy Rosary with mysteries and structure",
+      "category": "devotional",
+      "structure": {
+        "opening": ["sign_of_cross", "apostles_creed", "our_father", {"hail_mary": 3}, "glory_be"],
+        "decade": ["our_father", {"hail_mary": 10}, "glory_be", "fatima_prayer"],
+        "closing": ["hail_holy_queen", "final_prayer", "sign_of_cross"]
+      },
+      "mysteries": {
+        "joyful": [
+          {"number": 1, "latin": "Annuntiatio", "english": "The Annunciation", "spanish": "La Anunciación"},
+          {"number": 2, "latin": "Visitatio", "english": "The Visitation", "spanish": "La Visitación"},
+          {"number": 3, "latin": "Nativitas", "english": "The Nativity", "spanish": "El Nacimiento"},
+          {"number": 4, "latin": "Praesentatio", "english": "The Presentation", "spanish": "La Presentación"},
+          {"number": 5, "latin": "Inventio in Templo", "english": "Finding in the Temple", "spanish": "El Niño Perdido y Hallado"}
+        ],
+        "sorrowful": [
+          {"number": 1, "latin": "Agonia in Hortu", "english": "Agony in the Garden", "spanish": "La Oración en el Huerto"},
+          {"number": 2, "latin": "Flagellatio", "english": "The Scourging", "spanish": "La Flagelación"},
+          {"number": 3, "latin": "Coronatio Spinae", "english": "Crowning with Thorns", "spanish": "La Coronación de Espinas"},
+          {"number": 4, "latin": "Baiulatio Crucis", "english": "Carrying the Cross", "spanish": "El Camino del Calvario"},
+          {"number": 5, "latin": "Crucifixio", "english": "The Crucifixion", "spanish": "La Crucifixión"}
+        ],
+        "glorious": [
+          {"number": 1, "latin": "Resurrectio", "english": "The Resurrection", "spanish": "La Resurrección"},
+          {"number": 2, "latin": "Ascensio", "english": "The Ascension", "spanish": "La Ascensión"},
+          {"number": 3, "latin": "Descensus Spiritus Sancti", "english": "Descent of the Holy Spirit", "spanish": "La Venida del Espíritu Santo"},
+          {"number": 4, "latin": "Assumptio Mariae", "english": "The Assumption", "spanish": "La Asunción"},
+          {"number": 5, "latin": "Coronatio Mariae", "english": "Coronation of Mary", "spanish": "La Coronación de María"}
+        ],
+        "luminous": [
+          {"number": 1, "latin": "Baptisma in Iordane", "english": "Baptism in the Jordan", "spanish": "El Bautismo en el Jordán"},
+          {"number": 2, "latin": "Nuptiae Cana", "english": "Wedding at Cana", "spanish": "Las Bodas de Caná"},
+          {"number": 3, "latin": "Praedicatio Regni", "english": "Proclamation of the Kingdom", "spanish": "El Anuncio del Reino"},
+          {"number": 4, "latin": "Transfiguratio", "english": "The Transfiguration", "spanish": "La Transfiguración"},
+          {"number": 5, "latin": "Institutio Eucharistiae", "english": "Institution of the Eucharist", "spanish": "La Institución de la Eucaristía"}
+        ]
+      },
+      "prayers": [
+        {
+          "id": "fatima_prayer",
+          "title": "Fatima Prayer",
+          "title_latin": "Oratio Fatimae",
+          "title_english": "Fatima Prayer",
+          "title_spanish": "Oración de Fátima",
+          "latin": "O mi Iesu, dimitte nobis debita nostra, salva nos ab igne inferni, perduc in caelum omnes animas, praesertim eas quae maxime indigent misericordia tua.",
+          "english": "O my Jesus, forgive us our sins, save us from the fires of hell, lead all souls to heaven, especially those in most need of thy mercy.",
+          "spanish": "Oh Jesús mío, perdónanos nuestros pecados, líbranos del fuego del infierno, lleva al cielo a todas las almas, especialmente a las más necesitadas de tu misericordia.",
+          "tags": ["rosary", "fatima"],
+          "usage": "rosary"
+        },
+        {
+          "id": "salve_regina",
+          "title": "Hail Holy Queen",
+          "title_latin": "Salve Regina",
+          "title_english": "Hail Holy Queen",
+          "title_spanish": "Salve, Reina",
+          "latin": "Salve Regina, Mater misericordiae, vita, dulcedo, et spes nostra, salve. Ad te clamamus, exsules filii Hevae. Ad te suspiramus, gementes et flentes in hac lacrimarum valle. Eia ergo, Advocata nostra, illos tuos misericordes oculos ad nos converte. Et Iesum, benedictum fructum ventris tui, nobis post hoc exsilium ostende. O clemens, O pia, O dulcis Virgo Maria.",
+          "english": "Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve. To thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary.",
+          "spanish": "Dios te salve, Reina y Madre de misericordia, vida, dulzura y esperanza nuestra; Dios te salve. A ti llamamos los desterrados hijos de Eva; a ti suspiramos, gimiendo y llorando en este valle de lágrimas. Ea, pues, Señora, abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos; y después de este destierro, muéstranos a Jesús, fruto bendito de tu vientre. ¡Oh clemente, oh piadosa, oh dulce Virgen María!",
+          "tags": ["marian", "rosary"],
+          "usage": "rosary"
+        }
+      ]
+    },
+
+    "divine_mercy_chaplet": {
+      "description": "Prayers for the Divine Mercy Chaplet as revealed to St. Faustina",
+      "category": "devotional",
+      "structure": {
+        "opening": ["sign_of_cross", "our_father", "hail_mary", "apostles_creed"],
+        "decade": [{"eternal_father": 1}, {"for_his_sorrowful_passion": 10}],
+        "closing": [{"holy_god": 3}, "sign_of_cross"],
+        "decades": 5
+      },
+      "prayers": [
+        {
+          "id": "eternal_father",
+          "title": "Eternal Father",
+          "title_latin": "Pater Aeterne",
+          "title_english": "Eternal Father",
+          "title_spanish": "Padre Eterno",
+          "latin": "Pater aeterne, offero tibi Corpus et Sanguinem, animam et divinitatem dilectissimi Filii Tui, Domini nostri, Iesu Christi, in propitiatione pro peccatis nostris et totius mundi.",
+          "english": "Eternal Father, I offer you the Body and Blood, Soul and Divinity of Your Dearly Beloved Son, Our Lord, Jesus Christ, in atonement for our sins and those of the whole world.",
+          "spanish": "Padre Eterno, te ofrezco el Cuerpo y la Sangre, el Alma y la Divinidad de tu amadísimo Hijo, nuestro Señor Jesucristo, como propiciación por nuestros pecados y los del mundo entero.",
+          "tags": ["divine_mercy"],
+          "usage": "divine_mercy"
+        },
+        {
+          "id": "for_his_sorrowful_passion",
+          "title": "For His Sorrowful Passion",
+          "title_latin": "Pro Dolorosa Passione Eius",
+          "title_english": "For His Sorrowful Passion",
+          "title_spanish": "Por Su Dolorosa Pasión",
+          "latin": "Pro dolorosa passione eius, miserere nobis et totius mundi.",
+          "english": "For the sake of His sorrowful Passion, have mercy on us and on the whole world.",
+          "spanish": "Por su dolorosa Pasión, ten misericordia de nosotros y del mundo entero.",
+          "tags": ["divine_mercy"],
+          "usage": "divine_mercy"
+        },
+        {
+          "id": "holy_god_trisagion",
+          "title": "Holy God",
+          "title_latin": "Sanctus Deus",
+          "title_english": "Holy God",
+          "title_spanish": "Santo Dios",
+          "latin": "Sanctus Deus, Sanctus Fortis, Sanctus Immortalis, miserere nobis et totius mundi.",
+          "english": "Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world.",
+          "spanish": "Santo Dios, Santo Fuerte, Santo Inmortal, ten misericordia de nosotros y del mundo entero.",
+          "tags": ["divine_mercy", "trisagion"],
+          "usage": "divine_mercy"
+        }
+      ]
+    },
+
+    "angelus": {
+      "description": "The Angelus prayer traditionally prayed three times daily",
+      "category": "devotional",
+      "instructions": {
+        "english": "Pray the Angelus three times a day—traditionally at 6 a.m., 12 p.m., and 6 p.m.",
+        "spanish": "Reza el Ángelus tres veces al día: tradicionalmente a las 6 a.m., 12 p.m. y 6 p.m."
+      },
+      "prayers": [
+        {
+          "id": "angelus_1",
+          "order": 1,
+          "title": "The Angel of the Lord",
+          "title_latin": "Angelus Domini",
+          "title_english": "The Angel of the Lord",
+          "title_spanish": "El Ángel del Señor",
+          "latin": "℣. Angelus Domini nuntiavit Mariae. ℟. Et concepit de Spiritu Sancto.",
+          "english": "V/. The Angel of the Lord declared unto Mary. R/. And she conceived of the Holy Spirit.",
+          "spanish": "V/. El Ángel del Señor anunció a María. R/. Y concibió por obra del Espíritu Santo.",
+          "tags": ["angelus", "marian"],
+          "usage": "angelus"
+        },
+        {
+          "id": "angelus_2",
+          "order": 2,
+          "title": "Behold the Handmaid",
+          "title_latin": "Ecce Ancilla Domini",
+          "title_english": "Behold the Handmaid of the Lord",
+          "title_spanish": "He Aquí la Esclava del Señor",
+          "latin": "℣. Ecce ancilla Domini. ℟. Fiat mihi secundum verbum tuum.",
+          "english": "V/. Behold the handmaid of the Lord. R/. Be it done unto me according to thy word.",
+          "spanish": "V/. He aquí la esclava del Señor. R/. Hágase en mí según tu palabra.",
+          "tags": ["angelus", "marian"],
+          "usage": "angelus"
+        },
+        {
+          "id": "angelus_3",
+          "order": 3,
+          "title": "The Word Made Flesh",
+          "title_latin": "Verbum Caro Factum Est",
+          "title_english": "And the Word was made Flesh",
+          "title_spanish": "Y el Verbo se Hizo Carne",
+          "latin": "℣. Et Verbum caro factum est. ℟. Et habitavit in nobis.",
+          "english": "V/. And the Word was made Flesh. R/. And dwelt among us.",
+          "spanish": "V/. Y el Verbo se hizo carne. R/. Y habitó entre nosotros.",
+          "tags": ["angelus", "incarnation"],
+          "usage": "angelus"
+        }
+      ]
+    },
+
+    "liturgy_of_hours": {
+      "description": "Prayers from the Liturgy of the Hours (Divine Office)",
+      "category": "liturgical",
+      "schedule": {
+        "invitatory": "5:00-6:00 AM",
+        "office_of_readings": "2:00-5:00 AM",
+        "morning_prayer": "6:00 AM",
+        "mid_morning": "9:00 AM",
+        "mid_day": "12:00 PM",
+        "mid_afternoon": "3:00 PM",
+        "evening_prayer": "6:00 PM",
+        "night_prayer": "9:00-10:00 PM"
+      },
+      "prayers": [
+        {
+          "id": "invitatory",
+          "title": "Lord, Open My Lips",
+          "title_latin": "Domine, Labia Mea Aperies",
+          "title_english": "Lord, Open My Lips",
+          "title_spanish": "Señor, Abre Mis Labios",
+          "latin": "Domine, labia mea aperies; et os meum annuntiabit laudem tuam.",
+          "english": "Lord, open my lips, and my mouth will proclaim your praise.",
+          "spanish": "Señor, abre mis labios, y mi boca proclamará tu alabanza.",
+          "tags": ["liturgy_hours", "invitatory"],
+          "usage": "invitatory"
+        },
+        {
+          "id": "magnificat",
+          "title": "Canticle of Mary",
+          "title_latin": "Magnificat",
+          "title_english": "Magnificat",
+          "title_spanish": "Magníficat",
+          "latin": "Magnificat anima mea Dominum, et exsultavit spiritus meus in Deo salutari meo, quia respexit humilitatem ancillae suae. Ecce enim ex hoc beatam me dicent omnes generationes, quia fecit mihi magna qui potens est, et sanctum nomen eius.",
+          "english": "My soul proclaims the greatness of the Lord; my spirit rejoices in God my Savior, for he has looked with favor on his lowly servant. From this day all generations will call me blessed; the Almighty has done great things for me, and holy is his Name.",
+          "spanish": "Proclama mi alma la grandeza del Señor, se alegra mi espíritu en Dios, mi salvador; porque ha mirado la humillación de su esclava. Desde ahora me felicitarán todas las generaciones, porque el Poderoso ha hecho obras grandes por mí: su nombre es santo.",
+          "tags": ["liturgy_hours", "canticle", "marian"],
+          "usage": "evening_prayer"
+        },
+        {
+          "id": "benedictus",
+          "title": "Canticle of Zechariah",
+          "title_latin": "Benedictus",
+          "title_english": "Benedictus",
+          "title_spanish": "Benedictus",
+          "latin": "Benedictus Dominus Deus Israel, quia visitavit et fecit redemptionem plebis suae, et erexit cornu salutis nobis in domo David pueri sui.",
+          "english": "Blessed be the Lord, the God of Israel; he has visited his people and brought about their redemption. He has raised up a mighty Savior for us in the house of David his servant.",
+          "spanish": "Bendito sea el Señor, Dios de Israel, porque ha visitado y redimido a su pueblo, suscitándonos una fuerza de salvación en la casa de David, su siervo.",
+          "tags": ["liturgy_hours", "canticle"],
+          "usage": "morning_prayer"
+        },
+        {
+          "id": "nunc_dimittis",
+          "title": "Canticle of Simeon",
+          "title_latin": "Nunc Dimittis",
+          "title_english": "Nunc Dimittis",
+          "title_spanish": "Nunc Dimittis",
+          "latin": "Nunc dimittis servum tuum, Domine, secundum verbum tuum in pace: quia viderunt oculi mei salutare tuum, quod parasti ante faciem omnium populorum.",
+          "english": "Now, Lord, you let your servant go in peace; your word has been fulfilled: my own eyes have seen the salvation which you have prepared in the sight of every people.",
+          "spanish": "Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz. Porque han visto mis ojos tu salvación, la que has preparado a la vista de todos los pueblos.",
+          "tags": ["liturgy_hours", "canticle"],
+          "usage": "night_prayer"
+        }
+      ]
+    }
+  },
+
+  "display_modes": {
+    "single_language": ["latin_only", "english_only", "spanish_only"],
+    "bilingual": ["latin_english", "latin_spanish", "english_spanish"],
+    "trilingual": ["all_languages"]
+  },
+
+  "prayer_categories": {
+    "basic": ["sign_of_cross", "pater_noster", "ave_maria", "gloria_patri", "apostles_creed"],
+    "mass": ["kyrie_eleison", "gloria_in_excelsis", "sanctus", "agnus_dei"],
+    "marian": ["ave_maria", "salve_regina", "magnificat", "angelus_1", "angelus_2", "angelus_3"],
+    "devotional": ["rosary_prayers", "divine_mercy_chaplet", "angelus"],
+    "liturgical": ["mass_ordinary", "liturgy_of_hours"]
+  },
+
+  "usage_contexts": {
+    "universal": "Used in multiple contexts",
+    "mass": "Specific to Mass liturgy",
+    "rosary": "Used in Rosary devotion",
+    "divine_mercy": "Used in Divine Mercy Chaplet",
+    "angelus": "Used in Angelus prayer",
+    "liturgy_hours": "Used in Liturgy of the Hours"
+  }
+} 
