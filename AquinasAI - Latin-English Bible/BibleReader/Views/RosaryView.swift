@@ -4,7 +4,7 @@ struct RosaryView: View {
     @EnvironmentObject var prayerStore: PrayerStore
     @Environment(\.dismiss) var dismiss
     @State private var selectedDay: String = getCurrentDay()
-    @State private var selectedLanguage: PrayerLanguage = .bilingual
+    @State private var selectedLanguage: PrayerLanguage = .latinEnglish
     @State private var scrollToId: String?
     
     // Add parameter for initial prayer ID
@@ -124,10 +124,10 @@ private struct LanguageSelectionView: View {
     var body: some View {
         Picker("Language", selection: $selectedLanguage) {
             ForEach(PrayerLanguage.allCases, id: \.self) { language in
-                Text(language.rawValue.capitalized).tag(language)
+                Text(language.displayName).tag(language)
             }
         }
-        .pickerStyle(SegmentedPickerStyle())
+        .pickerStyle(MenuPickerStyle())
         .padding(.horizontal)
     }
 }

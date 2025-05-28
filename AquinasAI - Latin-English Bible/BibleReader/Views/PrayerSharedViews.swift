@@ -3,7 +3,63 @@ import SwiftUI
 enum PrayerLanguage: String, CaseIterable {
     case latinOnly = "latin"
     case englishOnly = "english"
-    case bilingual = "bilingual"
+    case spanishOnly = "spanish"
+    case latinEnglish = "latin_english"
+    case latinSpanish = "latin_spanish"
+    case englishSpanish = "english_spanish"
+    
+    var displayName: String {
+        switch self {
+        case .latinOnly:
+            return "Latin"
+        case .englishOnly:
+            return "English"
+        case .spanishOnly:
+            return "Spanish"
+        case .latinEnglish:
+            return "Latin-English"
+        case .latinSpanish:
+            return "Latin-Spanish"
+        case .englishSpanish:
+            return "English-Spanish"
+        }
+    }
+    
+    var isBilingual: Bool {
+        switch self {
+        case .latinOnly, .englishOnly, .spanishOnly:
+            return false
+        case .latinEnglish, .latinSpanish, .englishSpanish:
+            return true
+        }
+    }
+    
+    var showsLatin: Bool {
+        switch self {
+        case .latinOnly, .latinEnglish, .latinSpanish:
+            return true
+        case .englishOnly, .spanishOnly, .englishSpanish:
+            return false
+        }
+    }
+    
+    var showsEnglish: Bool {
+        switch self {
+        case .englishOnly, .latinEnglish, .englishSpanish:
+            return true
+        case .latinOnly, .spanishOnly, .latinSpanish:
+            return false
+        }
+    }
+    
+    var showsSpanish: Bool {
+        switch self {
+        case .spanishOnly, .latinSpanish, .englishSpanish:
+            return true
+        case .latinOnly, .englishOnly, .latinEnglish:
+            return false
+        }
+    }
 }
 
 struct PrayerCard: View {
@@ -22,25 +78,32 @@ struct PrayerCard: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    if language == .latinOnly || language == .bilingual {
+                    // Title display logic
+                    if language.showsLatin {
                         Text(prayer.displayTitleLatin)
                             .font(.headline)
                             .fontWeight(.semibold)
                             .foregroundColor(.deepPurple)
                     }
                     
-                    if language == .englishOnly || language == .bilingual {
-                        if language == .bilingual {
-                            Text(prayer.displayTitleEnglish)
-                                .font(.subheadline)
-                                .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8))
-                                .italic()
-                        } else {
-                            Text(prayer.displayTitleEnglish)
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.deepPurple)
-                        }
+                    if language.showsEnglish {
+                        Text(prayer.displayTitleEnglish)
+                            .font(language.isBilingual ? .subheadline : .headline)
+                            .fontWeight(language.isBilingual ? .medium : .semibold)
+                            .foregroundColor(language.isBilingual ? 
+                                (colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8)) : 
+                                .deepPurple)
+                            .italic(language.isBilingual)
+                    }
+                    
+                    if language.showsSpanish {
+                        Text(prayer.displayTitleSpanish)
+                            .font(language.isBilingual ? .subheadline : .headline)
+                            .fontWeight(language.isBilingual ? .medium : .semibold)
+                            .foregroundColor(language.isBilingual ? 
+                                (colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8)) : 
+                                .deepPurple)
+                            .italic(language.isBilingual)
                     }
                 }
                 
@@ -69,19 +132,37 @@ struct PrayerCard: View {
                     .padding(.bottom, 4)
             }
             
-            if language == .latinOnly || language == .bilingual {
+            // Prayer text display logic
+            if language.showsLatin {
                 Text(prayer.latin)
                     .font(.body)
                     .foregroundColor(colorScheme == .dark ? .white : .primary)
                     .padding(.top, 4)
             }
             
-            if language == .englishOnly || language == .bilingual {
+            if language.showsEnglish {
                 Text(prayer.english)
                     .font(.body)
-                    .foregroundColor(language == .bilingual ? .secondary : (colorScheme == .dark ? .white : .primary))
-                    .italic(language == .bilingual)
-                    .padding(.top, language == .bilingual ? 2 : 4)
+                    .foregroundColor(language.isBilingual ? .secondary : (colorScheme == .dark ? .white : .primary))
+                    .italic(language.isBilingual)
+                    .padding(.top, language.isBilingual ? 2 : 4)
+            }
+            
+            if language.showsSpanish {
+                if let spanishText = prayer.spanish {
+                    Text(spanishText)
+                        .font(.body)
+                        .foregroundColor(language.isBilingual ? .secondary : (colorScheme == .dark ? .white : .primary))
+                        .italic(language.isBilingual)
+                        .padding(.top, language.isBilingual ? 2 : 4)
+                } else {
+                    // Fallback if Spanish text is not available
+                    Text("Spanish translation not available")
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .italic()
+                        .padding(.top, language.isBilingual ? 2 : 4)
+                }
             }
         }
         .padding()
@@ -117,28 +198,54 @@ struct PrayerCard: View {
                 }
             }
             
-            // Copy options
-            if language == .bilingual {
+            // Copy options based on language mode
+            if language.isBilingual {
                 Button {
-                    UIPasteboard.general.string = "\(prayer.latin)\n\n\(prayer.english)"
+                    var copyText = ""
+                    if language.showsLatin { copyText += prayer.latin }
+                    if language.showsEnglish { 
+                        if !copyText.isEmpty { copyText += "\n\n" }
+                        copyText += prayer.english 
+                    }
+                    if language.showsSpanish, let spanish = prayer.spanish { 
+                        if !copyText.isEmpty { copyText += "\n\n" }
+                        copyText += spanish 
+                    }
+                    UIPasteboard.general.string = copyText
                 } label: {
                     Label("Copy Both", systemImage: "doc.on.doc")
                 }
                 
-                Button {
-                    UIPasteboard.general.string = prayer.latin
-                } label: {
-                    Label("Copy Latin", systemImage: "doc.on.doc.fill")
+                if language.showsLatin {
+                    Button {
+                        UIPasteboard.general.string = prayer.latin
+                    } label: {
+                        Label("Copy Latin", systemImage: "doc.on.doc.fill")
+                    }
                 }
                 
-                Button {
-                    UIPasteboard.general.string = prayer.english
-                } label: {
-                    Label("Copy English", systemImage: "doc.on.clipboard")
+                if language.showsEnglish {
+                    Button {
+                        UIPasteboard.general.string = prayer.english
+                    } label: {
+                        Label("Copy English", systemImage: "doc.on.clipboard")
+                    }
+                }
+                
+                if language.showsSpanish {
+                    Button {
+                        UIPasteboard.general.string = prayer.spanish ?? ""
+                    } label: {
+                        Label("Copy Spanish", systemImage: "doc.on.clipboard.fill")
+                    }
                 }
             } else {
                 Button {
-                    UIPasteboard.general.string = language == .latinOnly ? prayer.latin : prayer.english
+                    var copyText = ""
+                    if language.showsLatin { copyText = prayer.latin }
+                    else if language.showsEnglish { copyText = prayer.english }
+                    else if language.showsSpanish { copyText = prayer.spanish ?? "" }
+                    UIPasteboard.general.string = copyText
                 } label: {
                     Label("Copy", systemImage: "doc.on.doc")
                 }

@@ -18,7 +18,7 @@ struct PrayersView: View {
     @Environment(\.dismiss) var dismiss
     @State private var searchText = ""
     @State private var selectedCategory: PrayerCategory
-    @State private var selectedLanguage: PrayerLanguage = .bilingual
+    @State private var selectedLanguage: PrayerLanguage = .latinEnglish
     @State private var scrollToId: String?
     @State private var viewHasAppeared = false
     
@@ -47,8 +47,10 @@ struct PrayersView: View {
         return prayers.filter { prayer in
             prayer.displayTitleEnglish.localizedCaseInsensitiveContains(searchText) ||
             prayer.displayTitleLatin.localizedCaseInsensitiveContains(searchText) ||
+            prayer.displayTitleSpanish.localizedCaseInsensitiveContains(searchText) ||
             prayer.latin.localizedCaseInsensitiveContains(searchText) ||
-            prayer.english.localizedCaseInsensitiveContains(searchText)
+            prayer.english.localizedCaseInsensitiveContains(searchText) ||
+            (prayer.spanish?.localizedCaseInsensitiveContains(searchText) ?? false)
         }
     }
     
@@ -104,10 +106,10 @@ struct PrayersView: View {
                 // Language selection
                 Picker("Language", selection: $selectedLanguage) {
                     ForEach(PrayerLanguage.allCases, id: \.self) { language in
-                        Text(language.rawValue.capitalized).tag(language)
+                        Text(language.displayName).tag(language)
                     }
                 }
-                .pickerStyle(SegmentedPickerStyle())
+                .pickerStyle(MenuPickerStyle())
                 .padding(.horizontal)
                 
                 // Prayer list

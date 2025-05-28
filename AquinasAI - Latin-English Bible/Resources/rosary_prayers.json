@@ -1,112 +1,223 @@
 {
-    "common_prayers": {
-        "sign_of_the_cross": {
-            "title_latin": "Signum Crucis",
-            "title_english": "Sign of the Cross",
-            "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
-            "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen."
-        },
-        "apostles_creed": {
-            "title_latin": "Symbolum Apostolorum",
-            "title_english": "Apostles' Creed",
-            "latin": "Credo in Deum Patrem omnipotentem, Creatorem caeli et terrae. Et in Iesum Christum, Filium eius unicum, Dominum nostrum, qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus; descendit ad inferos; tertia die resurrexit a mortuis; ascendit ad caelos, sedet ad dexteram Dei Patris omnipotentis; inde venturus est iudicare vivos et mortuos. Credo in Spiritum Sanctum, sanctam Ecclesiam catholicam, sanctorum communionem, remissionem peccatorum, carnis resurrectionem, vitam aeternam. Amen.",
-            "english": "I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, His only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father almighty; from there He will come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen."
-        },
-        "our_father": {
-            "title_latin": "Pater Noster",
-            "title_english": "Our Father",
-            "latin": "Pater noster, qui es in caelis, sanctificetur nomen tuum. Adveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra. Panem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris. Et ne nos inducas in tentationem, sed libera nos a malo. Amen.",
-            "english": "Our Father, who art in heaven, hallowed be thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us, and lead us not into temptation, but deliver us from evil. Amen."
-        },
-        "hail_mary": {
-            "title_latin": "Ave Maria",
-            "title_english": "Hail Mary",
-            "latin": "Ave Maria, gratia plena, Dominus tecum. Benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
-            "english": "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
-        },
-        "glory_be": {
-            "title_latin": "Gloria Patri",
-            "title_english": "Glory Be",
-            "latin": "Gloria Patri, et Filio, et Spiritui Sancto. Sicut erat in principio, et nunc, et semper, et in saecula saeculorum. Amen.",
-            "english": "Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen."
-        },
-        "fatima_prayer": {
-            "title_latin": "Oratio Fatimae",
-            "title_english": "Fatima Prayer",
-            "latin": "O mi Iesu, dimitte nobis debita nostra, salva nos ab igne inferni, perduc in caelum omnes animas, praesertim eas quae maxime indigent misericordia tua.",
-            "english": "O my Jesus, forgive us our sins, save us from the fires of hell, lead all souls to heaven, especially those in most need of thy mercy."
-        },
-        "hail_holy_queen": {
-            "title_latin": "Salve Regina",
-            "title_english": "Hail Holy Queen",
-            "latin": "Salve Regina, Mater misericordiae, vita, dulcedo, et spes nostra, salve. Ad te clamamus, exsules filii Hevae. Ad te suspiramus, gementes et flentes in hac lacrimarum valle. Eia ergo, Advocata nostra, illos tuos misericordes oculos ad nos converte. Et Iesum, benedictum fructum ventris tui, nobis post hoc exsilium ostende. O clemens, O pia, O dulcis Virgo Maria.",
-            "english": "Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve. To thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary."
-        },
-        "final_prayer": {
-            "title_latin": "Oratio Finalis",
-            "title_english": "Final Prayer",
-            "latin": "Oremus. Deus, cuius Unigenitus per vitam, mortem et resurrectionem suam nobis salutis aeternae praemia comparavit, concede, quaesumus: ut haec mysteria sacratissimo beatae Mariae Virginis Rosario recolentes, et imitemur quod continent, et quod promittunt assequamur. Per eundem Christum Dominum nostrum. Amen.",
-            "english": "Let us pray. O God, whose only begotten Son, by His life, death, and resurrection, has purchased for us the rewards of eternal life, grant, we beseech Thee, that meditating upon these mysteries of the Most Holy Rosary of the Blessed Virgin Mary, we may imitate what they contain and obtain what they promise, through the same Christ our Lord. Amen."
-        }
+  "common_prayers": {
+    "sign_of_the_cross": {
+      "title_latin": "Signum Crucis",
+      "title_english": "Sign of the Cross",
+      "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+      "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen.",
+      "spanish": "En el nombre del Padre, y del Hijo, y del Espíritu Santo. Amén."
     },
-    "mysteries": {
-        "joyful": [
-            { "number": 1, "latin": "Annuntiátio", "english": "The Annunciation", "description": "The Angel Gabriel announces to Mary that she is to be the Mother of God. (Luke 1:26-38)" },
-            { "number": 2, "latin": "Visitátio", "english": "The Visitation", "description": "Mary visits her cousin Elizabeth, who tells her that she will be blessed among women. (Luke 1:39-56)" },
-            { "number": 3, "latin": "Natívitas", "english": "The Nativity", "description": "Jesus is born in a stable in Bethlehem. (Luke 2:1-21)" },
-            { "number": 4, "latin": "Præsentátio", "english": "The Presentation in the Temple", "description": "Mary and Joseph present Jesus in the Temple where they meet Simeon. (Luke 2:22-38)" },
-            { "number": 5, "latin": "Invéntio in Templo", "english": "The Finding of Jesus in the Temple", "description": "After searching for three days, Mary and Joseph find the young Jesus teaching in the Temple. (Luke 2:41-52)" }
-        ],
-        "sorrowful": [
-            { "number": 1, "latin": "Agónia in Hortu", "english": "The Agony in the Garden", "description": "Jesus prays in the Garden of Gethsemane on the night before His death. (Matthew 26:36-46)" },
-            { "number": 2, "latin": "Flagellátio", "english": "The Scourging at the Pillar", "description": "Jesus is bound to a pillar and scourged. (John 19:1)" },
-            { "number": 3, "latin": "Coronátio Spinæ", "english": "The Crowning with Thorns", "description": "Jesus is mocked and crowned with thorns. (Matthew 27:27-31)" },
-            { "number": 4, "latin": "Baiulátio Crucis", "english": "The Carrying of the Cross", "description": "Jesus carries His cross to Calvary. (John 19:17)" },
-            { "number": 5, "latin": "Crucifíxio", "english": "The Crucifixion", "description": "Jesus is nailed to the cross and dies. (John 19:18-30)" }
-        ],
-        "glorious": [
-            { "number": 1, "latin": "Resurréctio", "english": "The Resurrection", "description": "Jesus rises from the dead on the third day. (Mark 16:1-8)" },
-            { "number": 2, "latin": "Ascénsio", "english": "The Ascension", "description": "Jesus ascends into Heaven forty days after His Resurrection. (Acts 1:6-11)" },
-            { "number": 3, "latin": "Descénsus Spíritus Sancti", "english": "The Descent of the Holy Spirit", "description": "The Holy Spirit descends upon Mary and the Apostles at Pentecost. (Acts 2:1-4)" },
-            { "number": 4, "latin": "Assúmptio Mariæ", "english": "The Assumption", "description": "Mary is assumed body and soul into Heaven at the end of her life." },
-            { "number": 5, "latin": "Coronátio Mariæ", "english": "The Coronation of Mary", "description": "Mary is crowned Queen of Heaven and Earth. (Revelation 12:1)" }
-        ],
-        "luminous": [
-            { "number": 1, "latin": "Baptísma in Iordáne", "english": "The Baptism in the Jordan", "description": "Jesus is baptized in the Jordan River by John the Baptist. (Matthew 3:13-17)" },
-            { "number": 2, "latin": "Núptiæ Cana", "english": "The Wedding at Cana", "description": "At Mary's request, Jesus performs His first miracle, turning water into wine. (John 2:1-12)" },
-            { "number": 3, "latin": "Prædicátio Regni Dei", "english": "The Proclamation of the Kingdom", "description": "Jesus proclaims the Kingdom of God and calls all to conversion. (Mark 1:14-15)" },
-            { "number": 4, "latin": "Transfigurátio", "english": "The Transfiguration", "description": "Jesus is transfigured on Mount Tabor, revealing His divine glory. (Matthew 17:1-8)" },
-            { "number": 5, "latin": "Institútio Eucharístiæ", "english": "The Institution of the Eucharist", "description": "At the Last Supper, Jesus institutes the Eucharist. (Matthew 26:26-28)" }
-        ]
+    "apostles_creed": {
+      "title_latin": "Symbolum Apostolorum",
+      "title_english": "Apostles' Creed",
+      "latin": "Credo in Deum Patrem omnipotentem, Creatorem caeli et terrae. Et in Iesum Christum, Filium eius unicum, Dominum nostrum, qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus; descendit ad inferos; tertia die resurrexit a mortuis; ascendit ad caelos, sedet ad dexteram Dei Patris omnipotentis; inde venturus est iudicare vivos et mortuos. Credo in Spiritum Sanctum, sanctam Ecclesiam catholicam, sanctorum communionem, remissionem peccatorum, carnis resurrectionem, vitam aeternam. Amen.",
+      "english": "I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, His only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father almighty; from there He will come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.",
+      "spanish": "Creo en Dios, Padre todopoderoso, creador del cielo y de la tierra; y en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado; descendió a los infiernos; al tercer día resucitó de entre los muertos; subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso; desde allí ha de venir a juzgar a vivos y muertos. Creo en el Espíritu Santo, la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna. Amén."
     },
-    "schedule": {
-        "Monday": "joyful",
-        "Tuesday": "sorrowful",
-        "Wednesday": "glorious",
-        "Thursday": "luminous",
-        "Friday": "sorrowful",
-        "Saturday": "joyful",
-        "Sunday": "glorious"
+    "our_father": {
+      "title_latin": "Pater Noster",
+      "title_english": "Our Father",
+      "latin": "Pater noster, qui es in caelis, sanctificetur nomen tuum. Adveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra. Panem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris. Et ne nos inducas in tentationem, sed libera nos a malo. Amen.",
+      "english": "Our Father, who art in heaven, hallowed be thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us, and lead us not into temptation, but deliver us from evil. Amen.",
+      "spanish": "Padre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu Reino; hágase tu voluntad en la tierra como en el cielo. Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación y líbranos del mal. Amén."
     },
-    "template": {
-        "opening": [
-            "sign_of_the_cross",
-            "apostles_creed",
-            "our_father",
-            {"hail_mary": 3},
-            "glory_be"
-        ],
-        "decade": [
-            "our_father",
-            {"hail_mary": 10},
-            "glory_be",
-            "fatima_prayer"
-        ],
-        "closing": [
-            "hail_holy_queen",
-            "final_prayer",
-            "sign_of_the_cross"
-        ]
+    "hail_mary": {
+      "title_latin": "Ave Maria",
+      "title_english": "Hail Mary",
+      "latin": "Ave Maria, gratia plena, Dominus tecum. Benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+      "english": "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
+      "spanish": "Dios te salve, María, llena eres de gracia; el Señor es contigo; bendita tú eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús. Santa María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte. Amén."
+    },
+    "glory_be": {
+      "title_latin": "Gloria Patri",
+      "title_english": "Glory Be",
+      "latin": "Gloria Patri, et Filio, et Spiritui Sancto. Sicut erat in principio, et nunc, et semper, et in saecula saeculorum. Amen.",
+      "english": "Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.",
+      "spanish": "Gloria al Padre, y al Hijo, y al Espíritu Santo. Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén."
+    },
+    "fatima_prayer": {
+      "title_latin": "Oratio Fatimae",
+      "title_english": "Fatima Prayer",
+      "latin": "O mi Iesu, dimitte nobis debita nostra, salva nos ab igne inferni, perduc in caelum omnes animas, praesertim eas quae maxime indigent misericordia tua.",
+      "english": "O my Jesus, forgive us our sins, save us from the fires of hell, lead all souls to heaven, especially those in most need of thy mercy.",
+      "spanish": "Oh Jesús mío, perdona nuestros pecados, líbranos del fuego del infierno; lleva al cielo a todas las almas, especialmente a las más necesitadas de tu misericordia. Amén."
+    },
+    "hail_holy_queen": {
+      "title_latin": "Salve Regina",
+      "title_english": "Hail Holy Queen",
+      "latin": "Salve Regina, Mater misericordiae, vita, dulcedo, et spes nostra, salve. Ad te clamamus, exsules filii Hevae. Ad te suspiramus, gementes et flentes in hac lacrimarum valle. Eia ergo, Advocata nostra, illos tuos misericordes oculos ad nos converte. Et Iesum, benedictum fructum ventris tui, nobis post hoc exsilium ostende. O clemens, O pia, O dulcis Virgo Maria.",
+      "english": "Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve. To thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary.",
+      "spanish": "Dios te salve, Reina y Madre de misericordia, vida, dulzura y esperanza nuestra; Dios te salve. A Ti llamamos los desterrados hijos de Eva; a Ti suspiramos, gimiendo y llorando en este valle de lágrimas. Ea, pues, Señora, abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos; y después de este destierro, muéstranos a Jesús, fruto bendito de tu vientre. ¡Oh clemente, oh piadosa, oh dulce Virgen María!"
+    },
+    "final_prayer": {
+      "title_latin": "Oratio Finalis",
+      "title_english": "Final Prayer",
+      "latin": "Oremus. Deus, cuius Unigenitus per vitam, mortem et resurrectionem suam nobis salutis aeternae praemia comparavit, concede, quaesumus: ut haec mysteria sacratissimo beatae Mariae Virginis Rosario recolentes, et imitemur quod continent, et quod promittunt assequamur. Per eundem Christum Dominum nostrum. Amen.",
+      "english": "Let us pray. O God, whose only begotten Son, by His life, death, and resurrection, has purchased for us the rewards of eternal life, grant, we beseech Thee, that meditating upon these mysteries of the Most Holy Rosary of the Blessed Virgin Mary, we may imitate what they contain and obtain what they promise, through the same Christ our Lord. Amen.",
+      "spanish": "Oh Dios, cuyo Hijo unigénito nos adquirió con su vida, muerte y resurrección los premios de la salvación eterna, concédenos, te suplicamos, que, meditando estos misterios del Santísimo Rosario de la Bienaventurada Virgen María, imitemos lo que contienen y obtengamos lo que prometen. Por el mismo Cristo nuestro Señor. Amén."
     }
+  },
+  "mysteries": {
+    "joyful": [
+      {
+        "number": 1,
+        "latin": "Annuntiátio",
+        "english": "The Annunciation",
+        "description": "The Angel Gabriel announces to Mary that she is to be the Mother of God. (Luke 1:26-38)"
+      },
+      {
+        "number": 2,
+        "latin": "Visitátio",
+        "english": "The Visitation",
+        "description": "Mary visits her cousin Elizabeth, who tells her that she will be blessed among women. (Luke 1:39-56)"
+      },
+      {
+        "number": 3,
+        "latin": "Natívitas",
+        "english": "The Nativity",
+        "description": "Jesus is born in a stable in Bethlehem. (Luke 2:1-21)"
+      },
+      {
+        "number": 4,
+        "latin": "Præsentátio",
+        "english": "The Presentation in the Temple",
+        "description": "Mary and Joseph present Jesus in the Temple where they meet Simeon. (Luke 2:22-38)"
+      },
+      {
+        "number": 5,
+        "latin": "Invéntio in Templo",
+        "english": "The Finding of Jesus in the Temple",
+        "description": "After searching for three days, Mary and Joseph find the young Jesus teaching in the Temple. (Luke 2:41-52)"
+      }
+    ],
+    "sorrowful": [
+      {
+        "number": 1,
+        "latin": "Agónia in Hortu",
+        "english": "The Agony in the Garden",
+        "description": "Jesus prays in the Garden of Gethsemane on the night before His death. (Matthew 26:36-46)"
+      },
+      {
+        "number": 2,
+        "latin": "Flagellátio",
+        "english": "The Scourging at the Pillar",
+        "description": "Jesus is bound to a pillar and scourged. (John 19:1)"
+      },
+      {
+        "number": 3,
+        "latin": "Coronátio Spinæ",
+        "english": "The Crowning with Thorns",
+        "description": "Jesus is mocked and crowned with thorns. (Matthew 27:27-31)"
+      },
+      {
+        "number": 4,
+        "latin": "Baiulátio Crucis",
+        "english": "The Carrying of the Cross",
+        "description": "Jesus carries His cross to Calvary. (John 19:17)"
+      },
+      {
+        "number": 5,
+        "latin": "Crucifíxio",
+        "english": "The Crucifixion",
+        "description": "Jesus is nailed to the cross and dies. (John 19:18-30)"
+      }
+    ],
+    "glorious": [
+      {
+        "number": 1,
+        "latin": "Resurréctio",
+        "english": "The Resurrection",
+        "description": "Jesus rises from the dead on the third day. (Mark 16:1-8)"
+      },
+      {
+        "number": 2,
+        "latin": "Ascénsio",
+        "english": "The Ascension",
+        "description": "Jesus ascends into Heaven forty days after His Resurrection. (Acts 1:6-11)"
+      },
+      {
+        "number": 3,
+        "latin": "Descénsus Spíritus Sancti",
+        "english": "The Descent of the Holy Spirit",
+        "description": "The Holy Spirit descends upon Mary and the Apostles at Pentecost. (Acts 2:1-4)"
+      },
+      {
+        "number": 4,
+        "latin": "Assúmptio Mariæ",
+        "english": "The Assumption",
+        "description": "Mary is assumed body and soul into Heaven at the end of her life."
+      },
+      {
+        "number": 5,
+        "latin": "Coronátio Mariæ",
+        "english": "The Coronation of Mary",
+        "description": "Mary is crowned Queen of Heaven and Earth. (Revelation 12:1)"
+      }
+    ],
+    "luminous": [
+      {
+        "number": 1,
+        "latin": "Baptísma in Iordáne",
+        "english": "The Baptism in the Jordan",
+        "description": "Jesus is baptized in the Jordan River by John the Baptist. (Matthew 3:13-17)"
+      },
+      {
+        "number": 2,
+        "latin": "Núptiæ Cana",
+        "english": "The Wedding at Cana",
+        "description": "At Mary's request, Jesus performs His first miracle, turning water into wine. (John 2:1-12)"
+      },
+      {
+        "number": 3,
+        "latin": "Prædicátio Regni Dei",
+        "english": "The Proclamation of the Kingdom",
+        "description": "Jesus proclaims the Kingdom of God and calls all to conversion. (Mark 1:14-15)"
+      },
+      {
+        "number": 4,
+        "latin": "Transfigurátio",
+        "english": "The Transfiguration",
+        "description": "Jesus is transfigured on Mount Tabor, revealing His divine glory. (Matthew 17:1-8)"
+      },
+      {
+        "number": 5,
+        "latin": "Institútio Eucharístiæ",
+        "english": "The Institution of the Eucharist",
+        "description": "At the Last Supper, Jesus institutes the Eucharist. (Matthew 26:26-28)"
+      }
+    ]
+  },
+  "schedule": {
+    "Monday": "joyful",
+    "Tuesday": "sorrowful",
+    "Wednesday": "glorious",
+    "Thursday": "luminous",
+    "Friday": "sorrowful",
+    "Saturday": "joyful",
+    "Sunday": "glorious"
+  },
+  "template": {
+    "opening": [
+      "sign_of_the_cross",
+      "apostles_creed",
+      "our_father",
+      {
+        "hail_mary": 3
+      },
+      "glory_be"
+    ],
+    "decade": [
+      "our_father",
+      {
+        "hail_mary": 10
+      },
+      "glory_be",
+      "fatima_prayer"
+    ],
+    "closing": [
+      "hail_holy_queen",
+      "final_prayer",
+      "sign_of_the_cross"
+    ]
+  }
 }
-  

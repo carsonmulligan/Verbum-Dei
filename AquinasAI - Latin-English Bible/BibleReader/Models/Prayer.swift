@@ -18,8 +18,10 @@ struct Prayer: Identifiable, Codable {
     let title: String
     let title_latin: String?
     let title_english: String?
+    let title_spanish: String?
     let latin: String
     let english: String
+    let spanish: String?
     var category: PrayerCategory = .basic
     var instructions: String?
     
@@ -31,21 +33,29 @@ struct Prayer: Identifiable, Codable {
         title_english ?? title
     }
     
+    var displayTitleSpanish: String {
+        title_spanish ?? title_english ?? title
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case title
         case title_latin
         case title_english
+        case title_spanish
         case latin
         case english
+        case spanish
         case instructions
     }
     
-    init(title: String, title_latin: String?, title_english: String?, latin: String, english: String, category: PrayerCategory = .basic, instructions: String? = nil) {
+    init(title: String, title_latin: String?, title_english: String?, title_spanish: String? = nil, latin: String, english: String, spanish: String? = nil, category: PrayerCategory = .basic, instructions: String? = nil) {
         self.title = title
         self.title_latin = title_latin
         self.title_english = title_english
+        self.title_spanish = title_spanish
         self.latin = latin
         self.english = english
+        self.spanish = spanish
         self.category = category
         self.instructions = instructions
     }
@@ -55,8 +65,10 @@ struct Prayer: Identifiable, Codable {
         title = try container.decode(String.self, forKey: .title)
         title_latin = try container.decodeIfPresent(String.self, forKey: .title_latin)
         title_english = try container.decodeIfPresent(String.self, forKey: .title_english)
+        title_spanish = try container.decodeIfPresent(String.self, forKey: .title_spanish)
         latin = try container.decode(String.self, forKey: .latin)
         english = try container.decode(String.self, forKey: .english)
+        spanish = try container.decodeIfPresent(String.self, forKey: .spanish)
         instructions = try container.decodeIfPresent(String.self, forKey: .instructions)
         category = .basic // Default category, will be set after decoding
     }
@@ -66,10 +78,17 @@ struct Prayer: Identifiable, Codable {
         try container.encode(title, forKey: .title)
         try container.encode(title_latin, forKey: .title_latin)
         try container.encode(title_english, forKey: .title_english)
+        try container.encodeIfPresent(title_spanish, forKey: .title_spanish)
         try container.encode(latin, forKey: .latin)
         try container.encode(english, forKey: .english)
+        try container.encodeIfPresent(spanish, forKey: .spanish)
         try container.encodeIfPresent(instructions, forKey: .instructions)
     }
+}
+
+// MARK: - Spanish Translations Container
+struct SpanishTranslationsContainer: Codable {
+    let spanish_translations: [String: String]
 }
 
 // MARK: - Basic Prayers Container
@@ -88,16 +107,20 @@ struct RosaryPrayersContainer: Codable {
 struct RosaryPrayer: Codable {
     let title_latin: String?
     let title_english: String?
+    let title_spanish: String?
     let latin: String
     let english: String
+    let spanish: String?
     
     var asPrayer: Prayer {
         Prayer(
             title: title_english ?? title_latin ?? "",
             title_latin: title_latin,
             title_english: title_english,
+            title_spanish: title_spanish,
             latin: latin,
             english: english,
+            spanish: spanish,
             category: .rosary
         )
     }
@@ -197,16 +220,20 @@ struct MassPrayer: Codable {
     let title: String
     let title_latin: String?
     let title_english: String?
+    let title_spanish: String?
     let latin: String
     let english: String
+    let spanish: String?
     
     var asPrayer: Prayer {
         Prayer(
             title: title,
             title_latin: title_latin,
             title_english: title_english,
+            title_spanish: title_spanish,
             latin: latin,
             english: english,
+            spanish: spanish,
             category: .mass
         )
     }
@@ -431,16 +458,20 @@ struct AngelusPrayer: Codable {
     let title: String
     let title_latin: String
     let title_english: String
+    let title_spanish: String
     let latin: String
     let english: String
+    let spanish: String
     
     var asPrayer: Prayer {
         Prayer(
             title: title,
             title_latin: title_latin,
             title_english: title_english,
+            title_spanish: title_spanish,
             latin: latin,
             english: english,
+            spanish: spanish,
             category: .angelus,
             instructions: instructions
         )
@@ -460,16 +491,20 @@ struct DivineMercyContent: Codable {
 struct DivineMercyPrayer: Codable {
     let title_latin: String?
     let title_english: String?
+    let title_spanish: String?
     let latin: String
     let english: String
+    let spanish: String?
     
     var asPrayer: Prayer {
         Prayer(
             title: title_english ?? title_latin ?? "",
             title_latin: title_latin,
             title_english: title_english,
+            title_spanish: title_spanish,
             latin: latin,
             english: english,
+            spanish: spanish,
             category: .divine
         )
     }
@@ -571,6 +606,9 @@ class PrayerStore: ObservableObject {
         
         var allPrayers: [Prayer] = []
         
+        // Load Spanish translations first
+        let spanishTranslations = loadSpanishTranslations()
+        
         for (filename, category) in prayerFiles {
             print("Processing \(filename)...")
             if let url = Bundle.main.url(forResource: filename.replacingOccurrences(of: ".json", with: ""), withExtension: "json") {
@@ -584,28 +622,44 @@ class PrayerStore: ObservableObject {
                         let container = try JSONDecoder().decode(RosaryPrayersContainer.self, from: data)
                         print("Successfully decoded rosary prayers. Mysteries count: \(container.mysteries.count)")
                         rosaryPrayers = container
-                        let prayerArray = container.common_prayers.values.map { $0.asPrayer }
+                        let prayerArray = container.common_prayers.values.map { rosaryPrayer in
+                            var prayer = rosaryPrayer.asPrayer
+                            prayer = mergeSpanishTranslation(prayer: prayer, translations: spanishTranslations)
+                            return prayer
+                        }
                         print("Loaded \(prayerArray.count) rosary prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "order_of_mass.json":
                         let container = try JSONDecoder().decode(OrderOfMassContainer.self, from: data)
                         massOrder = container
-                        let prayerArray = container.prayers.map { $0.asPrayer }
+                        let prayerArray = container.prayers.map { massPrayer in
+                            var prayer = massPrayer.asPrayer
+                            prayer = mergeSpanishTranslation(prayer: prayer, translations: spanishTranslations)
+                            return prayer
+                        }
                         print("Loaded \(prayerArray.count) mass prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "angelus_domini.json":
                         let container = try JSONDecoder().decode(AngelusContainer.self, from: data)
                         angelusPrayers = container
-                        let prayerArray = container.angelus.prayers.map { $0.asPrayer }
+                        let prayerArray = container.angelus.prayers.map { angelusPrayer in
+                            var prayer = angelusPrayer.asPrayer
+                            prayer = mergeSpanishTranslation(prayer: prayer, translations: spanishTranslations)
+                            return prayer
+                        }
                         print("Loaded \(prayerArray.count) angelus prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
                     case "divine_mercy_chaplet.json":
                         let container = try JSONDecoder().decode(DivineMercyContainer.self, from: data)
                         divineMercyPrayers = container
-                        let prayerArray = container.divine_mercy_chaplet.common_prayers.values.map { $0.asPrayer }
+                        let prayerArray = container.divine_mercy_chaplet.common_prayers.values.map { divineMercyPrayer in
+                            var prayer = divineMercyPrayer.asPrayer
+                            prayer = mergeSpanishTranslation(prayer: prayer, translations: spanishTranslations)
+                            return prayer
+                        }
                         print("Loaded \(prayerArray.count) divine mercy prayers")
                         allPrayers.append(contentsOf: prayerArray)
                         
@@ -613,15 +667,18 @@ class PrayerStore: ObservableObject {
                         let container = try JSONDecoder().decode(LiturgyOfHoursContainer.self, from: data)
                         liturgyOfHoursPrayers = container
                         let prayerArray = container.liturgy_of_hours.prayers.map { prayer -> Prayer in
-                            let mutablePrayer = Prayer(
+                            var mutablePrayer = Prayer(
                                 title: prayer.title,
                                 title_latin: prayer.title_latin,
                                 title_english: prayer.title_english,
+                                title_spanish: prayer.title_spanish,
                                 latin: prayer.latin,
                                 english: prayer.english,
+                                spanish: prayer.spanish,
                                 category: .hours,
                                 instructions: prayer.instructions
                             )
+                            mutablePrayer = mergeSpanishTranslation(prayer: mutablePrayer, translations: spanishTranslations)
                             return mutablePrayer
                         }
                         print("Loaded \(prayerArray.count) liturgy of hours prayers")
@@ -632,6 +689,7 @@ class PrayerStore: ObservableObject {
                             let mappedPrayers = prayersContainer.prayers.map { prayer -> Prayer in
                                 var mutablePrayer = prayer
                                 mutablePrayer.category = category
+                                mutablePrayer = mergeSpanishTranslation(prayer: mutablePrayer, translations: spanishTranslations)
                                 return mutablePrayer
                             }
                             print("Loaded \(mappedPrayers.count) basic prayers")
@@ -654,6 +712,48 @@ class PrayerStore: ObservableObject {
         
         print("Total prayers loaded: \(allPrayers.count)")
         prayers = allPrayers
+    }
+    
+    private func loadSpanishTranslations() -> [String: String] {
+        guard let url = Bundle.main.url(forResource: "spanish_prayers", withExtension: "json") else {
+            print("❌ Could not find spanish_prayers.json in bundle")
+            return [:]
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let container = try JSONDecoder().decode(SpanishTranslationsContainer.self, from: data)
+            print("✅ Loaded \(container.spanish_translations.count) Spanish translations")
+            return container.spanish_translations
+        } catch {
+            print("❌ Error loading Spanish translations: \(error)")
+            return [:]
+        }
+    }
+    
+    private func mergeSpanishTranslation(prayer: Prayer, translations: [String: String]) -> Prayer {
+        // Try to find Spanish translation by prayer ID or title
+        let prayerId = prayer.id
+        let spanishText = translations[prayerId] ?? 
+                         translations[prayer.title.lowercased()] ??
+                         translations[prayer.displayTitleLatin.lowercased()] ??
+                         translations[prayer.displayTitleEnglish.lowercased()]
+        
+        if let spanish = spanishText {
+            return Prayer(
+                title: prayer.title,
+                title_latin: prayer.title_latin,
+                title_english: prayer.title_english,
+                title_spanish: prayer.title_spanish,
+                latin: prayer.latin,
+                english: prayer.english,
+                spanish: spanish,
+                category: prayer.category,
+                instructions: prayer.instructions
+            )
+        }
+        
+        return prayer
     }
     
     func getPrayers(for category: PrayerCategory) -> [Prayer] {
@@ -716,6 +816,8 @@ struct LiturgyOfHoursPrayer: Codable {
     let title: String
     let title_latin: String
     let title_english: String
+    let title_spanish: String
     let latin: String
     let english: String
+    let spanish: String
 } 
