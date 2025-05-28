@@ -35,7 +35,9 @@
       "title_latin": "Penitentiae Actus – Forma II",
       "title_english": "Penitential Act – Form B",
       "latin": "V/. Miserere nostri, Domine.  R/. Quia peccavimus tibi.  V/. Ostende nobis, Domine, misericordiam tuam.  R/. Et salutare tuum da nobis.",
-      "english": "V/. Have mercy on us, O Lord.  R/. For we have sinned against you.  V/. Show us, O Lord, your mercy.  R/. And grant us your salvation."
+      "english": "V/. Have mercy on us, O Lord.  R/. For we have sinned against you.  V/. Show us, O Lord, your mercy.  R/. And grant us your salvation.",
+      "spanish": "¿No habéis pecado de pensamiento, palabra, obra y omisión? Confesad vuestros pecados a Dios todopoderoso. Yo confieso ante Dios todopoderoso y ante vosotros, hermanos, que he pecado mucho de pensamiento, palabra, obra y omisión. Por mi culpa, por mi culpa, por mi gran culpa. Por eso ruego a santa María, siempre Virgen, a los ángeles, a los santos y a vosotros, hermanos, que intercedáis por mí ante Dios, nuestro Señor.",
+      "title_spanish": "Acto Penitencial – Forma B"
     },
     {
       "id": "penitential_act_c",
@@ -43,7 +45,9 @@
       "title_latin": "Penitentiae Actus – Forma III",
       "title_english": "Penitential Act – Form C",
       "latin": "V/. Qui missus es sanare contritos corde: Kyrie, eleison.  R/. Kyrie, eleison.\nV/. Qui peccatores vocare venisti: Christe, eleison.  R/. Christe, eleison.\nV/. Qui ad dexteram Patris sedes, ad interpellandum pro nobis: Kyrie, eleison.  R/. Kyrie, eleison.",
-      "english": "V/. You were sent to heal the contrite of heart: Lord, have mercy.  R/. Lord, have mercy.\nV/. You came to call sinners: Christ, have mercy.  R/. Christ, have mercy.\nV/. You are seated at the right hand of the Father to intercede for us: Lord, have mercy.  R/. Lord, have mercy."
+      "english": "V/. You were sent to heal the contrite of heart: Lord, have mercy.  R/. Lord, have mercy.\nV/. You came to call sinners: Christ, have mercy.  R/. Christ, have mercy.\nV/. You are seated at the right hand of the Father to intercede for us: Lord, have mercy.  R/. Lord, have mercy.",
+      "spanish": "Señor Jesús, que has sido enviado a sanar los corazones afligidos: Señor, ten piedad. Cristo Jesús, que has venido a llamar a los pecadores: Cristo, ten piedad. Señor Jesús, que estás sentado a la derecha del Padre para interceder por nosotros: Señor, ten piedad.",
+      "title_spanish": "Acto Penitencial – Forma C"
     },
     {
       "id": "kyrie",
@@ -114,7 +118,9 @@
       "title_latin": "Mortem Tuam Annuntiamus",
       "title_english": "We Proclaim Your Death",
       "latin": "Mortem tuam annuntiamus, Domine, et tuam resurrectionem confitemur, donec venias.",
-      "english": "We proclaim your Death, O Lord, and profess your Resurrection until you come again."
+      "english": "We proclaim your Death, O Lord, and profess your Resurrection until you come again.",
+      "spanish": "Anunciamos tu muerte, proclamamos tu resurrección. ¡Ven, Señor Jesús!",
+      "title_spanish": "Anunciamos tu muerte"
     },
     {
       "id": "mystery_of_faith_2",
@@ -122,7 +128,9 @@
       "title_latin": "Quotiescumque Manducamus",
       "title_english": "When We Eat This Bread",
       "latin": "Quotiescumque manducamus panem hunc et calicem bibimus, mortem tuam annuntiamus, Domine, donec venias.",
-      "english": "When we eat this Bread and drink this Cup, we proclaim your Death, O Lord, until you come again."
+      "english": "When we eat this Bread and drink this Cup, we proclaim your Death, O Lord, until you come again.",
+      "spanish": "Cada vez que comemos de este Pan y bebemos de este Cáliz, anunciamos tu muerte, Señor, hasta que vuelvas.",
+      "title_spanish": "Cada vez que comemos"
     },
     {
       "id": "mystery_of_faith_3",
@@ -130,7 +138,9 @@
       "title_latin": "Salvator Mundi",
       "title_english": "Save Us, Savior of the World",
       "latin": "Salvator mundi, salva nos, qui per crucem et resurrectionem tuam liberasti nos.",
-      "english": "Save us, Savior of the world, for by your Cross and Resurrection you have set us free."
+      "english": "Save us, Savior of the world, for by your Cross and Resurrection you have set us free.",
+      "spanish": "Salvador del mundo, sálvanos, tú que nos has liberado por tu cruz y resurrección.",
+      "title_spanish": "Sálvanos, Salvador"
     },
     {
       "id": "pax_domini",
@@ -273,7 +283,9 @@
       "title_latin": "Oratio Universalis",
       "title_english": "Universal Prayer",
       "latin": "(Variable petitions)",
-      "english": "(Variable petitions)"
+      "english": "(Variable petitions)",
+      "spanish": "Te rogamos, óyenos.",
+      "title_spanish": "Oración Universal"
     },
     {
       "id": "offertory",
@@ -281,7 +293,9 @@
       "title_latin": "Praeparatio Donorum",
       "title_english": "Preparation of the Gifts",
       "latin": "Benedictus es, Domine, Deus universi, quia de tua largitate accepimus panem, quem tibi offerimus, fructum terrae et operis manuum hominum: ex quo nobis fiet panis vitae.",
-      "english": "Blessed are you, Lord God of all creation, for through your goodness we have received the bread we offer you: fruit of the earth and work of human hands, it will become for us the bread of life."
+      "english": "Blessed are you, Lord God of all creation, for through your goodness we have received the bread we offer you: fruit of the earth and work of human hands, it will become for us the bread of life.",
+      "spanish": "Bendito seas, Señor, Dios del universo, por este pan, fruto de la tierra y del trabajo del hombre, que recibimos de tu generosidad y ahora te presentamos; él será para nosotros pan de vida.",
+      "title_spanish": "Preparación de los Dones"
     },
     {
       "id": "prayer_over_offerings",
@@ -289,7 +303,9 @@
       "title_latin": "Oratio Super Oblata",
       "title_english": "Prayer over the Offerings",
       "latin": "(Variable prayer)",
-      "english": "(Variable prayer)"
+      "english": "(Variable prayer)",
+      "spanish": "Acepta, Señor, los dones que presentamos en tu altar, y concédenos que sean para nosotros sacramento de salvación.",
+      "title_spanish": "Oración sobre las Ofrendas"
     },
     {
       "id": "eucharistic_prayer_i",

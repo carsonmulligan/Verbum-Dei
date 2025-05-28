@@ -18,7 +18,9 @@
         "title_latin": "Ecce ancilla Domini",
         "title_english": "Behold the handmaid of the Lord",
         "latin": "℣. Ecce ancilla Domini. \n℟. Fiat mihi secundum verbum tuum. \nAve Maria, gratia plena, Dominus tecum; benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
-        "english": "V/. Behold the handmaid of the Lord. \nR/. Be it done unto me according to Thy word. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
+        "english": "V/. Behold the handmaid of the Lord. \nR/. Be it done unto me according to Thy word. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
+        "spanish": "He aquí la esclava del Señor.",
+        "title_spanish": "He aquí la esclava del Señor"
       },
       {
         "order": 3,
@@ -27,7 +29,9 @@
         "title_latin": "Et Verbum caro factum est",
         "title_english": "And the Word was made Flesh",
         "latin": "℣. Et Verbum caro factum est. \n℟. Et habitavit in nobis. \nAve Maria, gratia plena, Dominus tecum; benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
-        "english": "V/. And the Word was made Flesh. \nR/. And dwelt among us. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen."
+        "english": "V/. And the Word was made Flesh. \nR/. And dwelt among us. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
+        "spanish": "Y el Verbo se hizo carne.",
+        "title_spanish": "Y el Verbo se hizo carne"
       },
       {
         "order": 4,
@@ -36,7 +40,9 @@
         "title_latin": "Ora pro nobis, sancta Dei Genetrix",
         "title_english": "Pray for us, O holy Mother of God",
         "latin": "℣. Ora pro nobis, sancta Dei Genetrix. \n℟. Ut digni efficiamur promissionibus Christi.",
-        "english": "V/. Pray for us, O holy Mother of God. \nR/. That we may be made worthy of the promises of Christ."
+        "english": "V/. Pray for us, O holy Mother of God. \nR/. That we may be made worthy of the promises of Christ.",
+        "spanish": "Ruega por nosotros, santa Madre de Dios.",
+        "title_spanish": "Ruega por nosotros, santa Madre de Dios"
       },
       {
         "order": 5,

@@ -8,7 +8,9 @@
         "title_latin": "Domine, labia mea aperies",
         "title_english": "Lord, open my lips",
         "latin": "Domine, labia mea aperies; et os meum annuntiabit laudem tuam.",
-        "english": "Lord, open my lips, and my mouth will proclaim your praise."
+        "english": "Lord, open my lips, and my mouth will proclaim your praise.",
+        "spanish": "Señor, abre mis labios.",
+        "title_spanish": "Señor, abre mis labios"
       },
       {
         "order": 2,
@@ -17,7 +19,9 @@
         "title_latin": "Psalmus 94 (95) «Venite, exultemus Domino»",
         "title_english": "Invitatory Psalm 95",
         "latin": "Venite, exultemus Domino; jubilemus Deo salutari nostro;\nPraecoccupemus faciem eius in confessione, et in psalmis jubilemus ei:\nQuoniam Deus magnus Dominus, et rex magnus super omnes deos.\nQuia in manu eius sunt omnes fines terrae, et altitudines montium ipsius sunt;\nQuoniam ipsius est mare, et ipse fecit illud, et siccam manus eius formaverunt.\nVenite, adoremus, et procidamus, et ploremus ante Dominum qui fecit nos:\nQuia ipse est Dominus Deus noster, et nos populus pascuae eius, et oves manus eius.\nHodie si vocem eius audieritis, nolite obdurare corda vestra\nSicut in irritatione, secundum diem tentationis in deserto, ubi tentaverunt me patres vestri: probaverunt me, et viderunt opera mea.\nQuadraginta annis offensus fui generationi illi, et dixi: Semper hi errant corde.\nEt isti non cognoverunt vias meas: ut iuravi in ira mea: Si introibunt in requiem meam.",
-        "english": "Sing ye to the Lord a new canticle: sing to the Lord, all the earth.\nSing ye to the Lord and bless his name: shew forth his salvation from day to day.\nDeclare his glory among the Gentiles: his wonders among all people.\nFor the Lord is great, and exceedingly to be praised: he is to be feared above all gods.\nFor all the gods of the Gentiles are devils: but the Lord made the heavens.\nPraise and beauty are before him: holiness and majesty in his sanctuary.\nBring ye to the Lord, O ye kindreds of the Gentiles, bring ye to the Lord glory and honour:\nBring to the Lord glory unto his name. Bring up sacrifices, and come into his courts:\nAdore ye the Lord in his holy court. Let all the earth be moved at his presence.\nSay ye among the Gentiles, the Lord hath reigned. For he hath corrected the world, which shall not be moved: he will judge the people with justice.\nLet the heavens rejoice, and let the earth be glad, let the sea be moved, and the fulness thereof:\nThe fields and all things that are in them shall be joyful. Then shall all the trees of the woods rejoice\nBefore the face of the Lord, because he cometh: because he cometh to judge the earth. He shall judge the world with justice, and the people with his truth."
+        "english": "Sing ye to the Lord a new canticle: sing to the Lord, all the earth.\nSing ye to the Lord and bless his name: shew forth his salvation from day to day.\nDeclare his glory among the Gentiles: his wonders among all people.\nFor the Lord is great, and exceedingly to be praised: he is to be feared above all gods.\nFor all the gods of the Gentiles are devils: but the Lord made the heavens.\nPraise and beauty are before him: holiness and majesty in his sanctuary.\nBring ye to the Lord, O ye kindreds of the Gentiles, bring ye to the Lord glory and honour:\nBring to the Lord glory unto his name. Bring up sacrifices, and come into his courts:\nAdore ye the Lord in his holy court. Let all the earth be moved at his presence.\nSay ye among the Gentiles, the Lord hath reigned. For he hath corrected the world, which shall not be moved: he will judge the people with justice.\nLet the heavens rejoice, and let the earth be glad, let the sea be moved, and the fulness thereof:\nThe fields and all things that are in them shall be joyful. Then shall all the trees of the woods rejoice\nBefore the face of the Lord, because he cometh: because he cometh to judge the earth. He shall judge the world with justice, and the people with his truth.",
+        "spanish": "Venid, aclamemos al Señor, demos vítores a la Roca que nos salva; entremos a su presencia dándole gracias, aclamándolo con cantos.",
+        "title_spanish": "Salmo Invitatorio 95"
       },
       {
         "order": 3,
@@ -26,7 +30,9 @@
         "title_latin": "Deus, in adiutorium meum intende",
         "title_english": "O God, come to my assistance",
         "latin": "Deus, in adiutorium meum intende; Domine, ad adiuvandum me festina.",
-        "english": "O God, come to my assistance; O Lord, make haste to help me."
+        "english": "O God, come to my assistance; O Lord, make haste to help me.",
+        "spanish": "Dios mío, ven en mi auxilio.",
+        "title_spanish": "Dios mío, ven en mi auxilio"
       },
       {
         "order": 4,
