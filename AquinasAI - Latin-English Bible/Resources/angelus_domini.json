@@ -7,6 +7,7 @@
         "title": "The Angel of the Lord declared unto Mary",
         "title_latin": "Angelus Domini nuntiavit Mariae",
         "title_english": "The Angel of the Lord declared unto Mary",
+        "title_spanish": "El Ángel del Señor anunció a María",
         "latin": "℣. Angelus Domini nuntiavit Mariae. \n℟. Et concepit de Spiritu Sancto. \nAve Maria, gratia plena, Dominus tecum; benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
         "english": "V/. The Angel of the Lord declared unto Mary. \nR/. And she conceived of the Holy Spirit. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
         "spanish": "℣. El Ángel del Señor anunció a María.\n℟. Y concibió por obra del Espíritu Santo.\n\nDios te salve, María, llena eres de gracia;\nel Señor es contigo.\nBendita tú eres entre todas las mujeres,\ny bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios,\nruega por nosotros, pecadores,\nahora y en la hora de nuestra muerte. Amén.\n\n℣. He aquí la esclava del Señor.\n℟. Hágase en mí según tu palabra.\n\nDios te salve, María, llena eres de gracia;\nel Señor es contigo.\nBendita tú eres entre todas las mujeres,\ny bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios,\nruega por nosotros, pecadores,\nahora y en la hora de nuestra muerte. Amén.\n\n℣. Y el Verbo se hizo carne.\n℟. Y habitó entre nosotros.\n\nDios te salve, María, llena eres de gracia;\nel Señor es contigo.\nBendita tú eres entre todas las mujeres,\ny bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios,\nruega por nosotros, pecadores,\nahora y en la hora de nuestra muerte. Amén.\n\n℣. Ruega por nosotros, Santa Madre de Dios.\n℟. Para que seamos dignos de alcanzar las promesas de Jesucristo.\n\n℣. Oremos.\nDerrama, Señor, tu gracia en nuestros corazones;\npara que los que hemos conocido la Encarnación de Cristo, tu Hijo,\npor el anuncio del Ángel,\npor los méritos de su Pasión y Cruz\nseamos llevados a la gloria de la Resurrección.\nPor el mismo Cristo, Nuestro Señor. Amén."
@@ -17,10 +18,10 @@
         "title": "Behold the handmaid of the Lord",
         "title_latin": "Ecce ancilla Domini",
         "title_english": "Behold the handmaid of the Lord",
+        "title_spanish": "He aquí la esclava del Señor",
         "latin": "℣. Ecce ancilla Domini. \n℟. Fiat mihi secundum verbum tuum. \nAve Maria, gratia plena, Dominus tecum; benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
         "english": "V/. Behold the handmaid of the Lord. \nR/. Be it done unto me according to Thy word. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
-        "spanish": "He aquí la esclava del Señor.",
-        "title_spanish": "He aquí la esclava del Señor"
+        "spanish": "℣. He aquí la esclava del Señor.\n℟. Hágase en mí según tu palabra.\n\nDios te salve, María, llena eres de gracia;\nel Señor es contigo.\nBendita tú eres entre todas las mujeres,\ny bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios,\nruega por nosotros, pecadores,\nahora y en la hora de nuestra muerte. Amén."
       },
       {
         "order": 3,
@@ -28,10 +29,10 @@
         "title": "And the Word was made Flesh",
         "title_latin": "Et Verbum caro factum est",
         "title_english": "And the Word was made Flesh",
+        "title_spanish": "Y el Verbo se hizo carne",
         "latin": "℣. Et Verbum caro factum est. \n℟. Et habitavit in nobis. \nAve Maria, gratia plena, Dominus tecum; benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
         "english": "V/. And the Word was made Flesh. \nR/. And dwelt among us. \nHail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
-        "spanish": "Y el Verbo se hizo carne.",
-        "title_spanish": "Y el Verbo se hizo carne"
+        "spanish": "℣. Y el Verbo se hizo carne.\n℟. Y habitó entre nosotros.\n\nDios te salve, María, llena eres de gracia;\nel Señor es contigo.\nBendita tú eres entre todas las mujeres,\ny bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios,\nruega por nosotros, pecadores,\nahora y en la hora de nuestra muerte. Amén."
       },
       {
         "order": 4,
@@ -39,10 +40,10 @@
         "title": "Pray for us, O holy Mother of God",
         "title_latin": "Ora pro nobis, sancta Dei Genetrix",
         "title_english": "Pray for us, O holy Mother of God",
+        "title_spanish": "Ruega por nosotros, santa Madre de Dios",
         "latin": "℣. Ora pro nobis, sancta Dei Genetrix. \n℟. Ut digni efficiamur promissionibus Christi.",
         "english": "V/. Pray for us, O holy Mother of God. \nR/. That we may be made worthy of the promises of Christ.",
-        "spanish": "Ruega por nosotros, santa Madre de Dios.",
-        "title_spanish": "Ruega por nosotros, santa Madre de Dios"
+        "spanish": "℣. Ruega por nosotros, santa Madre de Dios.\n℟. Para que seamos dignos de alcanzar las promesas de Jesucristo."
       },
       {
         "order": 5,
@@ -50,9 +51,10 @@
         "title": "Let us pray",
         "title_latin": "Oremus",
         "title_english": "Let us pray",
+        "title_spanish": "Oremos",
         "latin": "Gratiam tuam, quaesumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui Incarnationem cognovimus, per Passionem eius et Crucem ad Resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.",
         "english": "Pour forth, we beseech Thee, O Lord, Thy grace into our hearts; that we, to whom the Incarnation of Christ Thy Son was made known by the message of an angel, may by His Passion and Cross be brought to the glory of His Resurrection. Through the same Christ our Lord. Amen.",
-        "spanish": "Oremos por nuestro Santo Padre N.: que el Señor lo conserve, le dé vida, lo haga dichoso en la tierra y no lo entregue a la maldad de sus enemigos."
+        "spanish": "Derrama, Señor, tu gracia en nuestros corazones;\npara que los que hemos conocido la Encarnación de Cristo, tu Hijo,\npor el anuncio del Ángel,\npor los méritos de su Pasión y Cruz\nseamos llevados a la gloria de la Resurrección.\nPor el mismo Cristo, Nuestro Señor. Amén."
       }
     ]
   },
