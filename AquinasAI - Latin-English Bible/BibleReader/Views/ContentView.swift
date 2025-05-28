@@ -381,14 +381,8 @@ struct BookView: View {
     }
     
     private var navigationTitle: String {
-        switch viewModel.displayMode {
-        case .latinOnly:
-            return book.name
-        case .englishOnly:
-            return viewModel.getEnglishName(for: book.name)
-        case .bilingual:
-            return book.name
-        }
+        let primaryLanguage = viewModel.displayMode.primaryLanguage
+        return viewModel.getBookName(for: book.name, in: primaryLanguage)
     }
     
     var body: some View {
