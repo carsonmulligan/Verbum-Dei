@@ -16,6 +16,7 @@ enum PrayerCategory: String, CaseIterable {
 struct PrayersView: View {
     @EnvironmentObject var prayerStore: PrayerStore
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) private var colorScheme
     @State private var searchText = ""
     @State private var selectedCategory: PrayerCategory
     @State private var selectedLanguage: PrayerLanguage = .latinEnglish
@@ -163,6 +164,7 @@ struct PrayersView: View {
                     }
                 }
             }
+            .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
             .navigationTitle("Prayers")
             .navigationBarItems(trailing: Button("Done") { dismiss() })
         }

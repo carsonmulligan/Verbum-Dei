@@ -3,6 +3,7 @@ import SwiftUI
 struct RosaryView: View {
     @EnvironmentObject var prayerStore: PrayerStore
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) private var colorScheme
     @State private var selectedDay: String = getCurrentDay()
     @State private var selectedLanguage: PrayerLanguage = .latinEnglish
     @State private var scrollToId: String?
@@ -71,6 +72,7 @@ struct RosaryView: View {
                 LoadingErrorView(isLoading: prayerStore.rosaryPrayers == nil)
             }
         }
+        .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         .navigationTitle("Rosary")
     }
 }
@@ -365,7 +367,7 @@ private struct RepeatedPrayerView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(colorScheme == .dark ? Color.black.opacity(0.3) : Color.white)
+                .fill(colorScheme == .dark ? Color.black.opacity(0.3) : Color.paperWhite)
                 .shadow(color: colorScheme == .dark ? Color.clear : Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         )
         .overlay(
@@ -535,7 +537,7 @@ private struct LoadingErrorView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(colorScheme == .dark ? Color.black.opacity(0.6) : Color.white.opacity(0.9))
+        .background(colorScheme == .dark ? Color.black.opacity(0.6) : Color.paperWhite.opacity(0.9))
     }
 }
 

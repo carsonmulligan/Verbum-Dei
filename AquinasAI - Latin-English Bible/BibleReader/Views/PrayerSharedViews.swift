@@ -168,7 +168,7 @@ struct PrayerCard: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(colorScheme == .dark ? Color.black.opacity(0.3) : Color.white)
+                .fill(colorScheme == .dark ? Color.black.opacity(0.3) : Color.paperWhite)
                 .shadow(color: colorScheme == .dark ? .clear : Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         )
         .overlay(
