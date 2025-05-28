@@ -333,21 +333,33 @@ private struct RepeatedPrayerView: View {
                     .padding(.bottom, 4)
             }
             
-            if selectedLanguage == .latinOnly || selectedLanguage == .bilingual {
+            if selectedLanguage.showsLatin {
                 Text(prayer.latin)
                     .font(.body)
                     .foregroundColor(colorScheme == .dark ? .white : .primary)
                     .padding(.top, 4)
             }
             
-            if selectedLanguage == .englishOnly || selectedLanguage == .bilingual {
+            if selectedLanguage.showsEnglish {
                 Text(prayer.english)
                     .font(.body)
-                    .foregroundColor(selectedLanguage == .bilingual ? 
+                    .foregroundColor(selectedLanguage.isBilingual ? 
                                     (colorScheme == .dark ? .gray : .secondary) : 
                                     (colorScheme == .dark ? .white : .primary))
-                    .italic(selectedLanguage == .bilingual)
-                    .padding(.top, selectedLanguage == .bilingual ? 2 : 4)
+                    .italic(selectedLanguage.isBilingual)
+                    .padding(.top, selectedLanguage.isBilingual ? 2 : 4)
+            }
+            
+            if selectedLanguage.showsSpanish {
+                if let spanishText = prayer.spanish {
+                    Text(spanishText)
+                        .font(.body)
+                        .foregroundColor(selectedLanguage.isBilingual ? 
+                                        (colorScheme == .dark ? .gray : .secondary) : 
+                                        (colorScheme == .dark ? .white : .primary))
+                        .italic(selectedLanguage.isBilingual)
+                        .padding(.top, selectedLanguage.isBilingual ? 2 : 4)
+                }
             }
         }
         .padding()
@@ -386,13 +398,13 @@ private struct MysteriesView: View {
                     }
                     .padding(.bottom, 4)
                     
-                    if selectedLanguage != .englishOnly {
+                    if selectedLanguage.showsLatin {
                         Text(mystery.latin)
                             .font(.body)
                             .italic()
                     }
                     
-                    if selectedLanguage != .latinOnly {
+                    if selectedLanguage.showsEnglish {
                         Text(mystery.english)
                             .font(.body)
                     }
