@@ -1,0 +1,86 @@
+{
+  "liturgy_of_hours": {
+    "prayers": [
+      {
+        "order": 1,
+        "instructions": "Pray at the very start of the day—before your first Hour (Office of Readings or Morning Prayer)—around dawn, roughly 5:00-6:00 AM. Stand, make the Sign of the Cross, then say this versicle before the Invitatory Psalm.",
+        "title": "Lord, open my lips",
+        "title_latin": "Domine, labia mea aperies",
+        "title_english": "Lord, open my lips",
+        "latin": "Domine, labia mea aperies; et os meum annuntiabit laudem tuam.",
+        "english": "Lord, open my lips, and my mouth will proclaim your praise.",
+        "spanish": "Señor, abre mis labios.",
+        "title_spanish": "Señor, abre mis labios"
+      },
+      {
+        "order": 2,
+        "instructions": "Immediately after the versicle, recite (or sing) Psalm 95 with the day’s antiphon. This Invitatory still belongs to dawn—about 5:00-6:00 AM—before Office of Readings or Morning Prayer; remain standing and bow at the doxology.",
+        "title": "Invitatory Psalm 95",
+        "title_latin": "Psalmus 94 (95) «Venite, exultemus Domino»",
+        "title_english": "Invitatory Psalm 95",
+        "latin": "Venite, exultemus Domino; jubilemus Deo salutari nostro;\nPraecoccupemus faciem eius in confessione, et in psalmis jubilemus ei:\nQuoniam Deus magnus Dominus, et rex magnus super omnes deos.\nQuia in manu eius sunt omnes fines terrae, et altitudines montium ipsius sunt;\nQuoniam ipsius est mare, et ipse fecit illud, et siccam manus eius formaverunt.\nVenite, adoremus, et procidamus, et ploremus ante Dominum qui fecit nos:\nQuia ipse est Dominus Deus noster, et nos populus pascuae eius, et oves manus eius.\nHodie si vocem eius audieritis, nolite obdurare corda vestra\nSicut in irritatione, secundum diem tentationis in deserto, ubi tentaverunt me patres vestri: probaverunt me, et viderunt opera mea.\nQuadraginta annis offensus fui generationi illi, et dixi: Semper hi errant corde.\nEt isti non cognoverunt vias meas: ut iuravi in ira mea: Si introibunt in requiem meam.",
+        "english": "Sing ye to the Lord a new canticle: sing to the Lord, all the earth.\nSing ye to the Lord and bless his name: shew forth his salvation from day to day.\nDeclare his glory among the Gentiles: his wonders among all people.\nFor the Lord is great, and exceedingly to be praised: he is to be feared above all gods.\nFor all the gods of the Gentiles are devils: but the Lord made the heavens.\nPraise and beauty are before him: holiness and majesty in his sanctuary.\nBring ye to the Lord, O ye kindreds of the Gentiles, bring ye to the Lord glory and honour:\nBring to the Lord glory unto his name. Bring up sacrifices, and come into his courts:\nAdore ye the Lord in his holy court. Let all the earth be moved at his presence.\nSay ye among the Gentiles, the Lord hath reigned. For he hath corrected the world, which shall not be moved: he will judge the people with justice.\nLet the heavens rejoice, and let the earth be glad, let the sea be moved, and the fulness thereof:\nThe fields and all things that are in them shall be joyful. Then shall all the trees of the woods rejoice\nBefore the face of the Lord, because he cometh: because he cometh to judge the earth. He shall judge the world with justice, and the people with his truth.",
+        "spanish": "Venid, aclamemos al Señor, demos vítores a la Roca que nos salva; entremos a su presencia dándole gracias, aclamándolo con cantos.",
+        "title_spanish": "Salmo Invitatorio 95"
+      },
+      {
+        "order": 3,
+        "instructions": "Used at the very start of **every Hour except the Invitatory**—Office of Readings (any time after midnight, commonly 2:00-5:00 AM), Morning Prayer (~6 AM), Mid-Morning (Terce ~9 AM), Mid-Day (Sext ~12 PM), Mid-Afternoon (None ~3 PM), Evening Prayer (~6 PM) and Night Prayer (~9 PM). Trace the Sign of the Cross while saying it.",
+        "title": "O God, come to my assistance",
+        "title_latin": "Deus, in adiutorium meum intende",
+        "title_english": "O God, come to my assistance",
+        "latin": "Deus, in adiutorium meum intende; Domine, ad adiuvandum me festina.",
+        "english": "O God, come to my assistance; O Lord, make haste to help me.",
+        "spanish": "Dios mío, ven en mi auxilio.",
+        "title_spanish": "Dios mío, ven en mi auxilio"
+      },
+      {
+        "order": 4,
+        "instructions": "Added at the end of every psalm or canticle throughout **all Hours and times listed in prayer 3**; make a slight bow while reciting.",
+        "title": "Glory Be (Doxology)",
+        "title_latin": "Gloria Patri",
+        "title_english": "Glory Be (Doxology)",
+        "latin": "Gloria Patri, et Filio, et Spiritui Sancto; sicut erat in principio, et nunc, et semper, et in saecula saeculorum. Amen.",
+        "english": "Glory be to the Father, and to the Son, and to the Holy Spirit; as it was in the beginning, is now, and ever shall be, world without end. Amen.",
+        "spanish": "Gloria al Padre, y al Hijo, y al Espíritu Santo. Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén."
+      },
+      {
+        "order": 5,
+        "instructions": "Chanted or recited standing after the psalms and short reading of **Morning Prayer (Lauds)**, which is prayed at dawn or sunrise—about 6 AM.",
+        "title": "Canticle of Zechariah",
+        "title_latin": "Benedictus",
+        "title_english": "Canticle of Zechariah",
+        "latin": "Benedictus Dominus Deus Israel, quia visitavit et fecit redemptionem plebis suae;\nEt erexit cornu salutis nobis in domo David pueri sui;\nSicut locutus est per os sanctorum, qui a saeculo sunt, prophetarum eius:\nSalutem ex inimicis nostris et de manu omnium qui oderunt nos;\nAd faciendam misericordiam cum patribus nostris et memorari testamenti sui sancti;\nIusiurandum quod iuravit ad Abraham patrem nostrum, daturum se nobis;\nUt, sine timore, de manu inimicorum nostrorum liberati, serviamus illi\nIn sanctitate et iustitia coram ipso omnibus diebus nostris.\nEt tu, puer, propheta Altissimi vocaberis: praeibis enim ante faciem Domini parare vias eius,\nAd dandam scientiam salutis plebi eius in remissionem peccatorum eorum,\nPer viscera misericordiae Dei nostri, in quibus visitabit nos Oriens ex alto,\nIlluminare his qui in tenebris et in umbra mortis sedent, ad dirigendos pedes nostros in viam pacis.",
+        "english": "Blessed be the Lord, God of Israel, because He has visited us and wrought redemption for His people.\nAnd has raised up a horn of salvation for us in the house of David, His servant,\nAs He promised through the mouths of His holy ones, the prophets of old:\nSalvation from our enemies, and from the hand of all who hate us;\nTo show mercy to our forefathers and to be mindful of His holy covenant—\nThe oath which He swore to Abraham, our father, that He would grant us,\nThat, delivered from the hand of our enemies, we may serve Him without fear,\nIn holiness and justice before Him all our days.\nAnd thou, child, shalt be called the prophet of the Most High; for thou shalt go before the face of the Lord to prepare His ways,\nTo give knowledge of salvation to His people through forgiveness of their sins,\nBecause of the compassionate kindness of our God, the Dawn from on high shall break upon us,\nTo shine on those who sit in darkness and the shadow of death, to guide our feet into the way of peace.",
+        "spanish": "Bendito sea el Señor, Dios de Israel, porque ha visitado y redimido a su pueblo, suscitándonos una fuerza de salvación en la casa de David, su siervo, según lo había predicho desde antiguo por boca de sus santos profetas. Es la salvación que nos libra de nuestros enemigos y de la mano de todos los que nos odian; ha realizado así la misericordia que tuvo con nuestros padres, recordando su santa alianza y el juramento que juró a nuestro padre Abraham. Para concedernos que, libres de temor, arrancados de la mano de los enemigos, le sirvamos con santidad y justicia, en su presencia, todos nuestros días. Y a ti, niño, te llamarán profeta del Altísimo, porque irás delante del Señor a preparar sus caminos, anunciando a su pueblo la salvación, el perdón de sus pecados. Por la entrañable misericordia de nuestro Dios, nos visitará el sol que nace de lo alto, para iluminar a los que viven en tinieblas y en sombra de muerte, para guiar nuestros pasos por el camino de la paz."
+      },
+      {
+        "order": 6,
+        "instructions": "Chanted or recited standing after the psalms and short reading of **Evening Prayer (Vespers)**, prayed at dusk—roughly 4:00-6:00 PM depending on season, normally about 6 PM.",
+        "title": "Canticle of Mary",
+        "title_latin": "Magnificat",
+        "title_english": "Canticle of Mary",
+        "latin": "Magnificat anima mea Dominum,\nEt exultavit spiritus meus in Deo salutari meo;\nQuia respexit humilitatem ancillae suae: ecce enim ex hoc beatam me dicent omnes generationes.\nQuia fecit mihi magna qui potens est, et sanctum nomen eius.\nEt misericordia eius in progenies et progenies timentibus eum.\nFecit potentiam in brachio suo: dispersit superbos mente cordis sui.\nDeposuit potentes de sede et exaltavit humiles.\nEsurientes implevit bonis, et divites dimisit inanes.\nSuscepit Israel puerum suum, recordatus misericordiae suae,\nSicut locutus est ad patres nostros, Abraham et semini eius in saecula.\nGloria Patri, et Filio, et Spiritui Sancto,\nSicut erat in principio, et nunc, et semper, et in saecula saeculorum. Amen.",
+        "english": "My soul doth magnify the Lord,\nAnd my spirit hath rejoiced in God my Savior,\nBecause He hath regarded the humility of His handmaid; behold, from henceforth all generations shall call me blessed.\nBecause He that is mighty hath done great things for me, and holy is His name.\nAnd His mercy is from generation unto generations to them that fear Him.\nHe hath shown might in His arm; He hath scattered the proud in the conceit of their heart.\nHe hath put down the mighty from their seat, and hath exalted the humble.\nHe hath filled the hungry with good things, and the rich He hath sent empty away.\nHe hath received Israel His servant, being mindful of His mercy—\nAs He spoke to our fathers, to Abraham and to his seed for ever.\nGlory be to the Father, and to the Son, and to the Holy Spirit,\nAs it was in the beginning, is now, and ever shall be, for ever and ever. Amen.",
+        "spanish": "Proclama mi alma la grandeza del Señor, se alegra mi espíritu en Dios, mi salvador; porque ha mirado la humillación de su esclava. Desde ahora me felicitarán todas las generaciones, porque el Poderoso ha hecho obras grandes por mí: su nombre es santo, y su misericordia llega a sus fieles de generación en generación. Él hace proezas con su brazo: dispersa a los soberbios de corazón, derriba del trono a los poderosos y enaltece a los humildes, a los hambrientos los colma de bienes y a los ricos los despide vacíos. Auxilia a Israel, su siervo, acordándose de la misericordia —como lo había prometido a nuestros padres— en favor de Abraham y su descendencia por siempre."
+      },
+      {
+        "order": 7,
+        "instructions": "Recited after the psalmody of **Night Prayer (Compline)**—just before going to bed, typically about 9:00-10:00 PM; tradition dims the lights at this Hour.",
+        "title": "Canticle of Simeon",
+        "title_latin": "Nunc Dimittis",
+        "title_english": "Canticle of Simeon",
+        "latin": "Nunc dimittis servum tuum, Domine, secundum verbum tuum in pace:\nQuia viderunt oculi mei salutare tuum,\nQuod parasti ante faciem omnium populorum:\nLumen ad revelationem gentium, et gloriam plebis tuae Israel.",
+        "english": "Now dismiss Thy servant, O Lord, in peace, according to Thy word:\nFor mine own eyes have seen Thy salvation,\nWhich Thou hast prepared in the sight of all the peoples,\nA light to reveal Thee to the nations and the glory of Thy people Israel.",
+        "spanish": "Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz, porque mis ojos han visto a tu Salvador, a quien has presentado ante todos los pueblos: luz para alumbrar a las naciones y gloria de tu pueblo Israel."
+      }
+    ]
+  },
+  "metadata": {
+    "name": "Hours Prayers",
+    "category": "hours",
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-28T07:08:09.917491",
+    "description": "Collection of hours prayers in Latin, English, and Spanish"
+  }
+}

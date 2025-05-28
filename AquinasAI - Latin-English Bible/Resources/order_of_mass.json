@@ -1,0 +1,445 @@
+{
+  "prayers": [
+    {
+      "id": "sign_of_the_cross",
+      "title": "Sign of the Cross",
+      "title_latin": "Signum Crucis",
+      "title_english": "Sign of the Cross",
+      "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+      "english": "In the name of the Father, and of the Son, and of the Holy Spirit. Amen.",
+      "spanish": "En el nombre del Padre, y del Hijo, y del Espíritu Santo. Amén."
+    },
+    {
+      "id": "greeting",
+      "title": "Greeting",
+      "title_latin": "Dominus Vobiscum",
+      "title_english": "The Lord Be with You",
+      "latin": "Dominus vobiscum.",
+      "english": "The Lord be with you.",
+      "response_latin": "Et cum spiritu tuo.",
+      "response_english": "And with your spirit.",
+      "spanish": "El Señor esté con ustedes."
+    },
+    {
+      "id": "confiteor",
+      "title": "Confiteor",
+      "title_latin": "Confiteor",
+      "title_english": "I Confess",
+      "latin": "Confiteor Deo omnipotenti, beatae Mariae semper Virgini, beato Michaeli Archangelo, beato Ioanni Baptistae, sanctis Apostolis Petro et Paulo, omnibus Sanctis, et vobis, fratres: quia peccavi nimis cogitatione, verbo et opere: mea culpa, mea culpa, mea maxima culpa. Ideo precor beatam Mariam semper Virginem, beatum Michaelem Archangelum, beatum Ioannem Baptistam, sanctos Apostolos Petrum et Paulum, omnes Sanctos, et vos, fratres, orare pro me ad Dominum Deum nostrum. Amen.",
+      "english": "I confess to almighty God and to you, my brothers and sisters, that I have greatly sinned, in my thoughts and in my words, in what I have done and in what I have failed to do, through my fault, through my fault, through my most grievous fault; therefore I ask blessed Mary ever-Virgin, all the Angels and Saints, and you, my brothers and sisters, to pray for me to the Lord our God. Amen.",
+      "spanish": "Yo confieso ante Dios todopoderoso y ante ustedes, hermanos, que he pecado mucho de pensamiento, palabra, obra y omisión; por mi culpa, por mi culpa, por mi gran culpa. Por eso ruego a santa María, siempre Virgen, a los ángeles, a los santos y a ustedes, hermanos, que intercedan por mí ante Dios, nuestro Señor. Amén."
+    },
+    {
+      "id": "penitential_act_b",
+      "title": "Penitential Act (Form B)",
+      "title_latin": "Penitentiae Actus – Forma II",
+      "title_english": "Penitential Act – Form B",
+      "latin": "V/. Miserere nostri, Domine.  R/. Quia peccavimus tibi.  V/. Ostende nobis, Domine, misericordiam tuam.  R/. Et salutare tuum da nobis.",
+      "english": "V/. Have mercy on us, O Lord.  R/. For we have sinned against you.  V/. Show us, O Lord, your mercy.  R/. And grant us your salvation.",
+      "spanish": "¿No habéis pecado de pensamiento, palabra, obra y omisión? Confesad vuestros pecados a Dios todopoderoso. Yo confieso ante Dios todopoderoso y ante vosotros, hermanos, que he pecado mucho de pensamiento, palabra, obra y omisión. Por mi culpa, por mi culpa, por mi gran culpa. Por eso ruego a santa María, siempre Virgen, a los ángeles, a los santos y a vosotros, hermanos, que intercedáis por mí ante Dios, nuestro Señor.",
+      "title_spanish": "Acto Penitencial – Forma B"
+    },
+    {
+      "id": "penitential_act_c",
+      "title": "Penitential Act (Form C)",
+      "title_latin": "Penitentiae Actus – Forma III",
+      "title_english": "Penitential Act – Form C",
+      "latin": "V/. Qui missus es sanare contritos corde: Kyrie, eleison.  R/. Kyrie, eleison.\nV/. Qui peccatores vocare venisti: Christe, eleison.  R/. Christe, eleison.\nV/. Qui ad dexteram Patris sedes, ad interpellandum pro nobis: Kyrie, eleison.  R/. Kyrie, eleison.",
+      "english": "V/. You were sent to heal the contrite of heart: Lord, have mercy.  R/. Lord, have mercy.\nV/. You came to call sinners: Christ, have mercy.  R/. Christ, have mercy.\nV/. You are seated at the right hand of the Father to intercede for us: Lord, have mercy.  R/. Lord, have mercy.",
+      "spanish": "Señor Jesús, que has sido enviado a sanar los corazones afligidos: Señor, ten piedad. Cristo Jesús, que has venido a llamar a los pecadores: Cristo, ten piedad. Señor Jesús, que estás sentado a la derecha del Padre para interceder por nosotros: Señor, ten piedad.",
+      "title_spanish": "Acto Penitencial – Forma C"
+    },
+    {
+      "id": "kyrie",
+      "title": "Kyrie Eleison",
+      "title_latin": "Kyrie",
+      "title_english": "Lord Have Mercy",
+      "latin": "Kyrie eleison.  Christe eleison.  Kyrie eleison.",
+      "english": "Lord, have mercy.  Christ, have mercy.  Lord, have mercy.",
+      "spanish": "Señor, ten piedad. Cristo, ten piedad. Señor, ten piedad."
+    },
+    {
+      "id": "gloria",
+      "title": "Gloria in Excelsis",
+      "title_latin": "Gloria in Excelsis Deo",
+      "title_english": "Glory to God in the Highest",
+      "latin": "Gloria in excelsis Deo, et in terra pax hominibus bonae voluntatis. Laudamus te, benedicimus te, adoramus te, glorificamus te, gratias agimus tibi propter magnam gloriam tuam, Domine Deus, Rex caelestis, Deus Pater omnipotens. Domine Fili unigenite, Iesu Christe, Domine Deus, Agnus Dei, Filius Patris. Qui tollis peccata mundi, miserere nobis; qui tollis peccata mundi, suscipe deprecationem nostram. Qui sedes ad dexteram Patris, miserere nobis. Quoniam tu solus Sanctus, tu solus Dominus, tu solus Altissimus, Iesu Christe, cum Sancto Spiritu: in gloria Dei Patris. Amen.",
+      "english": "Glory to God in the highest, and on earth peace to people of good will. We praise you, we bless you, we adore you, we glorify you, we give you thanks for your great glory, Lord God, heavenly King, O God, almighty Father. Lord Jesus Christ, Only Begotten Son, Lord God, Lamb of God, Son of the Father, you take away the sins of the world, have mercy on us; you take away the sins of the world, receive our prayer; you are seated at the right hand of the Father, have mercy on us. For you alone are the Holy One, you alone are the Lord, you alone are the Most High, Jesus Christ, with the Holy Spirit, in the glory of God the Father. Amen.",
+      "spanish": "Gloria a Dios en el cielo, y en la tierra paz a los hombres que ama el Señor. Te alabamos, te bendecimos, te adoramos, te glorificamos, te damos gracias, Señor Dios, Rey celestial, Dios Padre todopoderoso. Señor, Hijo único, Jesucristo, Señor Dios, Cordero de Dios, Hijo del Padre; Tú que quitas el pecado del mundo, ten piedad de nosotros; Tú que quitas el pecado del mundo, atiende nuestra súplica; Tú que estás sentado a la derecha del Padre, ten piedad de nosotros. Porque sólo Tú eres Santo, sólo Tú Señor, sólo Tú Altísimo Jesucristo, con el Espíritu Santo, en la gloria de Dios Padre. Amén."
+    },
+    {
+      "id": "apostles_creed",
+      "title": "Credo (Apostles' Creed)",
+      "title_latin": "Symbolum Apostolorum",
+      "title_english": "Apostles' Creed",
+      "latin": "Credo in Deum Patrem omnipotentem, Creatorem caeli et terrae; et in Iesum Christum, Filium eius unicum, Dominum nostrum, qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus; descendit ad inferos; tertia die resurrexit a mortuis; ascendit ad caelos, sedet ad dexteram Dei Patris omnipotentis; inde venturus est iudicare vivos et mortuos. Credo in Spiritum Sanctum, sanctam Ecclesiam catholicam, sanctorum communionem, remissionem peccatorum, carnis resurrectionem, vitam aeternam. Amen.",
+      "english": "I believe in God, the Father almighty, Creator of heaven and earth; and in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; he descended into hell; on the third day he rose again from the dead; he ascended into heaven, and is seated at the right hand of God the Father almighty; from there he will come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.",
+      "spanish": "Creo en Dios, Padre todopoderoso, creador del cielo y de la tierra; y en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado; descendió a los infiernos; al tercer día resucitó de entre los muertos; subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso; desde allí ha de venir a juzgar a vivos y muertos. Creo en el Espíritu Santo, la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna. Amén."
+    },
+    {
+      "id": "nicene_creed",
+      "title": "Nicene Creed",
+      "title_latin": "Symbolum Niceno-Constantinopolitanum",
+      "title_english": "Nicene Creed",
+      "latin": "Credo in unum Deum, Patrem omnipotentem, factorem caeli et terrae, visibilium omnium et invisibilium. Et in unum Dominum Iesum Christum, Filium Dei unigenitum, et ex Patre natum ante omnia saecula: Deum de Deo, Lumen de Lumine, Deum verum de Deo vero, genitum, non factum, consubstantialem Patri; per quem omnia facta sunt. Qui propter nos homines et propter nostram salutem descendit de caelis, et incarnatus est de Spiritu Sancto ex Maria Virgine, et homo factus est. Crucifixus etiam pro nobis sub Pontio Pilato, passus et sepultus est, et resurrexit tertia die secundum Scripturas, et ascendit in caelum, sedet ad dexteram Patris. Et iterum venturus est cum gloria, iudicare vivos et mortuos, cuius regni non erit finis. Et in Spiritum Sanctum, Dominum et vivificantem, qui ex Patre Filioque procedit, qui cum Patre et Filio simul adoratur et conglorificatur, qui locutus est per prophetas. Et unam, sanctam, catholicam et apostolicam Ecclesiam. Confiteor unum baptisma in remissionem peccatorum. Et exspecto resurrectionem mortuorum et vitam venturi saeculi. Amen.",
+      "english": "I believe in one God, the Father almighty, maker of heaven and earth, of all things visible and invisible. I believe in one Lord Jesus Christ, the Only Begotten Son of God, born of the Father before all ages: God from God, Light from Light, true God from true God, begotten, not made, consubstantial with the Father; through him all things were made. For us men and for our salvation he came down from heaven, and by the Holy Spirit was incarnate of the Virgin Mary, and became man. For our sake he was crucified under Pontius Pilate; he suffered death and was buried, and rose again on the third day in accordance with the Scriptures. He ascended into heaven and is seated at the right hand of the Father. He will come again in glory to judge the living and the dead and his kingdom will have no end. I believe in the Holy Spirit, the Lord, the giver of life, who proceeds from the Father and the Son, who with the Father and the Son is adored and glorified, who has spoken through the prophets. I believe in one, holy, catholic and apostolic Church. I confess one baptism for the forgiveness of sins and I look forward to the resurrection of the dead and the life of the world to come. Amen.",
+      "spanish": "Creo en un solo Dios, Padre todopoderoso, Creador del cielo y de la tierra, de todo lo visible y lo invisible. Creo en un solo Señor Jesucristo, Hijo único de Dios, nacido del Padre antes de todos los siglos: Dios de Dios, Luz de Luz, Dios verdadero de Dios verdadero, engendrado, no creado, de la misma naturaleza del Padre; por quien todo fue hecho; que por nosotros los hombres y por nuestra salvación bajó del cielo, y por obra del Espíritu Santo se encarnó de María, la Virgen, y se hizo hombre; y por nuestra causa fue crucificado en tiempos de Poncio Pilato; padeció y fue sepultado, y resucitó al tercer día, según las Escrituras; y subió al cielo, y está sentado a la derecha del Padre; y de nuevo vendrá con gloria para juzgar a vivos y muertos, y su reino no tendrá fin. Creo en el Espíritu Santo, Señor y dador de vida, que procede del Padre y del Hijo, que con el Padre y el Hijo recibe una misma adoración y gloria, y que habló por los profetas. Creo en la Iglesia, que es una, santa, católica y apostólica. Confieso que hay un solo bautismo para el perdón de los pecados. Espero la resurrección de los muertos y la vida del mundo futuro. Amén."
+    },
+    {
+      "id": "orate_fratres",
+      "title": "Orate Fratres",
+      "title_latin": "Orate, Fratres",
+      "title_english": "Pray, Brethren",
+      "latin": "Orate, fratres, ut meum ac vestrum sacrificium acceptabile fiat apud Deum Patrem omnipotentem.",
+      "english": "Pray, brethren, that my sacrifice and yours may be acceptable to God, the almighty Father.",
+      "spanish": "Orad, hermanos, para que este sacrificio, mío y vuestro, sea agradable a Dios, Padre todopoderoso."
+    },
+    {
+      "id": "preface_dialogue",
+      "title": "Preface Dialogue",
+      "title_latin": "Sursum Corda",
+      "title_english": "Preface Dialogue",
+      "latin": "Dominus vobiscum.\nEt cum spiritu tuo.\nSursum corda.\nHabemus ad Dominum.\nGratias agamus Domino Deo nostro.\nDignum et iustum est.",
+      "english": "The Lord be with you.\nAnd with your spirit.\nLift up your hearts.\nWe lift them up to the Lord.\nLet us give thanks to the Lord our God.\nIt is right and just.",
+      "spanish": "El Señor esté con vosotros.\nY con tu espíritu.\nLevantemos el corazón.\nLo tenemos levantado hacia el Señor.\nDemos gracias al Señor, nuestro Dios.\nEs justo y necesario."
+    },
+    {
+      "id": "sanctus",
+      "title": "Sanctus",
+      "title_latin": "Sanctus",
+      "title_english": "Holy, Holy, Holy",
+      "latin": "Sanctus, Sanctus, Sanctus Dominus Deus Sabaoth. Pleni sunt caeli et terra gloria tua. Hosanna in excelsis. Benedictus qui venit in nomine Domini. Hosanna in excelsis.",
+      "english": "Holy, holy, holy Lord God of hosts. Heaven and earth are full of your glory. Hosanna in the highest. Blessed is he who comes in the name of the Lord. Hosanna in the highest.",
+      "spanish": "Santo, Santo, Santo es el Señor, Dios del universo. Llenos están el cielo y la tierra de tu gloria. Hosanna en el cielo. Bendito el que viene en nombre del Señor. Hosanna en el cielo."
+    },
+    {
+      "id": "mystery_of_faith_1",
+      "title": "Mystery of Faith I",
+      "title_latin": "Mortem Tuam Annuntiamus",
+      "title_english": "We Proclaim Your Death",
+      "latin": "Mortem tuam annuntiamus, Domine, et tuam resurrectionem confitemur, donec venias.",
+      "english": "We proclaim your Death, O Lord, and profess your Resurrection until you come again.",
+      "spanish": "Anunciamos tu muerte, proclamamos tu resurrección. ¡Ven, Señor Jesús!",
+      "title_spanish": "Anunciamos tu muerte"
+    },
+    {
+      "id": "mystery_of_faith_2",
+      "title": "Mystery of Faith II",
+      "title_latin": "Quotiescumque Manducamus",
+      "title_english": "When We Eat This Bread",
+      "latin": "Quotiescumque manducamus panem hunc et calicem bibimus, mortem tuam annuntiamus, Domine, donec venias.",
+      "english": "When we eat this Bread and drink this Cup, we proclaim your Death, O Lord, until you come again.",
+      "spanish": "Cada vez que comemos de este Pan y bebemos de este Cáliz, anunciamos tu muerte, Señor, hasta que vuelvas.",
+      "title_spanish": "Cada vez que comemos"
+    },
+    {
+      "id": "mystery_of_faith_3",
+      "title": "Mystery of Faith III",
+      "title_latin": "Salvator Mundi",
+      "title_english": "Save Us, Savior of the World",
+      "latin": "Salvator mundi, salva nos, qui per crucem et resurrectionem tuam liberasti nos.",
+      "english": "Save us, Savior of the world, for by your Cross and Resurrection you have set us free.",
+      "spanish": "Salvador del mundo, sálvanos, tú que nos has liberado por tu cruz y resurrección.",
+      "title_spanish": "Sálvanos, Salvador"
+    },
+    {
+      "id": "pax_domini",
+      "title": "Pax Domini",
+      "title_latin": "Pax Domini",
+      "title_english": "Peace of the Lord",
+      "latin": "Pax Domini sit semper vobiscum.",
+      "english": "The peace of the Lord be with you always.",
+      "spanish": "La paz del Señor esté siempre con vosotros."
+    },
+    {
+      "id": "agnus_dei",
+      "title": "Agnus Dei",
+      "title_latin": "Agnus Dei",
+      "title_english": "Lamb of God",
+      "latin": "Agnus Dei, qui tollis peccata mundi, miserere nobis. Agnus Dei, qui tollis peccata mundi, miserere nobis. Agnus Dei, qui tollis peccata mundi, dona nobis pacem.",
+      "english": "Lamb of God, you take away the sins of the world, have mercy on us. Lamb of God, you take away the sins of the world, have mercy on us. Lamb of God, you take away the sins of the world, grant us peace.",
+      "spanish": "Cordero de Dios, que quitas el pecado del mundo, ten piedad de nosotros. Cordero de Dios, que quitas el pecado del mundo, ten piedad de nosotros. Cordero de Dios, que quitas el pecado del mundo, danos la paz."
+    },
+    {
+      "id": "ecce_agnus_dei",
+      "title": "Ecce Agnus Dei",
+      "title_latin": "Ecce Agnus Dei",
+      "title_english": "Behold the Lamb of God",
+      "latin": "Ecce Agnus Dei, ecce qui tollit peccata mundi. Beati qui ad cenam Agni vocati sunt.",
+      "english": "Behold the Lamb of God, behold him who takes away the sins of the world. Blessed are those called to the supper of the Lamb.",
+      "spanish": "Éste es el Cordero de Dios, que quita el pecado del mundo. Dichosos los invitados a la cena del Señor."
+    },
+    {
+      "id": "domine_non_sum_dignus",
+      "title": "Domine, Non Sum Dignus",
+      "title_latin": "Domine, Non Sum Dignus",
+      "title_english": "Lord, I Am Not Worthy",
+      "latin": "Domine, non sum dignus ut intres sub tectum meum, sed tantum dic verbo et sanabitur anima mea.",
+      "english": "Lord, I am not worthy that you should enter under my roof, but only say the word and my soul shall be healed.",
+      "spanish": "Señor, no soy digno de que entres en mi casa, pero una palabra tuya bastará para sanarme."
+    },
+    {
+      "id": "ite_missa_est",
+      "title": "Ite, Missa Est",
+      "title_latin": "Ite, Missa Est",
+      "title_english": "Dismissal",
+      "latin": "Ite, missa est.",
+      "english": "Go forth, the Mass is ended.",
+      "spanish": "Podéis ir en paz."
+    },
+    {
+      "id": "pater_noster",
+      "title": "Pater Noster",
+      "title_latin": "Pater Noster",
+      "title_english": "Our Father",
+      "latin": "Pater noster, qui es in caelis, sanctificetur nomen tuum. Adveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra. Panem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris. Et ne nos inducas in tentationem, sed libera nos a malo.",
+      "english": "Our Father, who art in heaven, hallowed be thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us, and lead us not into temptation, but deliver us from evil.",
+      "spanish": "Padre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu Reino; hágase tu voluntad en la tierra como en el cielo. Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación y líbranos del mal. Amén."
+    },
+    {
+      "id": "communio_spiritualis",
+      "title": "Communio Spiritualis",
+      "title_latin": "Communio Spiritualis",
+      "title_english": "Act of Spiritual Communion",
+      "latin": "Iesu mi, credo te in Sanctissimo Sacramento vere praesentem. Te amo super omnia et te desidero in anima mea. Quoniam nunc non possum te sacramentaliter recipere, veni spiritualiter in cor meum. Te amplector ac me totum tibi unio; ne permittas me a te separari. Amen.",
+      "english": "My Jesus, I believe that you are present in the Most Holy Sacrament. I love you above all things and I desire to receive you into my soul. Since I cannot at this moment receive you sacramentally, come at least spiritually into my heart. I embrace you as if you were already there and unite myself wholly to you. Never permit me to be separated from you. Amen.",
+      "spanish": "Jesús mío, creo que estás realmente presente en el Santísimo Sacramento. Te amo sobre todas las cosas y deseo recibirte dentro de mi alma; pero, no pudiendo hacerlo ahora sacramentalmente, ven al menos espiritualmente a mi corazón. Como si ya te hubiese recibido, te abrazo y me uno completamente a Ti; no permitas que jamás me aparte de Ti. Amén."
+    },
+    {
+      "id": "collect",
+      "title": "Collect",
+      "title_latin": "Oratio",
+      "title_english": "Opening Prayer",
+      "latin": "(Variable prayer for the day)",
+      "english": "(Variable prayer for the day)",
+      "spanish": "(Oración variable del día)"
+    },
+    {
+      "id": "first_reading",
+      "title": "First Reading",
+      "title_latin": "Lectio Prima",
+      "title_english": "First Reading",
+      "latin": "(Variable Scripture reading)",
+      "english": "(Variable Scripture reading)",
+      "spanish": "(Lectura bíblica variable)"
+    },
+    {
+      "id": "responsorial_psalm",
+      "title": "Responsorial Psalm",
+      "title_latin": "Psalmus Responsorius",
+      "title_english": "Responsorial Psalm",
+      "latin": "(Variable psalm)",
+      "english": "(Variable psalm)",
+      "spanish": "(Salmo responsorial variable)"
+    },
+    {
+      "id": "second_reading",
+      "title": "Second Reading",
+      "title_latin": "Lectio Secunda",
+      "title_english": "Second Reading",
+      "latin": "(Variable Scripture reading)",
+      "english": "(Variable Scripture reading)",
+      "spanish": "(Segunda lectura variable)"
+    },
+    {
+      "id": "gospel_acclamation",
+      "title": "Gospel Acclamation",
+      "title_latin": "Acclamatio ante Evangelium",
+      "title_english": "Gospel Acclamation",
+      "latin": "Alleluia, alleluia. (Variable verse) Alleluia.",
+      "english": "Alleluia, alleluia. (Variable verse) Alleluia.",
+      "spanish": "Aleluya, aleluya. (Versículo variable) Aleluya."
+    },
+    {
+      "id": "gospel",
+      "title": "Gospel",
+      "title_latin": "Evangelium",
+      "title_english": "Gospel",
+      "latin": "(Variable Gospel reading)",
+      "english": "(Variable Gospel reading)",
+      "spanish": "(Lectura del Evangelio variable)"
+    },
+    {
+      "id": "homily",
+      "title": "Homily",
+      "title_latin": "Homilia",
+      "title_english": "Homily",
+      "latin": "(Reflection on the readings)",
+      "english": "(Reflection on the readings)",
+      "spanish": "(Reflexión sobre las lecturas)"
+    },
+    {
+      "id": "creed",
+      "title": "Creed",
+      "title_latin": "Symbolum",
+      "title_english": "Profession of Faith",
+      "latin": "(See Nicene Creed or Apostles' Creed)",
+      "english": "(See Nicene Creed or Apostles' Creed)",
+      "spanish": "(Ver Credo Niceno o de los Apóstoles)"
+    },
+    {
+      "id": "intercessions",
+      "title": "Prayer of the Faithful",
+      "title_latin": "Oratio Universalis",
+      "title_english": "Universal Prayer",
+      "latin": "(Variable petitions)",
+      "english": "(Variable petitions)",
+      "spanish": "Te rogamos, óyenos.",
+      "title_spanish": "Oración Universal"
+    },
+    {
+      "id": "offertory",
+      "title": "Presentation of the Gifts",
+      "title_latin": "Praeparatio Donorum",
+      "title_english": "Preparation of the Gifts",
+      "latin": "Benedictus es, Domine, Deus universi, quia de tua largitate accepimus panem, quem tibi offerimus, fructum terrae et operis manuum hominum: ex quo nobis fiet panis vitae.",
+      "english": "Blessed are you, Lord God of all creation, for through your goodness we have received the bread we offer you: fruit of the earth and work of human hands, it will become for us the bread of life.",
+      "spanish": "Bendito seas, Señor, Dios del universo, por este pan, fruto de la tierra y del trabajo del hombre, que recibimos de tu generosidad y ahora te presentamos; él será para nosotros pan de vida.",
+      "title_spanish": "Preparación de los Dones"
+    },
+    {
+      "id": "prayer_over_offerings",
+      "title": "Prayer over the Offerings",
+      "title_latin": "Oratio Super Oblata",
+      "title_english": "Prayer over the Offerings",
+      "latin": "(Variable prayer)",
+      "english": "(Variable prayer)",
+      "spanish": "Acepta, Señor, los dones que presentamos en tu altar, y concédenos que sean para nosotros sacramento de salvación.",
+      "title_spanish": "Oración sobre las Ofrendas"
+    },
+    {
+      "id": "eucharistic_prayer_i",
+      "title": "Eucharistic Prayer",
+      "title_latin": "Prex Eucharistica",
+      "title_english": "Eucharistic Prayer",
+      "latin": "(Variable prayer - includes consecration)",
+      "english": "(Variable prayer - includes consecration)",
+      "spanish": "(Plegaria eucarística variable — incluye consagración)"
+    },
+    {
+      "id": "memorial_acclamation",
+      "title": "Memorial Acclamation",
+      "title_latin": "Acclamatio Post Consecrationem",
+      "title_english": "Memorial Acclamation",
+      "latin": "(See Mystery of Faith options)",
+      "english": "(See Mystery of Faith options)",
+      "spanish": "(Ver Misterio de la Fe)"
+    },
+    {
+      "id": "doxology",
+      "title": "Doxology",
+      "title_latin": "Doxologia",
+      "title_english": "Doxology",
+      "latin": "Per ipsum, et cum ipso, et in ipso, est tibi Deo Patri omnipotenti, in unitate Spiritus Sancti, omnis honor et gloria per omnia saecula saeculorum.",
+      "english": "Through him, and with him, and in him, O God, almighty Father, in the unity of the Holy Spirit, all glory and honor is yours, for ever and ever.",
+      "spanish": "Por Cristo, con Él y en Él, a ti, Dios Padre omnipotente, en la unidad del Espíritu Santo, todo honor y toda gloria por los siglos de los siglos."
+    },
+    {
+      "id": "lords_prayer",
+      "title": "The Lord's Prayer",
+      "title_latin": "Pater Noster",
+      "title_english": "The Lord's Prayer",
+      "latin": "(See Pater Noster)",
+      "english": "(See Our Father)",
+      "spanish": "Padre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu Reino; hágase tu voluntad en la tierra como en el cielo. Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación y líbranos del mal. Amén."
+    },
+    {
+      "id": "sign_of_peace",
+      "title": "Sign of Peace",
+      "title_latin": "Ritus Pacis",
+      "title_english": "Rite of Peace",
+      "latin": "(See Pax Domini)",
+      "english": "(See Peace of the Lord)",
+      "spanish": "(Rito de la Paz)"
+    },
+    {
+      "id": "communion",
+      "title": "Communion",
+      "title_latin": "Communio",
+      "title_english": "Communion",
+      "latin": "(Distribution of Holy Communion)",
+      "english": "(Distribution of Holy Communion)",
+      "spanish": "(Distribución de la Sagrada Comunión)"
+    },
+    {
+      "id": "prayer_after_communion",
+      "title": "Prayer after Communion",
+      "title_latin": "Oratio Post Communionem",
+      "title_english": "Prayer after Communion",
+      "latin": "(Variable prayer)",
+      "english": "(Variable prayer)",
+      "spanish": "(Oración después de la Comunión variable)"
+    },
+    {
+      "id": "blessing",
+      "title": "Blessing",
+      "title_latin": "Benedictio",
+      "title_english": "Blessing",
+      "latin": "Benedicat vos omnipotens Deus, Pater, et Filius, et Spiritus Sanctus.",
+      "english": "May almighty God bless you, the Father, and the Son, and the Holy Spirit.",
+      "spanish": "La bendición de Dios todopoderoso, Padre, Hijo y Espíritu Santo, descienda sobre vosotros."
+    },
+    {
+      "id": "dismissal",
+      "title": "Dismissal",
+      "title_latin": "Dimissio",
+      "title_english": "Dismissal",
+      "latin": "(See Ite, Missa Est)",
+      "english": "(See Go forth, the Mass is ended)",
+      "spanish": "(Despedida)"
+    }
+  ],
+  "order_of_mass": {
+    "introductory_rites": [
+      "sign_of_the_cross",
+      "greeting",
+      "confiteor",
+      "kyrie",
+      "gloria",
+      "collect"
+    ],
+    "liturgy_of_the_word": [
+      "first_reading",
+      "responsorial_psalm",
+      "second_reading",
+      "gospel_acclamation",
+      "gospel",
+      "homily",
+      "creed",
+      "intercessions"
+    ],
+    "liturgy_of_the_eucharist": {
+      "preparation_of_the_gifts": [
+        "offertory",
+        "prayer_over_offerings"
+      ],
+      "eucharistic_prayer": [
+        "preface_dialogue",
+        "sanctus",
+        "eucharistic_prayer_i",
+        "memorial_acclamation",
+        "doxology"
+      ],
+      "communion_rite": [
+        "lords_prayer",
+        "sign_of_peace",
+        "agnus_dei",
+        "ecce_agnus_dei",
+        "domine_non_sum_dignus",
+        "communion",
+        "prayer_after_communion"
+      ]
+    },
+    "concluding_rites": [
+      "blessing",
+      "ite_missa_est"
+    ]
+  },
+  "metadata": {
+    "name": "Mass Prayers",
+    "category": "mass",
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-28T07:08:09.916429",
+    "description": "Collection of mass prayers in Latin, English, and Spanish"
+  }
+}
