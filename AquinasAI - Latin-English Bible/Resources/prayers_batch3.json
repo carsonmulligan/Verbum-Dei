@@ -1,0 +1,95 @@
+{
+    "prayers": [
+      {
+        "id": 21,
+        "title": "Benedictio Post Mensam",
+        "title_latin": "Benedictio Post Mensam",
+        "title_english": "Blessing After Meals",
+        "latin": "Agimus tibi gratias, omnipotens Deus, pro universis beneficiis tuis, qui vivis et regnas in saecula saeculorum. Amen.",
+        "english": "We give you thanks, almighty God, for all your benefits, who live and reign forever and ever. Amen.",
+        "spanish": "Te damos gracias, Dios omnipotente, por todos tus beneficios, tú que vives y reinas por los siglos de los siglos. Amén."
+      },
+      {
+        "id": 22,
+        "title": "Actus Contritionis",
+        "title_latin": "Actus Contritionis",
+        "title_english": "Act of Contrition",
+        "latin": "Deus meus, ex toto corde poenitet me omnium meorum peccatorum, eaque detestor, quia peccando, non solum poenas a te iuste statutas promeritus sum, sed praesertim quia offendi te, summum bonum, ac dignum qui super omnia diligaris. Ideo firmiter propono, adiuvante gratia tua, de cetero me non peccaturum peccandique occasiones proximas fugiturum. Amen.",
+        "english": "O my God, I am heartily sorry for having offended you, and I detest all my sins, because I dread the loss of heaven and the pains of hell; but most of all because they offend you, my God, who are all good and deserving of all my love. I firmly resolve, with the help of your grace, to confess my sins, do penance, and amend my life. Amen.",
+        "spanish": "¡Oh Dios mío!, me arrepiento de todo corazón de todos mis pecados, porque al pecar merecí el infierno y perdí el cielo; y, sobre todo, porque te ofendí a ti, que eres el sumo Bien y digno de ser amado sobre todas las cosas. Propongo firmemente, con tu gracia, confesarme, cumplir la penitencia y evitar las ocasiones próximas de pecado. Amén."
+      },
+      {
+        "id": 23,
+        "title": "Tota Pulchra Es",
+        "title_latin": "Tota Pulchra Es",
+        "title_english": "You Are All Beautiful",
+        "latin": "Tota pulchra es, Maria, et macula originalis non est in te.",
+        "english": "You are all beautiful, Mary, and the stain of original sin is not in you.",
+        "spanish": "Toda hermosa eres, María, y la mancha del pecado original no está en ti."
+      },
+      {
+        "id": 24,
+        "title": "Suscipe (Prayer of St. Ignatius)",
+        "title_latin": "Suscipe",
+        "title_english": "Take, Lord, Receive",
+        "latin": "Suscipe, Domine, universam meam libertatem. Accipe memoriam, intellectum atque voluntatem omnem. Quidquid habeo vel possideo mihi largitus es; id tibi totum restituo ac tuae prorsus voluntati trado gubernandum. Amorem tui solum cum gratia tua mihi dones et dives sum satis nec aliud quidquam ultra posco. Amen.",
+        "english": "Take, Lord, and receive all my liberty, my memory, my understanding, and my entire will—all I have and call my own. You have given all to me; to you, Lord, I return it. Everything is yours; do with it what you will. Give me only your love and your grace, that is enough for me. Amen.",
+        "spanish": "Toma, Señor, y recibe toda mi libertad, mi memoria, mi entendimiento y toda mi voluntad; todo mi haber y mi poseer. Tú me lo diste; a ti, Señor, lo devuelvo. Todo es tuyo: dispón de ello según tu voluntad. Dame tu amor y gracia, que ésta me basta. Amén."
+      },
+      {
+        "id": 25,
+        "title": "Agnus Dei",
+        "title_latin": "Agnus Dei",
+        "title_english": "Lamb of God",
+        "latin": "Agnus Dei, qui tollis peccata mundi, miserere nobis. Agnus Dei, qui tollis peccata mundi, miserere nobis. Agnus Dei, qui tollis peccata mundi, dona nobis pacem.",
+        "english": "Lamb of God, you take away the sins of the world, have mercy on us. Lamb of God, you take away the sins of the world, have mercy on us. Lamb of God, you take away the sins of the world, grant us peace.",
+        "spanish": "Cordero de Dios, que quitas el pecado del mundo, ten piedad de nosotros. Cordero de Dios, que quitas el pecado del mundo, ten piedad de nosotros. Cordero de Dios, que quitas el pecado del mundo, danos la paz."
+      },
+      {
+        "id": 26,
+        "title": "Regina Caeli",
+        "title_latin": "Regina Caeli",
+        "title_english": "Queen of Heaven",
+        "latin": "Regina caeli, laetare, alleluia: quia quem meruisti portare, alleluia, resurrexit sicut dixit, alleluia: ora pro nobis Deum, alleluia.",
+        "english": "Queen of Heaven, rejoice, alleluia. For He whom you were worthy to bear, alleluia, has risen as He said, alleluia. Pray for us to God, alleluia.",
+        "spanish": "Reina del Cielo, alégrate, aleluya; porque el que mereciste llevar en tu seno, aleluya, ha resucitado según su palabra, aleluya. Ruega al Señor por nosotros, aleluya."
+      },
+      {
+        "id": 27,
+        "title": "Alma Redemptoris Mater",
+        "title_latin": "Alma Redemptoris Mater",
+        "title_english": "Loving Mother of the Redeemer",
+        "latin": "Alma Redemptoris Mater, quae pervia caeli porta manes, et stella maris, succurre cadenti, surgere qui curat populo: tu quae genuisti, natura mirante, tuum sanctum Genitorem: Virgo prius ac posterius, Gabrielis ab ore sumens illud Ave, peccatorum miserere.",
+        "english": "Loving Mother of the Redeemer, who remain the ever-open gate of heaven and star of the sea, help your falling people who strive to rise: you who begot, to the wonder of nature, your holy Creator. Virgin before and after, receiving that Ave from Gabriel's lips, have mercy on sinners.",
+        "spanish": "Madre del Redentor, Virgen puerta del cielo siempre abierta y estrella del mar, socorre al pueblo que cae y procura levantarse; tú que, ante el asombro de la naturaleza, diste a luz a tu santo Creador. Virgen antes y después, al recibir de los labios de Gabriel aquel «Ave», ten piedad de los pecadores."
+      },
+      {
+        "id": 28,
+        "title": "Ave Regina Caelorum",
+        "title_latin": "Ave Regina Caelorum",
+        "title_english": "Hail, Queen of Heaven",
+        "latin": "Ave, Regina caelorum, ave, Domina Angelorum: salve radix, salve porta, ex qua mundo lux est orta. Gaude, Virgo gloriosa, super omnes speciosa; valde o valde decora, et pro nobis Christum exora.",
+        "english": "Hail, Queen of Heaven; hail, Lady of the Angels; hail, root, hail, gate from which the Light of the world has arisen. Rejoice, glorious Virgin, fair above all others; most lovely, and plead for us to Christ.",
+        "spanish": "Dios te salve, Reina de los cielos; Dios te salve, Señora de los ángeles; Dios te salve, raíz; Dios te salve, puerta de la que nos vino la luz del mundo. Alégrate, Virgen gloriosa, entre todas la más hermosa; oh bellísima, ruega a Cristo por nosotros."
+      },
+      {
+        "id": 29,
+        "title": "Confiteor",
+        "title_latin": "Confiteor",
+        "title_english": "I Confess",
+        "latin": "Confiteor Deo omnipotenti, beatae Mariae semper Virgini, beato Michaeli Archangelo, beato Ioanni Baptistae, sanctis Apostolis Petro et Paulo, omnibus Sanctis, et vobis, fratres: quia peccavi nimis cogitatione, verbo et opere: mea culpa, mea culpa, mea maxima culpa. Ideo precor beatam Mariam semper Virginem, beatum Michaelem Archangelum, beatum Ioannem Baptistam, sanctos Apostolos Petrum et Paulum, omnes Sanctos, et vos, fratres, orare pro me ad Dominum Deum nostrum. Amen.",
+        "english": "I confess to Almighty God, to Blessed Mary ever Virgin, to Blessed Michael the Archangel, to Blessed John the Baptist, to the holy Apostles Peter and Paul, to all the Saints, and to you, my brothers, that I have greatly sinned in thought, word, and deed: through my fault, through my fault, through my most grievous fault. Therefore I beseech Blessed Mary ever Virgin, Blessed Michael the Archangel, Blessed John the Baptist, the holy Apostles Peter and Paul, all the Saints, and you, my brothers, to pray for me to the Lord our God. Amen.",
+        "spanish": "Yo confieso ante Dios todopoderoso y ante vosotros, hermanos, que he pecado mucho de pensamiento, palabra, obra y omisión; por mi culpa, por mi culpa, por mi gran culpa. Por eso ruego a Santa María, siempre Virgen, a los ángeles, a los santos y a vosotros, hermanos, que intercedáis por mí ante Dios, nuestro Señor. Amén."
+      },
+      {
+        "id": 30,
+        "title": "Kyrie Eleison",
+        "title_latin": "Kyrie",
+        "title_english": "Lord, Have Mercy",
+        "latin": "Kyrie eleison. Christe eleison. Kyrie eleison.",
+        "english": "Lord, have mercy. Christ, have mercy. Lord, have mercy.",
+        "spanish": "Señor, ten piedad. Cristo, ten piedad. Señor, ten piedad."
+      }
+    ]
+  }
+  

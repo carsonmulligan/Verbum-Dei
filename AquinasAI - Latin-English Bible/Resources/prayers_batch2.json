@@ -1,0 +1,75 @@
+{
+    "prayers": [
+      {
+        "title": "Veni Sancte Spiritus (Oratio Brevis)",
+        "title_latin": "Veni Sancte Spiritus",
+        "title_english": "Come, Holy Spirit (Short Invocation)",
+        "latin": "Veni, Sancte Spiritus, reple tuorum corda fidelium, et tui amoris in eis ignem accende.",
+        "spanish": "Ven, Espíritu Santo, llena los corazones de tus fieles y enciende en ellos el fuego de tu amor."
+      },
+      {
+        "title": "Communio Spiritualis",
+        "title_latin": "Communio Spiritualis",
+        "title_english": "Act of Spiritual Communion",
+        "latin": "Iesu mi, credo Te in Sanctissimo Sacramento vere praesentem. Te amo super omnia et te desidero in animam meam. Quoniam nunc non possum Te sacramentaliter recipere, veni spiritualiter in cor meum. Te amplector ac me totum Tibi unio; numquam permittas me a Te separari. Amen.",
+        "spanish": "Jesús mío, creo que estás realmente presente en el Santísimo Sacramento del Altar. Te amo sobre todas las cosas y deseo recibirte dentro de mi alma; pero no pudiendo hacerlo ahora sacramentalmente, ven al menos espiritualmente a mi corazón. Y como si ya te hubiese recibido, te abrazo y me uno todo a Ti; no permitas Señor que jamás me aparte de Ti. Amén."
+      },
+      {
+        "title": "Oratio Fatimae",
+        "title_latin": "Oratio Fatimae",
+        "title_english": "Fatima Prayer (O My Jesus)",
+        "latin": "Domine Iesu, dimitte nobis debita nostra, libera nos ab ignibus inferni; perduc in caelum omnes animas, praesertim eas quae maxime indigent misericordia Tua. Amen.",
+        "spanish": "¡Oh Jesús mío!, perdona nuestros pecados, líbranos del fuego del infierno, lleva al cielo a todas las almas, especialmente a las más necesitadas de tu misericordia. Amén."
+      },
+      {
+        "title": "En Ego, O Bone et Dulcissime Iesu",
+        "title_latin": "Oratio ante Crucifixum",
+        "title_english": "Prayer Before a Crucifix",
+        "latin": "En ego, o bone et dulcissime Iesu, ante faciem tuam genibus provolutus, te supplex et ardentissime oro, ut cordi meo vivas et imprimatur in eo firma fide, spe et caritate vera contritio de peccatis ac firmissima voluntas emendandi. Amen.",
+        "spanish": "Mira, oh buen y dulcísimo Jesús, postrado en tu presencia te ruego con el mayor fervor imprimáis en mi corazón sentimientos de fe, esperanza y caridad, verdadero dolor de mis pecados y propósito firmísimo de enmendarme; mientras que yo, con gran amor y compasión, voy contemplando tus cinco llagas, teniendo presente, oh buen Jesús, lo que ya dijo de Ti el santo profeta David: \"Han taladrado mis manos y mis pies, y se pueden contar todos mis huesos\". Amén."
+      },
+      {
+        "title": "Oremus pro Pontifice Nostro",
+        "title_latin": "Oremus pro Pontifice Nostro",
+        "title_english": "Prayer for the Pope",
+        "latin": "Oremus pro Pontifice nostro N.: Dominus conservet eum, et vivificet eum, et beatum faciat eum in terra, et non tradat eum in animam inimicorum eius.",
+        "spanish": "Oremos por nuestro Santo Padre N.: Que el Señor lo conserve, le dé vida, lo haga dichoso en la tierra y no lo entregue a la voluntad de sus enemigos."
+      },
+      {
+        "title": "Laudes Divinae",
+        "title_latin": "Laudes Divinae",
+        "title_english": "The Divine Praises",
+        "latin": "Benedictus Deus. Benedictum Nomen Sanctum eius. Benedictus Iesus Christus, verus Deus et verus Homo. Benedictum Nomen Iesu. Benedictum Cor eius sacratissimum. Benedictus Sanguis eius pretiosissimus. Benedictus Iesus in sanctissimo altaris Sacramento. Benedictus Spiritus Sanctus Paraclitus. Benedicta excelsa Mater Dei, Maria sanctissima. Benedicta sancta eius et immaculata Conceptio. Benedicta eius gloriosa Assumptio. Benedictum nomen Mariae, Virginis et Matris. Benedictus sanctus Ioseph, eius castissimus Sponsus. Benedictus Deus in Angelis suis et in Sanctis suis. Amen.",
+        "spanish": "Bendito sea Dios. Bendito sea su Santo Nombre. Bendito sea Jesucristo, verdadero Dios y verdadero Hombre. Bendito sea el Nombre de Jesús. Bendito sea su Sacratísimo Corazón. Bendita sea su Preciosísima Sangre. Bendito sea Jesús en el Santísimo Sacramento del Altar. Bendito sea el Espíritu Santo, Paráclito. Bendita sea la excelsa Madre de Dios, María Santísima. Bendita sea su santa e Inmaculada Concepción. Bendita sea su gloriosa Asunción. Bendito sea el nombre de María, Virgen y Madre. Bendito sea San José, su castísimo esposo. Bendito sea Dios en sus ángeles y en sus santos. Amén."
+      },
+      {
+        "title": "Signum Crucis",
+        "title_latin": "Signum Crucis",
+        "title_english": "Sign of the Cross",
+        "latin": "In nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+        "spanish": "En el nombre del Padre, y del Hijo, y del Espíritu Santo. Amén."
+      },
+      {
+        "title": "In Manus Tuas, Domine",
+        "title_latin": "In Manus Tuas, Domine",
+        "title_english": "Into Your Hands, O Lord",
+        "latin": "In manus tuas, Domine, commendo spiritum meum.",
+        "spanish": "En tus manos, Señor, encomiendo mi espíritu."
+      },
+      {
+        "title": "Psalmus 23 (Dominus Regit Me)",
+        "title_latin": "Dominus Regit Me",
+        "title_english": "Psalm 23 (The Lord is My Shepherd)",
+        "latin": "Dominus regit me, et nihil mihi deerit.",
+        "spanish": "El Señor es mi pastor, nada me faltará."
+      },
+      {
+        "title": "Deus in Adjutorium",
+        "title_latin": "Deus in Adjutorium",
+        "title_english": "God Come to My Assistance",
+        "latin": "Deus, in adiutorium meum intende. Domine, ad adiuvandum me festina.",
+        "spanish": "Oh Dios, ven en mi auxilio. Señor, date prisa en socorrerme."
+      }
+    ]
+  }
+  
