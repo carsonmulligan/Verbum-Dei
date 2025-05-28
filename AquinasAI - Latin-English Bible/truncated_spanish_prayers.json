@@ -1,0 +1,43 @@
+{
+  "truncated_prayers_to_complete": {
+    "veni_creator_spiritus": "Ven, Espíritu Creador, visita las almas de tus fieles y llena de la divina gracia los corazones que Tú mismo creaste...",
+    "veni_sancte_spiritus_(sequence)": "Ven, Espíritu divino, manda tu luz desde el cielo. Padre amoroso del pobre, dador de los dones, luz de los corazones...",
+    "ave_maris_stella": "Salve, estrella del mar, madre y puerta del cielo, Virgen eternamente feliz...",
+    "te_deum": "Te alabamos, Señor, y te reconocemos como Dios; te ensalza el universo entero. Los ángeles todos, los cielos y sus poderes...",
+    "benedictus_(canticle_of_zechariah)": "Bendito sea el Señor, Dios de Israel, porque ha visitado y redimido a su pueblo...",
+    "magnificat_(canticle_of_mary)": "Proclama mi alma la grandeza del Señor, se alegra mi espíritu en Dios, mi salvador...",
+    "nunc_dimittis_(canticle_of_simeon)": "Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz, porque mis ojos han visto a tu Salvador...",
+    "benedicite_omnia_opera_domini": "Bendecid al Señor todas las obras del Señor; alabadlo y exaltadlo por los siglos...",
+    "prayer_of_st._francis": "Señor, haz de mí un instrumento de tu paz: donde haya odio, ponga yo amor; donde haya ofensa, ponga yo perdón...",
+    "angelus_domini": "℣. El ángel del Señor anunció a María. ℟. Y concibió por obra del Espíritu Santo...",
+    "our_father": "Padre nuestro, que estás en el cielo...",
+    "hail_mary": "Dios te salve, María...",
+    "glory_be": "Gloria al Padre...",
+    "fatima_prayer": "Oh Jesús mío, perdona nuestros pecados...",
+    "hail_holy_queen": "Dios te salve, Reina y Madre...",
+    "final_prayer": "Oh Dios, cuyo Hijo unigénito nos adquirió con su vida, muerte y resurrección los premios de la salvación eterna...",
+    "opening_prayer": "Expiraste, Jesús, pero la fuente de vida brotó para las almas...",
+    "closing_prayer": "Dios eterno, en quien la misericordia es infinita y el tesoro de compasión inagotable, mira con bondad y aumenta tu misericordia en nosotros...",
+    "angelus_1": "℣. El ángel del Señor anunció a María. ℟. Y concibió por obra del Espíritu Santo. Ave María...",
+    "angelus_2": "℣. He aquí la esclava del Señor. ℟. Hágase en mí según tu palabra. Ave María...",
+    "angelus_3": "℣. Y el Verbo se hizo carne. ℟. Y habitó entre nosotros. Ave María...",
+    "lh_2": "Venid, aclamemos al Señor, demos vítores a la Roca que nos salva...",
+    "lh_4": "Gloria al Padre, y al Hijo, y al Espíritu Santo...",
+    "lh_5": "Bendito sea el Señor, Dios de Israel, porque ha visitado y redimido a su pueblo...",
+    "lh_6": "Proclama mi alma la grandeza del Señor...",
+    "lh_7": "Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz..."
+  },
+  "notes": {
+    "total_truncated_prayers": 25,
+    "instructions": "Replace the '...' with the complete Spanish text for each prayer. When complete, these can be merged back into the main spanish_prayers.json file.",
+    "prayer_categories": {
+      "liturgical_hymns": ["veni_creator_spiritus", "veni_sancte_spiritus_(sequence)", "ave_maris_stella", "te_deum"],
+      "biblical_canticles": ["benedictus_(canticle_of_zechariah)", "magnificat_(canticle_of_mary)", "nunc_dimittis_(canticle_of_simeon)", "benedicite_omnia_opera_domini"],
+      "devotional_prayers": ["prayer_of_st._francis", "angelus_domini", "fatima_prayer", "opening_prayer", "closing_prayer"],
+      "basic_prayers": ["our_father", "hail_mary", "glory_be", "hail_holy_queen"],
+      "angelus_parts": ["angelus_1", "angelus_2", "angelus_3"],
+      "liturgy_of_hours": ["lh_2", "lh_4", "lh_5", "lh_6", "lh_7"],
+      "rosary_prayers": ["final_prayer"]
+    }
+  }
+} 
