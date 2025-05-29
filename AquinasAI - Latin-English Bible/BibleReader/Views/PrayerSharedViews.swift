@@ -133,35 +133,97 @@ struct PrayerCard: View {
             }
             
             // Prayer text display logic
-            if language.showsLatin {
-                Text(prayer.latin)
-                    .font(.body)
-                    .foregroundColor(colorScheme == .dark ? .white : .primary)
-                    .padding(.top, 4)
-            }
-            
-            if language.showsEnglish {
-                Text(prayer.english)
-                    .font(.body)
-                    .foregroundColor(language.isBilingual ? .secondary : (colorScheme == .dark ? .white : .primary))
-                    .italic(language.isBilingual)
-                    .padding(.top, language.isBilingual ? 2 : 4)
-            }
-            
-            if language.showsSpanish {
-                if let spanishText = prayer.spanish {
-                    Text(spanishText)
+            if language.isBilingual {
+                // For bilingual modes, show primary language first, then secondary
+                switch language {
+                case .latinEnglish:
+                    // Latin primary, English secondary
+                    Text(prayer.latin)
                         .font(.body)
-                        .foregroundColor(language.isBilingual ? .secondary : (colorScheme == .dark ? .white : .primary))
-                        .italic(language.isBilingual)
-                        .padding(.top, language.isBilingual ? 2 : 4)
-                } else {
-                    // Fallback if Spanish text is not available
-                    Text("Spanish translation not available")
+                        .foregroundColor(colorScheme == .dark ? .white : .primary)
+                        .padding(.top, 4)
+                    
+                    Text(prayer.english)
                         .font(.body)
                         .foregroundColor(.secondary)
                         .italic()
-                        .padding(.top, language.isBilingual ? 2 : 4)
+                        .padding(.top, 2)
+                        
+                case .latinSpanish:
+                    // Latin primary, Spanish secondary
+                    Text(prayer.latin)
+                        .font(.body)
+                        .foregroundColor(colorScheme == .dark ? .white : .primary)
+                        .padding(.top, 4)
+                    
+                    if let spanishText = prayer.spanish {
+                        Text(spanishText)
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .italic()
+                            .padding(.top, 2)
+                    } else {
+                        Text("Spanish translation not available")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .italic()
+                            .padding(.top, 2)
+                    }
+                    
+                case .englishSpanish:
+                    // English primary, Spanish secondary
+                    Text(prayer.english)
+                        .font(.body)
+                        .foregroundColor(colorScheme == .dark ? .white : .primary)
+                        .padding(.top, 4)
+                    
+                    if let spanishText = prayer.spanish {
+                        Text(spanishText)
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .italic()
+                            .padding(.top, 2)
+                    } else {
+                        Text("Spanish translation not available")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .italic()
+                            .padding(.top, 2)
+                    }
+                    
+                default:
+                    // This shouldn't happen for bilingual modes
+                    EmptyView()
+                }
+            } else {
+                // For single language modes
+                if language.showsLatin {
+                    Text(prayer.latin)
+                        .font(.body)
+                        .foregroundColor(colorScheme == .dark ? .white : .primary)
+                        .padding(.top, 4)
+                }
+                
+                if language.showsEnglish {
+                    Text(prayer.english)
+                        .font(.body)
+                        .foregroundColor(colorScheme == .dark ? .white : .primary)
+                        .padding(.top, 4)
+                }
+                
+                if language.showsSpanish {
+                    if let spanishText = prayer.spanish {
+                        Text(spanishText)
+                            .font(.body)
+                            .foregroundColor(colorScheme == .dark ? .white : .primary)
+                            .padding(.top, 4)
+                    } else {
+                        Text("Spanish translation not available")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .italic()
+                            .padding(.top, 4)
+                    }
                 }
             }
         }
