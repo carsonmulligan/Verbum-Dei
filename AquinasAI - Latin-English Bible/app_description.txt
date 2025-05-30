@@ -1,0 +1,18 @@
+AquinasAI - Latin-English Bible App Description
+
+ENGLISH:
+Read the complete 73-book Catholic Bible in Latin, English, and Spanish with parallel text display. Access 100+ traditional prayers including the Rosary, Order of Mass, and Divine Mercy Chaplet. Switch between languages instantly, bookmark favorite verses, search scripture, and toggle between light/dark modes. Features side-by-side text comparison for studying original Latin alongside modern translations.
+
+ESPAÑOL:
+Lee la Biblia católica completa de 73 libros en latín, inglés y español con texto paralelo. Accede a más de 100 oraciones tradicionales incluyendo el Rosario, Orden de la Misa y Coronilla de la Divina Misericordia. Cambia de idioma al instante, guarda versículos favoritos, busca en las Escrituras y alterna entre modos claro/oscuro. Incluye comparación de texto lado a lado para estudiar el latín original junto con traducciones modernas.
+
+CORE FEATURES / CARACTERÍSTICAS PRINCIPALES:
+• 73 Catholic Bible books / 73 libros de la Biblia católica
+• 100+ prayers in 3 languages / 100+ oraciones en 3 idiomas
+• Parallel text display / Visualización de texto paralelo
+• Instant language switching / Cambio de idioma instantáneo
+• Bookmark system / Sistema de marcadores
+• Fast scripture search / Búsqueda rápida de escrituras
+• Interactive Rosary / Rosario interactivo
+• Order of Mass guide / Guía del Orden de la Misa
+• Light/dark mode / Modo claro/oscuro 
