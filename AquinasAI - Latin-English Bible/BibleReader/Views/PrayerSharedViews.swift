@@ -78,32 +78,95 @@ struct PrayerCard: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    // Title display logic
-                    if language.showsLatin {
-                        Text(prayer.displayTitleLatin)
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.deepPurple)
-                    }
-                    
-                    if language.showsEnglish {
-                        Text(prayer.displayTitleEnglish)
-                            .font(language.isBilingual ? .subheadline : .headline)
-                            .fontWeight(language.isBilingual ? .medium : .semibold)
-                            .foregroundColor(language.isBilingual ? 
-                                (colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8)) : 
-                                .deepPurple)
-                            .italic(language.isBilingual)
-                    }
-                    
-                    if language.showsSpanish {
-                        Text(prayer.displayTitleSpanish)
-                            .font(language.isBilingual ? .subheadline : .headline)
-                            .fontWeight(language.isBilingual ? .medium : .semibold)
-                            .foregroundColor(language.isBilingual ? 
-                                (colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8)) : 
-                                .deepPurple)
-                            .italic(language.isBilingual)
+                    // Title display logic - handle primary/secondary based on specific language mode
+                    if language.isBilingual {
+                        switch language {
+                        case .latinEnglish:
+                            // Latin primary, English secondary
+                            Text(prayer.displayTitleLatin)
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.deepPurple)
+                            
+                            Text(prayer.displayTitleEnglish)
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8))
+                                .italic()
+                                
+                        case .latinSpanish:
+                            // Latin primary, Spanish secondary
+                            Text(prayer.displayTitleLatin)
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.deepPurple)
+                            
+                            Text(prayer.displayTitleSpanish)
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8))
+                                .italic()
+                                
+                        case .englishSpanish:
+                            // English primary, Spanish secondary
+                            Text(prayer.displayTitleEnglish)
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.deepPurple)
+                            
+                            Text(prayer.displayTitleSpanish)
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8))
+                                .italic()
+                                
+                        default:
+                            // Fallback for any other bilingual modes
+                            if language.showsLatin {
+                                Text(prayer.displayTitleLatin)
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.deepPurple)
+                            }
+                            
+                            if language.showsEnglish {
+                                Text(prayer.displayTitleEnglish)
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8))
+                                    .italic()
+                            }
+                            
+                            if language.showsSpanish {
+                                Text(prayer.displayTitleSpanish)
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.primary.opacity(0.8))
+                                    .italic()
+                            }
+                        }
+                    } else {
+                        // Single language modes - always primary formatting
+                        if language.showsLatin {
+                            Text(prayer.displayTitleLatin)
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.deepPurple)
+                        }
+                        
+                        if language.showsEnglish {
+                            Text(prayer.displayTitleEnglish)
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.deepPurple)
+                        }
+                        
+                        if language.showsSpanish {
+                            Text(prayer.displayTitleSpanish)
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.deepPurple)
+                        }
                     }
                 }
                 
