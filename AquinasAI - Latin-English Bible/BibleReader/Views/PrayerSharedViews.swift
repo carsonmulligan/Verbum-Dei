@@ -140,11 +140,13 @@ struct PrayerCard: View {
                     // Latin primary, English secondary
                     Text(prayer.latin)
                         .font(.body)
+                        .fontWeight(.regular)
                         .foregroundColor(colorScheme == .dark ? .white : .primary)
                         .padding(.top, 4)
                     
                     Text(prayer.english)
                         .font(.body)
+                        .fontWeight(.regular)
                         .foregroundColor(.secondary)
                         .italic()
                         .padding(.top, 2)
@@ -153,18 +155,21 @@ struct PrayerCard: View {
                     // Latin primary, Spanish secondary
                     Text(prayer.latin)
                         .font(.body)
+                        .fontWeight(.regular)
                         .foregroundColor(colorScheme == .dark ? .white : .primary)
                         .padding(.top, 4)
                     
                     if let spanishText = prayer.spanish {
                         Text(spanishText)
                             .font(.body)
+                            .fontWeight(.regular)
                             .foregroundColor(.secondary)
                             .italic()
                             .padding(.top, 2)
                     } else {
                         Text("Spanish translation not available")
                             .font(.body)
+                            .fontWeight(.regular)
                             .foregroundColor(.secondary)
                             .italic()
                             .padding(.top, 2)
@@ -174,18 +179,21 @@ struct PrayerCard: View {
                     // English primary, Spanish secondary
                     Text(prayer.english)
                         .font(.body)
+                        .fontWeight(.regular)
                         .foregroundColor(colorScheme == .dark ? .white : .primary)
                         .padding(.top, 4)
                     
                     if let spanishText = prayer.spanish {
                         Text(spanishText)
                             .font(.body)
+                            .fontWeight(.regular)
                             .foregroundColor(.secondary)
                             .italic()
                             .padding(.top, 2)
                     } else {
                         Text("Spanish translation not available")
                             .font(.body)
+                            .fontWeight(.regular)
                             .foregroundColor(.secondary)
                             .italic()
                             .padding(.top, 2)
