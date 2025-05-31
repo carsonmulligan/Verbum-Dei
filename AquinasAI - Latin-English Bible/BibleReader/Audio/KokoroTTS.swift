@@ -47,8 +47,13 @@ class KokoroTTS: ObservableObject {
             
             // Load model weights
             guard let modelURL = Bundle.main.url(forResource: "kokoro-v1_0", withExtension: "safetensors", subdirectory: "TTS") else {
+                print("❌ Kokoro model file not found in app bundle")
+                print("Bundle path: \(Bundle.main.bundlePath)")
+                print("Looking for: TTS/kokoro-v1_0.safetensors")
                 throw KokoroError.modelNotFound
             }
+            
+            print("✅ Found Kokoro model at: \(modelURL.path)")
             
             await MainActor.run { loadingProgress = 0.3 }
             
