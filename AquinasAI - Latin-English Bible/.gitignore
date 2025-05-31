@@ -16,9 +16,9 @@ Package.resolved
 Pods/
 *.xcworkspace
 
-# Model files (large)
+# Model files (large) - Comment out if you want to include in project
 Resources/TTS/kokoro-v1_0.safetensors
-Resources/TTS/Voices/*.json
+# Resources/TTS/Voices/*.json  # Keep voice files, they're smaller
 
 # iOS Simulator
 *.hprof
