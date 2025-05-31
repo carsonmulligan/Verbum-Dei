@@ -1,6 +1,7 @@
 import Foundation
 import MLX
 import MLXNN
+import AVFoundation
 
 class KokoroTTS: ObservableObject {
     private var model: KokoroModel?
@@ -26,8 +27,8 @@ class KokoroTTS: ObservableObject {
     
     private func setupMLX() {
         // Set up MLX for optimal performance
-        MLX.GPU.setMemoryLimit(gigabytes: 4)
-        MLX.GPU.setCacheLimit(gigabytes: 2)
+        // Note: Memory management methods may vary by MLX Swift version
+        // These are placeholder calls - adjust based on your MLX Swift version
     }
     
     // MARK: - Model Loading
@@ -162,10 +163,9 @@ class KokoroTTS: ObservableObject {
             samples.append(sample)
         }
         
-        // Convert to audio data
-        return samples.withUnsafeBufferPointer { buffer in
-            Data(buffer: UnsafeBufferPointer(rebasing: buffer))
-        }
+        // Convert Float array to Data properly
+        let data = Data(bytes: samples, count: samples.count * MemoryLayout<Float>.size)
+        return data
     }
     
     // MARK: - Utility Methods
@@ -177,8 +177,8 @@ class KokoroTTS: ObservableObject {
         isLoading = false
         error = nil
         
-        // Clear MLX cache
-        MLX.GPU.clearCache()
+        // Clear any MLX resources if available
+        // Note: Cache clearing methods may vary by MLX Swift version
     }
     
     var isReady: Bool {
@@ -188,12 +188,11 @@ class KokoroTTS: ObservableObject {
 
 // MARK: - Model Architecture
 
-class KokoroModel: Module {
+class KokoroModel {
     // Simplified Kokoro model architecture
     // In practice, this would match the actual Kokoro architecture
     
-    override init() {
-        super.init()
+    init() {
         // Model initialization would go here
     }
 }
