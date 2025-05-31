@@ -2,8 +2,9 @@ import Foundation
 import AVFoundation
 import Combine
 
+@MainActor
 class TTSManager: NSObject, ObservableObject {
-    private let synthesizer = AVSpeechSynthesizer()
+    @preconcurrency private let synthesizer = AVSpeechSynthesizer()
     private let kokoroTTS = KokoroTTS()
     
     @Published var isPlaying = false

@@ -84,7 +84,7 @@ class KokoroTTS: ObservableObject {
     private func loadWeights(for model: KokoroModel, from url: URL) async throws {
         // Load safetensors weights
         // This is a simplified implementation - in practice you'd need proper safetensors parsing
-        let data = try Data(contentsOf: url)
+        let _ = try Data(contentsOf: url)
         // Safetensors parsing would go here
         // For now, we'll simulate the loading
         try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second simulation

@@ -126,7 +126,7 @@ struct TTSSettingsView: View {
                         Slider(value: $audioSettings.speechRate, in: 0.2...1.0, step: 0.1) {
                             Text("Speech Rate")
                         }
-                        .onChange(of: audioSettings.speechRate) { _ in
+                        .onChange(of: audioSettings.speechRate) {
                             audioSettings.saveSettings()
                         }
                     }
@@ -142,7 +142,7 @@ struct TTSSettingsView: View {
                         Slider(value: $audioSettings.volume, in: 0.0...1.0, step: 0.1) {
                             Text("Volume")
                         }
-                        .onChange(of: audioSettings.volume) { _ in
+                        .onChange(of: audioSettings.volume) {
                             audioSettings.saveSettings()
                         }
                     }
@@ -153,7 +153,7 @@ struct TTSSettingsView: View {
                        footer: Text("Italian pronunciation is closest to ecclesiastical Latin. Kokoro provides the most natural pronunciation.")) {
                     
                     Toggle("Use Italian Voice for Latin", isOn: $audioSettings.useItalianForLatin)
-                        .onChange(of: audioSettings.useItalianForLatin) { _ in
+                        .onChange(of: audioSettings.useItalianForLatin) {
                             audioSettings.saveSettings()
                         }
                     
