@@ -15,9 +15,9 @@ let package = Package(
             name: "AquinasAI",
             dependencies: [
                 .product(name: "MLX", package: "mlx-swift"),
-                .product(name: "MLXRandom", package: "mlx-swift"),
                 .product(name: "MLXNN", package: "mlx-swift"),
-                .product(name: "MLXOptimizers", package: "mlx-swift"),
+                .product(name: "MLXFast", package: "mlx-swift"),
+                .product(name: "MLXLinalg", package: "mlx-swift"),
             ]
         )
     ]

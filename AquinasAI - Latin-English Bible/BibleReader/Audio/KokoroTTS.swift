@@ -1,8 +1,6 @@
 import Foundation
 import MLX
-import MLXRandom
 import MLXNN
-import MLXOptimizers
 
 class KokoroTTS: ObservableObject {
     private var model: KokoroModel?
