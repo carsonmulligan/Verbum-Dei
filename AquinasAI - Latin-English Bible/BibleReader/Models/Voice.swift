@@ -125,7 +125,7 @@ struct Voice: Codable, Identifiable, Equatable {
 // Voice loading utility
 class VoiceLoader {
     static func loadVoice(id: String) throws -> [Float] {
-        guard let url = Bundle.main.url(forResource: id, withExtension: "json", subdirectory: "TTS/Voices") else {
+        guard let url = Bundle.main.url(forResource: id, withExtension: "json", subdirectory: "Resources/TTS/Voices") else {
             throw VoiceError.fileNotFound(id)
         }
         
