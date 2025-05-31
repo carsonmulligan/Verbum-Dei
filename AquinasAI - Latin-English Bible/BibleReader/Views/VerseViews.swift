@@ -9,6 +9,7 @@ struct LatinOnlyVerseView: View {
     let chapterNumber: Int
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var viewModel: BibleViewModel
+    @EnvironmentObject private var ttsManager: TTSManager
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -16,37 +17,85 @@ struct LatinOnlyVerseView: View {
                 .font(.footnote)
                 .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
-            Text(text)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(8)
-                .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
-                .cornerRadius(8)
-                .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                .contextMenu {
-                    if isBookmarked {
-                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                            Label("Remove Bookmark", systemImage: "bookmark.slash")
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(text)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                
+                // TTS controls
+                HStack {
+                    Button(action: {
+                        ttsManager.speakLatin(text)
+                    }) {
+                        Image(systemName: ttsManager.isPlaying && ttsManager.currentText == text ? "speaker.wave.2.fill" : "speaker.wave.2")
+                            .foregroundColor(.deepPurple)
+                            .font(.caption)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    if ttsManager.isPlaying && ttsManager.currentText == text {
+                        Button(action: {
+                            if ttsManager.isPaused {
+                                ttsManager.resume()
+                            } else {
+                                ttsManager.pause()
+                            }
+                        }) {
+                            Image(systemName: ttsManager.isPaused ? "play.fill" : "pause.fill")
+                                .foregroundColor(.deepPurple)
+                                .font(.caption)
                         }
-                    } else {
-                        Button {
-                            NotificationCenter.default.post(
-                                name: NSNotification.Name("AddBookmark"), 
-                                object: nil, 
-                                userInfo: ["verseNumber": number]
-                            )
-                        } label: {
-                            Label("Add Bookmark", systemImage: "bookmark")
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            ttsManager.stop()
+                        }) {
+                            Image(systemName: "stop.fill")
+                                .foregroundColor(.deepPurple)
+                                .font(.caption)
                         }
+                        .buttonStyle(PlainButtonStyle())
                     }
                     
+                    Spacer()
+                }
+                .padding(.top, 2)
+            }
+            .padding(8)
+            .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
+            .cornerRadius(8)
+            .contextMenu {
+                Button(action: {
+                    ttsManager.speakLatin(text)
+                }) {
+                    Label("Speak Latin", systemImage: "speaker.wave.2")
+                }
+                
+                if isBookmarked {
+                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                    }
+                } else {
                     Button {
-                        let englishBookName = viewModel.getEnglishName(for: bookName)
-                        let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
-                        UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name("AddBookmark"), 
+                            object: nil, 
+                            userInfo: ["verseNumber": number]
+                        )
                     } label: {
-                        Label("Copy", systemImage: "doc.on.doc")
+                        Label("Add Bookmark", systemImage: "bookmark")
                     }
                 }
+                
+                Button {
+                    let englishBookName = viewModel.getEnglishName(for: bookName)
+                    let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
+                    UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                }
+            }
         }
     }
 }
@@ -60,6 +109,7 @@ struct EnglishOnlyVerseView: View {
     let chapterNumber: Int
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var viewModel: BibleViewModel
+    @EnvironmentObject private var ttsManager: TTSManager
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -67,37 +117,85 @@ struct EnglishOnlyVerseView: View {
                 .font(.footnote)
                 .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
-            Text(text)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(8)
-                .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
-                .cornerRadius(8)
-                .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                .contextMenu {
-                    if isBookmarked {
-                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                            Label("Remove Bookmark", systemImage: "bookmark.slash")
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(text)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                
+                // TTS controls
+                HStack {
+                    Button(action: {
+                        ttsManager.speakEnglish(text)
+                    }) {
+                        Image(systemName: ttsManager.isPlaying && ttsManager.currentText == text ? "speaker.wave.2.fill" : "speaker.wave.2")
+                            .foregroundColor(.deepPurple)
+                            .font(.caption)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    if ttsManager.isPlaying && ttsManager.currentText == text {
+                        Button(action: {
+                            if ttsManager.isPaused {
+                                ttsManager.resume()
+                            } else {
+                                ttsManager.pause()
+                            }
+                        }) {
+                            Image(systemName: ttsManager.isPaused ? "play.fill" : "pause.fill")
+                                .foregroundColor(.deepPurple)
+                                .font(.caption)
                         }
-                    } else {
-                        Button {
-                            NotificationCenter.default.post(
-                                name: NSNotification.Name("AddBookmark"), 
-                                object: nil, 
-                                userInfo: ["verseNumber": number]
-                            )
-                        } label: {
-                            Label("Add Bookmark", systemImage: "bookmark")
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            ttsManager.stop()
+                        }) {
+                            Image(systemName: "stop.fill")
+                                .foregroundColor(.deepPurple)
+                                .font(.caption)
                         }
+                        .buttonStyle(PlainButtonStyle())
                     }
                     
+                    Spacer()
+                }
+                .padding(.top, 2)
+            }
+            .padding(8)
+            .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
+            .cornerRadius(8)
+            .contextMenu {
+                Button(action: {
+                    ttsManager.speakEnglish(text)
+                }) {
+                    Label("Speak English", systemImage: "speaker.wave.2")
+                }
+                
+                if isBookmarked {
+                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                    }
+                } else {
                     Button {
-                        let englishBookName = viewModel.getEnglishName(for: bookName)
-                        let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
-                        UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name("AddBookmark"), 
+                            object: nil, 
+                            userInfo: ["verseNumber": number]
+                        )
                     } label: {
-                        Label("Copy", systemImage: "doc.on.doc")
+                        Label("Add Bookmark", systemImage: "bookmark")
                     }
                 }
+                
+                Button {
+                    let englishBookName = viewModel.getEnglishName(for: bookName)
+                    let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
+                    UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                }
+            }
         }
     }
 }
@@ -111,6 +209,7 @@ struct SpanishOnlyVerseView: View {
     let chapterNumber: Int
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var viewModel: BibleViewModel
+    @EnvironmentObject private var ttsManager: TTSManager
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -118,37 +217,85 @@ struct SpanishOnlyVerseView: View {
                 .font(.footnote)
                 .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
-            Text(text)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(8)
-                .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
-                .cornerRadius(8)
-                .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
-                .contextMenu {
-                    if isBookmarked {
-                        Button(role: .destructive, action: { onDeleteBookmark?() }) {
-                            Label("Remove Bookmark", systemImage: "bookmark.slash")
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(text)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(colorScheme == .dark ? .nightText : Color(.displayP3, red: 0.1, green: 0.1, blue: 0.1, opacity: 1))
+                
+                // TTS controls
+                HStack {
+                    Button(action: {
+                        ttsManager.speakSpanish(text)
+                    }) {
+                        Image(systemName: ttsManager.isPlaying && ttsManager.currentText == text ? "speaker.wave.2.fill" : "speaker.wave.2")
+                            .foregroundColor(.deepPurple)
+                            .font(.caption)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    if ttsManager.isPlaying && ttsManager.currentText == text {
+                        Button(action: {
+                            if ttsManager.isPaused {
+                                ttsManager.resume()
+                            } else {
+                                ttsManager.pause()
+                            }
+                        }) {
+                            Image(systemName: ttsManager.isPaused ? "play.fill" : "pause.fill")
+                                .foregroundColor(.deepPurple)
+                                .font(.caption)
                         }
-                    } else {
-                        Button {
-                            NotificationCenter.default.post(
-                                name: NSNotification.Name("AddBookmark"), 
-                                object: nil, 
-                                userInfo: ["verseNumber": number]
-                            )
-                        } label: {
-                            Label("Add Bookmark", systemImage: "bookmark")
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            ttsManager.stop()
+                        }) {
+                            Image(systemName: "stop.fill")
+                                .foregroundColor(.deepPurple)
+                                .font(.caption)
                         }
+                        .buttonStyle(PlainButtonStyle())
                     }
                     
+                    Spacer()
+                }
+                .padding(.top, 2)
+            }
+            .padding(8)
+            .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
+            .cornerRadius(8)
+            .contextMenu {
+                Button(action: {
+                    ttsManager.speakSpanish(text)
+                }) {
+                    Label("Speak Spanish", systemImage: "speaker.wave.2")
+                }
+                
+                if isBookmarked {
+                    Button(role: .destructive, action: { onDeleteBookmark?() }) {
+                        Label("Remove Bookmark", systemImage: "bookmark.slash")
+                    }
+                } else {
                     Button {
-                        let englishBookName = viewModel.getEnglishName(for: bookName)
-                        let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
-                        UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name("AddBookmark"), 
+                            object: nil, 
+                            userInfo: ["verseNumber": number]
+                        )
                     } label: {
-                        Label("Copy", systemImage: "doc.on.doc")
+                        Label("Add Bookmark", systemImage: "bookmark")
                     }
                 }
+                
+                Button {
+                    let englishBookName = viewModel.getEnglishName(for: bookName)
+                    let sourceInfo = "\(englishBookName) \(chapterNumber):\(number)"
+                    UIPasteboard.general.string = "\(sourceInfo)\n\n\(text)"
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                }
+            }
         }
     }
 }
@@ -161,8 +308,10 @@ struct BilingualVerseView: View {
     let onDeleteBookmark: (() -> Void)?
     let bookName: String
     let chapterNumber: Int
+    let displayMode: DisplayMode
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var viewModel: BibleViewModel
+    @EnvironmentObject private var ttsManager: TTSManager
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -170,6 +319,7 @@ struct BilingualVerseView: View {
                 .font(.footnote)
                 .foregroundColor(colorScheme == .dark ? .nightSecondary : .secondary)
                 .frame(width: 30, alignment: .trailing)
+            
             VStack(alignment: .leading, spacing: 4) {
                 Text(primaryText)
                     .fixedSize(horizontal: false, vertical: true)
@@ -178,11 +328,80 @@ struct BilingualVerseView: View {
                     .italic()
                     .foregroundColor(colorScheme == .dark ? .nightSecondary : Color(.displayP3, red: 0.3, green: 0.3, blue: 0.3, opacity: 1))
                     .fixedSize(horizontal: false, vertical: true)
+                
+                // TTS controls for bilingual views
+                HStack {
+                    // Primary text audio button
+                    Button(action: {
+                        let primaryLanguage = displayMode.primaryLanguage
+                        ttsManager.speak(text: primaryText, language: primaryLanguage)
+                    }) {
+                        Image(systemName: ttsManager.isPlaying && ttsManager.currentText == primaryText ? "speaker.wave.2.fill" : "speaker.wave.2")
+                            .foregroundColor(.deepPurple)
+                            .font(.caption)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    // Secondary text audio button
+                    if let secondaryLanguage = displayMode.secondaryLanguage {
+                        Button(action: {
+                            ttsManager.speak(text: secondaryText, language: secondaryLanguage)
+                        }) {
+                            Image(systemName: ttsManager.isPlaying && ttsManager.currentText == secondaryText ? "speaker.wave.1.fill" : "speaker.wave.1")
+                                .foregroundColor(.deepPurple.opacity(0.7))
+                                .font(.caption)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                    
+                    // Playback controls when active
+                    if ttsManager.isPlaying && (ttsManager.currentText == primaryText || ttsManager.currentText == secondaryText) {
+                        Button(action: {
+                            if ttsManager.isPaused {
+                                ttsManager.resume()
+                            } else {
+                                ttsManager.pause()
+                            }
+                        }) {
+                            Image(systemName: ttsManager.isPaused ? "play.fill" : "pause.fill")
+                                .foregroundColor(.deepPurple)
+                                .font(.caption)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            ttsManager.stop()
+                        }) {
+                            Image(systemName: "stop.fill")
+                                .foregroundColor(.deepPurple)
+                                .font(.caption)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                    
+                    Spacer()
+                }
+                .padding(.top, 2)
             }
             .padding(8)
             .background(isBookmarked ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.secondary.opacity(0.15)) : Color.clear)
             .cornerRadius(8)
             .contextMenu {
+                Button(action: {
+                    let primaryLanguage = displayMode.primaryLanguage
+                    ttsManager.speak(text: primaryText, language: primaryLanguage)
+                }) {
+                    Label("Speak \(displayMode.primaryLanguage.displayName)", systemImage: "speaker.wave.2")
+                }
+                
+                if let secondaryLanguage = displayMode.secondaryLanguage {
+                    Button(action: {
+                        ttsManager.speak(text: secondaryText, language: secondaryLanguage)
+                    }) {
+                        Label("Speak \(secondaryLanguage.displayName)", systemImage: "speaker.wave.1")
+                    }
+                }
+                
                 if isBookmarked {
                     Button(role: .destructive, action: { onDeleteBookmark?() }) {
                         Label("Remove Bookmark", systemImage: "bookmark.slash")
@@ -258,7 +477,8 @@ struct VerseView: View {
                     isBookmarked: isBookmarked,
                     onDeleteBookmark: deleteBookmark,
                     bookName: bookName,
-                    chapterNumber: chapterNumber
+                    chapterNumber: chapterNumber,
+                    displayMode: displayMode
                 )
             case .latinSpanish:
                 BilingualVerseView(
@@ -268,7 +488,8 @@ struct VerseView: View {
                     isBookmarked: isBookmarked,
                     onDeleteBookmark: deleteBookmark,
                     bookName: bookName,
-                    chapterNumber: chapterNumber
+                    chapterNumber: chapterNumber,
+                    displayMode: displayMode
                 )
             case .englishSpanish:
                 BilingualVerseView(
@@ -278,7 +499,8 @@ struct VerseView: View {
                     isBookmarked: isBookmarked,
                     onDeleteBookmark: deleteBookmark,
                     bookName: bookName,
-                    chapterNumber: chapterNumber
+                    chapterNumber: chapterNumber,
+                    displayMode: displayMode
                 )
             }
         }
