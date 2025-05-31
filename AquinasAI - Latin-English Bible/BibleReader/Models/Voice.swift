@@ -28,6 +28,8 @@ struct Voice: Codable, Identifiable, Equatable {
         case warm = "warm"
         case deep = "deep"
         case soft = "soft"
+        case bella = "bella"
+        case heart = "heart"
         
         var displayName: String {
             switch self {
@@ -35,11 +37,13 @@ struct Voice: Codable, Identifiable, Equatable {
             case .warm: return "Warm"
             case .deep: return "Deep"
             case .soft: return "Soft"
+            case .bella: return "Bella"
+            case .heart: return "Heart"
             }
         }
     }
     
-    // Predefined Italian voices for Latin
+    // Italian voices for Latin pronunciation
     static let italianVoices: [Voice] = [
         Voice(
             id: "if_sara",
@@ -61,8 +65,57 @@ struct Voice: Codable, Identifiable, Equatable {
         )
     ]
     
-    // Default voice for Latin
+    // English voices for English text
+    static let englishVoices: [Voice] = [
+        Voice(
+            id: "af_bella",
+            name: "Bella",
+            language: "en-US",
+            gender: .female,
+            style: .bella,
+            description: "High-quality female voice, warm and engaging",
+            embedding: [] // Will be loaded from JSON file
+        ),
+        Voice(
+            id: "am_adam",
+            name: "Adam",
+            language: "en-US",
+            gender: .male,
+            style: .clear,
+            description: "Clear male voice, good for narration",
+            embedding: [] // Will be loaded from JSON file
+        )
+    ]
+    
+    // Spanish voices for Spanish text
+    static let spanishVoices: [Voice] = [
+        Voice(
+            id: "ef_dora",
+            name: "Dora",
+            language: "es-ES",
+            gender: .female,
+            style: .warm,
+            description: "Warm female voice for Spanish text",
+            embedding: [] // Will be loaded from JSON file
+        ),
+        Voice(
+            id: "em_alex",
+            name: "Alex",
+            language: "es-ES",
+            gender: .male,
+            style: .clear,
+            description: "Clear male voice for Spanish text",
+            embedding: [] // Will be loaded from JSON file
+        )
+    ]
+    
+    // All available voices
+    static let allVoices = italianVoices + englishVoices + spanishVoices
+    
+    // Default voices for each language
     static let defaultLatinVoice = italianVoices[0] // Sara
+    static let defaultEnglishVoice = englishVoices[0] // Bella
+    static let defaultSpanishVoice = spanishVoices[0] // Dora
     
     static func == (lhs: Voice, rhs: Voice) -> Bool {
         lhs.id == rhs.id
