@@ -45,15 +45,63 @@ class KokoroTTS: ObservableObject {
         do {
             await MainActor.run { loadingProgress = 0.1 }
             
-            // Load model weights
-            guard let modelURL = Bundle.main.url(forResource: "kokoro-v1_0", withExtension: "safetensors", subdirectory: "Resources/TTS") else {
+            // Debug: List all files in the app bundle
+            print("🔍 DEBUG: App bundle contents:")
+            if let bundlePath = Bundle.main.resourcePath {
+                let fileManager = FileManager.default
+                let bundleURL = URL(fileURLWithPath: bundlePath)
+                
+                // Check for TTS folder at root level
+                let rootTTSURL = bundleURL.appendingPathComponent("TTS")
+                let rootTTSExists = fileManager.fileExists(atPath: rootTTSURL.path)
+                print("📁 Root TTS folder exists: \(rootTTSExists)")
+                if rootTTSExists {
+                    if let contents = try? fileManager.contentsOfDirectory(atPath: rootTTSURL.path) {
+                        print("   Contents: \(contents)")
+                    }
+                }
+                
+                // Check for Resources/TTS folder
+                let resourcesTTSURL = bundleURL.appendingPathComponent("Resources/TTS")
+                let resourcesTTSExists = fileManager.fileExists(atPath: resourcesTTSURL.path)
+                print("📁 Resources/TTS folder exists: \(resourcesTTSExists)")
+                if resourcesTTSExists {
+                    if let contents = try? fileManager.contentsOfDirectory(atPath: resourcesTTSURL.path) {
+                        print("   Contents: \(contents)")
+                    }
+                }
+                
+                // Try to find kokoro model file
+                let modelPaths = [
+                    "TTS/kokoro-v1_0.safetensors",
+                    "Resources/TTS/kokoro-v1_0.safetensors"
+                ]
+                
+                for path in modelPaths {
+                    let url = bundleURL.appendingPathComponent(path)
+                    let exists = fileManager.fileExists(atPath: url.path)
+                    print("🔍 Checking \(path): \(exists ? "✅ EXISTS" : "❌ NOT FOUND")")
+                }
+            }
+            
+            // Load model weights - try both possible locations
+            var modelURL: URL?
+            
+            // First try root TTS location
+            modelURL = Bundle.main.url(forResource: "kokoro-v1_0", withExtension: "safetensors", subdirectory: "TTS")
+            if modelURL == nil {
+                // Then try Resources/TTS location
+                modelURL = Bundle.main.url(forResource: "kokoro-v1_0", withExtension: "safetensors", subdirectory: "Resources/TTS")
+            }
+            
+            guard let finalModelURL = modelURL else {
                 print("❌ Kokoro model file not found in app bundle")
                 print("Bundle path: \(Bundle.main.bundlePath)")
-                print("Looking for: Resources/TTS/kokoro-v1_0.safetensors")
+                print("Tried: TTS/kokoro-v1_0.safetensors and Resources/TTS/kokoro-v1_0.safetensors")
                 throw KokoroError.modelNotFound
             }
             
-            print("✅ Found Kokoro model at: \(modelURL.path)")
+            print("✅ Found Kokoro model at: \(finalModelURL.path)")
             
             await MainActor.run { loadingProgress = 0.3 }
             
@@ -63,7 +111,7 @@ class KokoroTTS: ObservableObject {
             await MainActor.run { loadingProgress = 0.6 }
             
             // Load weights from safetensors file
-            try await loadWeights(for: model, from: modelURL)
+            try await loadWeights(for: model, from: finalModelURL)
             
             await MainActor.run { loadingProgress = 0.9 }
             
