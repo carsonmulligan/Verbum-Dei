@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		454CCA6B2DEB03AB00E5DA57 /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = 454CCA6A2DEB03AB00E5DA57 /* MLX */; };
+		454CCA6D2DEB03AB00E5DA57 /* MLXFast in Frameworks */ = {isa = PBXBuildFile; productRef = 454CCA6C2DEB03AB00E5DA57 /* MLXFast */; };
+		454CCA6F2DEB03AB00E5DA57 /* MLXLinalg in Frameworks */ = {isa = PBXBuildFile; productRef = 454CCA6E2DEB03AB00E5DA57 /* MLXLinalg */; };
+		454CCA712DEB03AB00E5DA57 /* MLXNN in Frameworks */ = {isa = PBXBuildFile; productRef = 454CCA702DEB03AB00E5DA57 /* MLXNN */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		45498A5C2DC23EEF0020E11F /* AquinasAI - Latin-English Bible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AquinasAI - Latin-English Bible.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +30,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				454CCA6D2DEB03AB00E5DA57 /* MLXFast in Frameworks */,
+				454CCA6F2DEB03AB00E5DA57 /* MLXLinalg in Frameworks */,
+				454CCA712DEB03AB00E5DA57 /* MLXNN in Frameworks */,
+				454CCA6B2DEB03AB00E5DA57 /* MLX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +76,10 @@
 			);
 			name = "AquinasAI - Latin-English Bible";
 			packageProductDependencies = (
+				454CCA6A2DEB03AB00E5DA57 /* MLX */,
+				454CCA6C2DEB03AB00E5DA57 /* MLXFast */,
+				454CCA6E2DEB03AB00E5DA57 /* MLXLinalg */,
+				454CCA702DEB03AB00E5DA57 /* MLXNN */,
 			);
 			productName = "AquinasAI - Latin-English Bible";
 			productReference = 45498A5C2DC23EEF0020E11F /* AquinasAI - Latin-English Bible.app */;
@@ -94,6 +109,9 @@
 			);
 			mainGroup = 45498A532DC23EEF0020E11F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				454CCA692DEB03AB00E5DA57 /* XCRemoteSwiftPackageReference "mlx-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 45498A5D2DC23EEF0020E11F /* Products */;
 			projectDirPath = "";
@@ -256,7 +274,7 @@
 				DEVELOPMENT_TEAM = 7B9449A6V8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Latin Bible";
+				INFOPLIST_KEY_CFBundleDisplayName = "Verbum Dei";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -268,7 +286,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "NA.AquinasAI---Latin-English-Bible";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -287,7 +305,7 @@
 				DEVELOPMENT_TEAM = 7B9449A6V8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Latin Bible";
+				INFOPLIST_KEY_CFBundleDisplayName = "Verbum Dei";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -299,7 +317,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "NA.AquinasAI---Latin-English-Bible";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -330,6 +348,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		454CCA692DEB03AB00E5DA57 /* XCRemoteSwiftPackageReference "mlx-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.25.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		454CCA6A2DEB03AB00E5DA57 /* MLX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 454CCA692DEB03AB00E5DA57 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLX;
+		};
+		454CCA6C2DEB03AB00E5DA57 /* MLXFast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 454CCA692DEB03AB00E5DA57 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLXFast;
+		};
+		454CCA6E2DEB03AB00E5DA57 /* MLXLinalg */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 454CCA692DEB03AB00E5DA57 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLXLinalg;
+		};
+		454CCA702DEB03AB00E5DA57 /* MLXNN */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 454CCA692DEB03AB00E5DA57 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLXNN;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 45498A542DC23EEF0020E11F /* Project object */;
 }
