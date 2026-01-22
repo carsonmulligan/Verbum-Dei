@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+xcuserdata/
+
+# Editor
+.cursor/
+.vscode/
+*.swp
+*.swo
+
+# Dependencies
+Pods/
+Carthage/
+
+# Environment
+.env
+.env.*
