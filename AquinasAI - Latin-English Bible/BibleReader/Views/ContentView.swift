@@ -74,7 +74,8 @@ struct TestamentSelectorView: View {
     @Binding var showingBookmarks: Bool
     @Binding var showingSearch: Bool
     @Binding var showingPrayers: Bool
-    
+    @Binding var showingSpeedReader: Bool
+
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 16) {
@@ -83,33 +84,40 @@ struct TestamentSelectorView: View {
                     isSelected: selectedTestament == .old,
                     action: { selectedTestament = .old }
                 )
-                
+
                 TestamentPillButton(
                     title: "New Testament",
                     isSelected: selectedTestament == .new,
                     action: { selectedTestament = .new }
                 )
             }
-            
+
             HStack(spacing: 16) {
                 TestamentPillButton(
                     title: "Search",
                     isSelected: false,
                     action: { showingSearch = true }
                 )
-                
+
                 TestamentPillButton(
                     title: "Bookmarks",
                     isSelected: false,
                     action: { showingBookmarks = true }
                 )
-                
+
                 TestamentPillButton(
                     title: "Prayers",
                     isSelected: false,
                     action: { showingPrayers = true }
                 )
             }
+
+            // Speed Reader button
+            TestamentPillButton(
+                title: "Speed Reader",
+                isSelected: false,
+                action: { showingSpeedReader = true }
+            )
         }
         .padding()
     }
@@ -125,6 +133,7 @@ struct BookList: View {
     @Binding var showingPrayers: Bool
     @State private var selectedTestament: Testament = .old
     @State private var showingSearch = false
+    @State private var showingSpeedReader = false
     @State private var navigationPath = NavigationPath()
     
     var filteredBooks: [Book] {
@@ -169,7 +178,8 @@ struct BookList: View {
                         isDarkMode: $isDarkMode,
                         showingBookmarks: $showingBookmarks,
                         showingSearch: $showingSearch,
-                        showingPrayers: $showingPrayers
+                        showingPrayers: $showingPrayers,
+                        showingSpeedReader: $showingSpeedReader
                     )
                     
                     bookListContent
@@ -274,6 +284,9 @@ struct BookList: View {
                 PrayersView(initialPrayerId: nil)
                     .environmentObject(prayerStore)
             }
+            .sheet(isPresented: $showingSpeedReader) {
+                SpeedReaderHubView()
+            }
         }
     }
     
@@ -372,10 +385,11 @@ struct BookView: View {
     let book: Book
     @ObservedObject var viewModel: BibleViewModel
     @State private var selectedChapterIndex: Int = 0
+    @State private var showingSpeedReader: Bool = false
     let initialChapter: Int?
     let scrollToVerse: Int?
     @Environment(\.colorScheme) private var colorScheme
-    
+
     private var currentChapter: Chapter {
         book.chapters[selectedChapterIndex]
     }
@@ -461,6 +475,19 @@ struct BookView: View {
         .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
         .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showingSpeedReader = true
+                } label: {
+                    Image(systemName: "text.viewfinder")
+                        .foregroundColor(.deepPurple)
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $showingSpeedReader) {
+            SpeedReaderView(book: book, chapter: currentChapter)
+        }
     }
 }
 
