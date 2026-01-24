@@ -286,6 +286,8 @@ struct BookList: View {
             }
             .sheet(isPresented: $showingSpeedReader) {
                 SpeedReaderHubView()
+                    .environmentObject(viewModel)
+                    .environmentObject(prayerStore)
             }
         }
     }
