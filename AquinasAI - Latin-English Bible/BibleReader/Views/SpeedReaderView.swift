@@ -282,6 +282,7 @@ struct SpeedReaderView: View {
                 Text("Tap to start")
                     .font(.title2)
                     .foregroundColor(textColor)
+            }
         }
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
