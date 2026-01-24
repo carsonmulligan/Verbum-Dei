@@ -20,15 +20,13 @@ struct SpeedReaderHubView: View {
     @State private var selectedPrayer: Prayer?
 
     var body: some View {
-        let _ = print("🏠 SpeedReaderHubView body called")
-        let _ = print("🏠 Books count: \(viewModel.books.count)")
-        let _ = print("🏠 Prayers count: \(prayerStore.prayers.count)")
-
         NavigationStack {
             ZStack {
+                // Background
                 backgroundColor
                     .ignoresSafeArea()
 
+                // Content
                 ScrollView {
                     VStack(spacing: 24) {
                         // Hero header
@@ -58,9 +56,6 @@ struct SpeedReaderHubView: View {
                 } else if let prayer = selectedPrayer {
                     SpeedReaderView(prayer: prayer)
                 }
-            }
-            .onAppear {
-                print("🏠 SpeedReaderHubView onAppear")
             }
         }
     }
