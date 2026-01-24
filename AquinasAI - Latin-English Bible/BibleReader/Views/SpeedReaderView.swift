@@ -58,80 +58,70 @@ struct SpeedReaderView: View {
 
     var body: some View {
         ZStack {
-            // Background
-            backgroundColor
+            // Background - use simple Color for now
+            Color(UIColor.systemBackground)
                 .ignoresSafeArea()
-                .onTapGesture {
-                    manager.togglePlayPause()
-                    showControlsTemporarily()
-                }
 
-            VStack(spacing: 0) {
-                // Top bar - only close button always visible, rest fades with controls
-                topBar
+            VStack(spacing: 20) {
+                // Debug info at top
+                Text("SpeedReader Debug")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+
+                Text("Book: \(book?.name ?? "nil")")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Text("Chapter: \(chapter?.number ?? -1)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Text("Words loaded: \(manager.words.count)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Text("Language: \(manager.currentLanguage.displayName)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Divider()
+
+                // Show current word or message
+                if manager.words.isEmpty {
+                    Text("No words loaded yet")
+                        .foregroundColor(.orange)
+                } else if let word = manager.currentWord {
+                    Text(word.text)
+                        .font(.largeTitle)
+                        .foregroundColor(.primary)
+                } else {
+                    Text("Tap play to start")
+                        .foregroundColor(.secondary)
+                }
 
                 Spacer()
 
-                // Word display area (always visible)
-                wordDisplayArea
-
-                Spacer()
-
-                // Bottom controls
-                if showControls {
-                    bottomControls
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                }
-            }
-
-            // Always-visible close button in top left
-            if !showControls {
-                VStack {
-                    HStack {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .font(.title2)
-                                .foregroundColor(.secondary.opacity(0.6))
-                        }
-                        .padding(.leading)
-                        .padding(.top, 8)
-                        Spacer()
+                // Simple controls
+                HStack(spacing: 40) {
+                    Button("Close") {
+                        dismiss()
                     }
-                    Spacer()
+                    .foregroundColor(.red)
+
+                    Button(manager.isPlaying ? "Pause" : "Play") {
+                        manager.togglePlayPause()
+                    }
+                    .foregroundColor(.blue)
                 }
+                .padding()
             }
-        }
-        .gesture(swipeGesture)
-        .sheet(isPresented: $showChapterPicker) {
-            SpeedReaderChapterPickerSheet(manager: manager, onSelect: { showChapterPicker = false })
-                .presentationDetents([.medium])
-        }
-        .sheet(isPresented: $showLanguagePicker) {
-            SpeedReaderLanguagePickerSheet(manager: manager, onSelect: { showLanguagePicker = false })
-                .presentationDetents([.height(200)])
+            .padding()
         }
         .onAppear {
+            print("SpeedReaderView: onAppear called")
+            print("SpeedReaderView: book=\(book?.name ?? "nil"), chapter=\(chapter?.number ?? -1)")
             loadContent()
-            showControlsTemporarily()
-        }
-        .onDisappear {
-            manager.pause()
-            controlsTimer?.invalidate()
-        }
-        .statusBarHidden(manager.isPlaying && !showControls)
-        .alert("Set WPM", isPresented: $showWPMInput) {
-            TextField("WPM (10-999)", text: $wpmInputText)
-                .keyboardType(.numberPad)
-            Button("Cancel", role: .cancel) { }
-            Button("Set") {
-                if let wpm = Int(wpmInputText), wpm >= 10, wpm <= 999 {
-                    manager.setWPM(wpm)
-                }
-            }
-        } message: {
-            Text("Enter words per minute (10-999)")
+            print("SpeedReaderView: After loadContent, words=\(manager.words.count)")
         }
     }
 
