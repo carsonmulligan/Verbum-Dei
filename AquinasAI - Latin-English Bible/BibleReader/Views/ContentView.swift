@@ -486,7 +486,29 @@ struct BookView: View {
             }
         }
         .fullScreenCover(isPresented: $showingSpeedReader) {
-            SpeedReaderView(book: book, chapter: currentChapter)
+            // Test: Simple view to verify fullScreenCover works
+            VStack(spacing: 20) {
+                Text("TEST - FullScreenCover Works!")
+                    .font(.largeTitle)
+                    .foregroundColor(.primary)
+
+                Text("Book: \(book.name)")
+                    .foregroundColor(.secondary)
+
+                Text("Chapter: \(currentChapter.number)")
+                    .foregroundColor(.secondary)
+
+                Text("Verses: \(currentChapter.verses.count)")
+                    .foregroundColor(.secondary)
+
+                Button("Close") {
+                    showingSpeedReader = false
+                }
+                .font(.title2)
+                .foregroundColor(.blue)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(UIColor.systemBackground))
         }
     }
 }
