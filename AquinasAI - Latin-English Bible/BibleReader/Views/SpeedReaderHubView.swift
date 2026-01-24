@@ -123,7 +123,7 @@ struct SpeedReaderHubView: View {
         case .mass:
             prayerSelection(category: .mass)
         case .angelus:
-            prayerSelection(category: .angelus)
+            prayerSelection(category: .basic)  // Angelus is in the basic prayers
         case .liturgyOfHours:
             prayerSelection(category: .hours)
         }

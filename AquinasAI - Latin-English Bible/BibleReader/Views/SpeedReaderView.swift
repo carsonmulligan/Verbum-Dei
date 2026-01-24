@@ -58,70 +58,61 @@ struct SpeedReaderView: View {
 
     var body: some View {
         ZStack {
-            // Background - use simple Color for now
-            Color(UIColor.systemBackground)
+            // Background
+            backgroundColor
                 .ignoresSafeArea()
 
-            VStack(spacing: 20) {
-                // Debug info at top
-                Text("SpeedReader Debug")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-
-                Text("Book: \(book?.name ?? "nil")")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                Text("Chapter: \(chapter?.number ?? -1)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                Text("Words loaded: \(manager.words.count)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                Text("Language: \(manager.currentLanguage.displayName)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                Divider()
-
-                // Show current word or message
-                if manager.words.isEmpty {
-                    Text("No words loaded yet")
-                        .foregroundColor(.orange)
-                } else if let word = manager.currentWord {
-                    Text(word.text)
-                        .font(.largeTitle)
-                        .foregroundColor(.primary)
-                } else {
-                    Text("Tap play to start")
-                        .foregroundColor(.secondary)
-                }
+            VStack(spacing: 0) {
+                // Top bar with title and progress
+                topBar
 
                 Spacer()
 
-                // Simple controls
-                HStack(spacing: 40) {
-                    Button("Close") {
-                        dismiss()
+                // Main word display
+                wordDisplayArea
+                    .onTapGesture {
+                        showControlsTemporarily()
                     }
-                    .foregroundColor(.red)
+                    .gesture(swipeGesture)
 
-                    Button(manager.isPlaying ? "Pause" : "Play") {
-                        manager.togglePlayPause()
-                    }
-                    .foregroundColor(.blue)
+                Spacer()
+
+                // Bottom controls
+                if showControls {
+                    bottomControls
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
-                .padding()
             }
-            .padding()
         }
         .onAppear {
             print("SpeedReaderView: onAppear called")
             print("SpeedReaderView: book=\(book?.name ?? "nil"), chapter=\(chapter?.number ?? -1)")
             loadContent()
             print("SpeedReaderView: After loadContent, words=\(manager.words.count)")
+        }
+        .onDisappear {
+            manager.pause()
+        }
+        .sheet(isPresented: $showChapterPicker) {
+            SpeedReaderChapterPickerSheet(manager: manager) {
+                showChapterPicker = false
+            }
+        }
+        .sheet(isPresented: $showLanguagePicker) {
+            SpeedReaderLanguagePickerSheet(manager: manager) {
+                showLanguagePicker = false
+            }
+        }
+        .alert("Set WPM", isPresented: $showWPMInput) {
+            TextField("WPM (10-999)", text: $wpmInputText)
+            Button("Cancel", role: .cancel) {}
+            Button("Set") {
+                if let newWPM = Int(wpmInputText) {
+                    manager.setWPM(newWPM)
+                }
+            }
+        } message: {
+            Text("Enter reading speed (10-999 words per minute)")
         }
     }
 

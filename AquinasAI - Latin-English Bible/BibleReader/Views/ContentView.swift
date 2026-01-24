@@ -480,10 +480,6 @@ struct BookView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    print("📱 SpeedReader button tapped!")
-                    print("📱 Book: \(book.name)")
-                    print("📱 Chapter: \(currentChapter.number)")
-                    print("📱 Setting showingSpeedReader = true")
                     showingSpeedReader = true
                 } label: {
                     Image(systemName: "text.viewfinder")
@@ -492,39 +488,7 @@ struct BookView: View {
             }
         }
         .fullScreenCover(isPresented: $showingSpeedReader) {
-            let _ = print("🎬 fullScreenCover content being created")
-            let _ = print("🎬 Book: \(book.name)")
-            let _ = print("🎬 Chapter: \(currentChapter.number)")
-
-            // Test: Simple view to verify fullScreenCover works
-            VStack(spacing: 20) {
-                Text("TEST - FullScreenCover Works!")
-                    .font(.largeTitle)
-                    .foregroundColor(.primary)
-
-                Text("Book: \(book.name)")
-                    .foregroundColor(.secondary)
-
-                Text("Chapter: \(currentChapter.number)")
-                    .foregroundColor(.secondary)
-
-                Text("Verses: \(currentChapter.verses.count)")
-                    .foregroundColor(.secondary)
-
-                Button("Close") {
-                    showingSpeedReader = false
-                }
-                .font(.title2)
-                .foregroundColor(.blue)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(UIColor.systemBackground))
-            .onAppear {
-                print("🎬 Test view onAppear!")
-            }
-        }
-        .onChange(of: showingSpeedReader) { oldValue, newValue in
-            print("📱 showingSpeedReader changed: \(oldValue) -> \(newValue)")
+            SpeedReaderView(book: book, chapter: currentChapter)
         }
     }
 }
