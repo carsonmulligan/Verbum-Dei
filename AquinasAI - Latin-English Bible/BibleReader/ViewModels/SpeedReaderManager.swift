@@ -150,13 +150,20 @@ class SpeedReaderManager: ObservableObject {
 
     /// Load a Bible chapter for speed reading
     func loadBibleChapter(_ book: Book, chapter: Chapter) {
+        print("SpeedReader: Loading chapter \(chapter.number) from \(book.name)")
+        print("SpeedReader: Chapter has \(chapter.verses.count) verses")
+        print("SpeedReader: Current language: \(currentLanguage.rawValue)")
+
         currentBook = book
         contentTitle = "\(book.displayName) \(chapter.number)"
         contentType = .bible
 
         let chapterItems = book.toSpeedReaderItems(chapter: chapter, language: currentLanguage)
+        print("SpeedReader: Generated \(chapterItems.count) items")
+
         items = chapterItems
         words = chapterItems.map { SpeedReaderWord(text: $0.text) }
+        print("SpeedReader: Created \(words.count) words")
 
         // Create verse markers
         var markers: [SpeedReaderVerseMarker] = []
@@ -250,12 +257,18 @@ class SpeedReaderManager: ObservableObject {
 
     /// Load a prayer for speed reading
     func loadPrayer(_ prayer: Prayer) {
+        print("SpeedReader: Loading prayer: \(prayer.title)")
+        print("SpeedReader: Current language: \(currentLanguage.rawValue)")
+
         contentTitle = prayer.displayTitleLatin
         contentType = .prayers
 
         let prayerItems = prayer.toSpeedReaderItems(language: currentLanguage)
+        print("SpeedReader: Generated \(prayerItems.count) items from prayer")
+
         items = prayerItems
         words = prayerItems.map { SpeedReaderWord(text: $0.text) }
+        print("SpeedReader: Created \(words.count) words")
 
         chapters = []
         verseMarkers = []

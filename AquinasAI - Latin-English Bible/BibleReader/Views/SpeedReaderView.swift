@@ -138,12 +138,25 @@ struct SpeedReaderView: View {
     // MARK: - Content Loading
 
     private func loadContent() {
+        print("SpeedReaderView: loadContent called")
+        print("SpeedReaderView: book=\(book?.name ?? "nil"), chapter=\(chapter?.number ?? -1)")
+        print("SpeedReaderView: prayer=\(prayer?.title ?? "nil")")
+        print("SpeedReaderView: text=\(text ?? "nil")")
+
         if let book = book, let chapter = chapter {
+            print("SpeedReaderView: Loading Bible chapter...")
             manager.loadBibleChapter(book, chapter: chapter)
+            print("SpeedReaderView: After load - words count: \(manager.words.count)")
         } else if let prayer = prayer {
+            print("SpeedReaderView: Loading prayer...")
             manager.loadPrayer(prayer)
+            print("SpeedReaderView: After load - words count: \(manager.words.count)")
         } else if let text = text {
+            print("SpeedReaderView: Loading text...")
             manager.loadText(text, title: title)
+            print("SpeedReaderView: After load - words count: \(manager.words.count)")
+        } else {
+            print("SpeedReaderView: No content to load!")
         }
     }
 
@@ -239,7 +252,25 @@ struct SpeedReaderView: View {
                     .cornerRadius(4)
             }
 
-            if let word = manager.currentWord {
+            if manager.words.isEmpty {
+                // No content loaded
+                VStack(spacing: 12) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.largeTitle)
+                        .foregroundColor(.orange)
+                    Text("No content loaded")
+                        .font(.headline)
+                        .foregroundColor(textColor)
+                    Text("Words: \(manager.words.count)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    if let title = manager.contentTitle {
+                        Text("Title: \(title)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            } else if let word = manager.currentWord {
                 // The word with ORP highlighting (arrows included)
                 WordORPDisplay(
                     word: word,
@@ -250,8 +281,7 @@ struct SpeedReaderView: View {
             } else {
                 Text("Tap to start")
                     .font(.title2)
-                    .foregroundColor(.secondary)
-            }
+                    .foregroundColor(textColor)
         }
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
