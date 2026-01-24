@@ -8,6 +8,14 @@
 
 import SwiftUI
 
+// Local color extensions for this view
+private extension Color {
+    static let deepPurple = Color(red: 137/255, green: 84/255, blue: 160/255)
+    static let paperWhite = Color(red: 242/255, green: 238/255, blue: 228/255)
+    static let nightBackground = Color(red: 28/255, green: 28/255, blue: 30/255)
+    static let nightText = Color.white.opacity(0.92)
+}
+
 struct SpeedReaderView: View {
     @StateObject private var manager = SpeedReaderManager()
     @Environment(\.dismiss) private var dismiss

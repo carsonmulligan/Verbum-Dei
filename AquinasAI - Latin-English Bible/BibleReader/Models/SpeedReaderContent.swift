@@ -8,6 +8,11 @@
 import Foundation
 import SwiftUI
 
+// Local color extension
+private extension Color {
+    static let deepPurple = Color(red: 137/255, green: 84/255, blue: 160/255)
+}
+
 // MARK: - Content Type
 
 /// Types of content that can be speed-read
