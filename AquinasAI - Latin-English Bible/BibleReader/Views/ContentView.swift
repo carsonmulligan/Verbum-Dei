@@ -478,6 +478,10 @@ struct BookView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    print("📱 SpeedReader button tapped!")
+                    print("📱 Book: \(book.name)")
+                    print("📱 Chapter: \(currentChapter.number)")
+                    print("📱 Setting showingSpeedReader = true")
                     showingSpeedReader = true
                 } label: {
                     Image(systemName: "text.viewfinder")
@@ -486,6 +490,10 @@ struct BookView: View {
             }
         }
         .fullScreenCover(isPresented: $showingSpeedReader) {
+            let _ = print("🎬 fullScreenCover content being created")
+            let _ = print("🎬 Book: \(book.name)")
+            let _ = print("🎬 Chapter: \(currentChapter.number)")
+
             // Test: Simple view to verify fullScreenCover works
             VStack(spacing: 20) {
                 Text("TEST - FullScreenCover Works!")
@@ -509,6 +517,12 @@ struct BookView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(UIColor.systemBackground))
+            .onAppear {
+                print("🎬 Test view onAppear!")
+            }
+        }
+        .onChange(of: showingSpeedReader) { oldValue, newValue in
+            print("📱 showingSpeedReader changed: \(oldValue) -> \(newValue)")
         }
     }
 }
