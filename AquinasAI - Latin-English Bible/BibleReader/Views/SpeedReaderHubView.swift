@@ -132,10 +132,10 @@ struct SpeedReaderHubView: View {
                 .font(.headline)
                 .foregroundColor(colorScheme == .dark ? .nightText : .black)
 
-            LazyVStack(spacing: 8) {
+            VStack(spacing: 8) {
                 ForEach(viewModel.books) { book in
                     DisclosureGroup {
-                        LazyVStack(spacing: 4) {
+                        VStack(spacing: 4) {
                             ForEach(book.chapters) { chapter in
                                 Button {
                                     selectedBook = book
@@ -203,7 +203,7 @@ struct SpeedReaderHubView: View {
                     .foregroundColor(.secondary)
                     .padding()
             } else {
-                LazyVStack(spacing: 8) {
+                VStack(spacing: 8) {
                     ForEach(prayers, id: \.id) { prayer in
                         Button {
                             selectedPrayer = prayer
