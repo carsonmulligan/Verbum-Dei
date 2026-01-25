@@ -215,7 +215,7 @@ struct SpeedReaderHubView: View {
     private var rosarySelection: some View {
         let mysteryTypes = ["joyful", "sorrowful", "glorious", "luminous"]
 
-        VStack(alignment: .leading, spacing: 16) {
+        return VStack(alignment: .leading, spacing: 16) {
             Text("Select Rosary Mysteries")
                 .font(.headline)
                 .foregroundColor(colorScheme == .dark ? .nightText : .black)
