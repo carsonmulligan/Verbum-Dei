@@ -64,7 +64,7 @@ struct SpeedReaderHubView: View {
             .fullScreenCover(item: $speedReaderContent) { content in
                 switch content {
                 case .bible(let book, let chapter):
-                    SpeedReaderView(book: book, chapter: chapter)
+                    SpeedReaderView(book: book, chapter: chapter, allBooks: viewModel.books)
                 case .prayer(let prayer):
                     SpeedReaderView(prayer: prayer)
                 }

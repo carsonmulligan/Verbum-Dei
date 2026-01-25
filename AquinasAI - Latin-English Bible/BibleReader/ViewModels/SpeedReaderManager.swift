@@ -30,10 +30,11 @@ class SpeedReaderManager: ObservableObject {
     @Published var chapters: [SpeedReaderChapterMarker] = []
     @Published var verseMarkers: [SpeedReaderVerseMarker] = []
     @Published var currentBook: Book? = nil
+    var allBooks: [Book] = []
 
     // MARK: - Settings (Persisted)
 
-    @AppStorage("speedReaderWPM") var wpm: Int = 200
+    @AppStorage("speedReaderWPM") var wpm: Int = 115
     @AppStorage("speedReaderAutoPause") var autoPauseOnPunctuation: Bool = true
     @AppStorage("speedReaderLanguage") private var savedLanguage: String = "latin"
 
@@ -370,20 +371,35 @@ class SpeedReaderManager: ObservableObject {
     func nextWord() {
         guard currentWordIndex < words.count - 1 else {
             // At the end of current content
-            // Check if we can auto-advance to next chapter
+            // Check if we can auto-advance to next chapter/book
             if let book = currentBook, let currentChap = currentChapter {
                 let currentNum = currentChap.number
-                // Find next chapter in book
+                // Find next chapter in current book
                 if let nextChapterObj = book.chapters.first(where: { $0.number == currentNum + 1 }) {
-                    print("📖 Auto-advancing to chapter \(nextChapterObj.number)...")
+                    print("📖 Auto-advancing to \(book.name) chapter \(nextChapterObj.number)...")
                     loadBibleChapter(book, chapter: nextChapterObj)
                     // Keep playing if we were playing
                     if isPlaying {
                         play()
                     }
                     return
-                } else {
-                    print("📖 Reached end of \(book.name), pausing...")
+                } else if !allBooks.isEmpty {
+                    // Reached end of book, find next book
+                    if let currentBookIndex = allBooks.firstIndex(where: { $0.id == book.id }),
+                       currentBookIndex + 1 < allBooks.count {
+                        let nextBook = allBooks[currentBookIndex + 1]
+                        if let firstChapter = nextBook.chapters.first {
+                            print("📖 Auto-advancing to next book: \(nextBook.name) chapter 1...")
+                            loadBibleChapter(nextBook, chapter: firstChapter)
+                            // Keep playing if we were playing
+                            if isPlaying {
+                                play()
+                            }
+                            return
+                        }
+                    } else {
+                        print("📖 Reached end of Bible!")
+                    }
                 }
             }
             pause()
@@ -422,6 +438,11 @@ class SpeedReaderManager: ObservableObject {
     func reset() {
         pause()
         currentWordIndex = 0
+    }
+
+    /// Jump to the end of current content
+    func jumpToEnd() {
+        currentWordIndex = max(0, words.count - 1)
     }
 
     /// Set WPM with bounds checking

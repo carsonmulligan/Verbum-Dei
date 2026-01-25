@@ -26,16 +26,18 @@ struct SpeedReaderView: View {
     let prayer: Prayer?
     let text: String?
     let title: String?
+    let allBooks: [Book]?
 
     // MARK: - Initializers
 
     /// Initialize with a Bible chapter
-    init(book: Book, chapter: Chapter) {
+    init(book: Book, chapter: Chapter, allBooks: [Book]? = nil) {
         self.book = book
         self.chapter = chapter
         self.prayer = nil
         self.text = nil
         self.title = nil
+        self.allBooks = allBooks
     }
 
     /// Initialize with a prayer
@@ -45,6 +47,7 @@ struct SpeedReaderView: View {
         self.prayer = prayer
         self.text = nil
         self.title = nil
+        self.allBooks = nil
     }
 
     /// Initialize with plain text
@@ -54,6 +57,7 @@ struct SpeedReaderView: View {
         self.prayer = nil
         self.text = text
         self.title = title
+        self.allBooks = nil
     }
 
     var body: some View {
@@ -157,6 +161,7 @@ struct SpeedReaderView: View {
 
         if let book = book, let chapter = chapter {
             print("SpeedReaderView: Loading Bible chapter...")
+            manager.allBooks = allBooks ?? []
             manager.loadBibleChapter(book, chapter: chapter)
             print("SpeedReaderView: After load - words count: \(manager.words.count)")
         } else if let prayer = prayer {
@@ -188,32 +193,14 @@ struct SpeedReaderView: View {
     private var topBar: some View {
         if showControls {
             VStack(spacing: 8) {
-                // Title and controls
+                // Top row: word counter and hide button
                 HStack {
-                    // Title and chapter info
-                    VStack(spacing: 2) {
-                        if let title = manager.contentTitle {
-                            Text(title)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                                .lineLimit(1)
-                        }
-
-                        // Current verse (if Bible mode)
-                        if manager.contentType == .bible, let verseNum = manager.currentVerseNumber {
-                            Text("Verse \(verseNum)")
-                                .font(.caption2)
-                                .foregroundColor(.deepPurple)
-                                .lineLimit(1)
-                        }
-                    }
-
-                    Spacer()
-
                     // Word counter
                     Text("\(manager.currentWordIndex + 1) / \(manager.totalWords)")
                         .font(.caption.monospacedDigit())
                         .foregroundColor(.secondary)
+
+                    Spacer()
 
                     // Hide controls button
                     Button {
@@ -229,6 +216,24 @@ struct SpeedReaderView: View {
                 }
                 .padding(.horizontal)
                 .padding(.top, 8)
+
+                // Center: Title and chapter info
+                VStack(spacing: 2) {
+                    if let title = manager.contentTitle {
+                        Text(title)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                    }
+
+                    // Current verse (if Bible mode)
+                    if manager.contentType == .bible, let verseNum = manager.currentVerseNumber {
+                        Text("Verse \(verseNum)")
+                            .font(.caption2)
+                            .foregroundColor(.deepPurple)
+                            .lineLimit(1)
+                    }
+                }
 
                 // Progress bar
                 GeometryReader { geo in
@@ -348,7 +353,22 @@ struct SpeedReaderView: View {
             }
 
             // Play/Pause and navigation
-            HStack(spacing: 32) {
+            HStack(spacing: 20) {
+                // Jump to beginning of chapter
+                Button {
+                    manager.reset()
+                } label: {
+                    VStack(spacing: 2) {
+                        Image(systemName: "backward.end")
+                            .font(.title3)
+                        Text("Start")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(textColor)
+                }
+                .disabled(manager.isAtStart)
+                .opacity(manager.isAtStart ? 0.3 : 1)
+
                 // Skip backward
                 Button {
                     manager.skipBackward()
@@ -398,6 +418,21 @@ struct SpeedReaderView: View {
                     Image(systemName: "goforward.10")
                         .font(.title2)
                         .foregroundColor(textColor)
+                }
+                .disabled(manager.isAtEnd)
+                .opacity(manager.isAtEnd ? 0.3 : 1)
+
+                // Jump to end of chapter
+                Button {
+                    manager.jumpToEnd()
+                } label: {
+                    VStack(spacing: 2) {
+                        Image(systemName: "forward.end")
+                            .font(.title3)
+                        Text("End")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(textColor)
                 }
                 .disabled(manager.isAtEnd)
                 .opacity(manager.isAtEnd ? 0.3 : 1)

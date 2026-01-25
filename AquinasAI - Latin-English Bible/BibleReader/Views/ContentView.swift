@@ -488,7 +488,7 @@ struct BookView: View {
             }
         }
         .fullScreenCover(isPresented: $showingSpeedReader) {
-            SpeedReaderView(book: book, chapter: currentChapter)
+            SpeedReaderView(book: book, chapter: currentChapter, allBooks: viewModel.books)
         }
     }
 }
