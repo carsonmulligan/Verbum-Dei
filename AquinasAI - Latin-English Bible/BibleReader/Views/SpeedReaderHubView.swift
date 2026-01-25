@@ -14,10 +14,21 @@ struct SpeedReaderHubView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     @State private var selectedContentType: SpeedReaderContentType = .bible
-    @State private var showingSpeedReader = false
-    @State private var selectedBook: Book?
-    @State private var selectedChapter: Chapter?
-    @State private var selectedPrayer: Prayer?
+    @State private var speedReaderContent: SpeedReaderContent?
+
+    enum SpeedReaderContent: Identifiable {
+        case bible(book: Book, chapter: Chapter)
+        case prayer(Prayer)
+
+        var id: String {
+            switch self {
+            case .bible(let book, let chapter):
+                return "bible_\(book.name)_\(chapter.number)"
+            case .prayer(let prayer):
+                return "prayer_\(prayer.id)"
+            }
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -50,22 +61,12 @@ struct SpeedReaderHubView: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $showingSpeedReader) {
-                let _ = print("🎬 fullScreenCover triggered")
-                let _ = print("🎬 selectedBook: \(selectedBook?.name ?? "nil")")
-                let _ = print("🎬 selectedChapter: \(selectedChapter?.number ?? -1)")
-                let _ = print("🎬 selectedPrayer: \(selectedPrayer?.title ?? "nil")")
-
-                if let book = selectedBook, let chapter = selectedChapter {
-                    let _ = print("🎬 Creating SpeedReaderView with book and chapter")
+            .fullScreenCover(item: $speedReaderContent) { content in
+                switch content {
+                case .bible(let book, let chapter):
                     SpeedReaderView(book: book, chapter: chapter)
-                } else if let prayer = selectedPrayer {
-                    let _ = print("🎬 Creating SpeedReaderView with prayer")
+                case .prayer(let prayer):
                     SpeedReaderView(prayer: prayer)
-                } else {
-                    let _ = print("🎬 ERROR: No content selected!")
-                    Text("Error: No content selected")
-                        .foregroundColor(.red)
                 }
             }
         }
@@ -150,12 +151,7 @@ struct SpeedReaderHubView: View {
                             ForEach(book.chapters) { chapter in
                                 Button {
                                     print("🎯 Chapter tapped: \(book.name) - Chapter \(chapter.number)")
-                                    selectedBook = book
-                                    selectedChapter = chapter
-                                    print("🎯 selectedBook: \(selectedBook?.name ?? "nil")")
-                                    print("🎯 selectedChapter: \(selectedChapter?.number ?? -1)")
-                                    print("🎯 Setting showingSpeedReader = true")
-                                    showingSpeedReader = true
+                                    speedReaderContent = .bible(book: book, chapter: chapter)
                                 } label: {
                                     HStack {
                                         Text("Chapter \(chapter.number)")
@@ -221,8 +217,7 @@ struct SpeedReaderHubView: View {
                 VStack(spacing: 8) {
                     ForEach(prayers, id: \.id) { prayer in
                         Button {
-                            selectedPrayer = prayer
-                            showingSpeedReader = true
+                            speedReaderContent = .prayer(prayer)
                         } label: {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {

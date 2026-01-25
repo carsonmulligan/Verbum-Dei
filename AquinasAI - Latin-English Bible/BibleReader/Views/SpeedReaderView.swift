@@ -71,7 +71,14 @@ struct SpeedReaderView: View {
                 // Main word display
                 wordDisplayArea
                     .onTapGesture {
-                        showControlsTemporarily()
+                        // Pause if playing
+                        if manager.isPlaying {
+                            manager.pause()
+                        }
+                        // Show controls
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            showControls = true
+                        }
                     }
                     .gesture(swipeGesture)
 
@@ -82,6 +89,30 @@ struct SpeedReaderView: View {
                     bottomControls
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
+            }
+
+            // Persistent close button (always visible)
+            VStack {
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .background(
+                                Circle()
+                                    .fill(Color.black.opacity(0.5))
+                                    .frame(width: 32, height: 32)
+                            )
+                    }
+                    .padding(.leading, 16)
+                    .padding(.top, 8)
+
+                    Spacer()
+                }
+
+                Spacer()
             }
         }
         .onAppear {
@@ -157,18 +188,8 @@ struct SpeedReaderView: View {
     private var topBar: some View {
         if showControls {
             VStack(spacing: 8) {
-                // Close button and title
+                // Title and controls
                 HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title2)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-
                     // Title and chapter info
                     VStack(spacing: 2) {
                         if let title = manager.contentTitle {
