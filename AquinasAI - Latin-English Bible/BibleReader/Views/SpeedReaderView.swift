@@ -99,6 +99,7 @@ struct SpeedReaderView: View {
 
                 // Main word display
                 wordDisplayArea
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         if !showControls {
                             // Controls hidden - always pause and show controls
@@ -116,7 +117,7 @@ struct SpeedReaderView: View {
                             manager.pause()
                         }
                     }
-                    .gesture(swipeGesture)
+                    .simultaneousGesture(swipeGesture)
 
                 Spacer()
 
