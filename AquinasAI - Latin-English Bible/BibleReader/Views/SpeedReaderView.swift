@@ -195,6 +195,10 @@ struct SpeedReaderView: View {
             VStack(spacing: 8) {
                 // Top row: word counter and hide button
                 HStack {
+                    // Spacer for X button
+                    Spacer()
+                        .frame(width: 50)
+
                     // Word counter
                     Text("\(manager.currentWordIndex + 1) / \(manager.totalWords)")
                         .font(.caption.monospacedDigit())
