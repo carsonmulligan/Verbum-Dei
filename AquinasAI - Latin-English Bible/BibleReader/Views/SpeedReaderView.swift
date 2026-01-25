@@ -98,29 +98,31 @@ struct SpeedReaderView: View {
                 Spacer()
 
                 // Main word display
-                wordDisplayArea
-                    .contentShape(Rectangle())
-                    .highPriorityGesture(
-                        TapGesture()
-                            .onEnded { _ in
-                                if !showControls {
-                                    // Controls hidden - always pause and show controls
-                                    if manager.isPlaying {
-                                        manager.pause()
-                                    }
-                                    withAnimation(.easeInOut(duration: 0.2)) {
-                                        showControls = true
-                                    }
-                                } else if !manager.isPlaying {
-                                    // Controls visible and paused - tap to play
-                                    manager.play()
-                                } else {
-                                    // Controls visible and playing - tap to pause
+                ZStack {
+                    wordDisplayArea
+                        .gesture(swipeGesture)
+
+                    // Transparent overlay to capture taps immediately
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            if !showControls {
+                                // Controls hidden - always pause and show controls
+                                if manager.isPlaying {
                                     manager.pause()
                                 }
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    showControls = true
+                                }
+                            } else if !manager.isPlaying {
+                                // Controls visible and paused - tap to play
+                                manager.play()
+                            } else {
+                                // Controls visible and playing - tap to pause
+                                manager.pause()
                             }
-                    )
-                    .gesture(swipeGesture)
+                        }
+                }
 
                 Spacer()
 
