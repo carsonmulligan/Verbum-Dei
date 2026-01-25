@@ -75,17 +75,20 @@ struct SpeedReaderView: View {
                 // Main word display
                 wordDisplayArea
                     .onTapGesture {
-                        // If controls are hidden, pause and show them
                         if !showControls {
+                            // Controls hidden - always pause and show controls
                             if manager.isPlaying {
                                 manager.pause()
                             }
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 showControls = true
                             }
+                        } else if !manager.isPlaying {
+                            // Controls visible and paused - tap to play
+                            manager.play()
                         } else {
-                            // Controls are visible, just toggle play/pause
-                            manager.togglePlayPause()
+                            // Controls visible and playing - tap to pause
+                            manager.pause()
                         }
                     }
                     .gesture(swipeGesture)

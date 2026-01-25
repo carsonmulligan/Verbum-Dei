@@ -305,12 +305,24 @@ class SpeedReaderManager: ObservableObject {
         currentLanguage = language
         savedLanguage = language.rawValue
 
+        // Save current position as percentage
+        let savedProgress = progress
+        let wasPlaying = isPlaying
+
         // Reload current content if any
         if let book = currentBook, let chapter = currentChapter {
             if hasChapters {
                 loadBook(book, startingChapter: chapter.number)
             } else if let chapterObj = book.chapters.first(where: { $0.number == chapter.number }) {
                 loadBibleChapter(book, chapter: chapterObj)
+            }
+
+            // Restore position
+            seekTo(progress: savedProgress)
+
+            // Resume playing if we were playing
+            if wasPlaying {
+                play()
             }
         }
     }
