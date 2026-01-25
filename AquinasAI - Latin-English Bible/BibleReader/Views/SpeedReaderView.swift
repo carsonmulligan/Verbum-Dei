@@ -27,6 +27,9 @@ struct SpeedReaderView: View {
     let text: String?
     let title: String?
     let allBooks: [Book]?
+    let rosaryPrayers: [String: Prayer]?
+    let mysterySet: String?
+    let mysteries: [RosaryMystery]?
 
     // MARK: - Initializers
 
@@ -38,6 +41,9 @@ struct SpeedReaderView: View {
         self.text = nil
         self.title = nil
         self.allBooks = allBooks
+        self.rosaryPrayers = nil
+        self.mysterySet = nil
+        self.mysteries = nil
     }
 
     /// Initialize with a prayer
@@ -48,6 +54,9 @@ struct SpeedReaderView: View {
         self.text = nil
         self.title = nil
         self.allBooks = nil
+        self.rosaryPrayers = nil
+        self.mysterySet = nil
+        self.mysteries = nil
     }
 
     /// Initialize with plain text
@@ -58,6 +67,22 @@ struct SpeedReaderView: View {
         self.text = text
         self.title = title
         self.allBooks = nil
+        self.rosaryPrayers = nil
+        self.mysterySet = nil
+        self.mysteries = nil
+    }
+
+    /// Initialize with Rosary
+    init(rosaryPrayers: [String: Prayer], mysterySet: String, mysteries: [RosaryMystery]) {
+        self.book = nil
+        self.chapter = nil
+        self.prayer = nil
+        self.text = nil
+        self.title = nil
+        self.allBooks = nil
+        self.rosaryPrayers = rosaryPrayers
+        self.mysterySet = mysterySet
+        self.mysteries = mysteries
     }
 
     var body: some View {
@@ -176,11 +201,16 @@ struct SpeedReaderView: View {
         print("SpeedReaderView: book=\(book?.name ?? "nil"), chapter=\(chapter?.number ?? -1)")
         print("SpeedReaderView: prayer=\(prayer?.title ?? "nil")")
         print("SpeedReaderView: text=\(text ?? "nil")")
+        print("SpeedReaderView: rosary mysterySet=\(mysterySet ?? "nil")")
 
         if let book = book, let chapter = chapter {
             print("SpeedReaderView: Loading Bible chapter...")
             manager.allBooks = allBooks ?? []
             manager.loadBibleChapter(book, chapter: chapter)
+            print("SpeedReaderView: After load - words count: \(manager.words.count)")
+        } else if let rosaryPrayers = rosaryPrayers, let mysterySet = mysterySet, let mysteries = mysteries {
+            print("SpeedReaderView: Loading full Rosary...")
+            manager.loadRosary(prayers: rosaryPrayers, mysterySet: mysterySet, mysteries: mysteries)
             print("SpeedReaderView: After load - words count: \(manager.words.count)")
         } else if let prayer = prayer {
             print("SpeedReaderView: Loading prayer...")

@@ -19,6 +19,7 @@ struct SpeedReaderHubView: View {
     enum SpeedReaderContent: Identifiable {
         case bible(book: Book, chapter: Chapter)
         case prayer(Prayer)
+        case rosary(prayers: [String: Prayer], mysterySet: String, mysteries: [RosaryMystery])
 
         var id: String {
             switch self {
@@ -26,6 +27,8 @@ struct SpeedReaderHubView: View {
                 return "bible_\(book.name)_\(chapter.number)"
             case .prayer(let prayer):
                 return "prayer_\(prayer.id)"
+            case .rosary(_, let mysterySet, _):
+                return "rosary_\(mysterySet)"
             }
         }
     }
@@ -67,6 +70,8 @@ struct SpeedReaderHubView: View {
                     SpeedReaderView(book: book, chapter: chapter, allBooks: viewModel.books)
                 case .prayer(let prayer):
                     SpeedReaderView(prayer: prayer)
+                case .rosary(let prayers, let mysterySet, let mysteries):
+                    SpeedReaderView(rosaryPrayers: prayers, mysterySet: mysterySet, mysteries: mysteries)
                 }
             }
         }
@@ -124,7 +129,7 @@ struct SpeedReaderHubView: View {
         case .prayers:
             prayerSelection(category: .basic)
         case .rosary:
-            prayerSelection(category: .rosary)
+            rosarySelection
         case .divineMercy:
             prayerSelection(category: .divine)
         case .mass:
@@ -193,6 +198,57 @@ struct SpeedReaderHubView: View {
                         .padding(.vertical, 4)
                     }
                     .tint(.deepPurple)
+                }
+            }
+        }
+    }
+
+    // MARK: - Rosary Selection
+
+    private var rosarySelection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Select Rosary Mysteries")
+                .font(.headline)
+                .foregroundColor(colorScheme == .dark ? .nightText : .black)
+
+            let mysteryTypes = ["joyful", "sorrowful", "glorious", "luminous"]
+
+            VStack(spacing: 8) {
+                ForEach(mysteryTypes, id: \.self) { mysteryType in
+                    if let mysteries = prayerStore.getRosaryMysteries(type: mysteryType),
+                       let rosaryContainer = prayerStore.rosaryPrayers {
+                        Button {
+                            // Convert rosary prayers dictionary to [String: Prayer]
+                            let prayersDict = rosaryContainer.common_prayers.mapValues { $0.asPrayer }
+                            speedReaderContent = .rosary(
+                                prayers: prayersDict,
+                                mysterySet: mysteryType,
+                                mysteries: mysteries
+                            )
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("The \(mysteryType.capitalized) Mysteries")
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+
+                                    Text(prayerStore.getMysteryDescription(for: mysteryType))
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .lineLimit(2)
+                                }
+
+                                Spacer()
+
+                                Image(systemName: "play.circle.fill")
+                                    .font(.title2)
+                                    .foregroundColor(.deepPurple)
+                            }
+                            .padding()
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(12)
+                        }
+                    }
                 }
             }
         }
