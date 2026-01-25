@@ -237,18 +237,9 @@ struct SpeedReaderHubView: View {
                         } label: {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
-                                    HStack(spacing: 6) {
-                                        Text("The \(mysteryType.capitalized) Mysteries")
-                                            .font(.headline)
-                                            .foregroundColor(.primary)
-
-                                        if isRecommended {
-                                            Text("(Recommended)")
-                                                .font(.caption)
-                                                .foregroundColor(.deepPurple)
-                                                .fontWeight(.semibold)
-                                        }
-                                    }
+                                    Text("The \(mysteryType.capitalized) Mysteries")
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
 
                                     Text(prayerStore.getMysteryDescription(for: mysteryType))
                                         .font(.caption)
