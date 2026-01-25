@@ -193,6 +193,18 @@ struct SpeedReaderView: View {
                     Text("\(manager.currentWordIndex + 1) / \(manager.totalWords)")
                         .font(.caption.monospacedDigit())
                         .foregroundColor(.secondary)
+
+                    // Hide controls button
+                    Button {
+                        controlsTimer?.invalidate()
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            showControls = false
+                        }
+                    } label: {
+                        Image(systemName: "eye.slash.fill")
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding(.horizontal)
                 .padding(.top, 8)
@@ -222,17 +234,6 @@ struct SpeedReaderView: View {
 
     private var wordDisplayArea: some View {
         VStack(spacing: 8) {
-            // Language indicator
-            if showControls {
-                Text(manager.currentLanguage.displayName)
-                    .font(.caption2)
-                    .foregroundColor(.gray)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 2)
-                    .background(Color.gray.opacity(0.15))
-                    .cornerRadius(4)
-            }
-
             if manager.words.isEmpty {
                 // No content loaded
                 VStack(spacing: 12) {

@@ -369,6 +369,23 @@ class SpeedReaderManager: ObservableObject {
     /// Go to the next word
     func nextWord() {
         guard currentWordIndex < words.count - 1 else {
+            // At the end of current content
+            // Check if we can auto-advance to next chapter
+            if let book = currentBook, let currentChap = currentChapter {
+                let currentNum = currentChap.number
+                // Find next chapter in book
+                if let nextChapterObj = book.chapters.first(where: { $0.number == currentNum + 1 }) {
+                    print("📖 Auto-advancing to chapter \(nextChapterObj.number)...")
+                    loadBibleChapter(book, chapter: nextChapterObj)
+                    // Keep playing if we were playing
+                    if isPlaying {
+                        play()
+                    }
+                    return
+                } else {
+                    print("📖 Reached end of \(book.name), pausing...")
+                }
+            }
             pause()
             return
         }

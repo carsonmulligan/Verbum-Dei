@@ -51,10 +51,21 @@ struct SpeedReaderHubView: View {
                 }
             }
             .fullScreenCover(isPresented: $showingSpeedReader) {
+                let _ = print("🎬 fullScreenCover triggered")
+                let _ = print("🎬 selectedBook: \(selectedBook?.name ?? "nil")")
+                let _ = print("🎬 selectedChapter: \(selectedChapter?.number ?? -1)")
+                let _ = print("🎬 selectedPrayer: \(selectedPrayer?.title ?? "nil")")
+
                 if let book = selectedBook, let chapter = selectedChapter {
+                    let _ = print("🎬 Creating SpeedReaderView with book and chapter")
                     SpeedReaderView(book: book, chapter: chapter)
                 } else if let prayer = selectedPrayer {
+                    let _ = print("🎬 Creating SpeedReaderView with prayer")
                     SpeedReaderView(prayer: prayer)
+                } else {
+                    let _ = print("🎬 ERROR: No content selected!")
+                    Text("Error: No content selected")
+                        .foregroundColor(.red)
                 }
             }
         }
@@ -138,8 +149,12 @@ struct SpeedReaderHubView: View {
                         VStack(spacing: 4) {
                             ForEach(book.chapters) { chapter in
                                 Button {
+                                    print("🎯 Chapter tapped: \(book.name) - Chapter \(chapter.number)")
                                     selectedBook = book
                                     selectedChapter = chapter
+                                    print("🎯 selectedBook: \(selectedBook?.name ?? "nil")")
+                                    print("🎯 selectedChapter: \(selectedChapter?.number ?? -1)")
+                                    print("🎯 Setting showingSpeedReader = true")
                                     showingSpeedReader = true
                                 } label: {
                                     HStack {

@@ -81,7 +81,7 @@ struct SpeedReaderItem: Identifiable {
         if isInstruction {
             return .gray
         }
-        return .red  // Default for main content
+        return .deepPurple  // App's primary color
     }
 }
 
