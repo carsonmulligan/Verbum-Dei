@@ -33,6 +33,12 @@ class SpeedReaderManager: ObservableObject {
     @Published var currentBook: Book? = nil
     var allBooks: [Book] = []
 
+    // MARK: - Rosary Support
+
+    private var currentRosaryPrayers: [String: Prayer]? = nil
+    private var currentMysterySet: String? = nil
+    private var currentMysteries: [RosaryMystery]? = nil
+
     // MARK: - Settings (Persisted)
 
     @AppStorage("speedReaderWPM") var wpm: Int = 115
@@ -309,6 +315,11 @@ class SpeedReaderManager: ObservableObject {
 
     /// Load a full Rosary with all repetitions and mysteries
     func loadRosary(prayers: [String: Prayer], mysterySet: String = "joyful", mysteries: [RosaryMystery]) {
+        // Store rosary parameters for language switching
+        currentRosaryPrayers = prayers
+        currentMysterySet = mysterySet
+        currentMysteries = mysteries
+
         contentTitle = "The Holy Rosary - \(mysterySet.capitalized) Mysteries"
         contentType = .rosary
 
@@ -404,7 +415,18 @@ class SpeedReaderManager: ObservableObject {
         let wasPlaying = isPlaying
 
         // Reload current content if any
-        if let book = currentBook, let chapter = currentChapter {
+        if let prayers = currentRosaryPrayers, let mysterySet = currentMysterySet, let mysteries = currentMysteries {
+            // Reload Rosary in new language
+            loadRosary(prayers: prayers, mysterySet: mysterySet, mysteries: mysteries)
+
+            // Restore position
+            seekTo(progress: savedProgress)
+
+            // Resume playing if we were playing
+            if wasPlaying {
+                play()
+            }
+        } else if let book = currentBook, let chapter = currentChapter {
             if hasChapters {
                 loadBook(book, startingChapter: chapter.number)
             } else if let chapterObj = book.chapters.first(where: { $0.number == chapter.number }) {

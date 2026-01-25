@@ -211,12 +211,20 @@ struct SpeedReaderHubView: View {
                 .font(.headline)
                 .foregroundColor(colorScheme == .dark ? .nightText : .black)
 
+            // Get today's recommended mystery set
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            let todayName = dateFormatter.string(from: Date())
+            let recommendedMystery = prayerStore.getRosarySchedule(day: todayName)
+
             let mysteryTypes = ["joyful", "sorrowful", "glorious", "luminous"]
 
             VStack(spacing: 8) {
                 ForEach(mysteryTypes, id: \.self) { mysteryType in
                     if let mysteries = prayerStore.getRosaryMysteries(type: mysteryType),
                        let rosaryContainer = prayerStore.rosaryPrayers {
+                        let isRecommended = mysteryType == recommendedMystery
+
                         Button {
                             // Convert rosary prayers dictionary to [String: Prayer]
                             let prayersDict = rosaryContainer.common_prayers.mapValues { $0.asPrayer }
@@ -228,9 +236,18 @@ struct SpeedReaderHubView: View {
                         } label: {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text("The \(mysteryType.capitalized) Mysteries")
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
+                                    HStack(spacing: 6) {
+                                        Text("The \(mysteryType.capitalized) Mysteries")
+                                            .font(.headline)
+                                            .foregroundColor(.primary)
+
+                                        if isRecommended {
+                                            Text("(Recommended)")
+                                                .font(.caption)
+                                                .foregroundColor(.deepPurple)
+                                                .fontWeight(.semibold)
+                                        }
+                                    }
 
                                     Text(prayerStore.getMysteryDescription(for: mysteryType))
                                         .font(.caption)
@@ -242,11 +259,15 @@ struct SpeedReaderHubView: View {
 
                                 Image(systemName: "play.circle.fill")
                                     .font(.title2)
-                                    .foregroundColor(.deepPurple)
+                                    .foregroundColor(isRecommended ? .deepPurple : .gray)
                             }
                             .padding()
-                            .background(Color.gray.opacity(0.1))
+                            .background(isRecommended ? Color.deepPurple.opacity(0.1) : Color.gray.opacity(0.1))
                             .cornerRadius(12)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(isRecommended ? Color.deepPurple : Color.clear, lineWidth: 2)
+                            )
                         }
                     }
                 }
