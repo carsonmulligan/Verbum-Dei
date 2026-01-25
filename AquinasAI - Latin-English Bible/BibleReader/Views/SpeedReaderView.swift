@@ -100,24 +100,27 @@ struct SpeedReaderView: View {
                 // Main word display
                 wordDisplayArea
                     .contentShape(Rectangle())
-                    .onTapGesture {
-                        if !showControls {
-                            // Controls hidden - always pause and show controls
-                            if manager.isPlaying {
-                                manager.pause()
+                    .highPriorityGesture(
+                        TapGesture()
+                            .onEnded { _ in
+                                if !showControls {
+                                    // Controls hidden - always pause and show controls
+                                    if manager.isPlaying {
+                                        manager.pause()
+                                    }
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        showControls = true
+                                    }
+                                } else if !manager.isPlaying {
+                                    // Controls visible and paused - tap to play
+                                    manager.play()
+                                } else {
+                                    // Controls visible and playing - tap to pause
+                                    manager.pause()
+                                }
                             }
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                showControls = true
-                            }
-                        } else if !manager.isPlaying {
-                            // Controls visible and paused - tap to play
-                            manager.play()
-                        } else {
-                            // Controls visible and playing - tap to pause
-                            manager.pause()
-                        }
-                    }
-                    .simultaneousGesture(swipeGesture)
+                    )
+                    .gesture(swipeGesture)
 
                 Spacer()
 
@@ -137,11 +140,7 @@ struct SpeedReaderView: View {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title2)
                             .foregroundColor(.white)
-                            .background(
-                                Circle()
-                                    .fill(Color.black.opacity(0.5))
-                                    .frame(width: 32, height: 32)
-                            )
+                            .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 1)
                     }
                     .padding(.leading, 16)
                     .padding(.top, 8)
@@ -689,7 +688,7 @@ struct WordORPDisplay: View {
         HStack(alignment: .firstTextBaseline, spacing: 0) {
             // Before ORP - right-aligned in left half
             Text(word.beforeORP)
-                .font(.system(size: dynamicFontSize, weight: .medium, design: .monospaced))
+                .font(.system(size: dynamicFontSize, weight: .semibold, design: .monospaced))
                 .foregroundColor(textColor)
                 .fixedSize(horizontal: true, vertical: false)
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -713,7 +712,7 @@ struct WordORPDisplay: View {
 
             // After ORP - left-aligned in right half
             Text(word.afterORP)
-                .font(.system(size: dynamicFontSize, weight: .medium, design: .monospaced))
+                .font(.system(size: dynamicFontSize, weight: .semibold, design: .monospaced))
                 .foregroundColor(textColor)
                 .fixedSize(horizontal: true, vertical: false)
                 .frame(maxWidth: .infinity, alignment: .leading)
