@@ -89,11 +89,11 @@ struct SpeedReaderHubView: View {
                 .font(.system(size: 50))
                 .foregroundColor(.deepPurple)
 
-            Text("RSVP Speed Reader")
+            Text("Speed Reader")
                 .font(.title2.bold())
                 .foregroundColor(colorScheme == .dark ? .nightText : .black)
 
-            Text("Read Scripture and prayers at your own pace using Rapid Serial Visual Presentation. Focus on the highlighted letter to train your reading speed.")
+            Text("Read Scripture and prayers one word at a time. Focus on the highlighted letter to train your reading speed.")
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
