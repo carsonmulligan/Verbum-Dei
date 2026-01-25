@@ -49,6 +49,7 @@ class SpeedReaderManager: ObservableObject {
 
     private var timer: Timer?
     private var progressKey: String? = nil
+    private var bookNameMappings: BookNameMappings? = nil
 
     // MARK: - Computed Properties
 
@@ -143,6 +144,22 @@ class SpeedReaderManager: ObservableObject {
         if let lang = Language(rawValue: savedLanguage) {
             currentLanguage = lang
         }
+        // Load book name mappings for English titles
+        loadBookNameMappings()
+    }
+
+    private func loadBookNameMappings() {
+        guard let url = Bundle.main.url(forResource: "mappings_three_languages", withExtension: "json") else {
+            print("Warning: Could not find mappings_three_languages.json")
+            return
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            bookNameMappings = try JSONDecoder().decode(BookNameMappings.self, from: data)
+        } catch {
+            print("Error loading book name mappings: \(error)")
+        }
     }
 
     // MARK: - Public Methods
@@ -168,7 +185,9 @@ class SpeedReaderManager: ObservableObject {
         print("SpeedReader: Current language: \(currentLanguage.rawValue)")
 
         currentBook = book
-        contentTitle = "\(book.displayName) \(chapter.number)"
+        // Always show book name in English
+        let englishBookName = book.displayName(for: .english, mappings: bookNameMappings)
+        contentTitle = "\(englishBookName) \(chapter.number)"
         contentType = .bible
 
         let chapterItems = book.toSpeedReaderItems(chapter: chapter, language: currentLanguage)
@@ -215,7 +234,8 @@ class SpeedReaderManager: ObservableObject {
     /// Load an entire book for continuous reading
     func loadBook(_ book: Book, startingChapter: Int = 1) {
         currentBook = book
-        contentTitle = book.displayName
+        // Always show book name in English
+        contentTitle = book.displayName(for: .english, mappings: bookNameMappings)
         contentType = .bible
 
         var allItems: [SpeedReaderItem] = []
