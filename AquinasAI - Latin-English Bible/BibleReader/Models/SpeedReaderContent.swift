@@ -113,6 +113,20 @@ struct SpeedReaderVerseMarker: Identifiable {
     let wordCount: Int
 }
 
+// MARK: - Rosary Marker
+
+/// Marks a section of the Rosary
+struct RosaryMarker: Identifiable {
+    let id: String
+    let startIndex: Int
+    let mysterySet: String?  // "Joyful", "Sorrowful", etc.
+    let mysteryNumber: Int?  // 1-5
+    let mysteryName: String? // "The Annunciation", etc.
+    let decadeNumber: Int?   // 1-5
+    let prayerType: String?  // "Our Father", "Hail Mary 3/10", etc.
+    let section: String      // "Opening", "Mystery 1", "Closing"
+}
+
 // MARK: - Progress Keys
 
 /// Keys for storing reading progress

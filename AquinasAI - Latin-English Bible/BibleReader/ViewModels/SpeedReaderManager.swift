@@ -29,6 +29,7 @@ class SpeedReaderManager: ObservableObject {
 
     @Published var chapters: [SpeedReaderChapterMarker] = []
     @Published var verseMarkers: [SpeedReaderVerseMarker] = []
+    @Published var rosaryMarkers: [RosaryMarker] = []
     @Published var currentBook: Book? = nil
     var allBooks: [Book] = []
 
@@ -122,6 +123,11 @@ class SpeedReaderManager: ObservableObject {
             return items[safe: currentWordIndex]?.verseNumber
         }
         return marker.number
+    }
+
+    /// Current rosary position (if reading Rosary)
+    var currentRosaryMarker: RosaryMarker? {
+        rosaryMarkers.last(where: { $0.startIndex <= currentWordIndex })
     }
 
     // MARK: - Initialization
@@ -293,11 +299,99 @@ class SpeedReaderManager: ObservableObject {
 
         chapters = []
         verseMarkers = []
+        rosaryMarkers = []
         progressKey = nil
 
         currentWordIndex = 0
         isPlaying = false
         timer?.invalidate()
+    }
+
+    /// Load a full Rosary with all repetitions and mysteries
+    func loadRosary(prayers: [String: Prayer], mysterySet: String = "joyful", mysteries: [RosaryMystery]) {
+        contentTitle = "The Holy Rosary - \(mysterySet.capitalized) Mysteries"
+        contentType = .rosary
+
+        var allItems: [SpeedReaderItem] = []
+        var markers: [RosaryMarker] = []
+
+        // Helper to add prayer with marker
+        func addPrayer(id: String, count: Int = 1, section: String, prayerLabel: String? = nil) {
+            guard let prayer = prayers[id] else { return }
+
+            for i in 1...count {
+                let markerLabel = count > 1 ? "\(prayerLabel ?? prayer.displayTitleEnglish) \(i)/\(count)" : (prayerLabel ?? prayer.displayTitleEnglish)
+
+                markers.append(RosaryMarker(
+                    id: UUID().uuidString,
+                    startIndex: allItems.count,
+                    mysterySet: nil,
+                    mysteryNumber: nil,
+                    mysteryName: nil,
+                    decadeNumber: nil,
+                    prayerType: markerLabel,
+                    section: section
+                ))
+
+                allItems.append(contentsOf: prayer.toSpeedReaderItems(language: currentLanguage))
+            }
+        }
+
+        // Opening Prayers
+        addPrayer(id: "sign_of_the_cross", section: "Opening", prayerLabel: "Sign of the Cross")
+        addPrayer(id: "apostles_creed", section: "Opening", prayerLabel: "Apostles' Creed")
+        addPrayer(id: "our_father", section: "Opening", prayerLabel: "Our Father")
+        addPrayer(id: "hail_mary", count: 3, section: "Opening", prayerLabel: "Hail Mary")
+        addPrayer(id: "glory_be", section: "Opening", prayerLabel: "Glory Be")
+
+        // Five Decades (one per mystery)
+        for (index, mystery) in mysteries.prefix(5).enumerated() {
+            let decadeNum = index + 1
+            let section = "Mystery \(decadeNum): \(mystery.english)"
+
+            // Announce Mystery
+            markers.append(RosaryMarker(
+                id: UUID().uuidString,
+                startIndex: allItems.count,
+                mysterySet: mysterySet.capitalized,
+                mysteryNumber: decadeNum,
+                mysteryName: mystery.english,
+                decadeNumber: decadeNum,
+                prayerType: "Mystery Announcement",
+                section: section
+            ))
+
+            // Our Father
+            addPrayer(id: "our_father", section: section, prayerLabel: "Our Father")
+
+            // 10 Hail Marys
+            addPrayer(id: "hail_mary", count: 10, section: section, prayerLabel: "Hail Mary")
+
+            // Glory Be
+            addPrayer(id: "glory_be", section: section, prayerLabel: "Glory Be")
+
+            // Fatima Prayer
+            addPrayer(id: "fatima_prayer", section: section, prayerLabel: "Fatima Prayer")
+        }
+
+        // Closing Prayers
+        addPrayer(id: "hail_holy_queen", section: "Closing", prayerLabel: "Hail Holy Queen")
+        addPrayer(id: "final_prayer", section: "Closing", prayerLabel: "Final Prayer")
+        addPrayer(id: "sign_of_the_cross", section: "Closing", prayerLabel: "Sign of the Cross")
+
+        items = allItems
+        words = allItems.map { SpeedReaderWord(text: $0.text) }
+        rosaryMarkers = markers
+
+        chapters = []
+        verseMarkers = []
+        progressKey = nil
+
+        currentWordIndex = 0
+        isPlaying = false
+        timer?.invalidate()
+
+        print("📿 Loaded full Rosary with \(words.count) words and \(markers.count) sections")
     }
 
     /// Set the reading language

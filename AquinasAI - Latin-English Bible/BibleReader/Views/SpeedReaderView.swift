@@ -239,7 +239,7 @@ struct SpeedReaderView: View {
                 .padding(.horizontal)
                 .padding(.top, 8)
 
-                // Center: Title and chapter info
+                // Center: Title and chapter/verse/rosary info
                 VStack(spacing: 2) {
                     if let title = manager.contentTitle {
                         Text(title)
@@ -254,6 +254,22 @@ struct SpeedReaderView: View {
                             .font(.caption2)
                             .foregroundColor(.deepPurple)
                             .lineLimit(1)
+                    }
+
+                    // Current rosary position (if Rosary mode)
+                    if manager.contentType == .rosary, let marker = manager.currentRosaryMarker {
+                        if let mysteryName = marker.mysteryName {
+                            Text(mysteryName)
+                                .font(.caption2)
+                                .foregroundColor(.deepPurple)
+                                .lineLimit(1)
+                        }
+                        if let prayerType = marker.prayerType {
+                            Text(prayerType)
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                                .lineLimit(1)
+                        }
                     }
                 }
 
