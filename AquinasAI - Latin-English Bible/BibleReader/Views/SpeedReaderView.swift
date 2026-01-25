@@ -75,13 +75,17 @@ struct SpeedReaderView: View {
                 // Main word display
                 wordDisplayArea
                     .onTapGesture {
-                        // Pause if playing
-                        if manager.isPlaying {
-                            manager.pause()
-                        }
-                        // Show controls
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            showControls = true
+                        // If controls are hidden, pause and show them
+                        if !showControls {
+                            if manager.isPlaying {
+                                manager.pause()
+                            }
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showControls = true
+                            }
+                        } else {
+                            // Controls are visible, just toggle play/pause
+                            manager.togglePlayPause()
                         }
                     }
                     .gesture(swipeGesture)
@@ -127,6 +131,17 @@ struct SpeedReaderView: View {
         }
         .onDisappear {
             manager.pause()
+        }
+        .onChange(of: manager.isPlaying) { oldValue, newValue in
+            // Auto-hide controls after 3 seconds when playback starts
+            if newValue {
+                controlsTimer?.invalidate()
+                controlsTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        showControls = false
+                    }
+                }
+            }
         }
         .sheet(isPresented: $showChapterPicker) {
             SpeedReaderChapterPickerSheet(manager: manager) {
