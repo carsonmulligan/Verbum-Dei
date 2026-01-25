@@ -205,19 +205,20 @@ struct SpeedReaderHubView: View {
 
     // MARK: - Rosary Selection
 
+    private var recommendedMystery: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        let todayName = dateFormatter.string(from: Date())
+        return prayerStore.getRosarySchedule(day: todayName)
+    }
+
     private var rosarySelection: some View {
+        let mysteryTypes = ["joyful", "sorrowful", "glorious", "luminous"]
+
         VStack(alignment: .leading, spacing: 16) {
             Text("Select Rosary Mysteries")
                 .font(.headline)
                 .foregroundColor(colorScheme == .dark ? .nightText : .black)
-
-            // Get today's recommended mystery set
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEEE"
-            let todayName = dateFormatter.string(from: Date())
-            let recommendedMystery = prayerStore.getRosarySchedule(day: todayName)
-
-            let mysteryTypes = ["joyful", "sorrowful", "glorious", "luminous"]
 
             VStack(spacing: 8) {
                 ForEach(mysteryTypes, id: \.self) { mysteryType in
