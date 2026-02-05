@@ -253,6 +253,114 @@ header {
     font-size: 18px;
 }
 
+/* About Section */
+.about {
+    background: var(--black);
+    padding: 100px 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-content h2 {
+    text-align: center;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.about-intro {
+    text-align: center;
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--text-secondary);
+    margin-bottom: 4rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.feature h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+.feature p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* FAQ Section */
+.faq {
+    background: var(--dark-gray);
+    padding: 100px 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.faq-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.faq-content h2 {
+    text-align: center;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 4rem;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.faq-item {
+    background: var(--medium-gray);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--green);
+}
+
+.faq-item h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+.faq-item p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
 /* Download/CTA Section */
 .download {
     background: var(--black);
@@ -389,9 +497,17 @@ footer {
         min-height: 48px;
     }
 
+    .about,
+    .faq,
     .screenshots,
     .download {
         padding: 60px 1.5rem;
+    }
+
+    .features-grid,
+    .faq-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
     .screenshots-grid {
@@ -460,9 +576,15 @@ footer {
         max-width: 100%;
     }
 
+    .about,
+    .faq,
     .screenshots,
     .download {
         padding: 40px 1rem;
+    }
+
+    .faq-item {
+        padding: 1.5rem;
     }
 
     .download-buttons {
