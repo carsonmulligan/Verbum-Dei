@@ -1,14 +1,10 @@
-/* Minimal Dark Theme - Wedding Vision AI Inspired */
+/* Minimal Light Theme - Wedding Vision AI Inspired */
 
 :root {
-    --black: #000000;
-    --white: #ffffff;
-    --green: #10b981;
-    --dark-gray: #111111;
-    --medium-gray: #1a1a1a;
-    --light-gray: #999999;
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
+    --bg-primary: #f5f3f0;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --border-color: #e5e5e5;
 }
 
 * {
@@ -25,84 +21,73 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
-    background: var(--black);
+    background: var(--bg-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 /* Hero Section */
 .hero {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 60px 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    padding: 80px 2rem 40px;
+    text-align: center;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.hero-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.hero-logo img {
-    width: 120px;
-    height: 120px;
-    border-radius: 24px;
-    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);
+    margin-bottom: 4rem;
 }
 
 .hero-content h1 {
-    font-size: clamp(36px, 4vw, 48px);
-    font-weight: 700;
-    color: var(--white);
-    margin: 0;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: clamp(42px, 5vw, 64px);
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
     line-height: 1.2;
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
 }
 
 .tagline {
-    font-size: clamp(16px, 2vw, 18px);
-    color: var(--light-gray);
-    margin-bottom: 2.5rem;
-    line-height: 1.5;
+    font-size: clamp(20px, 2.5vw, 28px);
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.4;
     font-weight: 400;
+}
+
+.description {
+    font-size: clamp(15px, 1.8vw, 18px);
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .cta-buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     gap: 1rem;
-    width: 100%;
-    max-width: 280px;
 }
 
 .store-badge {
-    display: block;
+    display: inline-block;
 }
 
 .store-badge img {
-    height: 52px;
-    width: 100%;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    filter: brightness(1.1);
+    height: 50px;
+    transition: transform 0.2s ease;
 }
 
 .store-badge:hover img {
-    transform: translateY(-2px);
-    opacity: 0.9;
+    transform: scale(1.05);
 }
 
 .hero-image {
@@ -113,37 +98,31 @@ body {
 
 .phone-mockup {
     position: relative;
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
 }
 
 .phone-mockup img {
     max-width: 100%;
     height: auto;
-    max-height: 600px;
-    filter: drop-shadow(0 20px 60px rgba(16, 185, 129, 0.25));
+    max-height: 550px;
     border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
 /* Screenshots Section */
 .screenshots {
-    background: var(--dark-gray);
+    background: #ffffff;
     padding: 100px 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
 }
 
 .screenshots h2 {
+    font-family: 'Georgia', 'Times New Roman', serif;
     text-align: center;
-    font-size: clamp(36px, 4vw, 56px);
-    font-weight: 800;
-    color: var(--white);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    color: var(--text-primary);
     margin-bottom: 4rem;
     line-height: 1.2;
-    letter-spacing: -1px;
 }
 
 .screenshots-grid {
@@ -177,28 +156,28 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
     padding: 2rem 1.5rem 1.5rem;
-    color: var(--white);
+    color: #ffffff;
     font-weight: 600;
     font-size: 18px;
 }
 
 /* About Section */
 .about {
-    background: var(--black);
+    background: var(--bg-primary);
     padding: 100px 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
 }
 
 .about h2 {
+    font-family: 'Georgia', 'Times New Roman', serif;
     text-align: center;
     font-size: clamp(32px, 4vw, 48px);
-    font-weight: 800;
-    color: var(--white);
+    font-weight: 400;
+    color: var(--text-primary);
     margin-bottom: 3rem;
     line-height: 1.2;
-    letter-spacing: -1px;
 }
 
 .about-grid {
@@ -210,23 +189,23 @@ body {
 }
 
 .about-card {
-    background: var(--dark-gray);
+    background: #ffffff;
     padding: 2.5rem;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
     transition: all 0.3s ease;
 }
 
 .about-card:hover {
     transform: translateY(-5px);
-    border-color: var(--green);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .about-card h3 {
-    color: var(--green);
+    color: var(--text-primary);
     margin-bottom: 0.75rem;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .about-card p {
@@ -237,19 +216,19 @@ body {
 
 /* FAQ Section */
 .faq {
-    background: var(--dark-gray);
+    background: #ffffff;
     padding: 100px 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
 }
 
 .faq h2 {
+    font-family: 'Georgia', 'Times New Roman', serif;
     text-align: center;
     font-size: clamp(32px, 4vw, 48px);
-    font-weight: 800;
-    color: var(--white);
+    font-weight: 400;
+    color: var(--text-primary);
     margin-bottom: 3rem;
     line-height: 1.2;
-    letter-spacing: -1px;
 }
 
 .faq-grid {
@@ -260,19 +239,19 @@ body {
 }
 
 .faq-item {
-    background: var(--medium-gray);
+    background: var(--bg-primary);
     padding: 2rem;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
     transition: all 0.3s ease;
 }
 
 .faq-item:hover {
-    border-color: var(--green);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
 }
 
 .faq-item h3 {
-    color: var(--white);
+    color: var(--text-primary);
     margin-bottom: 0.75rem;
     font-size: 18px;
     font-weight: 600;
@@ -286,18 +265,18 @@ body {
 
 /* Download/CTA Section */
 .download {
-    background: var(--black);
+    background: var(--bg-primary);
     padding: 100px 3rem;
     text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
 }
 
 .download-content h2 {
-    font-size: clamp(36px, 4vw, 56px);
-    font-weight: 800;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: clamp(36px, 4vw, 48px);
+    font-weight: 400;
     margin-bottom: 1.5rem;
     line-height: 1.2;
-    letter-spacing: -1px;
 }
 
 .download-content p {
@@ -318,8 +297,8 @@ body {
 
 /* Footer */
 footer {
-    background: var(--dark-gray);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border-top: 1px solid var(--border-color);
     padding: 4rem 3rem 3rem;
     text-align: center;
 }
@@ -335,8 +314,8 @@ footer {
     justify-content: center;
     gap: 1rem;
     font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--white);
+    font-weight: 600;
+    color: var(--text-primary);
     margin-bottom: 1.5rem;
 }
 
@@ -348,59 +327,36 @@ footer {
 
 .footer-tagline {
     font-style: italic;
-    color: var(--green);
-    font-size: 18px;
+    color: var(--text-secondary);
+    font-size: 16px;
     margin-bottom: 1rem;
 }
 
 .footer-copyright {
-    color: var(--light-gray);
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
-    .hero {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        padding: 60px 2rem;
-    }
-
-    .hero-image {
-        order: -1;
-    }
-
-    .screenshots-grid {
-        gap: 2rem;
-    }
-}
-
 @media (max-width: 768px) {
     .hero {
-        padding: 40px 1.5rem;
-        min-height: auto;
-        gap: 2rem;
+        padding: 60px 1.5rem 40px;
     }
 
-    .hero-logo img {
-        width: 100px;
-        height: 100px;
+    .hero-content {
+        margin-bottom: 3rem;
     }
 
     .hero-content h1 {
-        font-size: 32px;
+        font-size: 40px;
     }
 
     .tagline {
+        font-size: 20px;
+    }
+
+    .description {
         font-size: 15px;
-    }
-
-    .cta-buttons {
-        max-width: 240px;
-    }
-
-    .store-badge img {
-        height: 48px;
     }
 
     .phone-mockup img {
@@ -431,25 +387,19 @@ footer {
 
 @media (max-width: 480px) {
     .hero {
-        padding: 30px 1rem;
-    }
-
-    .hero-logo img {
-        width: 80px;
-        height: 80px;
+        padding: 40px 1rem 30px;
     }
 
     .hero-content h1 {
-        font-size: 28px;
+        font-size: 36px;
     }
 
     .tagline {
-        font-size: 14px;
-        margin-bottom: 2rem;
+        font-size: 18px;
     }
 
-    .cta-buttons {
-        max-width: 220px;
+    .description {
+        font-size: 14px;
     }
 
     .store-badge img {
@@ -468,18 +418,6 @@ footer {
     }
 
     .download-buttons {
-        flex-direction: column;
-        width: 100%;
-        gap: 0.75rem;
-    }
-}
-
-/* Mobile-First Touch Targets */
-@media (max-width: 768px) {
-    .store-badge {
-        min-height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-wrap: wrap;
     }
 }
