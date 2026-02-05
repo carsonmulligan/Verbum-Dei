@@ -1,0 +1,120 @@
+╔══════════════════════════════════════════════════════════════╗
+║  CLOUDFLARE CUSTOM DOMAIN SETUP - QUICK REFERENCE            ║
+║  latinenglishbible.com → latinenglishbible Pages project     ║
+╚══════════════════════════════════════════════════════════════╝
+
+METHOD 1: AUTOMATED (RECOMMENDED) - 2 MINUTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1: Create API Token
+→ https://dash.cloudflare.com/profile/api-tokens
+  Click "Create Token" → "Create Custom Token"
+
+  Permissions:
+  • Account | Cloudflare Pages | Edit
+  • Zone | DNS | Edit
+  • Zone | Zone | Read
+
+  Account Resources: Your Account
+  Zone Resources: latinenglishbible.com
+
+  Copy token (shown only once!)
+
+Step 2: Run Setup Script
+  export CLOUDFLARE_API_TOKEN='your_token_here'
+  ./setup_custom_domain.sh
+
+Step 3: Wait & Verify (1-2 minutes)
+  Visit: https://latinenglishbible.com
+
+Done! ✓
+
+
+METHOD 2: MANUAL VIA DASHBOARD - 3 MINUTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1: Add Domain to Cloudflare (if needed)
+→ https://dash.cloudflare.com
+  Click "Add a Site" → Enter latinenglishbible.com
+  Update nameservers at your domain registrar
+
+Step 2: Add to Pages Project
+→ https://dash.cloudflare.com/8ee4d2ac81da038bec97f4bdb831be92/pages
+  Click "latinenglishbible" project
+  Go to "Custom domains" tab
+  Click "Set up a domain"
+  Enter "latinenglishbible.com"
+  Click "Continue"
+
+  Cloudflare automatically creates the CNAME record!
+
+Step 3: Wait & Verify (1-2 minutes)
+  Visit: https://latinenglishbible.com
+
+Done! ✓
+
+
+CHECK STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Via Script:
+  ./check_domain_status.sh
+
+Via Dashboard:
+→ https://dash.cloudflare.com/8ee4d2ac81da038bec97f4bdb831be92/pages/view/latinenglishbible/domains
+
+Via DNS:
+  dig latinenglishbible.com
+  curl -I https://latinenglishbible.com
+
+
+TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"Domain not found in Cloudflare"
+→ Add domain at https://dash.cloudflare.com first
+→ Wait for nameserver propagation (24-48 hours)
+
+"Invalid API token"
+→ Check permissions: Pages Edit + DNS Edit
+→ Verify Account/Zone resources are correct
+→ Token not expired
+
+"Domain already exists"
+→ This is OK! Domain is already configured
+→ Check status at dashboard link
+
+"SSL Certificate pending"
+→ Wait 10-15 minutes for auto-provisioning
+→ Check Pages → Custom domains tab
+
+
+PROJECT INFO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Project:      latinenglishbible
+Account ID:   8ee4d2ac81da038bec97f4bdb831be92
+Pages URL:    https://a09625b3.latinenglishbible.pages.dev
+Custom Domain: latinenglishbible.com
+
+
+DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• CLOUDFLARE_SETUP_README.md - Quick start guide
+• DOMAIN_SETUP_INSTRUCTIONS.md - Full detailed guide
+• setup_custom_domain.sh - Automated setup script
+• check_domain_status.sh - Status verification script
+
+
+SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Cloudflare Docs:
+  https://developers.cloudflare.com/pages/configuration/custom-domains/
+
+Cloudflare Community:
+  https://community.cloudflare.com
+
+API Documentation:
+  https://developers.cloudflare.com/api/
