@@ -1,4 +1,4 @@
-/* Modern Dark Theme - Inspired by nonnaitalian.com and weddingvisionai.com */
+/* Minimal Dark Theme - Wedding Vision AI Inspired */
 
 :root {
     --black: #000000;
@@ -30,149 +30,79 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Navigation */
-header {
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1.5rem 3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: -0.5px;
-}
-
-.logo img {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 3rem;
-}
-
-.nav-links a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-.nav-links a:hover {
-    color: var(--white);
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--green);
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
 /* Hero Section */
 .hero {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 100px 3rem;
+    padding: 60px 2rem;
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 6rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
     align-items: center;
-    min-height: calc(100vh - 100px);
+    min-height: 100vh;
+}
+
+.hero-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-logo img {
+    width: 120px;
+    height: 120px;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);
 }
 
 .hero-content h1 {
-    font-size: clamp(40px, 5vw, 72px);
-    font-weight: 800;
+    font-size: clamp(36px, 4vw, 48px);
+    font-weight: 700;
     color: var(--white);
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
-    letter-spacing: -2px;
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: -1px;
 }
 
-.subtitle {
-    font-size: clamp(18px, 2vw, 24px);
-    color: var(--text-secondary);
-    margin-bottom: 3rem;
-    line-height: 1.5;
-    max-width: 600px;
-}
-
-.hero-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
-    margin-bottom: 3rem;
-    padding: 2rem 0;
-}
-
-.stat {
-    text-align: left;
-}
-
-.stat-number {
-    font-size: clamp(48px, 5vw, 64px);
-    font-weight: 800;
-    color: var(--green);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    font-size: 16px;
+.tagline {
+    font-size: clamp(16px, 2vw, 18px);
     color: var(--light-gray);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 500;
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+    font-weight: 400;
 }
 
 .cta-buttons {
     display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 280px;
 }
 
 .store-badge {
-    display: inline-block;
+    display: block;
 }
 
 .store-badge img {
-    height: 56px;
-    transition: transform 0.3s ease;
+    height: 52px;
+    width: 100%;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     filter: brightness(1.1);
 }
 
 .store-badge:hover img {
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    opacity: 0.9;
 }
 
 .hero-image {
@@ -194,8 +124,9 @@ header {
 .phone-mockup img {
     max-width: 100%;
     height: auto;
-    filter: drop-shadow(0 20px 60px rgba(16, 185, 129, 0.3));
-    border-radius: 30px;
+    max-height: 600px;
+    filter: drop-shadow(0 20px 60px rgba(16, 185, 129, 0.25));
+    border-radius: 24px;
 }
 
 /* Screenshots Section */
@@ -260,49 +191,47 @@ header {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.about-content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.about-content h2 {
+.about h2 {
     text-align: center;
-    font-size: clamp(36px, 4vw, 56px);
+    font-size: clamp(32px, 4vw, 48px);
     font-weight: 800;
     color: var(--white);
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     line-height: 1.2;
     letter-spacing: -1px;
 }
 
-.about-intro {
-    text-align: center;
-    font-size: clamp(18px, 2vw, 22px);
-    color: var(--text-secondary);
-    margin-bottom: 4rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.features-grid {
+.about-grid {
+    max-width: 1200px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 3rem;
-    margin-top: 3rem;
+    gap: 2.5rem;
 }
 
-.feature h3 {
+.about-card {
+    background: var(--dark-gray);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--green);
+}
+
+.about-card h3 {
+    color: var(--green);
+    margin-bottom: 0.75rem;
     font-size: 20px;
     font-weight: 700;
-    color: var(--green);
-    margin-bottom: 1rem;
-    letter-spacing: -0.5px;
 }
 
-.feature p {
-    font-size: 16px;
+.about-card p {
     color: var(--text-secondary);
+    font-size: 15px;
     line-height: 1.6;
 }
 
@@ -313,51 +242,45 @@ header {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.faq-content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.faq-content h2 {
+.faq h2 {
     text-align: center;
-    font-size: clamp(36px, 4vw, 56px);
+    font-size: clamp(32px, 4vw, 48px);
     font-weight: 800;
     color: var(--white);
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     line-height: 1.2;
     letter-spacing: -1px;
 }
 
 .faq-grid {
+    max-width: 1000px;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
+    gap: 1.5rem;
 }
 
 .faq-item {
     background: var(--medium-gray);
     padding: 2rem;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
 .faq-item:hover {
-    transform: translateY(-4px);
     border-color: var(--green);
 }
 
 .faq-item h3 {
-    font-size: 20px;
-    font-weight: 700;
     color: var(--white);
-    margin-bottom: 1rem;
-    letter-spacing: -0.5px;
+    margin-bottom: 0.75rem;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .faq-item p {
-    font-size: 16px;
     color: var(--text-secondary);
+    font-size: 15px;
     line-height: 1.6;
 }
 
@@ -439,17 +362,12 @@ footer {
 @media (max-width: 1024px) {
     .hero {
         grid-template-columns: 1fr;
-        gap: 4rem;
-        padding: 80px 2rem;
+        gap: 3rem;
+        padding: 60px 2rem;
     }
 
-    .hero-stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
-
-    .nav-container {
-        padding: 1.5rem 2rem;
+    .hero-image {
+        order: -1;
     }
 
     .screenshots-grid {
@@ -458,56 +376,42 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .nav-links {
-        gap: 1.5rem;
-    }
-
-    .nav-links a {
-        font-size: 0.9rem;
-    }
-
     .hero {
         padding: 40px 1.5rem;
         min-height: auto;
+        gap: 2rem;
     }
 
-    .hero-stats {
-        gap: 1.5rem;
-        grid-template-columns: repeat(2, 1fr);
+    .hero-logo img {
+        width: 100px;
+        height: 100px;
     }
 
-    .stat-number {
-        font-size: 36px;
+    .hero-content h1 {
+        font-size: 32px;
     }
 
-    .stat-label {
-        font-size: 14px;
+    .tagline {
+        font-size: 15px;
     }
 
     .cta-buttons {
-        gap: 1rem;
-    }
-
-    .store-badge {
-        display: block;
+        max-width: 240px;
     }
 
     .store-badge img {
         height: 48px;
-        min-height: 48px;
     }
 
+    .phone-mockup img {
+        max-height: 500px;
+    }
+
+    .screenshots,
     .about,
     .faq,
-    .screenshots,
     .download {
         padding: 60px 1.5rem;
-    }
-
-    .features-grid,
-    .faq-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
     }
 
     .screenshots-grid {
@@ -519,15 +423,6 @@ footer {
         gap: 1rem;
     }
 
-    .nav-container {
-        padding: 1rem 1.5rem;
-    }
-
-    .logo {
-        font-size: 1.2rem;
-    }
-
-    .logo img,
     .footer-logo img {
         width: 40px;
         height: 40px;
@@ -535,56 +430,41 @@ footer {
 }
 
 @media (max-width: 480px) {
-    .nav-links {
-        gap: 1rem;
-    }
-
-    .nav-links a {
-        font-size: 0.85rem;
-    }
-
     .hero {
-        padding: 40px 1rem;
+        padding: 30px 1rem;
     }
 
-    .hero-stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
+    .hero-logo img {
+        width: 80px;
+        height: 80px;
     }
 
-    .stat-number {
-        font-size: 32px;
+    .hero-content h1 {
+        font-size: 28px;
     }
 
-    .stat-label {
-        font-size: 12px;
+    .tagline {
+        font-size: 14px;
+        margin-bottom: 2rem;
     }
 
     .cta-buttons {
-        flex-direction: column;
-        width: 100%;
-        gap: 0.75rem;
-    }
-
-    .store-badge {
-        width: 100%;
-        text-align: center;
+        max-width: 220px;
     }
 
     .store-badge img {
-        height: 48px;
-        max-width: 100%;
+        height: 44px;
     }
 
+    .phone-mockup img {
+        max-height: 450px;
+    }
+
+    .screenshots,
     .about,
     .faq,
-    .screenshots,
     .download {
         padding: 40px 1rem;
-    }
-
-    .faq-item {
-        padding: 1.5rem;
     }
 
     .download-buttons {
@@ -592,24 +472,14 @@ footer {
         width: 100%;
         gap: 0.75rem;
     }
-
-    .nav-container {
-        padding: 0.75rem 1rem;
-    }
 }
 
 /* Mobile-First Touch Targets */
 @media (max-width: 768px) {
     .store-badge {
         min-height: 48px;
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .nav-links a {
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
     }
 }
