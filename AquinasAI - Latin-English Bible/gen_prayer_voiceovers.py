@@ -82,7 +82,8 @@ def main():
 
     total_chars = 0
     for p in prayers:
-        pid = prayer_id(p["title"])
+        # Prefer the explicit stable id from JSON; fall back to the title slug.
+        pid = p.get("id") or prayer_id(p["title"])
         entry = {"title": p["title"], "files": {}}
         for lang, vk in TEXT_KEY.items():
             text = p.get(vk)

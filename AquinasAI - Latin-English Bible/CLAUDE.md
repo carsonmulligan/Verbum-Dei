@@ -97,6 +97,20 @@ The app supports six display modes controlled by `DisplayMode` enum:
 
 - The Xcode project file is located one directory up from the source code
 - All Bible and prayer content is bundled as JSON resources
-- The app includes TTS (Text-to-Speech) audio files in `Resources/TTS/`
 - Supports iOS 15.0 and later
 - Uses native SwiftUI components without external dependencies
+
+### Stable prayer IDs (important)
+- Each prayer in `prayers.json` has an explicit `"id"` field. `Prayer.id` returns
+  this id, falling back to a title-derived slug (`Prayer.slug(from:)`) only when absent.
+- **Never change an existing prayer `id`** — bookmarks and bundled audio filenames key
+  off it. Editing a prayer's `title` is safe (the id no longer derives from the title).
+- New prayers should get a unique, lowercase/underscore-only `id`.
+
+### Prayer voiceovers / TTS
+- Pre-rendered ElevenLabs audio lives in `Resources/TTS/` named `<prayer_id>_<lang>.mp3`
+  (`lang` = `la`/`en`/`es`), keyed to `Prayer.id`. See `Resources/TTS/README.md`.
+- `voiceover_manifest.json` is the cross-platform contract (shared with the future Android app).
+- Regenerate with `python3 gen_prayer_voiceovers.py` (`--all` for the full set);
+  requires `ELEVEN_LABS_API_KEY` in `.env`. The Xcode source folder is a synchronized
+  root group, so new audio files bundle automatically.

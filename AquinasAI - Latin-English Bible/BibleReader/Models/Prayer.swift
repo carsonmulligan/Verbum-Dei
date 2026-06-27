@@ -2,9 +2,19 @@ import Foundation
 
 // MARK: - Prayer Models
 struct Prayer: Identifiable, Codable {
+    /// Explicit stable id from JSON (`"id"`). Prefer this; fall back to a
+    /// title-derived slug for any entry that lacks one. Bookmarks and bundled
+    /// audio filenames key off `id`, so it must never change for a given prayer.
+    let explicitId: String?
     var id: String {
-        // Create a normalized ID from the title by removing spaces and special characters
-        let normalized = title
+        if let explicitId = explicitId, !explicitId.isEmpty { return explicitId }
+        return Prayer.slug(from: title)
+    }
+
+    /// Normalizes a title into an id slug (lowercase, spaces -> "_", punctuation stripped).
+    /// Kept identical to the historical computed id so legacy bookmarks stay valid.
+    static func slug(from title: String) -> String {
+        title
             .lowercased()
             .replacingOccurrences(of: " ", with: "_")
             .replacingOccurrences(of: ",", with: "")
@@ -13,7 +23,6 @@ struct Prayer: Identifiable, Codable {
             .replacingOccurrences(of: "\"", with: "")
             .replacingOccurrences(of: "(", with: "")
             .replacingOccurrences(of: ")", with: "")
-        return normalized
     }
     let title: String
     let title_latin: String?
@@ -38,6 +47,7 @@ struct Prayer: Identifiable, Codable {
     }
     
     private enum CodingKeys: String, CodingKey {
+        case explicitId = "id"
         case title
         case title_latin
         case title_english
@@ -47,8 +57,9 @@ struct Prayer: Identifiable, Codable {
         case spanish
         case instructions
     }
-    
-    init(title: String, title_latin: String?, title_english: String?, title_spanish: String? = nil, latin: String, english: String, spanish: String? = nil, category: PrayerCategory = .basic, instructions: String? = nil) {
+
+    init(title: String, title_latin: String?, title_english: String?, title_spanish: String? = nil, latin: String, english: String, spanish: String? = nil, category: PrayerCategory = .basic, instructions: String? = nil, explicitId: String? = nil) {
+        self.explicitId = explicitId
         self.title = title
         self.title_latin = title_latin
         self.title_english = title_english
@@ -62,6 +73,7 @@ struct Prayer: Identifiable, Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        explicitId = try container.decodeIfPresent(String.self, forKey: .explicitId)
         title = try container.decode(String.self, forKey: .title)
         title_latin = try container.decodeIfPresent(String.self, forKey: .title_latin)
         title_english = try container.decodeIfPresent(String.self, forKey: .title_english)
@@ -75,6 +87,7 @@ struct Prayer: Identifiable, Codable {
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(explicitId, forKey: .explicitId)
         try container.encode(title, forKey: .title)
         try container.encode(title_latin, forKey: .title_latin)
         try container.encode(title_english, forKey: .title_english)
