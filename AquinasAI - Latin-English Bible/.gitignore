@@ -24,3 +24,6 @@ Carthage/
 # Environment
 .env
 .env.*
+
+# Throwaway ElevenLabs voice-comparison samples (real prayer audio lives in Resources/TTS/)
+voiceover_samples/

@@ -1,0 +1,142 @@
+{
+  "model": "eleven_multilingual_v2",
+  "voices": {
+    "la": {
+      "name": "Adam",
+      "voice_id": "pNInz6obpgDQGcFmaJgB",
+      "speed": 0.85
+    },
+    "en": {
+      "name": "Daniel",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9",
+      "speed": 0.95
+    },
+    "es": {
+      "name": "Charlotte",
+      "voice_id": "XB0fDUnXU5powFXDhCwa",
+      "speed": 1.0
+    }
+  },
+  "prayers": {
+    "pater_noster": {
+      "title": "Pater Noster",
+      "files": {
+        "la": {
+          "file": "pater_noster_la.mp3",
+          "chars": 307,
+          "voice": "Adam"
+        },
+        "en": {
+          "file": "pater_noster_en.mp3",
+          "chars": 290,
+          "voice": "Daniel"
+        },
+        "es": {
+          "file": "pater_noster_es.mp3",
+          "chars": 318,
+          "voice": "Charlotte"
+        }
+      }
+    },
+    "ave_maria": {
+      "title": "Ave Maria",
+      "files": {
+        "la": {
+          "file": "ave_maria_la.mp3",
+          "chars": 200,
+          "voice": "Adam"
+        },
+        "en": {
+          "file": "ave_maria_en.mp3",
+          "chars": 210,
+          "voice": "Daniel"
+        },
+        "es": {
+          "file": "ave_maria_es.mp3",
+          "chars": 251,
+          "voice": "Charlotte"
+        }
+      }
+    },
+    "gloria_patri": {
+      "title": "Gloria Patri",
+      "files": {
+        "la": {
+          "file": "gloria_patri_la.mp3",
+          "chars": 120,
+          "voice": "Adam"
+        },
+        "en": {
+          "file": "gloria_patri_en.mp3",
+          "chars": 143,
+          "voice": "Daniel"
+        },
+        "es": {
+          "file": "gloria_patri_es.mp3",
+          "chars": 127,
+          "voice": "Charlotte"
+        }
+      }
+    },
+    "credo_apostles_creed": {
+      "title": "Credo (Apostles' Creed)",
+      "files": {
+        "la": {
+          "file": "credo_apostles_creed_la.mp3",
+          "chars": 554,
+          "voice": "Adam"
+        },
+        "en": {
+          "file": "credo_apostles_creed_en.mp3",
+          "chars": 619,
+          "voice": "Daniel"
+        },
+        "es": {
+          "file": "credo_apostles_creed_es.mp3",
+          "chars": 634,
+          "voice": "Charlotte"
+        }
+      }
+    },
+    "salve_regina": {
+      "title": "Salve Regina",
+      "files": {
+        "la": {
+          "file": "salve_regina_la.mp3",
+          "chars": 364,
+          "voice": "Adam"
+        },
+        "en": {
+          "file": "salve_regina_en.mp3",
+          "chars": 387,
+          "voice": "Daniel"
+        },
+        "es": {
+          "file": "salve_regina_es.mp3",
+          "chars": 414,
+          "voice": "Charlotte"
+        }
+      }
+    },
+    "signum_crucis": {
+      "title": "Signum Crucis",
+      "files": {
+        "la": {
+          "file": "signum_crucis_la.mp3",
+          "chars": 53,
+          "voice": "Adam"
+        },
+        "en": {
+          "file": "signum_crucis_en.mp3",
+          "chars": 72,
+          "voice": "Daniel"
+        },
+        "es": {
+          "file": "signum_crucis_es.mp3",
+          "chars": 63,
+          "voice": "Charlotte"
+        }
+      }
+    }
+  }
+}
