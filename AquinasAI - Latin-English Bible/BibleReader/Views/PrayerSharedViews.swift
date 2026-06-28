@@ -60,6 +60,19 @@ enum PrayerLanguage: String, CaseIterable {
             return false
         }
     }
+
+    /// Primary audio language code (`la`/`en`/`es`) for bundled voiceovers.
+    /// For bilingual modes this is the primary (left/top) language.
+    var audioLangCode: String {
+        switch self {
+        case .latinOnly, .latinEnglish, .latinSpanish:
+            return "la"
+        case .englishOnly, .englishSpanish:
+            return "en"
+        case .spanishOnly:
+            return "es"
+        }
+    }
 }
 
 struct PrayerCard: View {
@@ -297,6 +310,9 @@ struct PrayerCard: View {
                     }
                 }
             }
+
+            // Bundled voiceover playback (only shows when audio exists for this prayer/language)
+            PrayerAudioControl(prayerId: prayer.id, language: language)
         }
         .padding()
         .background(
@@ -509,4 +525,40 @@ struct PrayerBookmarkEditView: View {
             }
         }
     }
-} 
+}
+
+// MARK: - Prayer Audio Control
+
+/// Compact play/pause + progress control for a prayer's bundled voiceover.
+/// Renders nothing when no audio file exists for the prayer in the chosen language.
+struct PrayerAudioControl: View {
+    let prayerId: String
+    let language: PrayerLanguage
+    @EnvironmentObject private var audio: AudioManager
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var lang: String { language.audioLangCode }
+
+    var body: some View {
+        if audio.hasAudio(prayerId: prayerId, lang: lang) {
+            let isCurrent = audio.isCurrent(prayerId: prayerId, lang: lang)
+            HStack(spacing: 12) {
+                Button {
+                    audio.toggle(prayerId: prayerId, lang: lang)
+                } label: {
+                    Image(systemName: (isCurrent && audio.isPlaying) ? "pause.circle.fill" : "play.circle.fill")
+                        .font(.system(size: 30))
+                        .foregroundColor(.deepPurple)
+                }
+
+                ProgressView(value: isCurrent ? audio.progress : 0)
+                    .tint(.deepPurple)
+
+                Text(language.audioLangCode.uppercased())
+                    .font(.caption2.weight(.semibold))
+                    .foregroundColor(.secondary)
+            }
+            .padding(.top, 8)
+        }
+    }
+}
