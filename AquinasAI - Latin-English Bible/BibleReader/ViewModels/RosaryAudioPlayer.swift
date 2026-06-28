@@ -2,108 +2,66 @@ import Foundation
 import AVFoundation
 import Combine
 
-/// One step in the audio-guided Rosary (a single prayer recitation or a
-/// mystery announcement). `audioPrayerId` is the prayers.json id whose bundled
-/// mp3 should play, or nil for steps we don't have audio for yet (mystery
-/// announcements, the Fatima prayer, the closing prayer).
-struct RosaryStep: Identifiable {
+/// A unit of the Rosary shown as one card in the reading view. Most blocks are a
+/// single prayer; a Hail Mary block carries `beadCount == 10` (or 3) and renders
+/// a bead tracker instead of repeating the text. `audioPrayerId` is the
+/// prayers.json id whose bundled mp3 backs the optional audio (nil = no audio yet).
+struct RosaryBlock: Identifiable {
     let id = UUID()
-    let section: String       // e.g. "Opening" or "1. The Agony in the Garden"
-    let label: String         // e.g. "Hail Mary (3 of 10)"
+    let section: String
+    let title: String
+    let latin: String?
+    let english: String?
+    let spanish: String?
+    let beadCount: Int
     let audioPrayerId: String?
     let isAnnouncement: Bool
+    let mysteryDescription: String?
 }
 
-/// Plays the whole Rosary as a continuous audio sequence, advancing through
-/// steps automatically. Owns its own AVAudioPlayer (independent of AudioManager)
-/// and supports adjustable playback speed.
+/// Sequences the Rosary as optional continuous audio over the reading view.
+/// Tracks the current block and, within a multi-bead block, the current bead so
+/// the UI can highlight exactly what's being prayed. Audio is layered on top of
+/// the always-present text — it is never required to read.
 final class RosaryAudioPlayer: NSObject, ObservableObject {
-    @Published private(set) var steps: [RosaryStep] = []
-    @Published private(set) var currentIndex = 0
+    @Published private(set) var blocks: [RosaryBlock] = []
+    @Published private(set) var currentBlockIndex = 0
+    @Published private(set) var currentBead = 0
     @Published private(set) var isPlaying = false
     @Published var rate: Float = 1.0 { didSet { player?.rate = rate } }
     /// Audio language code for the recitation: "la" | "en" | "es".
     @Published var lang = "la"
-    /// Silent pause inserted between prayers (prayerful pacing until the
-    /// recordings themselves carry punctuation pauses).
-    var gap: TimeInterval = 0.7
+    /// Silent pause between recitations (until recordings carry their own pauses).
+    var gap: TimeInterval = 0.6
 
     private var player: AVAudioPlayer?
     private var advanceTimer: Timer?
 
-    /// Maps a Rosary step's logical prayer id to the bundled audio prayer id.
-    private static let audioId: [String: String] = [
+    /// Maps a Rosary prayer's logical id to its bundled audio prayer id.
+    static let audioId: [String: String] = [
         "sign_of_the_cross": "signum_crucis",
         "apostles_creed": "credo_apostles_creed",
         "our_father": "pater_noster",
         "hail_mary": "ave_maria",
         "glory_be": "gloria_patri",
         "hail_holy_queen": "salve_regina"
-        // "fatima_prayer", "final_prayer", mystery announcements: no audio yet
     ]
 
-    var currentStep: RosaryStep? {
-        steps.indices.contains(currentIndex) ? steps[currentIndex] : nil
+    var currentBlock: RosaryBlock? {
+        blocks.indices.contains(currentBlockIndex) ? blocks[currentBlockIndex] : nil
     }
 
-    // MARK: - Build the sequence
-
-    func build(mysteryType: String, mysteries: [RosaryMystery]) {
-        var result: [RosaryStep] = []
-
-        func add(_ logicalId: String, label: String, section: String, count: Int = 1) {
-            for i in 0..<count {
-                let stepLabel = count > 1 ? "\(label) (\(i + 1) of \(count))" : label
-                result.append(RosaryStep(
-                    section: section,
-                    label: stepLabel,
-                    audioPrayerId: Self.audioId[logicalId],
-                    isAnnouncement: false
-                ))
-            }
-        }
-
-        // Opening
-        add("sign_of_the_cross", label: "Sign of the Cross", section: "Opening")
-        add("apostles_creed", label: "Apostles' Creed", section: "Opening")
-        add("our_father", label: "Our Father", section: "Opening")
-        add("hail_mary", label: "Hail Mary", section: "Opening", count: 3)
-        add("glory_be", label: "Glory Be", section: "Opening")
-
-        // Five decades
-        for (index, mystery) in mysteries.prefix(5).enumerated() {
-            let n = index + 1
-            let section = "\(n). \(mystery.english)"
-            result.append(RosaryStep(
-                section: section,
-                label: "Announce the \(ordinal(n)) \(mysteryType.capitalized) Mystery",
-                audioPrayerId: nil,
-                isAnnouncement: true
-            ))
-            add("our_father", label: "Our Father", section: section)
-            add("hail_mary", label: "Hail Mary", section: section, count: 10)
-            add("glory_be", label: "Glory Be", section: section)
-            result.append(RosaryStep(
-                section: section,
-                label: "Fatima Prayer",
-                audioPrayerId: nil,
-                isAnnouncement: false
-            ))
-        }
-
-        // Closing
-        add("hail_holy_queen", label: "Hail Holy Queen", section: "Closing")
-        result.append(RosaryStep(section: "Closing", label: "Closing Prayer", audioPrayerId: nil, isAnnouncement: false))
-        add("sign_of_the_cross", label: "Sign of the Cross", section: "Closing")
-
-        steps = result
-        currentIndex = 0
+    func load(_ blocks: [RosaryBlock]) {
+        stop()
+        self.blocks = blocks
+        currentBlockIndex = 0
+        currentBead = 0
     }
 
     // MARK: - Transport
 
     func play() {
-        guard !steps.isEmpty else { return }
+        guard !blocks.isEmpty else { return }
         isPlaying = true
         playCurrent()
     }
@@ -123,31 +81,33 @@ final class RosaryAudioPlayer: NSObject, ObservableObject {
         player = nil
         advanceTimer?.invalidate()
         advanceTimer = nil
-        currentIndex = 0
+        currentBlockIndex = 0
+        currentBead = 0
     }
 
-    /// Jump to a specific step (e.g. tapping a row).
-    func seek(to index: Int) {
-        guard steps.indices.contains(index) else { return }
+    /// Jump to a specific block + bead (tapping a card or a bead).
+    func seek(block: Int, bead: Int = 0) {
+        guard blocks.indices.contains(block) else { return }
         player?.stop()
         player = nil
         advanceTimer?.invalidate()
-        currentIndex = index
+        currentBlockIndex = block
+        currentBead = max(0, bead)
         if isPlaying { playCurrent() }
     }
 
-    func next() { seek(to: min(currentIndex + 1, steps.count - 1)) }
-    func previous() { seek(to: max(currentIndex - 1, 0)) }
+    func next() { seek(block: min(currentBlockIndex + 1, blocks.count - 1)) }
+    func previous() { seek(block: max(currentBlockIndex - 1, 0)) }
 
     // MARK: - Private
 
     private func playCurrent() {
-        guard isPlaying, let step = currentStep else { return }
+        guard isPlaying, let block = currentBlock else { return }
 
-        // Steps without audio: hold briefly so the user can pray/read, then advance.
-        guard let prayerId = step.audioPrayerId,
+        guard let prayerId = block.audioPrayerId,
               let url = Bundle.main.url(forResource: "\(prayerId)_\(lang)", withExtension: "mp3") else {
-            scheduleAdvance(after: step.isAnnouncement ? 2.5 : 1.5)
+            // No audio for this block yet — hold briefly, then advance.
+            scheduleAdvance(after: block.isAnnouncement ? 2.5 : 1.2)
             return
         }
 
@@ -166,8 +126,13 @@ final class RosaryAudioPlayer: NSObject, ObservableObject {
     }
 
     private func advance() {
-        if currentIndex + 1 < steps.count {
-            currentIndex += 1
+        guard isPlaying, let block = currentBlock else { return }
+        if currentBead + 1 < block.beadCount {
+            currentBead += 1
+            playCurrent()
+        } else if currentBlockIndex + 1 < blocks.count {
+            currentBlockIndex += 1
+            currentBead = 0
             playCurrent()
         } else {
             stop()
@@ -188,21 +153,11 @@ final class RosaryAudioPlayer: NSObject, ObservableObject {
         try? session.setActive(true)
         #endif
     }
-
-    private func ordinal(_ n: Int) -> String {
-        ["First", "Second", "Third", "Fourth", "Fifth"][safe: n - 1] ?? "\(n)th"
-    }
 }
 
 extension RosaryAudioPlayer: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         guard isPlaying else { return }
         scheduleAdvance(after: gap)
-    }
-}
-
-private extension Array {
-    subscript(safe index: Int) -> Element? {
-        indices.contains(index) ? self[index] : nil
     }
 }
