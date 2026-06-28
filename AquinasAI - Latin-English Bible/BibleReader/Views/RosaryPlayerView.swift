@@ -182,6 +182,7 @@ struct RosaryPlayerView: View {
                 title: p.title_english ?? p.title_latin ?? key,
                 latin: p.latin, english: p.english, spanish: p.spanish,
                 beadCount: beads,
+                logicalId: key,
                 audioPrayerId: RosaryAudioPlayer.audioId[key],
                 isAnnouncement: false,
                 mysteryDescription: nil
@@ -201,6 +202,7 @@ struct RosaryPlayerView: View {
                 title: m.english,
                 latin: m.latin, english: m.english, spanish: nil,
                 beadCount: 1,
+                logicalId: nil,
                 audioPrayerId: nil,
                 isAnnouncement: true,
                 mysteryDescription: m.description ?? prayerStore.getMysteryDescription(for: type)

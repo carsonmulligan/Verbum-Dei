@@ -14,6 +14,10 @@ struct RosaryBlock: Identifiable {
     let english: String?
     let spanish: String?
     let beadCount: Int
+    /// Rosary common-prayer key (e.g. "our_father"); used to find a rosary-specific
+    /// recording `<logicalId>_<lang>_rosary.mp3` before falling back.
+    let logicalId: String?
+    /// prayers.json id for the standard per-prayer recording, used as fallback.
     let audioPrayerId: String?
     let isAnnouncement: Bool
     let mysteryDescription: String?
@@ -101,11 +105,23 @@ final class RosaryAudioPlayer: NSObject, ObservableObject {
 
     // MARK: - Private
 
+    /// Prefer a rosary-specific recording (e.g. Elena Latin) over the standard
+    /// per-prayer file.
+    private func audioURL(for block: RosaryBlock) -> URL? {
+        if let lid = block.logicalId,
+           let url = Bundle.main.url(forResource: "\(lid)_\(lang)_rosary", withExtension: "mp3") {
+            return url
+        }
+        if let pid = block.audioPrayerId {
+            return Bundle.main.url(forResource: "\(pid)_\(lang)", withExtension: "mp3")
+        }
+        return nil
+    }
+
     private func playCurrent() {
         guard isPlaying, let block = currentBlock else { return }
 
-        guard let prayerId = block.audioPrayerId,
-              let url = Bundle.main.url(forResource: "\(prayerId)_\(lang)", withExtension: "mp3") else {
+        guard let url = audioURL(for: block) else {
             // No audio for this block yet — hold briefly, then advance.
             scheduleAdvance(after: block.isAnnouncement ? 2.5 : 1.2)
             return
