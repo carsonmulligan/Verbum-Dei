@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquinasAI — App Store Screenshots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#8954A0;
+  --purple-deep:#5a3470;
+  --purple-ink:#2c1838;
+  --paper:#F2EEE4;
+  --night:#1C1C1E;
+  --gold:#C9A24B;
+  --gold-bright:#E6C66E;
+  --ink:#1a1014;
+  /* iOS UI faithful colors */
+  --ios-sys:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;
+  --serif:"EB Garamond",Georgia,serif;
+  --display:"Cormorant Garamond",Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{
+  background:
+    radial-gradient(120% 80% at 15% -10%, rgba(201,162,75,.18), transparent 55%),
+    radial-gradient(130% 90% at 100% 110%, rgba(137,84,160,.40), transparent 60%),
+    linear-gradient(165deg,#1d1024 0%, #2c1838 45%, #1a0f22 100%);
+  color:var(--paper);
+  font-family:var(--serif);
+  min-height:100vh;
+  padding:64px 0 96px;
+  position:relative;
+  overflow-x:hidden;
+}
+/* grain overlay */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Masthead ---------- */
+.masthead{text-align:center;max-width:900px;margin:0 auto 60px;padding:0 32px;position:relative;z-index:2}
+.crest{
+  font-family:var(--display);font-size:13px;letter-spacing:.55em;text-transform:uppercase;
+  color:var(--gold-bright);font-weight:600;margin-bottom:22px;
+  display:inline-flex;align-items:center;gap:18px;
+}
+.crest::before,.crest::after{content:"";height:1px;width:46px;background:linear-gradient(90deg,transparent,var(--gold))}
+.crest::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.masthead h1{
+  font-family:var(--display);font-weight:600;font-size:clamp(48px,7vw,92px);line-height:.98;
+  letter-spacing:-.01em;color:var(--paper);
+}
+.masthead h1 em{font-style:italic;color:var(--gold-bright)}
+.masthead p{
+  font-size:clamp(17px,2vw,21px);color:rgba(242,238,228,.66);margin-top:18px;font-style:italic;font-weight:400;
+}
+
+/* ---------- Gallery ---------- */
+.gallery{
+  display:flex;gap:40px;padding:8px 64px 8px;overflow-x:auto;scroll-snap-type:x mandatory;
+  position:relative;z-index:2;
+}
+.gallery::-webkit-scrollbar{height:10px}
+.gallery::-webkit-scrollbar-track{background:rgba(0,0,0,.25);border-radius:99px}
+.gallery::-webkit-scrollbar-thumb{background:rgba(201,162,75,.45);border-radius:99px}
+
+/* App Store slide: 1290x2796 ratio */
+.slide{
+  flex:0 0 auto;width:340px;scroll-snap-align:center;
+  aspect-ratio:1290/2796;border-radius:42px;position:relative;overflow:hidden;
+  background:linear-gradient(170deg,var(--purple-deep),var(--purple-ink) 70%);
+  box-shadow:0 40px 80px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(201,162,75,.22), inset 0 1px 0 rgba(255,255,255,.06);
+  display:flex;flex-direction:column;align-items:center;
+  padding:46px 26px 0;
+}
+.slide.paper{background:linear-gradient(175deg,#3a2350,#23142e 75%)}
+/* faint cross watermark */
+.slide::before{
+  content:"✝";position:absolute;font-family:var(--display);font-size:340px;line-height:1;
+  right:-70px;bottom:-60px;color:rgba(201,162,75,.05);pointer-events:none;
+}
+.cap{position:relative;z-index:3;text-align:center;margin-bottom:26px;min-height:118px}
+.cap .kicker{
+  font-family:var(--display);font-size:12px;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold-bright);font-weight:600;margin-bottom:10px;
+}
+.cap h2{
+  font-family:var(--display);font-weight:500;font-size:33px;line-height:1.04;color:#fff;letter-spacing:-.01em;
+}
+.cap h2 em{font-style:italic;color:var(--gold-bright)}
+
+/* ---------- Phone ---------- */
+.phone{
+  width:248px;flex:0 0 auto;border-radius:42px;background:#0b0b0d;
+  padding:9px;position:relative;
+  box-shadow:0 0 0 2px #2a2a2e, 0 24px 50px -12px rgba(0,0,0,.7);
+  margin-top:auto;
+}
+.screen{
+  border-radius:34px;overflow:hidden;position:relative;background:var(--paper);
+  aspect-ratio:9/19.5;display:flex;flex-direction:column;font-family:var(--ios-sys);
+}
+.screen.dark{background:var(--night);color:var(--paper)}
+.island{
+  position:absolute;top:9px;left:50%;transform:translateX(-50%);
+  width:78px;height:23px;background:#000;border-radius:99px;z-index:50;
+}
+/* status bar */
+.status{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 20px 4px;font-size:11px;font-weight:600;color:var(--ink);z-index:40;
+}
+.dark .status{color:var(--paper)}
+.status .right{display:flex;gap:5px;align-items:center;font-size:10px}
+
+/* shared UI bits */
+.ui{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.scroll{flex:1;overflow:hidden;padding:0 14px}
+.lt{font-size:25px;font-weight:800;letter-spacing:-.5px;color:#15090f;padding:2px 16px 2px}
+.dark .lt{color:var(--paper)}
+.muted{color:#8a8a8e}
+.purple{color:var(--purple)}
+
+/* tab bar */
+.tabbar{
+  display:flex;justify-content:space-around;align-items:center;padding:9px 6px 16px;
+  border-top:.5px solid rgba(0,0,0,.08);background:rgba(242,238,228,.92);backdrop-filter:blur(8px);
+}
+.dark .tabbar{background:rgba(28,28,30,.92);border-top:.5px solid rgba(255,255,255,.08)}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:#9a9a9e;font-weight:500}
+.tab svg{width:21px;height:21px;fill:none;stroke:#9a9a9e;stroke-width:1.7}
+.tab.on{color:var(--purple)}
+.tab.on svg{stroke:var(--purple);fill:rgba(137,84,160,.12)}
+
+/* cards */
+.card{background:#fff;border-radius:13px;padding:11px 12px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.dark .card{background:rgba(255,255,255,.06)}
+.row{display:flex;align-items:center;gap:11px}
+
+/* hero */
+.hero{
+  position:relative;border-radius:18px;overflow:hidden;height:148px;
+  background:linear-gradient(135deg,var(--purple),rgba(137,84,160,.62));
+  padding:15px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;
+  box-shadow:0 10px 24px -8px rgba(137,84,160,.6);
+}
+.hero .halo{position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.28),transparent 65%)}
+.hero .ic{position:absolute;right:14px;top:14px;font-size:46px;opacity:.5}
+.hero .k{font-size:9px;letter-spacing:.18em;font-weight:700;opacity:.85}
+.hero h3{font-size:19px;font-weight:800;margin:3px 0 8px;letter-spacing:-.3px}
+.hero .play{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
+
+/* play button circle */
+.pbtn{width:30px;height:30px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pbtn svg{width:14px;height:14px;fill:#fff;margin-left:1px}
+.pbtn.lg{width:40px;height:40px}.pbtn.lg svg{width:18px;height:18px}
+.pbtn.ghost{background:rgba(137,84,160,.14)}.pbtn.ghost svg{fill:var(--purple)}
+
+/* day pills */
+.pills{display:flex;gap:6px;justify-content:center;margin:4px 0 10px;flex-wrap:nowrap}
+.pill{font-size:10px;padding:5px 9px;border-radius:99px;border:1px solid var(--purple);color:var(--purple);font-weight:600}
+.pill.on{background:var(--purple);color:#fff}
+
+/* prayer block card */
+.pcard{border-radius:13px;padding:12px;margin-bottom:9px;background:#fff;border:1px solid rgba(137,84,160,.14)}
+.dark .pcard{background:rgba(255,255,255,.05)}
+.pcard.cur{background:rgba(137,84,160,.12);border-color:rgba(137,84,160,.5)}
+.pcard .ti{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.pcard .ti b{color:var(--purple);font-size:14px;font-weight:700}
+.la{font-size:11.5px;line-height:1.45;color:#1c1014}
+.dark .la{color:var(--paper)}
+.en{font-size:11.5px;line-height:1.45;color:#8a8a8e;font-style:italic;margin-top:3px}
+.es{font-size:11.5px;line-height:1.45;color:#8a8a8e;font-style:italic;margin-top:3px}
+
+/* beads */
+.beads{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.bead{width:11px;height:11px;border-radius:50%;background:rgba(137,84,160,.22)}
+.bead.f{background:var(--purple)}
+.bead.now{background:var(--purple);box-shadow:0 0 0 3px rgba(137,84,160,.28)}
+
+/* listen bar */
+.listen{padding:12px 14px 14px;background:#fff;border-top:.5px solid rgba(0,0,0,.06);box-shadow:0 -3px 12px rgba(0,0,0,.05)}
+.dark .listen{background:rgba(0,0,0,.4)}
+.listen .ctrls{display:flex;align-items:center;gap:18px;color:var(--purple)}
+.listen .ctrls svg{width:16px;height:16px;fill:var(--purple)}
+.listen .np{margin-left:4px;line-height:1.2}
+.listen .np small{font-size:8.5px;color:#9a9a9e;display:block;text-transform:none}
+.listen .np b{font-size:12px;color:#1c1014;font-weight:600}
+.dark .listen .np b{color:var(--paper)}
+.speed{display:flex;align-items:center;gap:8px;margin-top:11px;color:#9a9a9e}
+.speed svg{width:13px;height:13px;fill:#9a9a9e}
+.track{flex:1;height:3px;border-radius:99px;background:rgba(137,84,160,.2);position:relative}
+.track .fill{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--purple)}
+.track .knob{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 3px rgba(0,0,0,.3),0 0 0 1px rgba(137,84,160,.4);transform:transl(-50%,-50%);translate:-50% -50%}
+.speed .x{font-size:10px;font-weight:700;color:var(--purple);font-variant-numeric:tabular-nums}
+
+/* row list item */
+.prow{display:flex;align-items:center;gap:11px;padding:9px 11px;background:#fff;border-radius:12px;margin-bottom:7px;box-shadow:0 2px 5px rgba(0,0,0,.04)}
+.dark .prow{background:rgba(255,255,255,.06)}
+.prow .tx b{font-size:12.5px;color:#1c1014;font-weight:700;display:block}
+.dark .prow .tx b{color:var(--paper)}
+.prow .tx small{font-size:10px;color:#9a9a9e}
+
+/* language menu chip */
+.langchip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--purple);
+  border:1px solid rgba(137,84,160,.3);border-radius:99px;padding:4px 11px}
+.langchip svg{width:9px;height:9px;fill:var(--purple)}
+
+.sech{font-size:10px;font-weight:800;letter-spacing:.04em;color:var(--purple);text-transform:uppercase;margin:12px 2px 7px}
+.weekrow{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:10px 11px;box-shadow:0 2px 5px rgba(0,0,0,.04)}
+.dark .weekrow{background:rgba(255,255,255,.06)}
+.dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px}
+
+/* voices marketing slide */
+.voicewrap{display:flex;flex-direction:column;gap:14px;padding:4px 2px}
+.voice{display:flex;align-items:center;gap:13px;background:rgba(255,255,255,.05);border:1px solid rgba(201,162,75,.25);
+  border-radius:16px;padding:14px}
+.voice .flag{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;
+  background:rgba(201,162,75,.14);border:1px solid rgba(201,162,75,.35)}
+.voice .vt{flex:1}
+.voice .vt b{font-family:var(--display);font-size:21px;color:#fff;font-weight:600;display:block;line-height:1}
+.voice .vt small{font-size:11px;color:rgba(242,238,228,.6);font-style:italic}
+.voice .lang{font-family:var(--display);font-size:12px;color:var(--gold-bright);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+
+/* footer */
+.foot{text-align:center;margin:70px auto 0;color:rgba(242,238,228,.4);font-style:italic;font-size:15px;position:relative;z-index:2}
+.foot b{color:var(--gold-bright);font-style:normal;font-weight:600;letter-spacing:.04em}
+.hint{text-align:center;color:rgba(242,238,228,.35);font-size:13px;margin-top:18px;font-style:italic}
+
+/* waveform icon */
+.wf{display:inline-flex;gap:1.5px;align-items:flex-end;height:12px}
+.wf i{width:2px;background:var(--purple);border-radius:2px;display:block}
+</style>
+</head>
+<body>
+
+  <div class="masthead">
+    <div class="crest">Ad Maiorem Dei Gloriam</div>
+    <h1>Pray the Rosary,<br><em>in three tongues</em></h1>
+    <p>Latin · English · Español — read along, or close your eyes and listen.</p>
+  </div>
+
+  <div class="gallery">
+
+    <!-- ============ SLIDE 1 — TODAY ============ -->
+    <div class="slide">
+      <div class="cap">
+        <div class="kicker">Your daily rhythm</div>
+        <h2>A place to <em>begin</em><br>each morning</h2>
+      </div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="right">5G ▮▮▮ 100%</span></div>
+        <div class="ui">
+          <div class="lt">Today</div>
+          <div class="scroll">
+            <div class="muted" style="font-size:11px;font-weight:600;padding:0 2px 10px">Sunday · 28 June</div>
+            <!-- hero -->
+            <div class="hero">
+              <div class="halo"></div><div class="ic">✝</div>
+              <div class="k">DAILY ROSARY</div>
+              <h3>The Glorious Mysteries</h3>
+              <div class="play"><span class="pbtn" style="width:22px;height:22px"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span> Pray today's Rosary</div>
+            </div>
+            <div style="height:10px"></div>
+            <div class="weekrow">
+              <div class="dot" style="background:rgba(201,162,75,.18);color:#b8902f">✦</div>
+              <div style="flex:1"><b style="font-size:12px;color:#1c1014">This week's mysteries</b><br><small class="muted" style="font-size:10px">Joyful · Sorrowful · Glorious · Luminous</small></div>
+              <span class="muted">›</span>
+            </div>
+            <div class="sech">Daily prayers</div>
+            <div class="prow">
+              <span class="pbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+              <div class="tx"><b>Signum Crucis</b><small>The Sign of the Cross</small></div>
+            </div>
+            <div class="prow">
+              <span class="pbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+              <div class="tx"><b>Pater Noster</b><small>Our Father</small></div>
+            </div>
+            <div class="prow">
+              <span class="pbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+              <div class="tx"><b>Ave Maria</b><small>Hail Mary</small></div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <div class="tab on"><svg viewBox="0 0 24 24"><path d="M12 3l8 7v10a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1V10z"/></svg>Today</div>
+            <div class="tab"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M12 3v18"/></svg>Bible</div>
+            <div class="tab"><svg viewBox="0 0 24 24"><path d="M12 4v16M8 8h8M8 12h8"/></svg>Prayers</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ============ SLIDE 2 — THREE LANGUAGES ============ -->
+    <div class="slide paper">
+      <div class="cap">
+        <div class="kicker">Parallel text</div>
+        <h2>The Vulgate <em>&amp;</em> your<br>mother tongue, together</h2>
+      </div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="right">5G ▮▮▮ 100%</span></div>
+        <div class="ui">
+          <div style="text-align:center;font-size:13px;font-weight:600;padding:6px 0 8px;color:#1c1014">Rosary</div>
+          <div class="pills">
+            <span class="pill">Sun</span><span class="pill on">Mon</span><span class="pill">Tue</span><span class="pill">Wed</span><span class="pill">Thu</span><span class="pill">Fri</span><span class="pill">Sat</span>
+          </div>
+          <div style="text-align:center"><div style="font-size:16px;font-weight:800;color:#15090f">The Glorious Mysteries</div>
+            <div style="margin:8px 0 4px"><span class="langchip">Latin – English <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></span></div>
+          </div>
+          <div class="scroll" style="padding-top:6px">
+            <div class="sech">Opening</div>
+            <div class="pcard">
+              <div class="ti"><b>Pater Noster</b></div>
+              <div class="la">Pater noster, qui es in cælis, sanctificétur nomen tuum. Advéniat regnum tuum.</div>
+              <div class="en">Our Father, who art in heaven, hallowed be thy name. Thy kingdom come.</div>
+            </div>
+            <div class="pcard">
+              <div class="ti"><b>Ave Maria</b></div>
+              <div class="la">Ave María, grátia plena, Dóminus tecum. Benedícta tu in muliéribus…</div>
+              <div class="en">Hail Mary, full of grace, the Lord is with thee. Blessed art thou amongst women…</div>
+              <div class="beads"><span class="bead f"></span><span class="bead f"></span><span class="bead"></span></div>
+            </div>
+            <div class="pcard">
+              <div class="ti"><b>Gloria Patri</b></div>
+              <div class="la">Glória Patri, et Fílio, et Spirítui Sancto…</div>
+              <div class="en">Glory be to the Father, and to the Son, and to the Holy Spirit…</div>
+            </div>
+          </div>
+          <div class="listen">
+            <div class="ctrls">
+              <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+              <span class="pbtn lg"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+              <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM4 6l8.5 6L4 18z"/></svg>
+              <div class="np"><small>Listen</small><b>Pray the whole Rosary</b></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ============ SLIDE 3 — LISTEN + BEAD TRACKER ============ -->
+    <div class="slide">
+      <div class="cap">
+        <div class="kicker">Hands-free</div>
+        <h2>Listen as you pray —<br>we <em>keep your place</em></h2>
+      </div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="right">5G ▮▮▮ 100%</span></div>
+        <div class="ui">
+          <div style="text-align:center;font-size:13px;font-weight:600;padding:6px 0 8px;color:#1c1014">Rosary</div>
+          <div class="scroll" style="padding-top:2px">
+            <div class="sech">2. The Ascension</div>
+            <div class="pcard"><div class="ti"><b>Pater Noster</b></div>
+              <div class="la">Pater noster, qui es in cælis…</div></div>
+            <div class="pcard cur">
+              <div class="ti"><b>Ave Maria</b>
+                <span class="wf"><i style="height:5px"></i><i style="height:11px"></i><i style="height:7px"></i><i style="height:12px"></i><i style="height:6px"></i></span>
+              </div>
+              <div class="la">Ave María, grátia plena, Dóminus tecum. Benedícta tu in muliéribus, et benedíctus fructus ventris tui, Iesus.</div>
+              <div class="en">Hail Mary, full of grace, the Lord is with thee.</div>
+              <div class="beads">
+                <span class="bead f"></span><span class="bead f"></span><span class="bead f"></span><span class="bead f"></span>
+                <span class="bead now"></span>
+                <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+              </div>
+            </div>
+            <div class="pcard"><div class="ti"><b>Gloria Patri</b></div>
+              <div class="la">Glória Patri, et Fílio…</div></div>
+          </div>
+          <div class="listen">
+            <div class="ctrls">
+              <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+              <span class="pbtn lg"><svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg></span>
+              <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM4 6l8.5 6L4 18z"/></svg>
+              <div class="np"><small style="color:var(--purple)">Now praying — bead 5 of 10</small><b>Ave Maria</b></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ============ SLIDE 4 — ADJUSTABLE SPEED ============ -->
+    <div class="slide paper">
+      <div class="cap">
+        <div class="kicker">At your own pace</div>
+        <h2>Slow and solemn,<br>or <em>steady &amp; brisk</em></h2>
+      </div>
+      <div class="phone"><div class="screen dark">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="right">5G ▮▮▮ 100%</span></div>
+        <div class="ui">
+          <div style="text-align:center;font-size:13px;font-weight:600;padding:6px 0 8px;color:var(--paper)">Rosary</div>
+          <div class="scroll" style="padding-top:2px">
+            <div class="sech">Opening</div>
+            <div class="pcard"><div class="ti"><b>Apostles' Creed</b></div>
+              <div class="la">Credo in Deum Patrem omnipoténtem, Creatórem cæli et terræ…</div>
+              <div class="en">I believe in God, the Father almighty, Creator of heaven and earth…</div>
+            </div>
+            <div class="pcard cur"><div class="ti"><b>Pater Noster</b>
+              <span class="wf"><i style="height:5px"></i><i style="height:11px"></i><i style="height:7px"></i><i style="height:12px"></i></span></div>
+              <div class="la">Pater noster, qui es in cælis, sanctificétur nomen tuum…</div>
+              <div class="en">Our Father, who art in heaven…</div>
+            </div>
+          </div>
+          <div class="listen">
+            <div class="ctrls">
+              <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+              <span class="pbtn lg"><svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg></span>
+              <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM4 6l8.5 6L4 18z"/></svg>
+              <div class="np"><small style="color:var(--purple)">Now praying</small><b>Pater Noster</b></div>
+            </div>
+            <div class="speed">
+              <svg viewBox="0 0 24 24"><path d="M2 13c4-4 8 0 12-2s6 2 8 1c-1 4-5 5-8 4s-8 1-12-3z"/></svg>
+              <div class="track"><div class="fill" style="width:42%"></div><div class="knob" style="left:42%"></div></div>
+              <svg viewBox="0 0 24 24"><path d="M12 3c2 0 3 2 3 4 4 1 6 4 6 8H3c0-4 2-7 6-8 0-2 1-4 3-4z"/></svg>
+              <span class="x">1.0×</span>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ============ SLIDE 5 — THREE VOICES ============ -->
+    <div class="slide">
+      <div class="cap">
+        <div class="kicker">Recorded for reverence</div>
+        <h2>Three <em>authentic</em><br>voices</h2>
+      </div>
+      <div class="phone"><div class="screen dark">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="right">5G ▮▮▮ 100%</span></div>
+        <div class="ui">
+          <div class="scroll" style="display:flex;flex-direction:column;justify-content:center;padding:0 16px">
+            <div style="text-align:center;margin-bottom:18px">
+              <div style="font-family:var(--display);font-size:34px;color:var(--paper);font-weight:600;line-height:1">Ave Maria</div>
+              <div style="font-style:italic;color:rgba(242,238,228,.55);font-size:13px;margin-top:4px">spoken in your chosen tongue</div>
+            </div>
+            <div class="voicewrap">
+              <div class="voice">
+                <div class="flag">🕊️</div>
+                <div class="vt"><b>Elena</b><small>Italianate ecclesiastical Latin</small></div>
+                <div class="lang">Latina</div>
+              </div>
+              <div class="voice">
+                <div class="flag">📖</div>
+                <div class="vt"><b>Daniel</b><small>Measured British clarity</small></div>
+                <div class="lang">English</div>
+              </div>
+              <div class="voice">
+                <div class="flag">🌹</div>
+                <div class="vt"><b>Charlotte</b><small>Warm, gentle delivery</small></div>
+                <div class="lang">Español</div>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:20px;color:rgba(242,238,228,.45);font-style:italic;font-size:12px">
+              Every prayer of the Rosary, in full.
+            </div>
+          </div>
+          <div class="tabbar">
+            <div class="tab"><svg viewBox="0 0 24 24"><path d="M12 3l8 7v10a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1V10z"/></svg>Today</div>
+            <div class="tab"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M12 3v18"/></svg>Bible</div>
+            <div class="tab on"><svg viewBox="0 0 24 24"><path d="M12 4v16M8 8h8M8 12h8"/></svg>Prayers</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <div class="hint">↔ scroll to see all five · open in a browser and screenshot each slide at 1290×2796 for the App Store</div>
+  <div class="foot"><b>AquinasAI</b> — Latin · English · Español Bible &amp; Rosary</div>
+
+</body>
+</html>
