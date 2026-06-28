@@ -11,14 +11,16 @@ extension Color {
 }
 
 struct ContentView: View {
-    @StateObject private var viewModel = BibleViewModel()
-    @StateObject private var bookmarkStore = BookmarkStore()
-    @StateObject private var prayerStore = PrayerStore()
+    // Shared app state is owned by RootTabView and injected via the environment,
+    // so the Bible, Today, and Prayers tabs stay in sync.
+    @EnvironmentObject private var viewModel: BibleViewModel
+    @EnvironmentObject private var bookmarkStore: BookmarkStore
+    @EnvironmentObject private var prayerStore: PrayerStore
     @AppStorage("isDarkMode") private var isDarkMode = true
     @State private var showingBookmarks = false
     @State private var showingSearch = false
     @State private var showingPrayers = false
-    
+
     var body: some View {
         NavigationView {
             if !viewModel.books.isEmpty {
@@ -36,10 +38,6 @@ struct ContentView: View {
                 LoadingView()
             }
         }
-        .preferredColorScheme(isDarkMode ? .dark : .light)
-        .environmentObject(bookmarkStore)
-        .environmentObject(viewModel)
-        .environmentObject(prayerStore)
         .sheet(isPresented: $showingSearch) {
             SearchView(bibleViewModel: viewModel)
         }
@@ -92,6 +90,8 @@ struct TestamentSelectorView: View {
                 )
             }
 
+            // Prayers now live in their own top-level tab; the Bible home keeps
+            // only Bible-specific utilities.
             HStack(spacing: 16) {
                 TestamentPillButton(
                     title: "Search",
@@ -103,12 +103,6 @@ struct TestamentSelectorView: View {
                     title: "Bookmarks",
                     isSelected: false,
                     action: { showingBookmarks = true }
-                )
-
-                TestamentPillButton(
-                    title: "Prayers",
-                    isSelected: false,
-                    action: { showingPrayers = true }
                 )
             }
 
@@ -539,4 +533,7 @@ struct LoadingView: View {
 
 #Preview {
     ContentView()
-} 
+        .environmentObject(BibleViewModel())
+        .environmentObject(BookmarkStore())
+        .environmentObject(PrayerStore())
+}

@@ -26,11 +26,14 @@ struct PrayersView: View {
     // Add optional initial prayer ID and category
     let initialPrayerId: String?
     let initialCategory: PrayerCategory?
-    
-    init(initialPrayerId: String? = nil, initialCategory: PrayerCategory? = nil) {
+    /// Hidden when embedded in a tab (no sheet to dismiss).
+    let showsDoneButton: Bool
+
+    init(initialPrayerId: String? = nil, initialCategory: PrayerCategory? = nil, showsDoneButton: Bool = true) {
         // Store parameters as constants
         self.initialPrayerId = initialPrayerId
         self.initialCategory = initialCategory
+        self.showsDoneButton = showsDoneButton
         
         // Initialize state variables
         self._scrollToId = State(initialValue: initialPrayerId)
@@ -67,7 +70,7 @@ struct PrayersView: View {
                     HStack(spacing: 8) {
                         ForEach(PrayerCategory.allCases, id: \.self) { category in
                             if category == .rosary {
-                                NavigationLink(destination: RosaryView().environmentObject(prayerStore)) {
+                                NavigationLink(destination: RosaryPlayerView()) {
                                     Text(category.displayName)
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 8)
@@ -166,7 +169,13 @@ struct PrayersView: View {
             }
             .background(colorScheme == .dark ? Color.nightBackground : Color.paperWhite)
             .navigationTitle("Prayers")
-            .navigationBarItems(trailing: Button("Done") { dismiss() })
+            .toolbar {
+                if showsDoneButton {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Done") { dismiss() }
+                    }
+                }
+            }
         }
     }
     
