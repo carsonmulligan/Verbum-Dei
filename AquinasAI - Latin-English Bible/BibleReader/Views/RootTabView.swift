@@ -7,7 +7,6 @@ struct RootTabView: View {
     @StateObject private var viewModel = BibleViewModel()
     @StateObject private var bookmarkStore = BookmarkStore()
     @StateObject private var prayerStore = PrayerStore()
-    @StateObject private var audioManager = AudioManager()
     @AppStorage("isDarkMode") private var isDarkMode = true
     @AppStorage("rootSelectedTab") private var selectedTab = 0
 
@@ -30,7 +29,6 @@ struct RootTabView: View {
         .environmentObject(viewModel)
         .environmentObject(bookmarkStore)
         .environmentObject(prayerStore)
-        .environmentObject(audioManager)
     }
 }
 

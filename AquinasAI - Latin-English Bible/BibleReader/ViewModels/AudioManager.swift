@@ -6,6 +6,11 @@ import Combine
 /// Shared app-wide so a prayer started on the Today tab stays reflected in the
 /// Prayers tab and a future global now-playing bar.
 final class AudioManager: NSObject, ObservableObject {
+    /// Single shared instance. Used directly (`@ObservedObject = .shared`) rather
+    /// than via the environment so prayer cards never crash on screens that don't
+    /// re-inject it (e.g. bookmark deep-links into fullScreenCovers).
+    static let shared = AudioManager()
+
     /// `"<prayerId>_<lang>"` of the track currently loaded, or nil when idle.
     @Published private(set) var nowPlayingKey: String?
     @Published private(set) var isPlaying = false

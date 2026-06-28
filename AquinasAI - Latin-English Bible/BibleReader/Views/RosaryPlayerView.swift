@@ -5,7 +5,7 @@ import SwiftUI
 /// being said and walks the bead tracker — never required to read.
 struct RosaryPlayerView: View {
     @EnvironmentObject private var prayerStore: PrayerStore
-    @EnvironmentObject private var audio: AudioManager
+    @ObservedObject private var audio = AudioManager.shared
     @Environment(\.colorScheme) private var colorScheme
     @StateObject private var player = RosaryAudioPlayer()
 

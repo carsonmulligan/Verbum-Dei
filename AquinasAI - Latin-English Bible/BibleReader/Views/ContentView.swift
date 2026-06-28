@@ -122,7 +122,6 @@ struct BookList: View {
     let books: [Book]
     @ObservedObject var viewModel: BibleViewModel
     let prayerStore: PrayerStore
-    @EnvironmentObject var audioManager: AudioManager
     @Binding var isDarkMode: Bool
     @Binding var showingBookmarks: Bool
     @Binding var showingPrayers: Bool
@@ -278,7 +277,6 @@ struct BookList: View {
             .sheet(isPresented: $showingPrayers) {
                 PrayersView(initialPrayerId: nil)
                     .environmentObject(prayerStore)
-                    .environmentObject(audioManager)
             }
             .sheet(isPresented: $showingSpeedReader) {
                 SpeedReaderHubView()
@@ -538,5 +536,4 @@ struct LoadingView: View {
         .environmentObject(BibleViewModel())
         .environmentObject(BookmarkStore())
         .environmentObject(PrayerStore())
-        .environmentObject(AudioManager())
 }

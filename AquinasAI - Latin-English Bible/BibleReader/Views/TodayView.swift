@@ -157,7 +157,7 @@ struct TodayView: View {
 /// One row in the Today "Daily prayers" list with an inline Latin audio button.
 struct TodayPrayerRow: View {
     let prayer: Prayer
-    @EnvironmentObject private var audio: AudioManager
+    @ObservedObject private var audio = AudioManager.shared
     @Environment(\.colorScheme) private var colorScheme
 
     private let lang = "la" // Latin is the traditional/TikTok hook

@@ -80,11 +80,17 @@ struct PrayerCard: View {
     let language: PrayerLanguage
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var bookmarkStore: BookmarkStore
+    @ObservedObject private var audio = AudioManager.shared
     @State private var showingBookmarkSheet = false
     @State private var showingEditBookmarkSheet = false
-    
+
     var isBookmarked: Bool {
         bookmarkStore.isPrayerBookmarked(prayerId: prayer.id)
+    }
+
+    /// True while this prayer's audio is the one currently playing.
+    var isPlayingThis: Bool {
+        audio.isCurrent(prayerId: prayer.id, lang: language.audioLangCode) && audio.isPlaying
     }
     
     var body: some View {
@@ -322,7 +328,8 @@ struct PrayerCard: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.deepPurple.opacity(0.2), lineWidth: 1)
+                .strokeBorder(Color.deepPurple.opacity(isPlayingThis ? 0.6 : 0.2),
+                              lineWidth: isPlayingThis ? 2 : 1)
         )
         .contextMenu {
             if isBookmarked {
@@ -534,7 +541,7 @@ struct PrayerBookmarkEditView: View {
 struct PrayerAudioControl: View {
     let prayerId: String
     let language: PrayerLanguage
-    @EnvironmentObject private var audio: AudioManager
+    @ObservedObject private var audio = AudioManager.shared
     @Environment(\.colorScheme) private var colorScheme
 
     private var lang: String { language.audioLangCode }
