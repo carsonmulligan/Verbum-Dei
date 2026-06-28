@@ -90,6 +90,8 @@ struct TestamentSelectorView: View {
                 )
             }
 
+            // Prayers now live in their own top-level tab; the Bible home keeps
+            // only Bible-specific utilities.
             HStack(spacing: 16) {
                 TestamentPillButton(
                     title: "Search",
@@ -101,12 +103,6 @@ struct TestamentSelectorView: View {
                     title: "Bookmarks",
                     isSelected: false,
                     action: { showingBookmarks = true }
-                )
-
-                TestamentPillButton(
-                    title: "Prayers",
-                    isSelected: false,
-                    action: { showingPrayers = true }
                 )
             }
 

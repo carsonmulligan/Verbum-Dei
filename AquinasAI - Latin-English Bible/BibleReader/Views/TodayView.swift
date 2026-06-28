@@ -65,7 +65,7 @@ struct TodayView: View {
 
     private var rosaryHero: some View {
         NavigationLink {
-            RosaryView().environmentObject(prayerStore)
+            RosaryPlayerView()
         } label: {
             ZStack(alignment: .bottomLeading) {
                 LinearGradient(
