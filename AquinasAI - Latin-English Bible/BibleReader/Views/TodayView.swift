@@ -14,25 +14,18 @@ struct TodayView: View {
         colorScheme == .dark ? Color.nightBackground : Color.paperWhite
     }
 
-    private var weekday: String {
-        let f = DateFormatter()
-        f.dateFormat = "EEEE"
-        return f.string(from: Date())
-    }
-
     private var dateLine: String {
         let f = DateFormatter()
         f.dateFormat = "EEEE · d MMMM"
         return f.string(from: Date())
     }
 
-    private var mysteryType: String? {
-        prayerStore.getRosarySchedule(day: weekday)
+    private var todaySet: RosaryMysterySet? {
+        RosaryMysterySet.set(for: Date(), schedule: prayerStore.rosaryPrayers?.schedule)
     }
 
     private var mysteryTitle: String {
-        guard let type = mysteryType else { return "Today's Rosary" }
-        return "The \(type.capitalized) Mysteries"
+        todaySet?.title ?? "Today's Rosary"
     }
 
     private func prayer(_ id: String) -> Prayer? {
@@ -51,6 +44,7 @@ struct TodayView: View {
                             .padding(.horizontal)
 
                         rosaryHero
+                        mysteriesLink
                         dailyPrayers
                         verseOfDay
                     }
@@ -98,6 +92,43 @@ struct TodayView: View {
             }
             .frame(height: 180)
             .clipShape(RoundedRectangle(cornerRadius: 20))
+            .padding(.horizontal)
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: - Mysteries this week link
+
+    private var mysteriesLink: some View {
+        NavigationLink {
+            MysteriesThisWeekView()
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: todaySet?.sfSymbol ?? "circle.grid.2x2")
+                    .font(.system(size: 20))
+                    .foregroundColor(todaySet?.accentColor ?? .deepPurple)
+                    .frame(width: 28)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("This week's mysteries")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundColor(colorScheme == .dark ? .nightText : .primary)
+                    Text("See the Joyful, Sorrowful, Glorious & Luminous rhythm")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundColor(.secondary)
+            }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(colorScheme == .dark ? Color.black.opacity(0.25) : Color.white)
+                    .shadow(color: colorScheme == .dark ? .clear : Color.black.opacity(0.05), radius: 3, y: 1)
+            )
             .padding(.horizontal)
         }
         .buttonStyle(.plain)
